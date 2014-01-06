@@ -1,0 +1,143 @@
+{{ GRAMEX(cache=['G.min.js', 'results.csv', 'colors.csv']) }}{% code %}
+from urllib import quote
+
+title = 'India Elections'
+
+colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color']
+data = DB.csv('assembly.csv', dtype=object)
+results = pd.read_csv('results.csv').fillna('')
+results['DATE'] = stats.to_date(results['DATE'])
+today = datetime.datetime(2014, 12, 30)
+
+{% end %}<!DOCTYPE html><html lang="en">
+<head>
+  <title class="title">{{ title }}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    {{ T('css/bootstrap.v3.min.css') }}
+    {{ T('style.css') }}
+  </style>
+</head><body>
+
+<header>
+  <div class="container">
+    <h1>
+      <span class="heading"><span class="em">Pre</span>lections <span class="em">2014</span> <span class="title"></span></span>
+    </h1>
+  </div>
+</header>
+
+<div class="container main">
+
+{% code %}
+states = results['ST_NAME'].unique()
+datepos = layout.dates(results['DATE'].min(), today)
+x0, y0, W, H, legend = 110, 28, 1000, 600, 30
+h = round((H - y0 - legend) / float(len(states)), 2)
+{% end %}
+<svg class="resultmap" width="100%" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ float(H) / W }}">
+  {{ T('dateaxis.svg',
+      x=x0,
+      y=legend,
+      width=W - x0 - x0,
+      height=H - legend,
+      dates=datepos,
+      labels=[
+        { 'type': 'year',
+          'y':  y0/2,
+          'anchor': 'start',
+          'label': lambda d: d.strftime('%Y'),
+          'angle': lambda v: -90,
+          'attrs': {'font-size': '9'},
+        },
+      ],
+      lines={
+          'year':  {'stroke': 'rgba(0,0,0,.2)'},
+      }
+  ) }}
+  {% for i, state in enumerate(states) %}
+    {% set state_key = state.replace(' ', '-').replace('&', '') %}
+    <text class="state-legend" font-size="12" x="{{ x0 - 5 }}"     y="{{ y0 + legend + h * (i + .5) }}" dy=".35em" data-state="{{ state_key }}" data-highlight="[data-state={{ state_key }}]" text-anchor="end">{{ state }}</text>
+    <text class="state-legend" font-size="12" x="{{ W - x0 + 5 }}" y="{{ y0 + legend + h * (i + .5) }}" dy=".35em" data-state="{{ state_key }}" data-highlight="[data-state={{ state_key }}]">{{ state }}</text>
+    {% code %}
+    state_results = results[results['ST_NAME'] == state]
+    state_results['TILL'] = state_results['DATE'].shift(-1)
+    state_results['TILL'].fillna(today, inplace=True)
+    state_results['x0'] = state_results['DATE'].apply(lambda d: round(datepos.x.iloc[datepos.index.searchsorted(d)], 2))
+    state_results['x1'] = state_results['TILL'].apply(lambda d: round(datepos.x.iloc[datepos.index.searchsorted(d)], 2))
+    party_colors = colors.ix['PARTY']
+    w = float(W - x0 * 2) / len(party_colors)
+    {% end %}
+    <g class="winner-timeline">
+      {% for index, row in state_results.iterrows() %}
+        {% set fill = party_colors.get(row['PARTY'], '#999') %}
+        <rect x="{{ x0 + (W - 2*x0) * row['x0'] }}" y="{{ y0 + legend + h * i }}" width="{{ (W - 2*x0) * (row['x1'] - row['x0']) }}" height="{{ h }}"
+          fill="{{ fill }}"
+          stroke="#fff"
+          href="?ST_NAME={{ quote(row['ST_NAME']) }}&YEAR={{ quote(row['YEAR']) }}"
+          title="<h1>{{ row['ST_NAME'] }} {{ row['YEAR'] }}</h1>{{ row['CM'].replace(', ', '<br>') }}"
+          data-party="{{ row['PARTY'].replace(' ', '-') }}"
+          data-state="{{ state_key }}"
+          ></rect>
+        <text data-party="{{ row['PARTY'].replace(' ', '-') }}" data-state="{{ state_key }}" font-size="10" x="{{ x0 + (W - 2*x0) * (row['x0'] + row['x1']) / 2 }}" text-anchor="middle" y="{{ y0 + legend + h * (i + .5) }}" dy=".35em" fill="#fff">{{ row['PARTY'] }}</text>
+      {% end %}
+    </g>
+  {% end %}
+  {% for i, (party, color) in enumerate(party_colors.iteritems()) %}
+    <rect class="party-legend" data-party="{{ party.replace(' ', '-') }}" data-highlight="[data-party={{ party.replace(' ', '-') }}]" x="{{ x0 + w * i }}" width="{{ w }}" y="0" height="{{ legend - 5 }}" fill="{{ color }}"></rect>
+    <text x="{{ x0 + w * (i + .5) }}" y="{{ (legend - 5) * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
+  {% end %}
+</svg>
+
+<div id="results"></div>
+
+</div>
+
+<script>
+{{ T('js/jquery2.min.js') }}
+{{ T('js/bootstrap.v3.min.js') }}
+{{ T('js/d3.v3.min.js') }}
+{{ T('G.min.js') }}
+{{ T('jquery.scrollTo.min.js') }}
+
+$('body')
+  .highlight({
+    selector: '.party-legend',
+    target: '[data-party]'
+  })
+  .highlight({
+    selector: '.state-legend',
+    target: '[data-state]'
+  })
+  .tooltip({
+    selector: '[title]',
+    container: 'body',
+    html: true
+  })
+  .urlfilter({
+    hash: true
+  })
+  .aspect({
+    selector: '[data-height]'
+  });
+
+function redraw() {
+  var query = G.url.parse(location.hash.replace(/^#/, ''));
+  if (!query.search) { return; }
+  $('#results').load('state-year?' + query.search, function() {
+    $('.tooltip').remove();
+    // Dispatch a resize event to resize the SVGs we just loaded
+    $(window).dispatch('resize');
+    scrolled = $.scrollTo('#results', {
+      duration: 300,
+      margin: true,
+      offset: {top: -20}
+    });
+  });
+}
+
+$(window).on('hashchange', redraw);
+redraw();
+</script>
+</body></html>

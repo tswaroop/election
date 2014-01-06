@@ -1,0 +1,37 @@
+header {
+  background-color: #8064a2;
+  color: #fff;
+  margin-bottom: 1em;
+}
+header .heading {
+  font-family: "Franklin Gothic Medium Cond", sans-serif;
+  text-transform: uppercase;
+}
+header .em {
+  opacity: 0.75;
+  margin-right: 0.2em;
+}
+text { pointer-events: none; }
+[href], [data-highlight] {
+  cursor: pointer;
+  pointer-events: all;
+}
+.tooltip {
+  font-family: sans-serif;
+}
+.tooltip-inner {
+  text-align: left;
+}
+.tooltip-inner h1 {
+  font-size: 100%;
+  font-weight: bold;
+  padding: 0 0 3px 0;
+  margin: 0 0 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .8);
+}
+svg {
+  min-width: 800px;
+}
+.party-legend.fade { opacity: .3; }
+.state-legend.fade { opacity: .3; }
+.link[href] { color: {{ _color.Office[0] }}; }
