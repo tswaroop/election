@@ -5,7 +5,7 @@ title = 'India Elections'
 
 colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color']
 data = DB.csv('assembly.csv', dtype=object)
-results = pd.read_csv('results.csv').fillna('')
+results = pd.read_csv('results.csv')
 results['DATE'] = stats.to_date(results['DATE'])
 today = datetime.datetime(2014, 12, 30)
 
