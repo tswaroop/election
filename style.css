@@ -29,9 +29,17 @@ text { pointer-events: none; }
   margin: 0 0 6px 0;
   border-bottom: 1px solid rgba(255, 255, 255, .8);
 }
-svg {
+svg.full-width {
   min-width: 800px;
 }
 .party-legend.fade { opacity: .3; }
 .state-legend.fade { opacity: .3; }
 .link[href] { color: {{ _color.Office[0] }}; }
+
+.no-select {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+       -o-user-select: none;
+          user-select: none;
+}

@@ -36,7 +36,7 @@ datepos = layout.dates(results['DATE'].min(), today)
 x0, y0, W, H, legend = 110, 28, 1000, 600, 30
 h = round((H - y0 - legend) / float(len(states)), 2)
 {% end %}
-<svg class="resultmap" width="100%" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ float(H) / W }}">
+<svg class="resultmap full-width" width="100%" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ float(H) / W }}">
   {{ T('dateaxis.svg',
       x=x0,
       y=legend,
@@ -102,6 +102,11 @@ h = round((H - y0 - legend) / float(len(states)), 2)
 {{ T('jquery.scrollTo.min.js') }}
 
 $('body')
+  .tooltip({
+    selector: '[title]',
+    container: 'body',
+    html: true
+  })
   .highlight({
     selector: '.party-legend',
     target: '[data-party]'
@@ -110,13 +115,8 @@ $('body')
     selector: '.state-legend',
     target: '[data-state]'
   })
-  .tooltip({
-    selector: '[title]',
-    container: 'body',
-    html: true
-  })
   .urlfilter({
-    hash: true
+    target: '#'
   })
   .aspect({
     selector: '[data-height]'

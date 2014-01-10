@@ -1,8 +1,18 @@
 {{ GRAMEX(cache=['assembly.csv', 'colors.csv', 'latlong.csv'], max_age=30) }}{% code %}
+from common import slug
+
+R = 0.1
+def latlong_setup(latlong):
+    latlong['X'] = latlong['Y'] = pd.np.empty(len(latlong))
+    for state, indices in latlong.groupby('ST_NAME').groups.iteritems():
+        xy = layout.unpack(latlong.ix[indices][['LONG', 'LAT']], [R] * len(indices), gravity=0, factor=.98)
+        latlong['X'][indices] = xy[:,0]
+        latlong['Y'][indices] = xy[:,1]
+    return latlong
 
 colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color']
 data = DB.csv('assembly.csv', dtype=object)
-latlong = DB.csv('latlong.csv', dtype=object)
+latlong = DB.csv('latlong.csv', setup=latlong_setup)
 
 # Filter by state and year
 state, year = args['ST_NAME'][0], args['YEAR'][0]
@@ -31,20 +41,20 @@ top_parties['cx'] = top_parties['cw'].cumsum() - top_parties['cw']
 party_colors = colors.ix['PARTY']
 
 {% end %}
-<h2>
+<h2 class="no-select">
   {{ args.get('ST_NAME', [''])[0] }}
   <small class="link" {% if year_index > 0 %} href="?YEAR={{ years[year_index - 1] }}" title="Show {{ years[year_index - 1] }} results"{% end %}>◄</small>
   {{ args.get('YEAR', [''])[0] }}
   <small class="link" {% if year_index < len(years) - 1 %} href="?YEAR={{ years[year_index + 1] }}" title="Show {{ years[year_index + 1] }} results"{% end %}>►</small>
 </h2>
 
-<svg width="100%" viewBox="{{ -x0 }} 0 {{ x0 + W }} {{ H }}" data-height="{{ float(H) / (x0 + W) }}">
+<svg class="full-width" width="100%" viewBox="{{ -x0 }} 0 {{ x0 + W }} {{ H }}" data-height="{{ float(H) / (x0 + W) }}">
   <text x="-5" y="{{ 0*(h + gap) + h * .5 }}" dy=".35em" text-anchor="end">{{ '{:,d}'.format(len(parties)) }} parties</text>
   <text x="-5" y="{{ 1*(h + gap) + h * .5 }}" dy=".35em" text-anchor="end">{{ '{:,d}'.format(parties['CANDIDATES'].sum()) }} candidates</text>
   <text x="-5" y="{{ 2*(h + gap) + h * .5 }}" dy=".35em" text-anchor="end">{{ '{:,d}'.format(parties['WON'].sum()) }} seats</text>
   {% for i, (party, row) in enumerate(top_parties.iterrows()) %}
     {% code %}
-    party_key = party.replace(' ', '-')
+    party_key = slug(party)
     fill = party_colors.get(party, '#999')
     title = '{:s} won<br>{:d} seats contesting in<br>{:d} constituencies'.format(party, row['WON'], row['CONTESTED'])
     {% end %}
@@ -63,11 +73,11 @@ party_colors = colors.ix['PARTY']
     L{{ row['cx'] }},{{ 2*h + gap }}
     v{{ -h }}
     L{{ i*w }},{{ h }}
-    z" fill="{{ fill }}" stroke="#fff" opacity=".3" data-party="{{ party_key }}"/>
+    z" fill="{{ fill }}" stroke="#fff" opacity=".3" data-party="{{ party_key }}" class="party-legend"/>
 
-    <rect x="{{ i * w }}"     width="{{ w }}"         y="0"                 height="{{ h }}" fill="{{ fill }}" title="{{ title }}" stroke="#fff" data-party="{{ party_key }}"/>
-    <rect x="{{ row['cx'] }}" width="{{ row['cw'] }}" y="{{ h + gap }}"     height="{{ h }}" fill="{{ fill }}" title="{{ title }}" stroke="#fff" data-party="{{ party_key }}"/>
-    <rect x="{{ row['wx'] }}" width="{{ row['ww'] }}" y="{{ 2*(h + gap) }}" height="{{ h }}" fill="{{ fill }}" title="{{ title }}" stroke="#fff" data-party="{{ party_key }}"/>
+    <rect x="{{ i * w }}"     width="{{ w }}"         y="0"                 height="{{ h }}" fill="{{ fill }}" title="{{ title }}" stroke="#fff" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
+    <rect x="{{ row['cx'] }}" width="{{ row['cw'] }}" y="{{ h + gap }}"     height="{{ h }}" fill="{{ fill }}" title="{{ title }}" stroke="#fff" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
+    <rect x="{{ row['wx'] }}" width="{{ row['ww'] }}" y="{{ 2*(h + gap) }}" height="{{ h }}" fill="{{ fill }}" title="{{ title }}" stroke="#fff" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
 
     <text x="{{ (i + .5) * w }}" y="{{ h * .5 }}" dy=".35em" text-anchor="middle" fill="#fff" font-size="14">{{ party }}</text>
     {% if row['cw'] > 20 %}
@@ -81,5 +91,27 @@ party_colors = colors.ix['PARTY']
   {% for pos in [.25, .5, .75] %}
     <path d="M{{ pos * W }},{{ 3*h + 2*gap - axis/4 }}v{{ axis/2 }}" stroke="#000"/>
     <text x="{{ pos*W }}" y="{{ 3*h + 2*gap + axis/4 }}" dy="1em" text-anchor="middle">{{ '{:.0%}'.format(pos) }}</text>
+  {% end %}
+</svg>
+
+
+{% code %}
+pos = latlong[latlong['ST_NAME'] == state].set_index('AC_NAME')
+xmax, xmin = pos['X'].max(), pos['X'].min()
+ymax, ymin = pos['Y'].max(), pos['Y'].min()
+diameter = max(ymax - ymin, xmax - xmin) + 2 * R
+xmax, xmin = (xmax + xmin + diameter) * .5, (xmax + xmin - diameter) * .5
+ymax, ymin = (ymax + ymin + diameter) * .5, (ymax + ymin - diameter) * .5
+
+data = data.set_index('AC_NAME')
+data['X'] = pos['X']
+data['Y'] = pos['Y']
+{% end %}
+<svg width="50%" data-height="1" viewBox="{{ xmin }} {{ ymin }} {{ xmax - xmin }} {{ ymax - ymin }}">
+  {% for index, row in data[data['#'] == '1'].iterrows() %}
+    <circle cx="{{ row['X'] }}" cy="{{ ymax - row['Y'] + ymin }}" r="{{ R }}"
+    fill="{{ party_colors.get(row['PARTY'], '#999') }}"
+    data-party="{{ slug(row['PARTY']) }}"
+    title="{{ index }}<br>{{ escape(row['NAME']) }} of {{ escape(row['PARTY']) }}<br>won with {{ '{:,.0f}'.format(row['VOTES']) }} votes"/>
   {% end %}
 </svg>
