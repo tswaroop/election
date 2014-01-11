@@ -31,8 +31,8 @@ parties = pd.DataFrame({
 top_parties = parties.head(12)
 x0, W = 120, 1000
 w = W / len(top_parties)
-h, gap, axis = 30, 10, 20
-H = 3 * h + 2 * gap + axis
+h = [(0, 50), (60, 30), (100, 30), (135, 20)]
+H = h[-1][0] + h[-1][1]
 top_parties['ww'] = top_parties['WON'] * W / top_parties['WON'].sum()
 top_parties['wx'] = top_parties['ww'].cumsum() - top_parties['ww']
 top_parties['cw'] = top_parties['CONTESTED'] * W / top_parties['CONTESTED'].sum()
@@ -49,9 +49,9 @@ party_colors = colors.ix['PARTY']
 </h2>
 
 <svg class="full-width" width="100%" viewBox="{{ -x0 }} 0 {{ x0 + W }} {{ H }}" data-height="{{ float(H) / (x0 + W) }}">
-  <text x="-5" y="{{ 0*(h + gap) + h * .5 }}" dy=".35em" text-anchor="end">{{ '{:,d}'.format(len(parties)) }} parties</text>
-  <text x="-5" y="{{ 1*(h + gap) + h * .5 }}" dy=".35em" text-anchor="end">{{ '{:,d}'.format(parties['CANDIDATES'].sum()) }} candidates</text>
-  <text x="-5" y="{{ 2*(h + gap) + h * .5 }}" dy=".35em" text-anchor="end">{{ '{:,d}'.format(parties['WON'].sum()) }} seats</text>
+  <text x="-5" y="{{ h[0][0] + h[0][1] * .5 }}" dy=".35em" text-anchor="end">{{ '{:,d}'.format(len(parties)) }} parties</text>
+  <text x="-5" y="{{ h[1][0] + h[1][1] * .5 }}" dy=".35em" text-anchor="end">{{ '{:,d}'.format(parties['CANDIDATES'].sum()) }} candidates</text>
+  <text x="-5" y="{{ h[2][0] + h[2][1] * .5 }}" dy=".35em" text-anchor="end">{{ '{:,d}'.format(parties['WON'].sum()) }} seats</text>
   {% for i, (party, row) in enumerate(top_parties.iterrows()) %}
     {% code %}
     party_key = slug(party)
@@ -59,38 +59,39 @@ party_colors = colors.ix['PARTY']
     title = '{:s} won<br>{:d} seats contesting in<br>{:d} constituencies'.format(party, row['WON'], row['CONTESTED'])
     {% end %}
     <path d="
-    M{{ i*w }},0
+    M{{ i*w }},{{ h[0][0] }}
     h{{ w }}
-    v{{ h }}
-    L{{ row['cx'] + row['cw'] }},{{ h + gap }}
-    v{{ h }}
+    v{{ h[0][1] }}
+    L{{ row['cx'] + row['cw'] }},{{ h[1][0] }}
+    v{{ h[1][1] }}
 
-    L{{ row['wx'] + row['ww'] }},{{ 2*(h + gap) }}
-    v{{ h }}
+    L{{ row['wx'] + row['ww'] }},{{ h[2][0] }}
+    v{{ h[2][1] }}
     h{{ -row['ww'] }}
-    v{{ -h }}
+    v{{ -h[2][1] }}
 
-    L{{ row['cx'] }},{{ 2*h + gap }}
-    v{{ -h }}
-    L{{ i*w }},{{ h }}
+    L{{ row['cx'] }},{{ h[1][0] + h[1][1] }}
+    v{{ -h[1][1] }}
+    L{{ i*w }},{{ h[0][0] + h[0][1]  }}
     z" fill="{{ fill }}" stroke="#fff" opacity=".3" data-party="{{ party_key }}" class="party-legend"/>
 
-    <rect x="{{ i * w }}"     width="{{ w }}"         y="0"                 height="{{ h }}" fill="{{ fill }}" title="{{ title }}" stroke="#fff" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
-    <rect x="{{ row['cx'] }}" width="{{ row['cw'] }}" y="{{ h + gap }}"     height="{{ h }}" fill="{{ fill }}" title="{{ title }}" stroke="#fff" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
-    <rect x="{{ row['wx'] }}" width="{{ row['ww'] }}" y="{{ 2*(h + gap) }}" height="{{ h }}" fill="{{ fill }}" title="{{ title }}" stroke="#fff" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
+    <rect x="{{ i * w }}"     width="{{ w }}"         y="{{ h[0][0] }}" height="{{ h[0][1] }}" fill="{{ fill }}" title="{{ title }}" stroke="#fff" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
+    <rect x="{{ row['cx'] }}" width="{{ row['cw'] }}" y="{{ h[1][0] }}" height="{{ h[1][1] }}" fill="{{ fill }}" title="{{ title }}" stroke="#fff" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
+    <rect x="{{ row['wx'] }}" width="{{ row['ww'] }}" y="{{ h[2][0] }}" height="{{ h[2][1] }}" fill="{{ fill }}" title="{{ title }}" stroke="#fff" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
 
-    <text x="{{ (i + .5) * w }}" y="{{ h * .5 }}" dy=".35em" text-anchor="middle" fill="#fff" font-size="14">{{ party }}</text>
+    <text x="{{ (i + .5) * w }}" y="{{ h[0][0] }}" dy="1.2em" text-anchor="middle" fill="#fff" font-size="14">{{ party }}</text>
+    <text x="{{ (i + .5) * w }}" y="{{ h[0][0] }}" dy="3em" text-anchor="middle" fill="#fff"><tspan font-size="22" font-weight="bold">{{ row['WON'] }}</tspan> / {{ row['CONTESTED'] }}</text>
     {% if row['cw'] > 20 %}
-      <text x="{{ row['cx'] + row['cw'] * .5 }}" y="{{ h + gap + h * .5 }}" dy=".35em" text-anchor="middle" fill="#fff">{{ row['CONTESTED'] }}</text>
+      <text x="{{ row['cx'] + row['cw'] * .5 }}" y="{{ h[1][0] + h[1][1]*.5 }}" dy=".35em" text-anchor="middle" fill="#fff">{{ row['CONTESTED'] }}</text>
     {% end %}
     {% if row['ww'] > 20 %}
-      <text x="{{ row['wx'] + row['ww'] * .5 }}" y="{{ 2*(h + gap) + h * .5 }}" dy=".35em" text-anchor="middle" fill="#fff">{{ row['WON'] }}</text>
+      <text x="{{ row['wx'] + row['ww'] * .5 }}" y="{{ h[2][0] + h[2][1]*.5 }}" dy=".35em" text-anchor="middle" fill="#fff">{{ row['WON'] }}</text>
     {% end %}
   {% end %}
   {# Axis ticks #}
   {% for pos in [.25, .5, .75] %}
-    <path d="M{{ pos * W }},{{ 3*h + 2*gap - axis/4 }}v{{ axis/2 }}" stroke="#000"/>
-    <text x="{{ pos*W }}" y="{{ 3*h + 2*gap + axis/4 }}" dy="1em" text-anchor="middle">{{ '{:.0%}'.format(pos) }}</text>
+    <path d="M{{ pos * W }},{{ h[2][0] + h[2][1] }}V{{ h[3][0] }}" stroke="#000"/>
+    <text x="{{ pos*W }}" y="{{ h[3][0] }}" dy="1em" text-anchor="middle">{{ '{:.0%}'.format(pos) }}</text>
   {% end %}
 </svg>
 
@@ -115,3 +116,9 @@ data['Y'] = pos['Y']
     title="{{ index }}<br>{{ escape(row['NAME']) }} of {{ escape(row['PARTY']) }}<br>won with {{ '{:,.0f}'.format(row['VOTES']) }} votes"/>
   {% end %}
 </svg>
+
+{#
+TODO
+
+- Click on party to persist filter
+#}
