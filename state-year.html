@@ -42,13 +42,13 @@ party_colors = colors.ix['PARTY']
 
 {% end %}
 <h2 class="no-select">
-  {{ args.get('ST_NAME', [''])[0] }}
+  <span href="?YEAR=">{{ args.get('ST_NAME', [''])[0] }}</span>
   <small class="link" {% if year_index > 0 %} href="?YEAR={{ years[year_index - 1] }}" title="Show {{ years[year_index - 1] }} results"{% end %}>◄</small>
   {{ args.get('YEAR', [''])[0] }}
   <small class="link" {% if year_index < len(years) - 1 %} href="?YEAR={{ years[year_index + 1] }}" title="Show {{ years[year_index + 1] }} results"{% end %}>►</small>
 </h2>
 
-<svg class="full-width" width="100%" viewBox="{{ -x0 }} 0 {{ x0 + W }} {{ H }}" data-height="{{ float(H) / (x0 + W) }}">
+<svg class="state-year-result full-width" width="100%" viewBox="{{ -x0 }} 0 {{ x0 + W }} {{ H }}" data-height="{{ float(H) / (x0 + W) }}">
   <text x="-5" y="{{ h[0][0] + h[0][1] * .5 }}" dy=".35em" text-anchor="end">{{ '{:,d}'.format(len(parties)) }} parties</text>
   <text x="-5" y="{{ h[1][0] + h[1][1] * .5 }}" dy=".35em" text-anchor="end">{{ '{:,d}'.format(parties['CANDIDATES'].sum()) }} candidates</text>
   <text x="-5" y="{{ h[2][0] + h[2][1] * .5 }}" dy=".35em" text-anchor="end">{{ '{:,d}'.format(parties['WON'].sum()) }} seats</text>
@@ -73,11 +73,11 @@ party_colors = colors.ix['PARTY']
     L{{ row['cx'] }},{{ h[1][0] + h[1][1] }}
     v{{ -h[1][1] }}
     L{{ i*w }},{{ h[0][0] + h[0][1]  }}
-    z" fill="{{ fill }}" stroke="#fff" opacity=".3" data-party="{{ party_key }}" class="party-legend"/>
+    z" fill="{{ fill }}" data-party="{{ party_key }}" class="party-legend"/>
 
-    <rect x="{{ i * w }}"     width="{{ w }}"         y="{{ h[0][0] }}" height="{{ h[0][1] }}" fill="{{ fill }}" title="{{ title }}" stroke="#fff" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
-    <rect x="{{ row['cx'] }}" width="{{ row['cw'] }}" y="{{ h[1][0] }}" height="{{ h[1][1] }}" fill="{{ fill }}" title="{{ title }}" stroke="#fff" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
-    <rect x="{{ row['wx'] }}" width="{{ row['ww'] }}" y="{{ h[2][0] }}" height="{{ h[2][1] }}" fill="{{ fill }}" title="{{ title }}" stroke="#fff" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
+    <rect x="{{ i * w }}"     width="{{ w }}"         y="{{ h[0][0] }}" height="{{ h[0][1] }}" fill="{{ fill }}" title="{{ title }}" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
+    <rect x="{{ row['cx'] }}" width="{{ row['cw'] }}" y="{{ h[1][0] }}" height="{{ h[1][1] }}" fill="{{ fill }}" title="{{ title }}" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
+    <rect x="{{ row['wx'] }}" width="{{ row['ww'] }}" y="{{ h[2][0] }}" height="{{ h[2][1] }}" fill="{{ fill }}" title="{{ title }}" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
 
     <text x="{{ (i + .5) * w }}" y="{{ h[0][0] }}" dy="1.2em" text-anchor="middle" fill="#fff" font-size="14">{{ party }}</text>
     <text x="{{ (i + .5) * w }}" y="{{ h[0][0] }}" dy="3em" text-anchor="middle" fill="#fff"><tspan font-size="22" font-weight="bold">{{ row['WON'] }}</tspan> / {{ row['CONTESTED'] }}</text>
@@ -90,7 +90,7 @@ party_colors = colors.ix['PARTY']
   {% end %}
   {# Axis ticks #}
   {% for pos in [.25, .5, .75] %}
-    <path d="M{{ pos * W }},{{ h[2][0] + h[2][1] }}V{{ h[3][0] }}" stroke="#000"/>
+    <path d="M{{ pos * W }},{{ h[2][0] + h[2][1] }}V{{ h[3][0] }}"/>
     <text x="{{ pos*W }}" y="{{ h[3][0] }}" dy="1em" text-anchor="middle">{{ '{:.0%}'.format(pos) }}</text>
   {% end %}
 </svg>
@@ -116,9 +116,3 @@ data['Y'] = pos['Y']
     title="{{ index }}<br>{{ escape(row['NAME']) }} of {{ escape(row['PARTY']) }}<br>won with {{ '{:,.0f}'.format(row['VOTES']) }} votes"/>
   {% end %}
 </svg>
-
-{#
-TODO
-
-- Click on party to persist filter
-#}

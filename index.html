@@ -1,5 +1,6 @@
 {{ GRAMEX(cache=['G.min.js', 'results.csv', 'colors.csv']) }}{% code %}
 from urllib import quote
+from common import slug
 
 title = 'India Elections'
 
@@ -33,10 +34,10 @@ today = datetime.datetime(2014, 12, 30)
 {% code %}
 states = results['ST_NAME'].unique()
 datepos = layout.dates(results['DATE'].min(), today)
-x0, y0, W, H, legend = 110, 28, 1000, 600, 30
-h = round((H - y0 - legend) / float(len(states)), 2)
+x0, y0, W, h, legend = 110, 28, 1000, 20., 30
+H = h * len(states) + y0 + legend
 {% end %}
-<svg class="resultmap full-width" width="100%" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ float(H) / W }}">
+<svg class="resultmap full-width" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ float(H) / W }}">
   {{ T('dateaxis.svg',
       x=x0,
       y=legend,
@@ -57,9 +58,9 @@ h = round((H - y0 - legend) / float(len(states)), 2)
       }
   ) }}
   {% for i, state in enumerate(states) %}
-    {% set state_key = state.replace(' ', '-').replace('&', '') %}
-    <text class="state-legend" font-size="12" x="{{ x0 - 5 }}"     y="{{ y0 + legend + h * (i + .5) }}" dy=".35em" data-state="{{ state_key }}" data-highlight="[data-state={{ state_key }}]" text-anchor="end">{{ state }}</text>
-    <text class="state-legend" font-size="12" x="{{ W - x0 + 5 }}" y="{{ y0 + legend + h * (i + .5) }}" dy=".35em" data-state="{{ state_key }}" data-highlight="[data-state={{ state_key }}]">{{ state }}</text>
+    {% set state_key = slug(state) %}
+    <text class="state-legend" font-size="12" x="{{ x0 - 5 }}"     y="{{ y0 + legend + h * (i + .5) }}" dy=".35em" href="?ST_NAME={{ quote(state) }}&YEAR=" data-state="{{ state_key }}" data-highlight="[data-state={{ state_key }}]" text-anchor="end">{{ state }}</text>
+    <text class="state-legend" font-size="12" x="{{ W - x0 + 5 }}" y="{{ y0 + legend + h * (i + .5) }}" dy=".35em" href="?ST_NAME={{ quote(state) }}&YEAR=" data-state="{{ state_key }}" data-highlight="[data-state={{ state_key }}]">{{ state }}</text>
     {% code %}
     state_results = results[results['ST_NAME'] == state]
     state_results['TILL'] = state_results['DATE'].shift(-1)
@@ -77,15 +78,16 @@ h = round((H - y0 - legend) / float(len(states)), 2)
           stroke="#fff"
           href="?ST_NAME={{ quote(row['ST_NAME']) }}&YEAR={{ quote(row['YEAR']) }}"
           title="<h1>{{ row['ST_NAME'] }} {{ row['YEAR'] }}</h1>{{ row['CM'].replace(', ', '<br>') }}"
-          data-party="{{ row['PARTY'].replace(' ', '-') }}"
+          data-party="{{ slug(row['PARTY']) }}"
           data-state="{{ state_key }}"
           ></rect>
-        <text data-party="{{ row['PARTY'].replace(' ', '-') }}" data-state="{{ state_key }}" font-size="10" x="{{ x0 + (W - 2*x0) * (row['x0'] + row['x1']) / 2 }}" text-anchor="middle" y="{{ y0 + legend + h * (i + .5) }}" dy=".35em" fill="#fff">{{ row['PARTY'] }}</text>
+        <text data-party="{{ slug(row['PARTY']) }}" data-state="{{ state_key }}" font-size="10" x="{{ x0 + (W - 2*x0) * (row['x0'] + row['x1']) / 2 }}" text-anchor="middle" y="{{ y0 + legend + h * (i + .5) }}" dy=".35em" fill="#fff">{{ row['PARTY'] }}</text>
       {% end %}
     </g>
   {% end %}
   {% for i, (party, color) in enumerate(party_colors.iteritems()) %}
-    <rect class="party-legend" data-party="{{ party.replace(' ', '-') }}" data-highlight="[data-party={{ party.replace(' ', '-') }}]" x="{{ x0 + w * i }}" width="{{ w }}" y="0" height="{{ legend - 5 }}" fill="{{ color }}"></rect>
+    <rect class="party-legend" data-party="{{ slug(party) }}" data-highlight="[data-party={{ slug(party) }}]" data-toggle="1"
+      x="{{ x0 + w * i }}" width="{{ w }}" y="0" height="{{ legend - 5 }}" fill="{{ color }}"></rect>
     <text x="{{ x0 + w * (i + .5) }}" y="{{ (legend - 5) * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
   {% end %}
 </svg>
@@ -122,19 +124,25 @@ $('body')
     selector: '[data-height]'
   });
 
+
+function post_load() {
+  $('.tooltip').remove();
+  // Resize the SVG we just loaded for aspect ratio
+  $(window).dispatch('resize');
+  scrolled = $.scrollTo('#results', {
+    duration: 300,
+    margin: true,
+    offset: {top: -20}
+  });
+}
+
 function redraw() {
   var query = G.url.parse(location.hash.replace(/^#/, ''));
   if (!query.search) { return; }
-  $('#results').load('state-year?' + query.search, function() {
-    $('.tooltip').remove();
-    // Dispatch a resize event to resize the SVGs we just loaded
-    $(window).dispatch('resize');
-    scrolled = $.scrollTo('#results', {
-      duration: 300,
-      margin: true,
-      offset: {top: -20}
-    });
-  });
+  if (query.searchKey.ST_NAME && query.searchKey.YEAR)
+      $('#results').load('state-year?' + query.search, post_load);
+  else if (query.searchKey.ST_NAME)
+      $('#results').load('state?' + query.search, post_load);
 }
 
 $(window).on('hashchange', redraw);

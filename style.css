@@ -31,6 +31,7 @@ text { pointer-events: none; }
 }
 svg.full-width {
   min-width: 800px;
+  width: 100%;
 }
 .party-legend.fade { opacity: .3; }
 .state-legend.fade { opacity: .3; }
@@ -42,4 +43,17 @@ svg.full-width {
       -ms-user-select: none;
        -o-user-select: none;
           user-select: none;
+}
+
+.state-result rect {
+  stroke: #fff;
+}
+
+.state-year-result path.party-legend {
+  stroke: #fff;
+  opacity: .3;
+}
+
+.state-year-result rect {
+  stroke: #fff;
 }
