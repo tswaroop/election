@@ -109,10 +109,11 @@ data['X'] = pos['X']
 data['Y'] = pos['Y']
 {% end %}
 <svg width="50%" data-height="1" viewBox="{{ xmin }} {{ ymin }} {{ xmax - xmin }} {{ ymax - ymin }}">
-  {% for index, row in data[data['#'] == '1'].iterrows() %}
+  {% for ac_name, row in data[data['#'] == '1'].iterrows() %}
     <circle cx="{{ row['X'] }}" cy="{{ ymax - row['Y'] + ymin }}" r="{{ R }}"
     fill="{{ party_colors.get(row['PARTY'], '#999') }}"
     data-party="{{ slug(row['PARTY']) }}"
-    title="{{ index }}<br>{{ escape(row['NAME']) }} of {{ escape(row['PARTY']) }}<br>won with {{ '{:,.0f}'.format(row['VOTES']) }} votes"/>
+    href="?AC_NAME={{ slug(ac_name) }}"
+    title="{{ ac_name }}<br>{{ escape(row['NAME']) }} of {{ escape(row['PARTY']) }}<br>won with {{ '{:,.0f}'.format(row['VOTES']) }} votes"/>
   {% end %}
 </svg>

@@ -57,3 +57,7 @@ svg.full-width {
 .state-year-result rect {
   stroke: #fff;
 }
+
+.state-ac-year-result .table td, .state-ac-year-result .table th {
+  text-align: right;
+}

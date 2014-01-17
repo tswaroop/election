@@ -1,0 +1,30 @@
+{{ GRAMEX(cache=['assembly.csv', 'colors.csv'], max_age=30) }}{% code %}
+data = DB.csv('assembly.csv', dtype=object)
+
+state, year, ac_name = args['ST_NAME'][0], args['YEAR'][0], args['AC_NAME'][0]
+data = data[data['ST_NAME'] == state]
+data = data[data['AC_NAME'] == ac_name]
+years = sorted(data['YEAR'].unique())
+year_index = years.index(year)
+data = data[data['YEAR'] == year][['#', 'NAME', 'PARTY', 'VOTES', 'SEX', 'CATEGORY']]
+data['VOTES'] = data['VOTES'].astype(float)
+data.sort(['VOTES', 'NAME'], inplace=True, ascending=[False, True])
+data['#'] = pd.np.arange(1, 1 + len(data))
+{% end %}
+
+<h2 class="no-select">
+  <span href="?AC_NAME=&YEAR=">{{ state }}</span>
+  <span href="?YEAR=">{{ ac_name }}</span>
+  <small class="link" {% if year_index > 0 %} href="?YEAR={{ years[year_index - 1] }}" title="Show {{ years[year_index - 1] }} results"{% end %}>◄</small>
+  {{ year }}
+  <small class="link" {% if year_index < len(years) - 1 %} href="?YEAR={{ years[year_index + 1] }}" title="Show {{ years[year_index + 1] }} results"{% end %}>►</small>
+</h2>
+
+<div class="state-ac-year-result">
+{{ data.to_html(
+    index=False,
+    na_rep='',
+    classes='table table-compressed',
+    float_format=lambda v: '{:,.0f}'.format(v),
+) }}
+</div>

@@ -34,7 +34,7 @@ today = datetime.datetime(2014, 12, 30)
 {% code %}
 states = results['ST_NAME'].unique()
 datepos = layout.dates(results['DATE'].min(), today)
-x0, y0, W, h, legend = 110, 28, 1000, 20., 30
+x0, y0, W, h, legend = 120, 28, 1000, 20., 30
 H = h * len(states) + y0 + legend
 {% end %}
 <svg class="resultmap full-width" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ float(H) / W }}">
@@ -59,8 +59,8 @@ H = h * len(states) + y0 + legend
   ) }}
   {% for i, state in enumerate(states) %}
     {% set state_key = slug(state) %}
-    <text class="state-legend" font-size="12" x="{{ x0 - 5 }}"     y="{{ y0 + legend + h * (i + .5) }}" dy=".35em" href="?ST_NAME={{ quote(state) }}&YEAR=" data-state="{{ state_key }}" data-highlight="[data-state={{ state_key }}]" text-anchor="end">{{ state }}</text>
-    <text class="state-legend" font-size="12" x="{{ W - x0 + 5 }}" y="{{ y0 + legend + h * (i + .5) }}" dy=".35em" href="?ST_NAME={{ quote(state) }}&YEAR=" data-state="{{ state_key }}" data-highlight="[data-state={{ state_key }}]">{{ state }}</text>
+    <text class="state-legend" font-size="12" x="{{ x0 - 5 }}"     y="{{ y0 + legend + h * (i + .5) }}" dy=".35em" href="?ST_NAME={{ quote(state) }}&YEAR=&AC_NAME=" data-state="{{ state_key }}" data-highlight="[data-state={{ state_key }}]" text-anchor="end">{{ state }}</text>
+    <text class="state-legend" font-size="12" x="{{ W - x0 + 5 }}" y="{{ y0 + legend + h * (i + .5) }}" dy=".35em" href="?ST_NAME={{ quote(state) }}&YEAR=&AC_NAME=" data-state="{{ state_key }}" data-highlight="[data-state={{ state_key }}]">{{ state }}</text>
     {% code %}
     state_results = results[results['ST_NAME'] == state]
     state_results['TILL'] = state_results['DATE'].shift(-1)
@@ -76,7 +76,7 @@ H = h * len(states) + y0 + legend
         <rect x="{{ x0 + (W - 2*x0) * row['x0'] }}" y="{{ y0 + legend + h * i }}" width="{{ (W - 2*x0) * (row['x1'] - row['x0']) }}" height="{{ h }}"
           fill="{{ fill }}"
           stroke="#fff"
-          href="?ST_NAME={{ quote(row['ST_NAME']) }}&YEAR={{ quote(row['YEAR']) }}"
+          href="?ST_NAME={{ quote(row['ST_NAME']) }}&YEAR={{ quote(row['YEAR']) }}&AC_NAME="
           title="<h1>{{ row['ST_NAME'] }} {{ row['YEAR'] }}</h1>{{ row['CM'].replace(', ', '<br>') }}"
           data-party="{{ slug(row['PARTY']) }}"
           data-state="{{ state_key }}"
@@ -138,8 +138,11 @@ function post_load() {
 
 function redraw() {
   var query = G.url.parse(location.hash.replace(/^#/, ''));
-  if (!query.search) { return; }
-  if (query.searchKey.ST_NAME && query.searchKey.YEAR)
+  if (!query.search)
+      return $('#results').empty();
+  if (query.searchKey.ST_NAME && query.searchKey.AC_NAME && query.searchKey.YEAR)
+      $('#results').load('state-ac-year?' + query.search, post_load);
+  else if (query.searchKey.ST_NAME && query.searchKey.YEAR)
       $('#results').load('state-year?' + query.search, post_load);
   else if (query.searchKey.ST_NAME)
       $('#results').load('state?' + query.search, post_load);
@@ -149,3 +152,26 @@ $(window).on('hashchange', redraw);
 redraw();
 </script>
 </body></html>
+{#
+
+- Multi-click is not obvious. Check box? Active state?
+- Add filters: gender, caste, # candidates, etc
+
+Stories:
+    - Individual vs Party incumbency (people switching)
+    - Muslim votes
+    - Women candidates
+
+Notes:
+- Connect to iPad, display on device, help tell a story directly
+- State-focus every week (schedule to be made available)
+- Show the past trend of the state so far. State summary must be the most prominent.
+- Anchors are not data and chart friendly. Need to make it easy for them
+- Process
+    - The issue calendar is the key driver of content
+    - Brainstorming of stories
+
+Lok Sabha next week
+
+
+#}
