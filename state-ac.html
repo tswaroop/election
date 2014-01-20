@@ -1,0 +1,20 @@
+{{ GRAMEX(cache=['assembly.csv', 'colors.csv'], max_age=30) }}{% code %}
+data = DB.csv('assembly.csv', dtype=object)
+
+state, ac = args['ST_NAME'][0], args['AC_NAME'][0]
+data = data[data['ST_NAME'] == state]
+data = data[data['AC_NAME'] == ac]
+data['VOTES'] = data['VOTES'].astype(float)
+data.sort(['VOTES', 'NAME'], inplace=True, ascending=[False, True])
+{% end %}
+
+<h2 class="no-select">
+  <span href="?ST_NAME=&AC_NAME=">India</span> &raquo;
+  <span href="?AC_NAME=&BY=AC">{{ state }}</span> &raquo;
+  {{ ac }}
+</h2>
+
+{% apply markdown %}
+Show what happened in {{ ac }} over time across parties
+
+{% end %}

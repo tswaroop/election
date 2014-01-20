@@ -1,5 +1,6 @@
 {{ GRAMEX(cache=['assembly.csv', 'colors.csv', 'latlong.csv'], max_age=30) }}{% code %}
 from common import slug
+from urllib import quote
 
 R = 0.1
 def latlong_setup(latlong):
@@ -42,8 +43,8 @@ party_colors = colors.ix['PARTY']
 
 {% end %}
 <h2 class="no-select">
-  <span href="?ST_NAME=&YEAR=&AC_NAME=">India</span> &raquo;
-  <span href="?YEAR=">{{ args.get('ST_NAME', [''])[0] }}</span>
+  <span href="?ST_NAME=&YEAR=">India</span> &raquo;
+  <span href="?YEAR=&BY=PARTY">{{ args.get('ST_NAME', [''])[0] }}</span>
   <small class="link" {% if year_index > 0 %} href="?YEAR={{ years[year_index - 1] }}" title="Show {{ years[year_index - 1] }} results"{% end %}>◄</small>
   {{ args.get('YEAR', [''])[0] }}
   <small class="link" {% if year_index < len(years) - 1 %} href="?YEAR={{ years[year_index + 1] }}" title="Show {{ years[year_index + 1] }} results"{% end %}>►</small>
@@ -81,17 +82,17 @@ party_colors = colors.ix['PARTY']
     <rect x="{{ row['wx'] }}" width="{{ row['ww'] }}" y="{{ h[2][0] }}" height="{{ h[2][1] }}" fill="{{ fill }}" title="{{ title }}" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
 
     <text x="{{ (i + .5) * w }}" y="{{ h[0][0] }}" dy="1.2em" text-anchor="middle" fill="#fff" font-size="14">{{ party }}</text>
-    <text x="{{ (i + .5) * w }}" y="{{ h[0][0] }}" dy="3em" text-anchor="middle" fill="#fff"><tspan font-size="22" font-weight="bold">{{ row['WON'] }}</tspan> / {{ row['CONTESTED'] }}</text>
+    <text x="{{ (i + .5) * w }}" y="{{ h[0][0] }}" dy="3em" text-anchor="middle" fill="#fff"><tspan font-size="22" font-weight="bold">{{ '{:.0f}'.format(row['WON']) }}</tspan> / {{ '{:.0f}'.format(row['CONTESTED']) }}</text>
     {% if row['cw'] > 20 %}
-      <text x="{{ row['cx'] + row['cw'] * .5 }}" y="{{ h[1][0] + h[1][1]*.5 }}" dy=".35em" text-anchor="middle" fill="#fff">{{ row['CONTESTED'] }}</text>
+      <text x="{{ row['cx'] + row['cw'] * .5 }}" y="{{ h[1][0] + h[1][1]*.5 }}" dy=".35em" text-anchor="middle" fill="#fff">{{ '{:.0f}'.format(row['CONTESTED']) }}</text>
     {% end %}
     {% if row['ww'] > 20 %}
-      <text x="{{ row['wx'] + row['ww'] * .5 }}" y="{{ h[2][0] + h[2][1]*.5 }}" dy=".35em" text-anchor="middle" fill="#fff">{{ row['WON'] }}</text>
+      <text x="{{ row['wx'] + row['ww'] * .5 }}" y="{{ h[2][0] + h[2][1]*.5 }}" dy=".35em" text-anchor="middle" fill="#fff">{{ '{:.0f}'.format(row['WON']) }}</text>
     {% end %}
   {% end %}
   {# Axis ticks #}
   {% for pos in [.25, .5, .75] %}
-    <path d="M{{ pos * W }},{{ h[2][0] + h[2][1] }}V{{ h[3][0] }}"/>
+    <path d="M{{ pos * W }},{{ h[2][0] + h[2][1] }}V{{ h[3][0] }}" stroke="#000"/>
     <text x="{{ pos*W }}" y="{{ h[3][0] }}" dy="1em" text-anchor="middle">{{ '{:.0%}'.format(pos) }}</text>
   {% end %}
 </svg>
@@ -114,7 +115,7 @@ data['Y'] = pos['Y']
     <circle cx="{{ row['X'] }}" cy="{{ ymax - row['Y'] + ymin }}" r="{{ R }}"
     fill="{{ party_colors.get(row['PARTY'], '#999') }}"
     data-party="{{ slug(row['PARTY']) }}"
-    href="?AC_NAME={{ slug(ac_name) }}"
+    href="?AC_NAME={{ quote(ac_name) }}"
     title="{{ ac_name }}<br>{{ escape(row['NAME']) }} of {{ escape(row['PARTY']) }}<br>won with {{ '{:,.0f}'.format(row['VOTES']) }} votes"/>
   {% end %}
 </svg>

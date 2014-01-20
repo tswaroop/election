@@ -1,0 +1,39 @@
+{{ GRAMEX(cache=['assembly.csv', 'colors.csv'], max_age=30) }}{% code %}
+data = DB.csv('assembly.csv', dtype=object)
+
+state, year, party = args['ST_NAME'][0], args['YEAR'][0], args['PARTY'][0]
+data = data[data['ST_NAME'] == state]
+years = sorted(data['YEAR'].unique())
+year_index = years.index(year)
+data = data[data['YEAR'] == year][['#', 'AC_NAME', 'NAME', 'PARTY', 'VOTES', 'SEX', 'CATEGORY']]
+data['VOTES'] = data['VOTES'].astype(float)
+data.sort(['VOTES', 'NAME'], inplace=True, ascending=[False, True])
+data['#'] = pd.np.arange(1, 1 + len(data))
+{% end %}
+
+<h2 class="no-select">
+  <span href="?ST_NAME=&YEAR=&PARTY=">India</span> &raquo;
+  <span href="?YEAR=&PARTY=&BY=PARTY">{{ state }}</span> &raquo;
+  <span href="?YEAR=">{{ party }}</span>
+  <small class="link" {% if year_index > 0 %} href="?YEAR={{ years[year_index - 1] }}" title="Show {{ years[year_index - 1] }} results"{% end %}>◄</small>
+  {{ year }}
+  <small class="link" {% if year_index < len(years) - 1 %} href="?YEAR={{ years[year_index + 1] }}" title="Show {{ years[year_index + 1] }} results"{% end %}>►</small>
+</h2>
+
+<div class="state-party-year-result">
+{% apply markdown %}
+In each constituency, show
+
+- whether the party won
+    - if so, who won against whom by how much (summary, not detail)
+- or lost
+    - if so, who won (name, party), what was this party's votes and rank
+- both as a cartogram and as a table
+
+<a href="?PARTY=&AC_NAME={{ data['AC_NAME'].iloc[0] }}">Clicking on a constituency</a>
+will go to the state-ac-year view showing the
+election results, (independent of PARTY)
+
+
+{% end %}
+</div>

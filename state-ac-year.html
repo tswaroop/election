@@ -5,6 +5,7 @@ state, year, ac_name = args['ST_NAME'][0], args['YEAR'][0], args['AC_NAME'][0]
 data = data[data['ST_NAME'] == state]
 data = data[data['AC_NAME'] == ac_name]
 years = sorted(data['YEAR'].unique())
+print ac_name
 year_index = years.index(year)
 data = data[data['YEAR'] == year][['#', 'NAME', 'PARTY', 'VOTES', 'SEX', 'CATEGORY']]
 data['VOTES'] = data['VOTES'].astype(float)
@@ -13,8 +14,8 @@ data['#'] = pd.np.arange(1, 1 + len(data))
 {% end %}
 
 <h2 class="no-select">
-  <span href="?ST_NAME=&YEAR=&AC_NAME=">India</span> &raquo;
-  <span href="?AC_NAME=&YEAR=">{{ state }}</span> &raquo;
+  <span href="?ST_NAME=&AC_NAME=&YEAR=">India</span> &raquo;
+  <span href="?AC_NAME=&YEAR=&BY=AC">{{ state }}</span> &raquo;
   <span href="?YEAR=">{{ ac_name }}</span>
   <small class="link" {% if year_index > 0 %} href="?YEAR={{ years[year_index - 1] }}" title="Show {{ years[year_index - 1] }} results"{% end %}>◄</small>
   {{ year }}

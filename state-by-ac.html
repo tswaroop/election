@@ -1,0 +1,42 @@
+{{ GRAMEX(cache=['assembly.csv', 'colors.csv', 'state-by-common.html'], max_age=30) }}
+{% include state-by-common.html %}
+{% set W = x1 + w * len(years) + w1 %}
+{% set H = y0 + h * len(acs) %}
+<h2>
+  <span href="?ST_NAME=&YEAR=&AC_NAME=&BY=">India</span> &raquo;
+  {{ state }}
+  <div class="btn-group">
+    <a class="btn btn-xs btn-default" href="?BY=PARTY">Party-wise</a>
+    <a class="btn btn-xs btn-primary active" href="?BY=AC">Constituency-wise</a>
+  </div>
+</h2>
+
+<svg class="state-by-ac" width="{{ W }}px" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ float(H) / W }}">
+  {% for year in years %}
+    {% set x = x1 + w * year_pos[year] %}
+    <rect x="{{ x }}" width="{{ w }}" height="{{ y0 + w / 2 }}" fill="#eee" transform="rotate(45 {{ x + w/2 }} {{ y0 }})" href="?YEAR={{ year }}&AC_NAME=&BY="/>
+    <text x="{{ x + w/2 }}" y="{{ y0 }}" dx=".5em" dy=".35em" transform="rotate(-45 {{ x + w/2 }} {{ y0 }})" font-size="{{ fontsize }}">{{ year }}</text>
+  {% end %}
+  {# Cover the bottom of the year diagonals, so it does not look ugly #}
+  <rect y="{{ y0 }}" width="{{ W }}" height="{{ h }}" fill="#fff"/>
+
+  {% for i, row in winners.iterrows() %}{% code %}
+    x = x1 + w * year_pos[row['YEAR']]
+    y = y0 + h * ac_pos[row['AC_NAME']]
+    fill = party_colors.get(row['PARTY'], '#999')
+    {% end %}
+    <rect x="{{ x }}" y="{{ y }}" width="{{ w }}" height="{{ h }}" fill="{{ fill }}"
+      href="?AC_NAME={{ quote(row['AC_NAME']) }}&YEAR={{ row['YEAR'] }}&BY="
+      title="{{ escape(row['NAME']) }} of<br>{{ escape(row['PARTY']) }} won in {{ row['YEAR'] }} at <br>{{ escape(row['AC_NAME']) }} with <br>{{ '{:,.0f}'.format(float(row['VOTES'])) }} votes"/>
+    <text x="{{ x + w/2 }}" y="{{ y + h/2 }}" text-anchor="middle" dy=".35em" fill="{{ _color.contrast(fill) }}" font-size="{{ fontsize }}">{{ row['PARTY'] }}</text>
+  {% end %}
+
+  {% for i, ac in enumerate(acs) %}
+    {% set y = y0 + h * ac_pos[ac] %}
+    <rect width="{{ x1 }}" y="{{ y }}" height="{{ h }}" fill="#fff" href="?BY=&AC_NAME={{ quote(ac) }}"/>
+    <text x="{{ x1 - 5 }}" y="{{ y + h/2 }}" dy=".35em" font-size="{{ fontsize }}" text-anchor="end">{{ ac.title() }}</text>
+    {% if i % 5 == 0 %}
+      <path d="M0,{{ y }}h{{ W }}" stroke="#bbb"/>
+    {% end %}
+  {% end %}
+</svg>

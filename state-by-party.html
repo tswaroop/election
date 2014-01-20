@@ -1,61 +1,29 @@
-{{ GRAMEX(cache=['assembly.csv', 'colors.csv'], max_age=30) }}{% code %}
-from common import slug
-
-data = DB.csv('assembly.csv', dtype=object)
-colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color']
-party_colors = colors.ix['PARTY']
-
-state = args['ST_NAME'][0]
-state_data = data[data['ST_NAME'] == state]
-winners = state_data[state_data['#'] == '1']
-winners.sort('AC_NAME', inplace=True)
-
-acs = winners['AC_NAME'].unique()
-years = winners['YEAR'].unique()
-parties = state_data['PARTY'].value_counts().order(ascending=False)
-
-acs.sort()
-years.sort()
-
-party_won = winners.pivot_table(rows='YEAR', cols='PARTY', values='NAME', aggfunc='count').fillna(0).astype(int)
-party_year_rank = party_won.rank(axis=1, ascending=False)
-party_contested = state_data.pivot_table(rows='YEAR', cols='PARTY', values='NAME', aggfunc='count').fillna(0).astype(int)
-
-parties = pd.DataFrame({
-  'CONTESTED': parties,
-  'WON': party_won.sum()
-}).fillna(0).sort(['WON', 'CONTESTED'], ascending=False)
-
-ac_pos = dict(zip(acs, range(len(acs))))
-year_pos = dict(zip(years, range(len(years))))
-
-win_color = {
-  1: '#000',  # Winners in black
-  2: '#bbb',  # Runner-ups in grey
-}
-
-w, h = 40, 22
-fontsize = h * 0.55
-w0 = 3*w    # Width of contestants, wins and party # columns
-w1 = 3*h    # Width of party name
-x0, x1, y0 = w0, w0 + w1 + 20, 2.2 * h
-W = x1 + w * len(years) + w1
-H = y0 + h * len(parties)
-{% end %}
+{{ GRAMEX(cache=['assembly.csv', 'colors.csv', 'state-by-common.html'], max_age=30) }}
+{% include state-by-common.html %}
+{% set W = x1 + w * len(years) + w1 %}
+{% set H = y0 + h * len(parties) %}
 <h2>
-  <span href="?ST_NAME=&YEAR=&AC_NAME=">India</span> &raquo;
+  <span href="?ST_NAME=&YEAR=&AC_NAME=&BY=">India</span> &raquo;
   {{ state }}
+  <div class="btn-group">
+    <a class="btn btn-xs btn-primary active" href="?BY=PARTY">Party-wise</a>
+    <a class="btn btn-xs btn-default" href="?BY=AC">Constituency-wise</a>
+  </div>
+  <div class="pull-right">
+    <span style="background-color:{{ win_color[1] }};color:{{ _color.contrast(win_color[1]) }};padding:4px .5em;font-size:16px;">Winning party</span>
+    <span style="background-color:{{ win_color[2] }};color:{{ _color.contrast(win_color[2]) }};padding:4px .5em;font-size:16px;">Runner-up</span>
+    <span style="background-color:{{ win_color[3] }};color:{{ _color.contrast(win_color[3]) }};padding:4px .5em;font-size:16px;">Others</span>
+  </div>
 </h2>
 
-<svg class="state-result" width="{{ W }}px" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ float(H) / W }}">
-
+<svg class="state-by-party" width="{{ W }}px" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ float(H) / W }}">
   <text x="{{ 0*w + w/2 }}" y="{{ y0 }}" dx=".5em" dy=".35em" transform="rotate(-45 {{ 0*w + w/2 }} {{ y0 }})" font-size="{{ fontsize }}">#</text>
   <text x="{{ 1*w + w/2 }}" y="{{ y0 }}" dx=".5em" dy=".35em" transform="rotate(-45 {{ 1*w + w/2 }} {{ y0 }})" font-size="{{ fontsize }}">Won</text>
   <text x="{{ 2*w + w/2 }}" y="{{ y0 }}" dx=".5em" dy=".35em" transform="rotate(-45 {{ 2*w + w/2 }} {{ y0 }})" font-size="{{ fontsize }}">Contested</text>
   <text x="{{ x1 - 5 }}" y="{{ y0 }}" dy="-0.55em" text-anchor="end" font-size="{{ fontsize + 2 }}" font-weight="bold">Party</text>
   {% for year in years %}
     {% set x = x1 + w * year_pos[year] %}
-    <rect x="{{ x }}" width="{{ w }}" height="{{ y0 + w / 2 }}" fill="#eee" transform="rotate(45 {{ x + w/2 }} {{ y0 }})" href="?YEAR={{ year }}&AC_NAME="/>
+    <rect x="{{ x }}" width="{{ w }}" height="{{ y0 + w / 2 }}" fill="#eee" transform="rotate(45 {{ x + w/2 }} {{ y0 }})" href="?YEAR={{ year }}&AC_NAME=&BY="/>
     <text x="{{ x + w/2 }}" y="{{ y0 }}" dx=".5em" dy=".35em" transform="rotate(-45 {{ x + w/2 }} {{ y0 }})" font-size="{{ fontsize }}">{{ year }}</text>
   {% end %}
   {# Cover the bottom of the year diagonals, so it does not look ugly #}
@@ -71,18 +39,20 @@ H = y0 + h * len(parties)
     <text x="{{ 3*w }}" y="{{ y + h/2 }}" dx="-.2em" dy=".35em" font-size="{{ fontsize }}" text-anchor="end">{{ '{:,.0f}'.format(party_contested[party].sum()) }}</text>
 
     {% set party_key = slug(party) %}
-    <rect x="{{ x1 - 3*h }}" width="{{ w1 }}" y="{{ y }}" height="{{ h }}" fill="{{ fill }}" data-party="{{ party_key }}"/>
+    <rect x="{{ x1 - 3*h }}" width="{{ w1 }}" y="{{ y }}" height="{{ h }}" fill="{{ fill }}" data-party="{{ party_key }}" href="?PARTY={{ quote(party) }}&BY="/>
     <text x="{{     x1 - 5 }}" y="{{ y + h/2 }}" dy=".35em" font-size="{{ fontsize }}" data-party="{{ party_key }}" fill="{{ _color.contrast(fill) }}" text-anchor="end">{{ party }}</text>
-    <text x="{{ W - w1 + 5 }}" y="{{ y + h/2 }}" dy=".35em" font-size="{{ fontsize }}" data-party="{{ party_key }}">{{ party }}</text>
+    <rect x="{{ W - w1 }}" width="{{ w1 }}" y="{{ y }}" height="{{ h }}" fill="{{ fill }}" data-party="{{ party_key }}" href="?PARTY={{ quote(party) }}&BY="/>
+    <text x="{{ W - w1 + 5 }}" y="{{ y + h/2 }}" dy=".35em" font-size="{{ fontsize }}" data-party="{{ party_key }}" fill="{{ _color.contrast(fill) }}">{{ party }}</text>
     {% for year in years %}{% code %}
       x = x1 + w * year_pos[year]
       won = party_won[party][year] if party in party_won else 0
       contested = party_contested[party][year]
       rank = party_year_rank[party][year] if party in party_year_rank else pd.np.nan
-      cell_fill = win_color.get(rank, '#eee') if contested > 0 else '#fff'
+      cell_fill = win_color.get(rank, win_color[3]) if contested > 0 else '#fff'
       {% end %}
       {% if contested %}
         <rect x="{{ x }}" y="{{ y }}" width="{{ w }}" height="{{ h }}" fill="{{ cell_fill }}"
+          href="?YEAR={{ year }}&PARTY={{ quote(party) }}&BY="
           title="In {{ year }}, {{ party }} won<br>{{ won }} seats out of<br>{{ contested }} contested<br>Rank: {{ 'NA' if pd.isnull(rank) else '{:,.0f}'.format(rank) }}"/>
         <text x="{{ x + w - 2 }}" y="{{ y + h/2 }}" dx="-.2em" dy=".35em" fill="{{ _color.contrast(cell_fill) }}" font-size="{{ fontsize }}" text-anchor="end">{{ won }}</text>
       {% end %}

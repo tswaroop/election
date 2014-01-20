@@ -1,0 +1,45 @@
+{% code %}
+from common import slug
+from urllib import quote
+
+data = DB.csv('assembly.csv', dtype=object)
+colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color']
+party_colors = colors.ix['PARTY']
+
+state = args['ST_NAME'][0]
+state_data = data[data['ST_NAME'] == state]
+winners = state_data[state_data['#'] == '1']
+winners.sort('AC_NAME', inplace=True)
+
+years = winners['YEAR'].unique()
+years.sort()
+year_pos = dict(zip(years, range(len(years))))
+
+acs = winners['AC_NAME'].unique()
+acs.sort()
+ac_pos = dict(zip(acs, range(len(acs))))
+
+parties = state_data['PARTY'].value_counts().order(ascending=False)
+
+party_won = winners.pivot_table(rows='YEAR', cols='PARTY', values='NAME', aggfunc='count').fillna(0).astype(int)
+party_year_rank = party_won.rank(axis=1, ascending=False)
+party_contested = state_data.pivot_table(rows='YEAR', cols='PARTY', values='NAME', aggfunc='count').fillna(0).astype(int)
+
+parties = pd.DataFrame({
+  'CONTESTED': parties,
+  'WON': party_won.sum()
+}).fillna(0).sort(['WON', 'CONTESTED'], ascending=False)
+
+w, h = 40, 22
+fontsize = h * 0.55
+w0 = 3*w    # Width of contestants, wins and party # columns
+w1 = 3*h    # Width of party name
+x0, x1, y0 = w0, w0 + w1 + 20, 2.2 * h
+
+win_color = {
+  1: '#333',  # Winners in black
+  2: '#bbb',  # Runner-ups in grey
+  3: '#eee',  # Others in light grey
+}
+
+{% end %}

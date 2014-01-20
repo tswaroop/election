@@ -31,7 +31,7 @@ title = 'Assembly Elections'
 
 <header>
   <div class="container">
-    <h1 href="?ST_NAME=&YEAR=&AC_NAME=">
+    <h1 href="?ST_NAME=&YEAR=&AC_NAME=&PARTY=&BY=">
       <span class="heading">
         <span class="em">Assembly</span> Elections<span class="title"></span>
         <small>&mdash; every election at a glance</small>
@@ -109,14 +109,25 @@ function post_load() {
 function redraw() {
   var query = G.url.parse(location.hash.replace(/^#/, ''));
   if (!query.search)
-      // $('#results').load('all?' + query.search, post_load)
       $('#results').empty()
   else if (query.searchKey.ST_NAME && query.searchKey.AC_NAME && query.searchKey.YEAR)
       $('#results').load('state-ac-year?' + query.search, post_load)
+  else if (query.searchKey.ST_NAME && query.searchKey.AC_NAME && query.searchKey.PARTY)
+      $('#results').load('state-ac-party?' + query.search, post_load)
+  else if (query.searchKey.ST_NAME && query.searchKey.YEAR && query.searchKey.PARTY)
+      $('#results').load('state-party-year?' + query.search, post_load)
+  else if (query.searchKey.ST_NAME && query.searchKey.AC_NAME)
+      $('#results').load('state-ac?' + query.search, post_load)
   else if (query.searchKey.ST_NAME && query.searchKey.YEAR)
       $('#results').load('state-year?' + query.search, post_load)
-  else if (query.searchKey.ST_NAME)
+  else if (query.searchKey.ST_NAME && query.searchKey.PARTY)
+      $('#results').load('state-party?' + query.search, post_load)
+  else if (query.searchKey.ST_NAME && query.searchKey.BY == 'PARTY')
       $('#results').load('state-by-party?' + query.search, post_load)
+  else if (query.searchKey.ST_NAME && query.searchKey.BY == 'AC')
+      $('#results').load('state-by-ac?' + query.search, post_load)
+  else
+      $('#results').html('Did not understand ' + query.search)
 }
 
 $(window).on('hashchange', redraw);
@@ -147,6 +158,5 @@ Notes:
 
 
 Lok Sabha next week
-
 
 #}

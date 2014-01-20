@@ -55,7 +55,7 @@ svg.full-width {
   min-height: 800px;
 }
 
-.state-result rect {
+.state-by-party rect, .state-by-ac rect {
   stroke: #fff;
 }
 
