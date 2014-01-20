@@ -35,13 +35,12 @@ win_color = {
 }
 
 w, h = 40, 22
-gap = 2 * h
 fontsize = h * 0.55
 w0 = 3*w    # Width of contestants, wins and party # columns
 w1 = 3*h    # Width of party name
 x0, x1, y0 = w0, w0 + w1 + 20, 2.2 * h
 W = x1 + w * len(years) + w1
-H = y0 + h * len(acs) + gap + h * len(parties) + y0
+H = y0 + h * len(parties)
 {% end %}
 <h2>
   <span href="?ST_NAME=&YEAR=&AC_NAME=">India</span> &raquo;
@@ -50,9 +49,9 @@ H = y0 + h * len(acs) + gap + h * len(parties) + y0
 
 <svg class="state-result" width="{{ W }}px" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ float(H) / W }}">
 
-  <text x="{{ 0*w + w/2 }}" y="{{ y0 }}" dx=".5em" dy=".35em" transform="rotate(-45 {{ 0*w + w/2 }} {{ y0 }})" font-size="{{ fontsize }}">Won</text>
-  <text x="{{ 1*w + w/2 }}" y="{{ y0 }}" dx=".5em" dy=".35em" transform="rotate(-45 {{ 1*w + w/2 }} {{ y0 }})" font-size="{{ fontsize }}">Contested</text>
-  <text x="{{ 2*w + w/2 }}" y="{{ y0 }}" dx=".5em" dy=".35em" transform="rotate(-45 {{ 2*w + w/2 }} {{ y0 }})" font-size="{{ fontsize }}">#</text>
+  <text x="{{ 0*w + w/2 }}" y="{{ y0 }}" dx=".5em" dy=".35em" transform="rotate(-45 {{ 0*w + w/2 }} {{ y0 }})" font-size="{{ fontsize }}">#</text>
+  <text x="{{ 1*w + w/2 }}" y="{{ y0 }}" dx=".5em" dy=".35em" transform="rotate(-45 {{ 1*w + w/2 }} {{ y0 }})" font-size="{{ fontsize }}">Won</text>
+  <text x="{{ 2*w + w/2 }}" y="{{ y0 }}" dx=".5em" dy=".35em" transform="rotate(-45 {{ 2*w + w/2 }} {{ y0 }})" font-size="{{ fontsize }}">Contested</text>
   <text x="{{ x1 - 5 }}" y="{{ y0 }}" dy="-0.55em" text-anchor="end" font-size="{{ fontsize + 2 }}" font-weight="bold">Party</text>
   {% for year in years %}
     {% set x = x1 + w * year_pos[year] %}
@@ -67,9 +66,9 @@ H = y0 + h * len(acs) + gap + h * len(parties) + y0
     y, fill = y0 + h * i, party_colors.get(party, '#fff')
     {% end %}
 
-    <text x="{{ 1*w }}" y="{{ y + h/2 }}" dx="-.2em" dy=".35em" font-size="{{ fontsize }}" text-anchor="end">{{ '{:,.0f}'.format(party_won[party].sum()) if party in party_won else 0 }}</text>
-    <text x="{{ 2*w }}" y="{{ y + h/2 }}" dx="-.2em" dy=".35em" font-size="{{ fontsize }}" text-anchor="end">{{ '{:,.0f}'.format(party_contested[party].sum()) }}</text>
-    <text x="{{ 3*w }}" y="{{ y + h/2 }}" dx="-.2em" dy=".35em" font-size="{{ fontsize }}" text-anchor="end"># {{ '{:.0f}'.format(i + 1) }}</text>
+    <text x="{{ 1*w }}" y="{{ y + h/2 }}" dx="-.2em" dy=".35em" font-size="{{ fontsize }}" text-anchor="end"># {{ '{:.0f}'.format(i + 1) }}</text>
+    <text x="{{ 2*w }}" y="{{ y + h/2 }}" dx="-.2em" dy=".35em" font-size="{{ fontsize }}" text-anchor="end">{{ '{:,.0f}'.format(party_won[party].sum()) if party in party_won else 0 }}</text>
+    <text x="{{ 3*w }}" y="{{ y + h/2 }}" dx="-.2em" dy=".35em" font-size="{{ fontsize }}" text-anchor="end">{{ '{:,.0f}'.format(party_contested[party].sum()) }}</text>
 
     {% set party_key = slug(party) %}
     <rect x="{{ x1 - 3*h }}" width="{{ w1 }}" y="{{ y }}" height="{{ h }}" fill="{{ fill }}" data-party="{{ party_key }}"/>
@@ -91,22 +90,5 @@ H = y0 + h * len(acs) + gap + h * len(parties) + y0
     {% if i % 5 == 0 %}
       <path d="M0,{{ y }}h{{ W }}" stroke="#bbb"/>
     {% end %}
-  {% end %}
-
-  {% for ac in acs %}
-    {% set y = y0 + h * len(parties) + gap + h * ac_pos[ac] %}
-    <text x="{{     x1 - 5 }}" y="{{ y + h/2 }}" dy=".35em" font-size="{{ fontsize }}" text-anchor="end">{{ ac.title() }}</text>
-    <text x="{{ W - w1 + 5 }}" y="{{ y + h/2 }}" dy=".35em" font-size="{{ fontsize }}">{{ ac.title() }}</text>
-  {% end %}
-
-  {% for i, row in winners.iterrows() %}{% code %}
-    x = x1 + w * year_pos[row['YEAR']]
-    y = y0 + h * len(parties) + gap + h * ac_pos[row['AC_NAME']]
-    fill = party_colors.get(row['PARTY'], '#999')
-    {% end %}
-    <rect x="{{ x }}" y="{{ y }}" width="{{ w }}" height="{{ h }}" fill="{{ fill }}"
-      href="?AC_NAME={{ escape(row['AC_NAME']) }}&YEAR={{ row['YEAR'] }}"
-      title="{{ escape(row['NAME']) }} of<br>{{ escape(row['PARTY']) }} won in {{ row['YEAR'] }} at <br>{{ escape(row['AC_NAME']) }} with <br>{{ '{:,.0f}'.format(float(row['VOTES'])) }} votes"/>
-    <text x="{{ x + w/2 }}" y="{{ y + h/2 }}" text-anchor="middle" dy=".35em" fill="{{ _color.contrast(fill) }}">{{ row['PARTY'] }}</text>
   {% end %}
 </svg>
