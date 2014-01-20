@@ -116,7 +116,7 @@ function redraw() {
   else if (query.searchKey.ST_NAME && query.searchKey.YEAR)
       $('#results').load('state-year?' + query.search, post_load)
   else if (query.searchKey.ST_NAME)
-      $('#results').load('state-by-year?' + query.search, post_load)
+      $('#results').load('state-by-party?' + query.search, post_load)
 }
 
 $(window).on('hashchange', redraw);
