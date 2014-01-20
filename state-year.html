@@ -42,6 +42,7 @@ party_colors = colors.ix['PARTY']
 
 {% end %}
 <h2 class="no-select">
+  <span href="?ST_NAME=&YEAR=&AC_NAME=">India</span> &raquo;
   <span href="?YEAR=">{{ args.get('ST_NAME', [''])[0] }}</span>
   <small class="link" {% if year_index > 0 %} href="?YEAR={{ years[year_index - 1] }}" title="Show {{ years[year_index - 1] }} results"{% end %}>◄</small>
   {{ args.get('YEAR', [''])[0] }}
@@ -56,7 +57,7 @@ party_colors = colors.ix['PARTY']
     {% code %}
     party_key = slug(party)
     fill = party_colors.get(party, '#999')
-    title = '{:s} won<br>{:d} seats contesting in<br>{:d} constituencies'.format(party, row['WON'], row['CONTESTED'])
+    title = '{:s} won<br>{:,.0f} seats contesting in<br>{:,.0f} constituencies'.format(party, row['WON'], row['CONTESTED'])
     {% end %}
     <path d="
     M{{ i*w }},{{ h[0][0] }}
@@ -108,7 +109,7 @@ data = data.set_index('AC_NAME')
 data['X'] = pos['X']
 data['Y'] = pos['Y']
 {% end %}
-<svg width="50%" data-height="1" viewBox="{{ xmin }} {{ ymin }} {{ xmax - xmin }} {{ ymax - ymin }}">
+<svg class="cartogram" width="50%" data-height="1" viewBox="{{ xmin }} {{ ymin }} {{ xmax - xmin }} {{ ymax - ymin }}">
   {% for ac_name, row in data[data['#'] == '1'].iterrows() %}
     <circle cx="{{ row['X'] }}" cy="{{ ymax - row['Y'] + ymin }}" r="{{ R }}"
     fill="{{ party_colors.get(row['PARTY'], '#999') }}"

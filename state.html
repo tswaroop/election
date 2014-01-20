@@ -21,21 +21,25 @@ party_contested = state_data.groupby(['YEAR', 'PARTY'])['NAME'].count()
 ac_pos = dict(zip(acs, range(len(acs))))
 year_pos = dict(zip(years, range(len(years))))
 
-w, h = 24, 14
+w, h = 30, 18
 gap = 2 * h
 fontsize = h * 0.8
 x0, y0 = 12 * h, 3 * h
 W = x0 + w * len(years) + x0
 H = y0 + h * len(acs) + gap + h * len(parties) + y0
 {% end %}
-<h2>{{ state }} elections</h2>
+<h2>
+  <span href="?ST_NAME=&YEAR=&AC_NAME=">India</span> &raquo;
+  {{ state }}
+</h2>
 
 <svg class="state-result" width="{{ W }}px" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ float(H) / W }}">
 
   <text x="{{ x0 - 5 }}" y="{{ y0 }}" dy="-1em" text-anchor="end" font-size="{{ fontsize }}">Election year</text>
   {% for year in years %}
     {% set x = x0 + w * year_pos[year] %}
-    <text x="{{ x + w/2 }}" y="{{ y0 }}" dx=".5em" dy=".35em" href="?YEAR={{ year }}&AC_NAME=" transform="rotate(-90 {{ x + w/2 }} {{ y0 }})" font-size="{{ fontsize }}">{{ year }}</text>
+    <rect x="{{ x }}" y="0" width="{{ w }}" height="{{ y0 }}" fill="#fff" href="?YEAR={{ year }}&AC_NAME="/>
+    <text x="{{ x + w/2 }}" y="{{ y0 }}" dx=".5em" dy=".35em" transform="rotate(-90 {{ x + w/2 }} {{ y0 }})" font-size="{{ fontsize }}">{{ year }}</text>
   {% end %}
 
   {% for i, (party, count) in enumerate(parties.iteritems()) %}
@@ -49,7 +53,7 @@ H = y0 + h * len(acs) + gap + h * len(parties) + y0
       x = x0 + w * year_pos[year]
       won = party_won.get((year, party), 0)
       contested = party_contested.get((year, party), 0)
-      cell_fill = _color.gradient((won * 1.)/party_won.ix[year].max(), _color.Greys) if contested > 0 else '#fff'
+      cell_fill = _color.gradient((won * 1.)/party_won.ix[year].max(), _color.Blues) if contested > 0 else '#fff'
       {% end %}
       <rect x="{{ x }}" y="{{ y }}" width="{{ w }}" height="{{ h }}" fill="{{ cell_fill }}" title="{{ party }} won<br>{{ won }} seats out of<br>{{ contested }} contested"/>
       {% if contested %}

@@ -1,113 +1,78 @@
-{{ GRAMEX(cache=['G.min.js', 'results.csv', 'colors.csv']) }}{% code %}
-from urllib import quote
-from common import slug
-
-title = 'India Elections'
-
-colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color']
-data = DB.csv('assembly.csv', dtype=object)
-results = pd.read_csv('results.csv')
-results['DATE'] = stats.to_date(results['DATE'])
-today = datetime.datetime(2014, 12, 30)
-
+{{ GRAMEX(cache=['G.min.js', 'results.csv', 'colors.csv', 'style.css', 'all.html']) }}{% code %}
+title = 'Assembly Elections'
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
-  <title class="title">{{ title }}</title>
   <meta charset="utf-8">
+  <title class="title">{{ title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="cleartype" content="on">
   <style>
     {{ T('css/bootstrap.v3.min.css') }}
     {{ T('style.css') }}
   </style>
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57x57-precomposed.png">
+  <link rel="shortcut icon" sizes="196x196" href="img/touch-icon-196x196.png">
+  <link rel="shortcut icon" href="img/apple-touch-icon.png">
+  <meta name="msapplication-TileImage" content="img/apple-touch-icon-144x144-precomposed.png">
+  <meta name="msapplication-TileColor" content="{{ _color.Office.accent_4 }}">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="{{ title }}">
+  <script>
+      // Remove no-js class. Set no-touch upfront to ensure -webkit-scrollbar styling
+      var touch_device = 'ontouchend' in document;
+      document.documentElement.setAttribute('class', touch_device ? 'touch' : 'no-touch');
+  </script>
 </head><body>
 
 <header>
   <div class="container">
-    <h1>
-      <span class="heading"><span class="em">Pre</span>lections <span class="em">2014</span> <span class="title"></span></span>
+    <h1 href="?ST_NAME=&YEAR=&AC_NAME=">
+      <span class="heading">
+        <span class="em">Assembly</span> Elections<span class="title"></span>
+        <small>&mdash; every election at a glance</small>
+      </span>
+      <div style="float:right;font-size:20px;line-height:40px;text-align:right">
+        <a class="show-help btn btn-default" data-toggle="button" href="#">Help</a>
+      </div>
     </h1>
   </div>
 </header>
 
 <div class="container main">
+  {{ T('all.html', DB=DB) }}
 
-{% code %}
-states = results['ST_NAME'].unique()
-datepos = layout.dates(results['DATE'].min(), today)
-x0, y0, W, h, legend = 120, 28, 1000, 20., 30
-H = h * len(states) + y0 + legend
-{% end %}
-<svg class="resultmap full-width" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ float(H) / W }}">
-  {{ T('dateaxis.svg',
-      x=x0,
-      y=legend,
-      width=W - x0 - x0,
-      height=H - legend,
-      dates=datepos,
-      labels=[
-        { 'type': 'year',
-          'y':  y0/2,
-          'anchor': 'start',
-          'label': lambda d: d.strftime('%Y'),
-          'angle': lambda v: -90,
-          'attrs': {'font-size': '9'},
-        },
-      ],
-      lines={
-          'year':  {'stroke': 'rgba(0,0,0,.2)'},
-      }
-  ) }}
-  {% for i, state in enumerate(states) %}
-    {% set state_key = slug(state) %}
-    <text class="state-legend" font-size="12" x="{{ x0 - 5 }}"     y="{{ y0 + legend + h * (i + .5) }}" dy=".35em" href="?ST_NAME={{ quote(state) }}&YEAR=&AC_NAME=" data-state="{{ state_key }}" data-highlight="[data-state={{ state_key }}]" text-anchor="end">{{ state }}</text>
-    <text class="state-legend" font-size="12" x="{{ W - x0 + 5 }}" y="{{ y0 + legend + h * (i + .5) }}" dy=".35em" href="?ST_NAME={{ quote(state) }}&YEAR=&AC_NAME=" data-state="{{ state_key }}" data-highlight="[data-state={{ state_key }}]">{{ state }}</text>
-    {% code %}
-    state_results = results[results['ST_NAME'] == state]
-    state_results['TILL'] = state_results['DATE'].shift(-1)
-    state_results['TILL'].fillna(today, inplace=True)
-    state_results['x0'] = state_results['DATE'].apply(lambda d: round(datepos.x.iloc[datepos.index.searchsorted(d)], 2))
-    state_results['x1'] = state_results['TILL'].apply(lambda d: round(datepos.x.iloc[datepos.index.searchsorted(d)], 2))
-    party_colors = colors.ix['PARTY']
-    w = float(W - x0 * 2) / len(party_colors)
-    {% end %}
-    <g class="winner-timeline">
-      {% for index, row in state_results.iterrows() %}
-        {% set fill = party_colors.get(row['PARTY'], '#999') %}
-        <rect x="{{ x0 + (W - 2*x0) * row['x0'] }}" y="{{ y0 + legend + h * i }}" width="{{ (W - 2*x0) * (row['x1'] - row['x0']) }}" height="{{ h }}"
-          fill="{{ fill }}"
-          stroke="#fff"
-          href="?ST_NAME={{ quote(row['ST_NAME']) }}&YEAR={{ quote(row['YEAR']) }}&AC_NAME="
-          title="<h1>{{ row['ST_NAME'] }} {{ row['YEAR'] }}</h1>{{ row['CM'].replace(', ', '<br>') }}"
-          data-party="{{ slug(row['PARTY']) }}"
-          data-state="{{ state_key }}"
-          ></rect>
-        <text data-party="{{ slug(row['PARTY']) }}" data-state="{{ state_key }}" font-size="10" x="{{ x0 + (W - 2*x0) * (row['x0'] + row['x1']) / 2 }}" text-anchor="middle" y="{{ y0 + legend + h * (i + .5) }}" dy=".35em" fill="#fff">{{ row['PARTY'] }}</text>
-      {% end %}
-    </g>
-  {% end %}
-  {% for i, (party, color) in enumerate(party_colors.iteritems()) %}
-    <rect class="party-legend" data-party="{{ slug(party) }}" data-highlight="[data-party={{ slug(party) }}]" data-toggle="1"
-      x="{{ x0 + w * i }}" width="{{ w }}" y="0" height="{{ legend - 5 }}" fill="{{ color }}"></rect>
-    <text x="{{ x0 + w * (i + .5) }}" y="{{ (legend - 5) * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
-  {% end %}
-</svg>
-
-<div id="results"></div>
-
+  <div id="results"></div>
 </div>
 
 <script>
+{{ T('js/helper.js') }}
+
+MBP.scaleFix();
+MBP.startupImage();
+MBP.hideUrlBarOnLoad();
+MBP.enableActive();
+
+// TODO: FastClick
+if (window.FastClick)
+  window.addEventListener('load', function() { FastClick.attach(document.body); }, false);
+
 {{ T('js/jquery2.min.js') }}
 {{ T('js/bootstrap.v3.min.js') }}
 {{ T('js/d3.v3.min.js') }}
-{{ T('G.min.js') }}
-{{ T('jquery.scrollTo.min.js') }}
+{{ T('js/G.min.js') }}
+{{ T('js/jQuery.scrollTo.min.js') }}
 
 $('body')
   .tooltip({
     selector: '[title]',
     container: 'body',
-    html: true
+    html: true,
+    trigger: touch_device ? 'focus' : 'hover'
   })
   .highlight({
     selector: '.party-legend',
@@ -122,11 +87,17 @@ $('body')
   })
   .aspect({
     selector: '[data-height]'
-  });
-
+  })
+  .on('click', '.show-help', function() {
+    if ($(this).is('.active'))
+      $('.help').tooltip('hide')
+    else
+      $('.help').dispatch(touch_device ? 'focus': 'mouseover')
+  })
 
 function post_load() {
   $('.tooltip').remove();
+  $('.show-help').removeClass('active');
   // Resize the SVG we just loaded for aspect ratio
   $(window).dispatch('resize');
   scrolled = $.scrollTo('#results', {
@@ -139,13 +110,14 @@ function post_load() {
 function redraw() {
   var query = G.url.parse(location.hash.replace(/^#/, ''));
   if (!query.search)
-      return $('#results').empty();
-  if (query.searchKey.ST_NAME && query.searchKey.AC_NAME && query.searchKey.YEAR)
-      $('#results').load('state-ac-year?' + query.search, post_load);
+      // $('#results').load('all?' + query.search, post_load)
+      $('#results').empty()
+  else if (query.searchKey.ST_NAME && query.searchKey.AC_NAME && query.searchKey.YEAR)
+      $('#results').load('state-ac-year?' + query.search, post_load)
   else if (query.searchKey.ST_NAME && query.searchKey.YEAR)
-      $('#results').load('state-year?' + query.search, post_load);
+      $('#results').load('state-year?' + query.search, post_load)
   else if (query.searchKey.ST_NAME)
-      $('#results').load('state?' + query.search, post_load);
+      $('#results').load('state?' + query.search, post_load)
 }
 
 $(window).on('hashchange', redraw);
@@ -154,13 +126,15 @@ redraw();
 </body></html>
 {#
 
+- Add help
+
 - Multi-click is not obvious. Check box? Active state?
 - Add filters: gender, caste, # candidates, etc
 
-Stories:
-    - Individual vs Party incumbency (people switching)
-    - Muslim votes
+Multi-filters:
     - Women candidates
+    - Anti-incumbent constituency
+    -
 
 Notes:
 - Connect to iPad, display on device, help tell a story directly
@@ -170,6 +144,8 @@ Notes:
 - Process
     - The issue calendar is the key driver of content
     - Brainstorming of stories
+- State story
+
 
 Lok Sabha next week
 
