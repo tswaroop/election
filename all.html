@@ -2,7 +2,7 @@
 from urllib import quote
 from common import slug
 
-colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color']
+party_colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 data = DB.csv('assembly.csv', dtype=object)
 results = pd.read_csv('results.csv')
 results['DATE'] = stats.to_date(results['DATE'])
@@ -46,7 +46,6 @@ H = h * len(states) + y0 + legend
     state_results['TILL'].fillna(today, inplace=True)
     state_results['x0'] = state_results['DATE'].apply(lambda d: round(datepos.x.iloc[datepos.index.searchsorted(d)], 2))
     state_results['x1'] = state_results['TILL'].apply(lambda d: round(datepos.x.iloc[datepos.index.searchsorted(d)], 2))
-    party_colors = colors.ix['PARTY']
     w = float(W - x0 * 2) / len(party_colors)
     {% end %}
     <g class="winner-timeline">

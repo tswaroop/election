@@ -35,12 +35,18 @@ text { pointer-events: none; }
   margin: 0 0 6px 0;
   border-bottom: 1px solid rgba(255, 255, 255, .8);
 }
-svg.full-width {
+.full-width {
   min-width: 800px;
   width: 100%;
 }
 .party-legend.fade { opacity: .3; }
 .state-legend.fade { opacity: .3; }
+.rank-legend.fade { opacity: .3;}
+.rank-legend {
+  padding: 4px .5em;
+  font-size: 16px;
+}
+
 .link[href] { color: {{ _color.Office[0] }}; }
 
 .no-select {
@@ -59,12 +65,33 @@ svg.full-width {
   stroke: #fff;
 }
 
+table.state-ac > tbody > tr > td {
+  border: 1px solid #ccc;
+  padding: 2px;
+  text-align:center;
+  overflow:hidden;
+  font-size: 10px;
+  vertical-align:middle;
+}
+table.state-ac > thead > tr > th {
+  padding: 2px;
+  text-align: center;
+}
+table.state-ac > tbody > tr > th {
+  padding: 5px;
+  border: 1px solid #ccc;
+  text-align:right;
+  vertical-align: middle;
+}
+table.state-ac .rank1 { background-color: #000; color: #fff; }
+table.state-ac .rank2 { background-color: #888; color: #fff; }
+
 .state-year-result path.party-legend {
   stroke: #fff;
   opacity: .3;
 }
 
-.state-year-result rect {
+.state-year-result rect, .state-ac rect {
   stroke: #fff;
 }
 

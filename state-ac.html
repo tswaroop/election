@@ -1,11 +1,26 @@
 {{ GRAMEX(cache=['assembly.csv', 'colors.csv'], max_age=30) }}{% code %}
+from common import slug
+from urllib import quote
+
 data = DB.csv('assembly.csv', dtype=object)
+party_colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 
 state, ac = args['ST_NAME'][0], args['AC_NAME'][0]
 data = data[data['ST_NAME'] == state]
 data = data[data['AC_NAME'] == ac]
+
+parties = pd.DataFrame({
+    'WON': data[data['#'] == '1'].groupby('PARTY')['NAME'].count(),
+    'CONTESTED': data['PARTY'].value_counts()
+}).fillna(0).sort(['WON', 'CONTESTED'], ascending=False)
+years = sorted(data['YEAR'].unique())
+groups = data.groupby(['PARTY', 'YEAR']).groups
+
 data['VOTES'] = data['VOTES'].astype(float)
-data.sort(['VOTES', 'NAME'], inplace=True, ascending=[False, True])
+votes = data.pivot_table(rows='YEAR', cols=['PARTY', 'NAME'], values='VOTES', aggfunc='sum').fillna(0)
+W, H = 1000, 360
+height = H * votes.div(votes.sum(axis=1), axis=0)
+w = W / float(1 + len(years))
 {% end %}
 
 <h2 class="no-select">
@@ -14,7 +29,55 @@ data.sort(['VOTES', 'NAME'], inplace=True, ascending=[False, True])
   {{ ac }}
 </h2>
 
-{% apply markdown %}
-Show what happened in {{ ac }} over time across parties
+<svg class="full-width state-ac" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ float(H) / W }}">
+  <text y="{{ H/2 }}" dy="-.35em">50% votes</text>
+  {% for i, (year, row) in enumerate(votes.iterrows()) %}{% code %}
+    row = row.order(ascending=False)
+    h = height.ix[year].reindex_like(row)
+    y = h.cumsum() - h
+    {% end %}{% for partyname, votes in row.iteritems() %}{% code %}
+      party, name = partyname
+      fill = party_colors.get(party, '#999')
+      if not h[partyname] > 0:
+          continue
+      {% end %}
+      <rect x="{{ (i + 1) * w }}" y="{{ y[partyname] }}" width="{{ w }}" height="{{ h[partyname] }}"
+        fill="{{ fill }}"
+        data-party="{{ partyname }}"
+        href="?YEAR={{ year }}"
+        title="{{ name }}<br>{{ party }}<br>{{ '{:,.0f}'.format(votes) }} votes"
+        />
+      {% if h[partyname] > 8 %}
+        <text x="{{ (i + 1.5) * w }}" y="{{ y[partyname] + h[partyname]/2 }}" dy=".35em" text-anchor="middle" data-party="{{ slug(party) }}" fill="{{ _color.contrast(fill) }}">{{ party }}</text>
+      {% end %}
+    {% end %}
+  {% end %}
+  <path d="M0,{{ H/2 }}h{{ W }}" stroke="#000"/>
+</svg>
 
-{% end %}
+<table class="state-ac table full-width" style="table-layout:fixed">
+  <thead>
+    <th>Party</th>
+    {% for year in years %}
+      <th>{{ year }}</th>
+    {% end %}
+  </thead>
+  <tbody>
+    {% for party, row in parties.iterrows() %}
+      {% set fill = party_colors.get(party, '#999' if (party, year) in groups else '#fff') %}
+      <tr>
+        <th style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ party }}</th>
+        {% for year in years %}
+          {% if (party, year) in groups %}
+            {% set cell = data.ix[groups[party, year]].iloc[0].fillna('') %}
+            <td
+              {% if cell['#'] in ('1', '2') %} class="rank{{ cell['#'] }}"{% end %}
+              href="?YEAR={{ year }}"
+              title="{{ '{:,.0f}'.format(cell['VOTES']) }} votes<br>Rank {{ cell['#'] }}<br>{{ cell['SEX'] }} {{ cell['CATEGORY'] }}"
+              >{{ cell['NAME'] }}</td>
+          {% else %}<td></td>{% end %}
+        {% end %}
+      </tr>
+    {% end %}
+  </tbody>
+</table>
