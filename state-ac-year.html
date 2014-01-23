@@ -1,32 +1,74 @@
 {{ GRAMEX(cache=['assembly.csv', 'colors.csv'], max_age=30) }}{% code %}
+from common import slug
+from urllib import quote
+
 data = DB.csv('assembly.csv', dtype=object)
+party_colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 
 state, year, ac_name = args['ST_NAME'][0], args['YEAR'][0], args['AC_NAME'][0]
+light = args.get('BY', [''])[0] == 'LIGHT'
 data = data[data['ST_NAME'] == state]
 data = data[data['AC_NAME'] == ac_name]
 years = sorted(data['YEAR'].unique())
-print ac_name
 year_index = years.index(year)
+
 data = data[data['YEAR'] == year][['#', 'NAME', 'PARTY', 'VOTES', 'SEX', 'CATEGORY']]
 data['VOTES'] = data['VOTES'].astype(float)
 data.sort(['VOTES', 'NAME'], inplace=True, ascending=[False, True])
 data['#'] = pd.np.arange(1, 1 + len(data))
+
+if light:
+    data = data[['NAME', 'PARTY', 'VOTES']]
+data = data.fillna('')
 {% end %}
 
-<h2 class="no-select">
-  <span href="?ST_NAME=&AC_NAME=&YEAR=">India</span> &raquo;
-  <span href="?AC_NAME=&YEAR=&BY=AC">{{ state }}</span> &raquo;
-  <span href="?YEAR=">{{ ac_name }}</span>
-  <small class="link" {% if year_index > 0 %} href="?YEAR={{ years[year_index - 1] }}" title="Show {{ years[year_index - 1] }} results"{% end %}>◄</small>
-  {{ year }}
-  <small class="link" {% if year_index < len(years) - 1 %} href="?YEAR={{ years[year_index + 1] }}" title="Show {{ years[year_index + 1] }} results"{% end %}>►</small>
-</h2>
+{% if not light %}
+  <h2 class="no-select">
+    <span href="?ST_NAME=&AC_NAME=&YEAR=">India</span> &raquo;
+    <span href="?AC_NAME=&YEAR=&BY=AC">{{ state }}</span> &raquo;
+    <span href="?YEAR=">{{ ac_name }}</span>
+    <small class="link" {% if year_index > 0 %} href="?YEAR={{ years[year_index - 1] }}" title="Show {{ years[year_index - 1] }} results"{% end %}>◄</small>
+    {{ year }}
+    <small class="link" {% if year_index < len(years) - 1 %} href="?YEAR={{ years[year_index + 1] }}" title="Show {{ years[year_index + 1] }} results"{% end %}>►</small>
+  </h2>
+{% else %}
+  <h3>{{ ac_name }}</h3>
+{% end %}
 
-<div class="state-ac-year-result">
-{{ data.to_html(
-    index=False,
-    na_rep='',
-    classes='table table-compressed',
-    float_format=lambda v: '{:,.0f}'.format(v),
-) }}
-</div>
+<table class="table table-condensed state-ac-year">
+  <thead>
+    <tr>
+      {% for col in data %}
+        <th>{{ col }}</th>
+      {% end %}
+    </tr>
+  </thead>
+  {% for index, row in data.iterrows() %}{% code %}
+    fill = party_colors.get(row['PARTY'], '#ccc')
+    party_slug = slug(row['PARTY'])
+    {% end %}
+    <tr>
+      {% if not light %}
+        <td>{{ row['#'] }}</td>
+      {% end %}
+      <td>{{ row['NAME'] }}</td>
+      <td
+        class="party-legend"
+        data-highlight="[data-party={{ party_slug }}]"
+        data-party="{{ party_slug }}"
+        href="?AC_NAME=&PARTY={{ quote(row['PARTY']) }}"
+        style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ row['PARTY'] }}</td>
+      <td>{{ '{:,.0f}'.format(row['VOTES']) }}</td>
+      {% if not light %}
+        <td>{{ row['SEX'] }}</td>
+        <td>{{ row['CATEGORY'] }}</td>
+      {% end %}
+    </tr>
+  {% end %}
+</table>
+<p>
+  <a href="?YEAR=&AC_NAME={{ quote(ac_name) }}">{{ ac_name.title() }} election history</a>
+  {% if not light %}
+    | <a href="?AC_NAME=">{{ state }} elections in {{ year }}</a>
+  {% end %}
+</p>

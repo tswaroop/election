@@ -6,12 +6,12 @@ R = 0.1
 def latlong_setup(latlong):
     latlong['X'] = latlong['Y'] = pd.np.empty(len(latlong))
     for state, indices in latlong.groupby('ST_NAME').groups.iteritems():
-        xy = layout.unpack(latlong.ix[indices][['LONG', 'LAT']], [R] * len(indices), gravity=0, factor=.98)
+        xy = layout.unpack(latlong.ix[indices][['LONG', 'LAT']], [R] * len(indices), gravity=0, factor=.99)
         latlong['X'][indices] = xy[:,0]
         latlong['Y'][indices] = xy[:,1]
     return latlong
 
-colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color']
+party_colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 data = DB.csv('assembly.csv', dtype=object)
 latlong = DB.csv('latlong.csv', setup=latlong_setup)
 
@@ -38,8 +38,6 @@ top_parties['ww'] = top_parties['WON'] * W / top_parties['WON'].sum()
 top_parties['wx'] = top_parties['ww'].cumsum() - top_parties['ww']
 top_parties['cw'] = top_parties['CONTESTED'] * W / top_parties['CONTESTED'].sum()
 top_parties['cx'] = top_parties['cw'].cumsum() - top_parties['cw']
-
-party_colors = colors.ix['PARTY']
 
 {% end %}
 <h2 class="no-select">
@@ -75,11 +73,11 @@ party_colors = colors.ix['PARTY']
     L{{ row['cx'] }},{{ h[1][0] + h[1][1] }}
     v{{ -h[1][1] }}
     L{{ i*w }},{{ h[0][0] + h[0][1]  }}
-    z" fill="{{ fill }}" data-party="{{ party_key }}" class="party-legend"/>
+    z" fill="{{ fill }}" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]" data-toggle="highlight"/>
 
-    <rect x="{{ i * w }}"     width="{{ w }}"         y="{{ h[0][0] }}" height="{{ h[0][1] }}" fill="{{ fill }}" title="{{ title }}" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
-    <rect x="{{ row['cx'] }}" width="{{ row['cw'] }}" y="{{ h[1][0] }}" height="{{ h[1][1] }}" fill="{{ fill }}" title="{{ title }}" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
-    <rect x="{{ row['wx'] }}" width="{{ row['ww'] }}" y="{{ h[2][0] }}" height="{{ h[2][1] }}" fill="{{ fill }}" title="{{ title }}" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]"/>
+    <rect x="{{ i * w }}"     width="{{ w }}"         y="{{ h[0][0] }}" height="{{ h[0][1] }}" fill="{{ fill }}" title="{{ title }}" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]" data-toggle="highlight"/>
+    <rect x="{{ row['cx'] }}" width="{{ row['cw'] }}" y="{{ h[1][0] }}" height="{{ h[1][1] }}" fill="{{ fill }}" title="{{ title }}" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]" data-toggle="highlight"/>
+    <rect x="{{ row['wx'] }}" width="{{ row['ww'] }}" y="{{ h[2][0] }}" height="{{ h[2][1] }}" fill="{{ fill }}" title="{{ title }}" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]" data-toggle="highlight"/>
 
     <text x="{{ (i + .5) * w }}" y="{{ h[0][0] }}" dy="1.2em" text-anchor="middle" fill="#fff" font-size="14">{{ party }}</text>
     <text x="{{ (i + .5) * w }}" y="{{ h[0][0] }}" dy="3em" text-anchor="middle" fill="#fff"><tspan font-size="22" font-weight="bold">{{ '{:.0f}'.format(row['WON']) }}</tspan> / {{ '{:.0f}'.format(row['CONTESTED']) }}</text>
@@ -110,12 +108,20 @@ data = data.set_index('AC_NAME')
 data['X'] = pos['X']
 data['Y'] = pos['Y']
 {% end %}
-<svg class="cartogram" width="50%" data-height="1" viewBox="{{ xmin }} {{ ymin }} {{ xmax - xmin }} {{ ymax - ymin }}">
-  {% for ac_name, row in data[data['#'] == '1'].iterrows() %}
-    <circle cx="{{ row['X'] }}" cy="{{ ymax - row['Y'] + ymin }}" r="{{ R }}"
-    fill="{{ party_colors.get(row['PARTY'], '#999') }}"
-    data-party="{{ slug(row['PARTY']) }}"
-    href="?AC_NAME={{ quote(ac_name) }}"
-    title="{{ ac_name }}<br>{{ escape(row['NAME']) }} of {{ escape(row['PARTY']) }}<br>won with {{ '{:,.0f}'.format(row['VOTES']) }} votes"/>
-  {% end %}
-</svg>
+<div class="container">
+  <div class="col-sm-8">
+    <svg class="cartogram" width="100%" data-height="1" viewBox="{{ xmin }} {{ ymin }} {{ xmax - xmin }} {{ ymax - ymin }}">
+      <text x="{{ xmin }}" y="{{ ymin }}" font-size="{{ (xmax - xmin)/25. }}" dy="1em">Constituency map</text>
+      {% for ac_name, row in data[data['#'] == '1'].iterrows() %}
+        <circle cx="{{ row['X'] }}" cy="{{ ymax - row['Y'] + ymin }}" r="{{ R }}"
+        fill="{{ party_colors.get(row['PARTY'], '#999') }}"
+        data-party="{{ slug(row['PARTY']) }}"
+        href="?AC_NAME={{ quote(ac_name) }}"
+        data-target="#state-ac-year"
+        title="{{ ac_name }}<br>{{ escape(row['NAME']) }} of {{ escape(row['PARTY']) }}<br>won with {{ '{:,.0f}'.format(row['VOTES']) }} votes"/>
+      {% end %}
+    </svg>
+  </div>
+  <div class="col-sm-4" id="state-ac-year" data-src="state-ac-year?ST_NAME={{ quote(state) }}&YEAR={{ year }}&BY=LIGHT">
+  </div>
+</div>

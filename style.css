@@ -36,16 +36,13 @@ text { pointer-events: none; }
   border-bottom: 1px solid rgba(255, 255, 255, .8);
 }
 .full-width {
-  min-width: 800px;
+  min-width: 750px;
   width: 100%;
 }
 .party-legend.fade { opacity: .3; }
 .state-legend.fade { opacity: .3; }
-.rank-legend.fade { opacity: .3;}
-.rank-legend {
-  padding: 4px .5em;
-  font-size: 16px;
-}
+.rank-legend.fade { opacity: .3; }
+.cartogram .fade { opacity: .05; }
 
 .link[href] { color: {{ _color.Office[0] }}; }
 
@@ -61,8 +58,41 @@ text { pointer-events: none; }
   min-height: 800px;
 }
 
-.state-by-party rect, .state-by-ac rect {
-  stroke: #fff;
+.year-table {
+  width: auto;
+  table-layout: fixed;
+  font-size: 12px;
+}
+.year-table thead tr th {
+  text-align: right;
+  font-size: 11px;
+  padding: 2px;
+}
+.year-table thead tr .year {
+  text-align: center;
+}
+.year-table tbody tr th {
+  text-align: right;
+  vertical-align: middle;
+  padding: 2px;
+}
+.year-table tbody tr td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 2px;
+  border-bottom: 1px solid #ddd;
+}
+
+.state-by-party tbody tr td {
+  text-align: right;
+}
+
+.state-ac {
+  width: 100%;
+  margin-bottom: 2em;
+}
+svg.state-ac text {
+  font-size: 12px;
 }
 
 table.state-ac > tbody > tr > td {
@@ -78,13 +108,16 @@ table.state-ac > thead > tr > th {
   text-align: center;
 }
 table.state-ac > tbody > tr > th {
-  padding: 5px;
+  font-size: 10px;
+  padding: 2px;
   border: 1px solid #ccc;
   text-align:right;
   vertical-align: middle;
 }
-table.state-ac .rank1 { background-color: #000; color: #fff; }
-table.state-ac .rank2 { background-color: #888; color: #fff; }
+
+.rank1 { background-color: #000; color: #fff; }
+.rank2 { background-color: #888; color: #fff; }
+.rank3 { background-color: #eee; color: #000; }
 
 .state-year-result path.party-legend {
   stroke: #fff;
@@ -95,12 +128,12 @@ table.state-ac .rank2 { background-color: #888; color: #fff; }
   stroke: #fff;
 }
 
-.state-ac-year-result .table td, .state-ac-year-result .table th {
+.state-ac-year td, .state-ac-year th {
+  font-size: 12px;
   text-align: right;
 }
 
 .cartogram circle {
   stroke: rgba(0,0,0,.5);
   stroke-width: .01;
-  opacity: .8;
 }

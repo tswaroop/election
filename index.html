@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['G.min.js', 'results.csv', 'colors.csv', 'style.css', 'all.html']) }}{% code %}
+{{ GRAMEX(cache=['js/G.min.js', 'results.csv', 'colors.csv', 'style.css', 'all.html']) }}{% code %}
 title = 'Assembly Elections'
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
@@ -67,6 +67,66 @@ if (window.FastClick)
 {{ T('js/G.min.js') }}
 {{ T('js/jquery.scrollTo.min.js') }}
 
+
+function _G_search_transform(s) {
+  return (s || '').toLowerCase().replace(/\s+/g, ' ').replace(/^ /, '').replace(/ $/, '');
+}
+
+$.fn.search = function(options) {
+  options = options || {};
+  var self = this,
+      attr = options.attr || 'data-search',
+      selector = options.selector || '[' + attr + ']',
+      text = options.text || 'title',
+      target = options.target || '[' + text + ']',
+      transform = options.transform || _G_search_transform,
+      showClass = options.showClass || '',
+      hideClass = options.hideClass || 'fade',
+      lastsearch = 'search.lastsearch',
+      mapping = 'search.mapping';
+
+  if (options.off)
+    return self.off('.search')
+
+  function refresh($el) {
+    var list = [],
+        targets = $($el.data('target') || target),
+        textattr = $el.data('text') || text;
+    targets.each(typeof textattr == 'function' ?
+        function() { list.push([$(this), transform(textattr(this)), false]) } :
+        function() { list.push([$(this), transform(this.getAttribute(textattr)), false]) }
+    );
+    $el.data(mapping, list);
+    return list;
+  }
+
+  function search(e) {
+    var $el = $(e.target),
+        search = transform(e.target.value),
+        map = $el.data(mapping),
+        re = new RegExp(search),
+        i = 0,
+        cell;
+
+    if ($el.data(lastsearch) == search) return;
+    $el.data(lastsearch, search);
+    if (!map) map = refresh($el);
+
+    var re = new RegExp(search);
+    for (; cell=map[i]; i++) {
+      var hide = !cell[1].match(re);
+      if (hide !== cell[2]) {
+          cell[2] = hide;
+          cell[0][hide ? 'addClass' : 'removeClass'](hideClass);
+      }
+    }
+  }
+
+  return self
+    .on('keyup.search', selector, search)
+    .on('change.search', selector, search)
+};
+
 $('body')
   .tooltip({
     selector: '[title]',
@@ -83,13 +143,17 @@ $('body')
   })
   .highlight({
     selector: '.rank-legend',
-    target: '[data-rank]'
+    target: '.rank1,.rank2,.rank3'
   })
   .urlfilter({
     target: '#'
   })
   .aspect({
     selector: '[data-height]'
+  })
+  .search({
+    selector: 'input[type=search]',
+    hideClass: 'hide'
   })
   .on('click', '.show-help', function() {
     if ($(this).is('.active'))
