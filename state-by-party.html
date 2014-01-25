@@ -1,17 +1,17 @@
 {{ GRAMEX(cache=['assembly.csv', 'colors.csv', 'state-by-common.html'], max_age=30) }}
 {% include state-by-common.html %}
 {% code %}
-wins = winners.pivot_table(rows='PARTY', cols='YEAR', values='NAME', aggfunc='count')
-ranks = wins.rank(axis=0, method='min', ascending=False)
 contested = state_data.pivot_table(rows='PARTY', cols='YEAR', values='NAME', aggfunc='count')
+wins = winners.pivot_table(rows='PARTY', cols='YEAR', values='NAME', aggfunc='count').fillna(0)
+ranks = wins.rank(axis=0, method='min', ascending=False)
 
-wins = wins.fillna(0).astype(int)
-wins.insert(0, 'WON', wins.sum(axis=1))
-wins.insert(1, 'CONTESTED', state_data['PARTY'].value_counts())
-wins.sort('WON', ascending=False, inplace=True)
+contested.insert(0, 'CONTESTED', contested.sum(axis=1))
+contested.insert(1, 'WON', wins.sum(axis=1))
+contested = contested.fillna(0).astype(int)
+contested.sort(['WON', 'CONTESTED'], ascending=False, inplace=True)
 {% end %}
 <h2>
-  <span href="?ST_NAME=&YEAR=&AC_NAME=&BY=">India</span> &raquo;
+  <a href="?ST_NAME=&YEAR=&AC_NAME=&BY=">India</a> &raquo;
   {{ state }}
   <div class="btn-group">
     <a class="btn btn-xs btn-primary active" href="?BY=PARTY">Party-wise</a>
@@ -30,25 +30,26 @@ wins.sort('WON', ascending=False, inplace=True)
       <th>Won</th>
       <th>Out of</th>
       <th>Party</th>
-      {% for year in wins.columns[2:] %}
+      {% for year in contested.columns[2:] %}
         <th class="year" href="?YEAR={{ year }}&BY=" title="View {{ escape(state) }} results for {{ year }}">{{  year }}</th>
       {% end %}
     </tr>
   </thead>
   <tbody>
-    {% for party, row in wins.iterrows() %}
+    {% for party, row in contested.iterrows() %}
       {% set fill = party_colors.get(party, '#fff') %}
       <tr>
         <td>{{ '{:,.0f}'.format(row['WON']) }}</td>
         <td>{{ '{:,.0f}'.format(row['CONTESTED']) }}</td>
         <th title="View all {{ escape(party) }} results in {{ escape(state) }}" style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}" href="?PARTY={{ quote(party) }}&BY=">{{ party }}</th>
-        {% for year, won in row[2:].iteritems() %}
-          {% set rank = ranks[year][party] %}
-          {% if not pd.isnull(contested[year][party]) %}
+        {% for year, c in row[2:].iteritems() %}
+          {% if contested[year][party] %}
+            {% set rank = ranks[year][party] if party in ranks[year] else pd.np.nan %}
+            {% set won = wins[year][party] if party in wins[year] else 0 %}
             <td
               class="rank{{ 3 if pd.isnull(rank) else int(min(rank, 3)) }}"
               href="?YEAR={{ year }}&PARTY={{ quote(party) }}&BY="
-              title="In {{ year }}, {{ party }} won<br>{{ '{:,.0f}'.format(won) }} seats out of<br>{{ '{:,.0f}'.format(contested[year][party]) }} contested<br>Rank: {{ 'NA' if pd.isnull(ranks[year][party]) else '{:,.0f}'.format(ranks[year][party]) }}"
+              title="In {{ year }}, {{ party }} won<br>{{ '{:,.0f}'.format(won) }} seats out of<br>{{ '{:,.0f}'.format(c) }} contested<br>Rank: {{ rank }}"
               >{{ '{:,.0f}'.format(won) }}</td>
           {% else %}
             <td></td>

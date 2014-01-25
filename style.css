@@ -65,8 +65,8 @@ text { pointer-events: none; }
 }
 .year-table thead tr th {
   text-align: right;
-  font-size: 11px;
-  padding: 2px;
+  font-size: 90%;
+  padding: .2em;
 }
 .year-table thead tr .year {
   text-align: center;
@@ -74,17 +74,20 @@ text { pointer-events: none; }
 .year-table tbody tr th {
   text-align: right;
   vertical-align: middle;
-  padding: 2px;
+  padding: .2em;
 }
 .year-table tbody tr td {
-  text-align: center;
+  text-align: right;
   vertical-align: middle;
-  padding: 2px;
-  border-bottom: 1px solid #ddd;
+  padding: .2em;
 }
 
-.state-by-party tbody tr td {
-  text-align: right;
+.state-by-ac tbody tr td {
+  text-align: center;
+}
+
+table.state-party {
+  font-size: 14px;
 }
 
 .state-ac {
@@ -119,21 +122,60 @@ table.state-ac > tbody > tr > th {
 .rank2 { background-color: #888; color: #fff; }
 .rank3 { background-color: #eee; color: #000; }
 
-.state-year-result path.party-legend {
-  stroke: #fff;
-  opacity: .3;
-}
-
-.state-year-result rect, .state-ac rect {
-  stroke: #fff;
-}
-
 .state-ac-year td, .state-ac-year th {
   font-size: 12px;
   text-align: right;
 }
 
+.analysis td, .analysis th {
+  text-align: right;
+}
+
+.state-ac rect {
+  stroke: #fff;
+}
+
 .cartogram circle {
   stroke: rgba(0,0,0,.5);
   stroke-width: .01;
+}
+
+#facts .img {
+  width: 100%;
+  height: 360px;
+  background-size: cover;
+  background-position: center center;
+}
+
+#facts .carousel-caption {
+  text-shadow: 1px 1px 3px rgba(0,0,0,.8);
+  background-color: rgba(0,0,0,.5);
+}
+
+#facts {
+  margin-bottom: 1em;
+}
+
+#factoid {
+  margin-bottom: 1em;
+}
+
+#factoid .thumbnail .img {
+  display: block;
+  width: 100%;
+  height: 100px;
+  background-size: cover;
+  background-position: center center;
+}
+
+#factoid h3 {
+  margin: 10px 0;
+}
+
+h2 {
+  font-size: 175%;
+}
+h2 a:hover {
+  text-decoration: none;
+  border-bottom: 1px solid #000;
 }

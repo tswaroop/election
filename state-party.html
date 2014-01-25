@@ -1,19 +1,73 @@
 {{ GRAMEX(cache=['assembly.csv', 'colors.csv'], max_age=30) }}{% code %}
+import collections
 data = DB.csv('assembly.csv', dtype=object)
 
 state, party = args['ST_NAME'][0], args['PARTY'][0]
 data = data[data['ST_NAME'] == state]
-data['VOTES'] = data['VOTES'].astype(float)
-data.sort(['VOTES', 'NAME'], inplace=True, ascending=[False, True])
+data = data[data['PARTY'] == party]
+winners = data[data['#'] == '1']
+
+def by(param):
+    df = pd.DataFrame(collections.OrderedDict((
+        ('WON', winners.groupby(param)['PARTY'].count()),
+        ('OUT OF', data.groupby(param)['PARTY'].count()),
+    ))).fillna(0)
+    df['%'] = (100. * df['WON'] / df['OUT OF']).astype(int)
+    return df
+
+by_year = by('YEAR').T
+by_name = by('NAME')
+by_ac = by('AC_NAME')
+N = 10
 {% end %}
 
 <h2 class="no-select">
-  <span href="?ST_NAME=&PARTY=">India</span> &raquo;
-  <span href="?PARTY=&BY=PARTY">{{ state }}</span> &raquo;
+  <a href="?ST_NAME=&PARTY=">India</a> &raquo;
+  <a href="?PARTY=&BY=PARTY">{{ state }}</a> &raquo;
   {{ party }}
 </h2>
 
-{% apply markdown %}
-For this state, show how the party has performed across the years.
+<table class="table year-table state-party">
+  <thead>
+    <tr>
+      <th></th>
+      {% for year in by_year %}
+        <th>{{ year }}</th>
+      {% end %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for param, row in by_year.iterrows() %}
+      <tr>
+        <th>{{ param }}</th>
+        {% for year, value in row.iteritems() %}
+          <td
+            {% if param == '%' %}
+              {% set fill = _color.gradient(2. * value / 100 - 1, _color.RdYlGn) %}
+              style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}"
+            {% end %}
+            href="?YEAR={{ year }}">{{ '{:,.0f}'.format(value) }}{{ '%' if param == '%' else '' }}</td>
+        {% end %}
+      </tr>
+    {% end %}
+  </tbody>
+</table>
 
-{% end %}
+<h3>Top Constituencies</h3>
+<div class="state-party row">
+  <div class="col-sm-4">
+    {{ by_ac.sort(['WON', 'OUT OF'], ascending=(False, False)).head(N).to_html() }}
+  </div>
+  <div class="col-sm-4">
+    {{ by_ac.sort(['WON', 'OUT OF'], ascending=(True, False)).head(N).to_html() }}
+  </div>
+</div>
+<h3>Top candidates</h3>
+<div class="state-party row">
+  <div class="col-sm-4">
+    {{ by_name.sort(['WON', 'OUT OF'], ascending=(False, False)).head(N).to_html() }}
+  </div>
+  <div class="col-sm-4">
+    {{ by_name.sort(['WON', 'OUT OF'], ascending=(True, False)).head(N).to_html() }}
+  </div>
+</div>

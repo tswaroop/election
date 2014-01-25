@@ -24,8 +24,8 @@ w = W / float(1 + len(years))
 {% end %}
 
 <h2 class="no-select">
-  <span href="?ST_NAME=&AC_NAME=">India</span> &raquo;
-  <span href="?AC_NAME=&BY=AC">{{ state }}</span> &raquo;
+  <a href="?ST_NAME=&AC_NAME=">India</a> &raquo;
+  <a href="?AC_NAME=&BY=AC">{{ state }}</a> &raquo;
   {{ ac }}
 </h2>
 
@@ -68,7 +68,7 @@ w = W / float(1 + len(years))
   <thead>
     <th>Party</th>
     {% for year in years %}
-      <th title="View {{ escape(ac) }} results for {{ year }}">{{ year }}</th>
+      <th title="View {{ escape(ac) }} results for {{ year }}" href="?YEAR={{ year }}">{{ year }}</th>
     {% end %}
   </thead>
   <tbody>

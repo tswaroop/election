@@ -41,8 +41,8 @@ top_parties['cx'] = top_parties['cw'].cumsum() - top_parties['cw']
 
 {% end %}
 <h2 class="no-select">
-  <span href="?ST_NAME=&YEAR=">India</span> &raquo;
-  <span href="?YEAR=&BY=PARTY">{{ args.get('ST_NAME', [''])[0] }}</span>
+  <a href="?ST_NAME=&YEAR=">India</a> &raquo;
+  <a href="?YEAR=&BY=PARTY">{{ args.get('ST_NAME', [''])[0] }}</a>
   <small class="link" {% if year_index > 0 %} href="?YEAR={{ years[year_index - 1] }}" title="Show {{ years[year_index - 1] }} results"{% end %}>◄</small>
   {{ args.get('YEAR', [''])[0] }}
   <small class="link" {% if year_index < len(years) - 1 %} href="?YEAR={{ years[year_index + 1] }}" title="Show {{ years[year_index + 1] }} results"{% end %}>►</small>
@@ -73,7 +73,7 @@ top_parties['cx'] = top_parties['cw'].cumsum() - top_parties['cw']
     L{{ row['cx'] }},{{ h[1][0] + h[1][1] }}
     v{{ -h[1][1] }}
     L{{ i*w }},{{ h[0][0] + h[0][1]  }}
-    z" fill="{{ fill }}" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]" data-toggle="highlight"/>
+    z" fill="{{ _color.brighten(fill, 0.5) }}" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]" data-toggle="highlight"/>
 
     <rect x="{{ i * w }}"     width="{{ w }}"         y="{{ h[0][0] }}" height="{{ h[0][1] }}" fill="{{ fill }}" title="{{ title }}" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]" data-toggle="highlight"/>
     <rect x="{{ row['cx'] }}" width="{{ row['cw'] }}" y="{{ h[1][0] }}" height="{{ h[1][1] }}" fill="{{ fill }}" title="{{ title }}" data-party="{{ party_key }}" class="party-legend" data-highlight="[data-party={{ party_key }}]" data-toggle="highlight"/>
@@ -122,6 +122,12 @@ data['Y'] = pos['Y']
       {% end %}
     </svg>
   </div>
-  <div class="col-sm-4" id="state-ac-year" data-src="state-ac-year?ST_NAME={{ quote(state) }}&YEAR={{ year }}&BY=LIGHT">
+  <div class="col-sm-4">
+    <div class="form-inline">
+      <div class="form-group">
+        <input class="form-control" type="search" placeholder="Search" data-search="title" data-target=".cartogram circle">
+      </div>
+    </div>
+    <div id="state-ac-year" data-src="state-ac-year?ST_NAME={{ quote(state) }}&YEAR={{ year }}&BY=LIGHT"></div>
   </div>
 </div>

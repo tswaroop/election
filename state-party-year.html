@@ -12,9 +12,9 @@ data['#'] = pd.np.arange(1, 1 + len(data))
 {% end %}
 
 <h2 class="no-select">
-  <span href="?ST_NAME=&YEAR=&PARTY=">India</span> &raquo;
-  <span href="?YEAR=&PARTY=&BY=PARTY">{{ state }}</span> &raquo;
-  <span href="?YEAR=">{{ party }}</span>
+  <a href="?ST_NAME=&YEAR=&PARTY=">India</a> &raquo;
+  <a href="?YEAR=&PARTY=&BY=PARTY">{{ state }}</a> &raquo;
+  <a href="?YEAR=">{{ party }}</a>
   <small class="link" {% if year_index > 0 %} href="?YEAR={{ years[year_index - 1] }}" title="Show {{ years[year_index - 1] }} results"{% end %}>◄</small>
   {{ year }}
   <small class="link" {% if year_index < len(years) - 1 %} href="?YEAR={{ years[year_index + 1] }}" title="Show {{ years[year_index + 1] }} results"{% end %}>►</small>

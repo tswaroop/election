@@ -1,5 +1,10 @@
-{{ GRAMEX(cache=['js/G.min.js', 'results.csv', 'colors.csv', 'style.css', 'all.html']) }}{% code %}
+{{ GRAMEX(cache=['js/G.min.js', 'results.csv', 'colors.csv', 'facts.csv', 'style.css', 'all.html', 'analysis-table.html']) }}{% code %}
 title = 'Assembly Elections'
+facts = pd.read_csv('facts.csv').fillna('')
+data = DB.csv('assembly.csv', dtype=object)
+data['VOTES'] = data['VOTES'].astype(float)
+data['AGE'] = data['AGE'].astype(float)
+data['COUNT'] = 1
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="utf-8">
@@ -9,14 +14,13 @@ title = 'Assembly Elections'
   <style>
     {{ T('css/bootstrap.v3.min.css') }}
     {{ T('style.css') }}
-  </style>
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57x57-precomposed.png">
-  <link rel="shortcut icon" sizes="196x196" href="img/touch-icon-196x196.png">
-  <link rel="shortcut icon" href="img/apple-touch-icon.png">
-  <meta name="msapplication-TileImage" content="img/apple-touch-icon-144x144-precomposed.png">
+  </style>  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ static_url('img/apple-touch-icon-144x144-precomposed.png') }}">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ static_url('img/apple-touch-icon-114x114-precomposed.png') }}">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ static_url('img/apple-touch-icon-72x72-precomposed.png') }}">
+  <link rel="apple-touch-icon-precomposed" href="{{ static_url('img/apple-touch-icon-57x57-precomposed.png') }}">
+  <link rel="shortcut icon" sizes="196x196" href="{{ static_url('img/touch-icon-196x196.png') }}">
+  <link rel="shortcut icon" href="{{ static_url('img/apple-touch-icon.png') }}">
+  <meta name="msapplication-TileImage" content="{{ static_url('img/apple-touch-icon-144x144-precomposed.png') }}">
   <meta name="msapplication-TileColor" content="{{ _color.Office.accent_4 }}">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -31,19 +35,123 @@ title = 'Assembly Elections'
 
 <header>
   <div class="container">
-    <h1 href="?ST_NAME=&YEAR=&AC_NAME=&PARTY=&BY=">
-      <span class="heading">
+    <h1>
+      <span class="heading" href=".?ST_NAME=&YEAR=&AC_NAME=&PARTY=&BY=">
         <span class="em">Assembly</span> Elections<span class="title"></span>
-        <small>&mdash; every election at a glance</small>
+        <small>in India</small>
       </span>
-      <div style="float:right;font-size:20px;line-height:40px;text-align:right">
-        <a class="show-help btn btn-default" data-toggle="button" href="#">Help</a>
+      <div class="pull-right">
+        <div class="btn-group">
+          <a class="btn btn-default btn-sm show-insights" href=".?ST_NAME=&YEAR=&AC_NAME&PARTY=&BY=">Insights</a>
+          <a class="btn btn-default btn-sm show-results" href="india">Results</a>
+        </div>
       </div>
     </h1>
   </div>
 </header>
 
 <div class="container main">
+  <div id="facts" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      {% for index, row in facts[facts['type'] == 'carousel'].iterrows() %}
+        <li data-target="#facts" data-slide-to="{{ index }}"{{ ' class="active"' if index == 0 else ''}}></li>
+      {% end %}
+    </ol>
+
+    <div class="carousel-inner">
+      {% for index, row in facts[facts['type'] == 'carousel'].iterrows() %}
+        <div class="item{{ ' active' if index == 0 else '' }}" href="{{ row['link'] }}">
+          <div class="img" style="background-image:url({{ static_url(row['image']) }})"></div>
+          <div class="carousel-caption">
+            <h3>{{ escape(row['title']) }}</h3>
+            <p>{{ row['content'] }}</p>
+          </div>
+        </div>
+      {% end %}
+    </div>
+
+    <a class="left carousel-control" href="#facts" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#facts" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+  </div>
+
+  <div id="factoid" class="row">
+    {% for index, row in facts[facts['type'] == 'factoid'].iterrows() %}
+      <div class="col-sm-4">
+        <div class="thumbnail" href="{{ row['link'] }}">
+          <div class="img" style="background-image:url({{ static_url(row['image']) }})"></div>
+          <div class="caption">
+            <h3>{{ escape(row['title']) }}</h3>
+            <p>{{ row['content'] }}</p>
+          </div>
+        </div>
+      </div>
+    {% end %}
+  </div>
+
+  <div id="analyses">
+    <ul class="nav nav-tabs">
+      <li><a data-toggle="tab" href="#margin">Winner margins</a></li>
+      <li><a data-toggle="tab" href="#candidates"># candidates</a></li>
+      <li><a data-toggle="tab" href="#voters"># voters</a></li>
+      <li><a data-toggle="tab" href="#votes">Vote counts</a></li>
+      <li><a data-toggle="tab" href="#gender"># women</a></li>
+      <li><a data-toggle="tab" href="#age">Young vs old</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <div class="tab-pane" id="margin">
+        {% code %}
+        N = 20
+        election_groups = data.groupby(['ST_NAME', 'AC_NAME', 'YEAR'])
+        margins = data[data['#'].isin(['1', '2'])]
+        margins = margins.pivot_table(rows=['ST_NAME', 'AC_NAME', 'YEAR'], cols=['#'], values='VOTES', aggfunc='max')
+        margins['DIFF'] = margins['1'] - margins['2']
+        diffs = margins.dropna().sort(['DIFF'], ascending=False).reset_index()
+        tables = (('Highest vote difference', diffs.head(N)), ('Closest elections', diffs.tail(N)[::-1]))
+        {% end %}
+        {{ T('analysis-table.html', tables=tables, column='Difference') }}
+      </div>
+
+      <div class="tab-pane" id="candidates">
+        {% set candidates = election_groups['COUNT'].sum().dropna().order(ascending=False).reset_index() %}
+        {% set tables = (('Most candidates', candidates.head(N)), ('Uncontested wins', candidates[candidates['COUNT'] == 1].sort(['ST_NAME', 'AC_NAME', 'YEAR']))) %}
+        {{ T('analysis-table.html', tables=tables, column='Candidates') }}
+      </div>
+
+      <div class="tab-pane" id="voters">
+        {% set voters = election_groups['VOTES'].sum().dropna().order(ascending=False).reset_index() %}
+        {% set tables = (('Most voters', voters.head(N)), ('Fewest voters', voters.tail(N)[::-1])) %}
+        {{ T('analysis-table.html', tables=tables, column='Votes') }}
+      </div>
+
+      <div class="tab-pane" id="votes">
+        {% set winner_votes = margins['1'].order(ascending=False).reset_index() %}
+        {% set zero_votes = data[['ST_NAME', 'AC_NAME', 'YEAR', 'NAME', 'VOTES']][data['VOTES'] == 0] %}
+        {% set tables = (('Most votes', winner_votes.head(N)), ('No votes, not even their own', zero_votes)) %}
+        {{ T('analysis-table.html', tables=tables, column='Votes') }}
+      </div>
+
+      <div class="tab-pane" id="gender">
+        {% set women_data = data[data['SEX'] == 'F'] %}
+        {% set women_candidates = women_data.groupby(['ST_NAME', 'AC_NAME', 'YEAR'])['COUNT'].sum().order(ascending=False).reset_index() %}
+        {% set women_winners = women_data[women_data['#'] == '1'][['ST_NAME', 'AC_NAME', 'YEAR', 'NAME', 'COUNT']].sort(['YEAR', 'ST_NAME', 'AC_NAME'], ascending=(True, True, True)) %}
+        {% set tables = (('Most women candidates', women_candidates.head(N)), ('Women winners', women_winners.head(N))) %}
+        {{ T('analysis-table.html', tables=tables, column='Women') }}
+      </div>
+
+      <div class="tab-pane" id="age">
+        {% set agewise = data[['ST_NAME', 'AC_NAME', 'YEAR', 'NAME', 'AGE']].dropna().sort('AGE') %}
+        {% set tables = (('Youngest candidates', agewise.head(N)), ('Oldest candidates', agewise.tail(N)[::-1])) %}
+        {{ T('analysis-table.html', tables=tables, column='Age') }}
+      </div>
+    </div>
+  </div>
+
   {{ T('all.html', DB=DB) }}
 
   <div id="results"></div>
@@ -57,7 +165,7 @@ MBP.startupImage();
 MBP.hideUrlBarOnLoad();
 MBP.enableActive();
 
-// TODO: FastClick
+// TODO: Add FastClick
 if (window.FastClick)
   window.addEventListener('load', function() { FastClick.attach(document.body); }, false);
 
@@ -66,66 +174,6 @@ if (window.FastClick)
 {{ T('js/d3.v3.min.js') }}
 {{ T('js/G.min.js') }}
 {{ T('js/jquery.scrollTo.min.js') }}
-
-
-function _G_search_transform(s) {
-  return (s || '').toLowerCase().replace(/\s+/g, ' ').replace(/^ /, '').replace(/ $/, '');
-}
-
-$.fn.search = function(options) {
-  options = options || {};
-  var self = this,
-      attr = options.attr || 'data-search',
-      selector = options.selector || '[' + attr + ']',
-      text = options.text || 'title',
-      target = options.target || '[' + text + ']',
-      transform = options.transform || _G_search_transform,
-      showClass = options.showClass || '',
-      hideClass = options.hideClass || 'fade',
-      lastsearch = 'search.lastsearch',
-      mapping = 'search.mapping';
-
-  if (options.off)
-    return self.off('.search')
-
-  function refresh($el) {
-    var list = [],
-        targets = $($el.data('target') || target),
-        textattr = $el.data('text') || text;
-    targets.each(typeof textattr == 'function' ?
-        function() { list.push([$(this), transform(textattr(this)), false]) } :
-        function() { list.push([$(this), transform(this.getAttribute(textattr)), false]) }
-    );
-    $el.data(mapping, list);
-    return list;
-  }
-
-  function search(e) {
-    var $el = $(e.target),
-        search = transform(e.target.value),
-        map = $el.data(mapping),
-        re = new RegExp(search),
-        i = 0,
-        cell;
-
-    if ($el.data(lastsearch) == search) return;
-    $el.data(lastsearch, search);
-    if (!map) map = refresh($el);
-
-    var re = new RegExp(search);
-    for (; cell=map[i]; i++) {
-      var hide = !cell[1].match(re);
-      if (hide !== cell[2]) {
-          cell[2] = hide;
-          cell[0][hide ? 'addClass' : 'removeClass'](hideClass);
-      }
-    }
-  }
-
-  return self
-    .on('keyup.search', selector, search)
-    .on('change.search', selector, search)
-};
 
 $('body')
   .tooltip({
@@ -151,33 +199,51 @@ $('body')
   .aspect({
     selector: '[data-height]'
   })
-  .search({
-    selector: 'input[type=search]',
-    hideClass: 'hide'
-  })
+  .search()
   .on('click', '.show-help', function() {
+    $(this).toggleClass('active')
     if ($(this).is('.active'))
-      $('.help').tooltip('hide')
-    else
       $('.help').dispatch(touch_device ? 'focus': 'mouseover')
+    else
+      $('.help').tooltip('hide')
   })
+
+var scroll_options = {
+  duration: 300,
+  margin: true,
+  offset: {top: -20}
+};
 
 function post_load() {
   $('.tooltip').remove();
   $('.show-help').removeClass('active');
-  // Resize the SVG we just loaded for aspect ratio
-  $(window).dispatch('resize');
-  scrolled = $.scrollTo('#results', {
-    duration: 300,
-    margin: true,
-    offset: {top: -20}
-  });
+  $('#results').show();
+  $(window).dispatch('resize');   // Aspect-ise the SVG we just loaded
+  scrolled = $.scrollTo('#results', scroll_options);
 }
 
 function redraw() {
-  var query = G.url.parse(location.hash.replace(/^#/, ''));
-  if (!query.search)
+  var hash = location.hash.replace(/^#/, ''),
+      query = G.url.parse(hash);
+  if (!hash.match(/^india/)) {
+    $('#facts, #factoid, #analyses').show();
+    $('.all-results').hide();
+    $('.show-insights').addClass('active');
+    $('.show-results').removeClass('active');
+    $('#results').empty()
+    $.scrollTo('h1', scroll_options);
+    return;
+  }
+
+  $('#facts, #factoid, #analyses').hide();
+  $('.all-results').show();
+  $('.show-results').addClass('active');
+  $('.show-insights').removeClass('active');
+
+  if (!query.search) {
       $('#results').empty()
+      $.scrollTo('h1', scroll_options);
+  }
   else if (query.searchKey.ST_NAME && query.searchKey.AC_NAME && query.searchKey.YEAR)
       $('#results').load('state-ac-year?' + query.search, post_load)
   else if (query.searchKey.ST_NAME && query.searchKey.AC_NAME && query.searchKey.PARTY)
@@ -204,15 +270,12 @@ redraw();
 </body></html>
 {#
 
-- Add help
-
 - Multi-click is not obvious. Check box? Active state?
 - Add filters: gender, caste, # candidates, etc
 
 Multi-filters:
     - Women candidates
     - Anti-incumbent constituency
-    -
 
 Notes:
 - Connect to iPad, display on device, help tell a story directly
@@ -223,7 +286,6 @@ Notes:
     - The issue calendar is the key driver of content
     - Brainstorming of stories
 - State story
-
 
 Lok Sabha next week
 

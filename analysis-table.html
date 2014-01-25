@@ -1,0 +1,29 @@
+{% from urllib import quote %}
+
+<div class="row">
+  {% for name, table in tables %}
+    {% set field = table.columns[-1] %}
+    <div class="col-md-6">
+      <h3>{{ name }}</h3>
+      <table class="table table-condensed analysis">
+        <thead>
+          <th>Place</th>
+          <th>Year</th>
+          {% if 'NAME' in table.columns %}<th>Name</th>{% end %}
+          <th>{{ column }}</th>
+        </thead>
+        <tbody>
+          {% for i, row in table.iterrows() %}
+            <tr href="india?ST_NAME={{ quote(row['ST_NAME']) }}&YEAR={{ row['YEAR'] }}&AC_NAME={{ quote(row['AC_NAME']) }}">
+              <td>{{ row['AC_NAME'].title() }}, {{ row['ST_NAME'].title() }}</td>
+              <td>{{ row['YEAR'] }}</td>
+              {% if 'NAME' in row %}<td>{{ row['NAME'].title() }}</td>{% end %}
+              <td>{{ '{:,.0f}'.format(row[field]) }}</td>
+            </tr>
+          {% end %}
+        </tbody>
+      </table>
+    </div>
+  {% end %}
+</div>
+

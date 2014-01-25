@@ -5,7 +5,7 @@ ac_year = winners.pivot_table(rows='AC_NAME', cols='YEAR', values='PARTY', aggfu
 groups = winners.groupby(['AC_NAME', 'YEAR']).groups
 {% end %}
 <h2>
-  <span href="?ST_NAME=&YEAR=&AC_NAME=&BY=">India</span> &raquo;
+  <a href="?ST_NAME=&YEAR=&AC_NAME=&BY=">India</a> &raquo;
   {{ state }}
   <div class="btn-group">
     <a class="btn btn-xs btn-default" href="?BY=PARTY">Party-wise</a>
@@ -13,7 +13,7 @@ groups = winners.groupby(['AC_NAME', 'YEAR']).groups
   </div>
   <span class="form-inline pull-right">
     <div class="form-group">
-      <input class="form-control" type="search" placeholder="Search" data-target=".state-by-ac tr[data-ac]" data-text="data-ac">
+      <input class="form-control" type="search" placeholder="Search" data-search="data-ac" data-target=".state-by-ac tr[data-ac]" data-hide-class="hide">
     </div>
   </span>
 </h2>
