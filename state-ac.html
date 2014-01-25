@@ -78,13 +78,13 @@ w = W / float(1 + len(years))
         <th style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ party }}</th>
         {% for year in years %}
           {% if (party, year) in groups %}{% code %}
-            cells = data.ix[groups[party, year]].fillna('')
+            cells = data.ix[groups[party, year]]
             cell = cells.iloc[0]
             {% end %}
             <td
               class="rank{{ min(3, int(cell['#'])) }}"
               href="?YEAR={{ year }}"
-              title="{{ escape(cell['NAME']) }}<br>{{ '{:,.0f}'.format(float(cell['VOTES'] or 0)) }} votes<br>Rank {{ cell['#'] }}<br>{{ year }}<br>{{ cell['SEX'] }} {{ escape(cell['CATEGORY']) }}"
+              title="{{ escape(cell['NAME']) }}<br>{{ '{:,.0f}'.format(float(cell['VOTES'] or 0)) }} votes<br>Rank {{ cell['#'] }}<br>{{ year }}<br>{{ cell['SEX'] }} {{ cell['CATEGORY'] }}"
               >{{ cell['NAME'] }}{% if len(cells) > 1 %} +{{ len(cells) - 1}}{% end %}
               </td>
           {% else %}<td></td>{% end %}
