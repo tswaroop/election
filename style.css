@@ -18,7 +18,7 @@ header small {
 }
 
 text { pointer-events: none; }
-[href], [data-highlight] {
+[href], [data-highlight], .home {
   cursor: pointer;
   pointer-events: all;
 }
@@ -178,4 +178,29 @@ h2 {
 h2 a:hover {
   text-decoration: none;
   border-bottom: 1px solid #000;
+}
+
+
+/* For Parliament elections */
+
+.topic {
+  width: 231px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.topic .caption {
+  display: inline-block;
+  height: 12em;
+}
+
+.sorted {
+  background-color: #8064a2;
+  color: #fff;
+}
+
+.multicolumn {
+ -webkit-column-count: 2;
+    -moz-column-count: 2;
+         column-count: 2;
 }

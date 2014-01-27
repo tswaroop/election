@@ -1,0 +1,36 @@
+{% code %}
+from urllib import quote
+data, elections = DB.csv('parliament.csv', dtype=object)
+data = data[data['PC'] == args['PC'][0]]
+data = data[data['STATE'] == args['STATE'][0]]
+data = data[data['YEAR'] == args['YEAR'][0]]
+data.sort('VOTES', ascending=False, inplace=True)
+columns = ['#', 'NAME', 'SEX', 'PARTY', 'AGE', 'CATEGORY', 'VOTES']
+{% end %}
+<h2>{{ args['PC'][0].title() }}, {{ args['STATE'][0].title() }}: {{ args['YEAR'][0] }}</h2>
+<table class="table table-condensed analysis">
+  <thead>
+    {% for c in columns %}<th>{{ c }}</th>{% end %}
+  </thead>
+  <tbody>
+    {% for i, row in data.iterrows() %}
+      <tr>
+        {% for c in columns %}
+          {% if c in ('WINNER', 'NAME') %}
+            <td>{{ escape(row[c].title()) }}</td>
+          {% elif c in ('MARGIN', 'VOTES', '1', '2', 'WOMEN') %}
+            <td>{{ 0 if pd.isnull(row[c]) else '{:,.0f}'.format(row[c]) }}</td>
+          {% elif c.endswith('%') %}
+            <td>{{ pc_format.format(0 if pd.isnull(row[c]) else row[c]) }}</td>
+          {% elif c in ('CATEGORY', 'SEX') %}
+            <td>{{ '' if pd.isnull(row[c]) else row[c] }}</td>
+          {% elif c in ('AGE',) %}
+            <td>{{ '' if pd.isnull(row[c]) else '{:,.0f}'.format(row[c]) }}</td>
+          {% else %}
+            <td>{{ row[c] }}</td>
+          {% end %}
+        {% end %}
+      </tr>
+    {% end %}
+  </tbody>
+</table>

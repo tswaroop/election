@@ -1,0 +1,11 @@
+type,image,link,title,content
+,img/clip1.jpg,summary?margin=max,Highest margins,"**Anil Basu**'s victory at Arambagh, WB had the largest margin CPM or any party had seen: over 5.9 lakh votes."
+,img/clip2.jpg,summary?margin=min,Lowest margins,"On the other hand, **Som Marandi** (BJP) and **Konathala Ramakrishna** (INC) won by just 9 votes in Bihar, 1998 and AP, 1989 respectively."
+,img/clip3.jpg,summary?votes=max,Most voters,"Until 2004, **Outer Delhi** had the highest number of voters polled (15 lakh). After the 2008 delimitation, that mantle went to **Malkajgiri, AP** (12 lakh)"
+,img/clip4.jpg,summary?votes=min,Fewest voters,"**Lakshadweep** has the lowest number of votes counted consistently across the years, with close competition from **Dadra & Nagar Haveli**."
+,img/clip5.jpg,summary?candidates=max,Most candidates,"**Nalgonda, AP** fielded a record-breaking 480 candidates in the 1996 elections, with **Belgaum, KA** a close second in the same year."
+,img/clip6.jpg,summary?candidates=1,Uncontested wins,"Since 1989, no election was won uncontested. **Srinagar, J&K** was the last, where Mohammad Shafi Bhat of JKN won without competition."
+,img/clip7.jpg,summary?women=max,Most women,"Only two elections had women candidates exclusively: **Karur, TN** (1967) and **Panskura, WB** (1977). Only 8 elections have had more women than men."
+,img/clip8.jpg,summary?age=max,Old candidates,"**Arif Ahmed Shaikh Jafhar** (NBNP) contested the 2009 elections from Dhhule, MH at age 99, making him the oldest candidate ever in India."
+,img/clip9.jpg,summary?party=INC,INC strongholds,TBD
+,img/clipa.jpg,summary?party=BJP,BJP strongholds,TBD
