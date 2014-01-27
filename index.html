@@ -1,5 +1,7 @@
 {{ GRAMEX(cache=['js/G.min.js', 'results.csv', 'colors.csv', 'facts.csv', 'style.css', 'all.html', 'analysis-table.html']) }}{% code %}
+from urllib import quote
 title = 'Assembly Elections'
+description = 'A visual guide to the history of Indian assembly elections, from 1951 until today, by Gramener.'
 facts = pd.read_csv('facts.csv').fillna('')
 data = DB.csv('assembly.csv', dtype=object)
 data['VOTES'] = data['VOTES'].astype(float)
@@ -11,14 +13,13 @@ data['COUNT'] = 1
   <title class="title">{{ title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="cleartype" content="on">
-  <style>
-    {{ T('css/bootstrap.v3.min.css') }}
-    {{ T('style.css') }}
-  </style>  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ static_url('img/apple-touch-icon-144x144-precomposed.png') }}">
+  <link rel="stylesheet" href="{{ static_url('/css/bootstrap.v3.min.css') }}">
+  <link rel="stylesheet" href="{{ static_url('style.css') }}">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ static_url('img/apple-touch-icon-144x144-precomposed.png') }}">
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ static_url('img/apple-touch-icon-114x114-precomposed.png') }}">
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ static_url('img/apple-touch-icon-72x72-precomposed.png') }}">
   <link rel="apple-touch-icon-precomposed" href="{{ static_url('img/apple-touch-icon-57x57-precomposed.png') }}">
-  <link rel="shortcut icon" sizes="196x196" href="{{ static_url('img/touch-icon-196x196.png') }}">
+  <link rel="shortcut icon" sizes="196x196" href="{{ static_url('img/touch-icon-196x196-precomposed.png') }}">
   <link rel="shortcut icon" href="{{ static_url('img/apple-touch-icon.png') }}">
   <meta name="msapplication-TileImage" content="{{ static_url('img/apple-touch-icon-144x144-precomposed.png') }}">
   <meta name="msapplication-TileColor" content="{{ _color.Office.accent_4 }}">
@@ -26,6 +27,11 @@ data['COUNT'] = 1
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="{{ title }}">
+  <meta name="description" content="{{ description }}">
+  <meta property="og:image" content="{{ static_url('img/startup-tablet-landscape.png') }}">
+  <meta property="twitter:image" content="{{ static_url('img/startup-tablet-landscape.png') }}">
+  <meta property="og:description" content="{{ description }}">
+  <meta property="twitter:description" content="{{ static_url('img/startup-tablet-landscape.png') }}">
   <script>
       // Remove no-js class. Set no-touch upfront to ensure -webkit-scrollbar styling
       var touch_device = 'ontouchend' in document;
@@ -41,6 +47,12 @@ data['COUNT'] = 1
         <small>in India</small>
       </span>
       <div class="pull-right">
+        <a class="fb-share popup" title="Share on Facebook" data-placement="bottom" target="_blank" href="https://www.facebook.com/dialog/feed?app_id=163328100435225&display=popup&caption=By%20Gramener&link={{ quote('https://gramener.com/election/') }}&redirect_uri=https://gramener.com/election/">
+          <svg viewBox="0 0 266.893 266.895" width="24px" height="24px">
+            <path fill="#3C5A99" d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225H248.082z"/>
+            <path fill="#FFFFFF" d="M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585v99.803H182.409z"/>
+          </svg>
+        </a>
         <div class="btn-group">
           <a class="btn btn-default btn-sm show-insights" href=".?ST_NAME=&YEAR=&AC_NAME&PARTY=&BY=">Insights</a>
           <a class="btn btn-default btn-sm show-results" href="india">Results</a>
@@ -160,10 +172,10 @@ data['COUNT'] = 1
 <script>
 {{ T('js/helper.js') }}
 
-MBP.scaleFix();
-MBP.startupImage();
-MBP.hideUrlBarOnLoad();
-MBP.enableActive();
+MBP.scaleFix()
+MBP.startupImage()
+MBP.hideUrlBarOnLoad()
+MBP.enableActive()
 
 // TODO: Add FastClick
 if (window.FastClick)
@@ -171,7 +183,6 @@ if (window.FastClick)
 
 {{ T('js/jquery2.min.js') }}
 {{ T('js/bootstrap.v3.min.js') }}
-{{ T('js/d3.v3.min.js') }}
 {{ T('js/G.min.js') }}
 {{ T('js/jquery.scrollTo.min.js') }}
 
@@ -194,6 +205,7 @@ $('body')
     target: '.rank1,.rank2,.rank3'
   })
   .urlfilter({
+    selector: '[href]:not(.popup)',
     target: '#'
   })
   .aspect({
@@ -225,6 +237,7 @@ function post_load() {
 function redraw() {
   var hash = location.hash.replace(/^#/, ''),
       query = G.url.parse(hash);
+
   if (!hash.match(/^india/)) {
     $('#facts, #factoid, #analyses').show();
     $('.all-results').hide();
@@ -266,27 +279,6 @@ function redraw() {
 
 $(window).on('hashchange', redraw);
 redraw();
+
 </script>
 </body></html>
-{#
-
-- Multi-click is not obvious. Check box? Active state?
-- Add filters: gender, caste, # candidates, etc
-
-Multi-filters:
-    - Women candidates
-    - Anti-incumbent constituency
-
-Notes:
-- Connect to iPad, display on device, help tell a story directly
-- State-focus every week (schedule to be made available)
-- Show the past trend of the state so far. State summary must be the most prominent.
-- Anchors are not data and chart friendly. Need to make it easy for them
-- Process
-    - The issue calendar is the key driver of content
-    - Brainstorming of stories
-- State story
-
-Lok Sabha next week
-
-#}
