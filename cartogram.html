@@ -1,0 +1,276 @@
+{{ GRAMEX(cache=['js/G.min.js', 'results.csv', 'colors.csv', 'latlong.csv', 'style.css']) }}{% code %}
+import json
+from cStringIO import StringIO
+from urllib import quote
+from common import slug, latlong_setup
+
+title = 'Assembly Elections Cartogram'
+
+data = DB.csv('assembly.csv', dtype=object)
+states = data['ST_NAME'].unique()
+metric_names = {
+  'COUNT': 'Candidates',
+  'VOTES': 'Voters',
+  'MARGIN': 'Margin',
+}
+metrics = metric_names.keys()
+state = args.get('ST_NAME', states)[0]
+metric = args.get('metric', metrics)[0]
+
+# Create a AC_NAME vs YEAR pivot table that sums up the metric
+subset = data[data['ST_NAME'] == state]
+winners = subset[subset['#'] == '1'].set_index(['AC_NAME', 'YEAR'])
+if metric == 'MARGIN':
+    runners = subset[subset['#'] == '2'].set_index(['AC_NAME', 'YEAR'])
+    total = subset.groupby(['AC_NAME', 'YEAR'])['VOTES'].sum().astype(float)
+    subset = (winners['VOTES'] - runners['VOTES']) / total * 100
+    subset.name = 'MARGIN'
+    subset = subset.reset_index()
+pivot = subset.pivot_table(
+  rows='AC_NAME',
+  cols='YEAR',
+  values=metric,
+  aggfunc='sum'
+).fillna(0).astype(int)
+
+# Create a pivot for parties
+party_pivot = winners['PARTY'].reset_index().pivot_table(
+  rows='AC_NAME',
+  cols='YEAR',
+  values='PARTY',
+  aggfunc='max'
+).fillna('')
+
+# Ensure that the party_pivot and pivot are synced
+assert (party_pivot.index == pivot.index).all()
+assert (party_pivot.columns == pivot.columns).all()
+
+years = subset['YEAR'].unique()
+
+# Add the latitude and longitude
+latlong = DB.csv('latlong.csv', setup=latlong_setup).set_index(['ST_NAME', 'AC_NAME']).ix[state]
+pivot['LAT'] = latlong['LAT']
+pivot['LONG'] = latlong['LONG']
+
+colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
+
+W = 800
+
+{% end %}<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title class="title">{{ title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ static_url('/css/bootstrap.v3.min.css') }}">
+  <link rel="stylesheet" href="{{ static_url('style.css') }}">
+</head><body>
+
+<header>
+  <div class="container">
+    <h1 class="no-select">
+      <span class="heading" href=".?ST_NAME=&metric=">
+        <span class="em">Assembly</span> Elections<span class="title"></span>
+      </span>
+      <span class="prev clickable">◄</span>
+      <span class="year">Year</span>
+      <span class="next clickable">►</span>
+      <div class="pull-right">
+        {% for param, val, vals, names in (('ST_NAME', state, states, {}), ('metric', metric, metrics, metric_names)) %}
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{ escape(names.get(val, val)) }} <span class="caret"></span></button>
+            <ul class="dropdown-menu pull-right" role="menu">
+              {% for v in sorted(vals) %}
+                <li data-year="{{ v }}"{{ ' class="active"' if v == val else '' }}><a href="?{{ quote(param) }}={{ v }}">{{ escape(names.get(v, v)) }}</a></li>
+              {% end %}
+            </ul>
+          </div>
+        {% end %}
+      </div>
+    </h1>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-9">
+      <p class="summary summary-title"></p>
+      <svg width="100%" data-height="1" viewBox="0 0 {{ W }} {{ W }}">
+        {% set w = W / float(len(colors)) %}
+        {% for i, (party, color) in enumerate(colors.iteritems()) %}
+          <rect class="party-legend"
+            x="{{ w * i }}"
+            width="{{ w }}"
+            height="{{ 20 }}"
+            fill="{{ color }}"></rect>
+          <text x="{{ w * (i + .5) }}" y="{{ 20 * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
+        {% end %}
+      </svg>
+    </div>
+    <div class="col-sm-3 cartogram-results">
+    </div>
+  </div>
+</div>
+<script id="data" type="text/csv">{% set csv = StringIO() %}{% set pivot.to_csv(csv, float_format='%.3f') %}{{ csv.getvalue() }}</script>
+<script id="party" type="text/csv">{% set csv = StringIO() %}{% set party_pivot.to_csv(csv) %}{{ csv.getvalue() }}</script>
+
+<script src="{{ static_url('/js/jquery.min.js') }}"></script>
+<script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
+<script src="{{ static_url('js/G.min.js') }}"></script>
+<script src="{{ static_url('/js/d3.v3.min.js') }}"></script>
+<script>
+{% code %}
+lat_range = pivot['LAT'].max() - pivot['LAT'].min()
+long_range = pivot['LONG'].max() - pivot['LONG'].min()
+scale = max(lat_range, long_range)
+{% end %}
+
+var colors = {{ colors.to_json() }}
+
+var data = d3.csv.parse($('#data').text(), function(row) {
+  for (var key in row) {
+    // Convert values to integers
+    if (key != 'AC_NAME')
+      row[key] = +row[key]
+    // Get the scaled x,y coords
+    row.x = row.x0 = {{ W }} * (.5 + (row.LONG - {{ (pivot['LONG'].max() + pivot['LONG'].min()) / 2 }}) / {{ scale }})
+    row.y = row.y0 = {{ W }} * (.5 - (row.LAT  - {{ (pivot['LAT' ].max() + pivot['LAT' ].min()) / 2 }}) / {{ scale }})
+  }
+  return row
+})
+
+var party = d3.csv.parse($('#party').text())
+
+var years = {{ json.dumps(sorted(years)) }},
+    year = "{{ years[0] }}"
+
+var force = d3.layout.force()
+      .charge(0)
+      .gravity(0.01)
+      .size([{{ W }}, {{ W }}])
+      .nodes(data)
+      .on("tick", tick)
+
+var acs = d3.select('svg').selectAll('.ac')
+    .data(data)
+  .enter()
+    .append('circle')
+    .attr('class', 'ac clickable')
+    .attr('stroke', 'rgba(0,0,0,.4)')
+    .attr('cx', function(d) { return d.x })
+    .attr('cy', function(d) { return d.y })
+    .on('click', function(d) {
+      var href = 'state-ac-year?BY=LIGHT&ST_NAME={{ quote(state) }}&AC_NAME=' + encodeURIComponent(d.AC_NAME) + '&YEAR=' + year
+      $('.cartogram-results').load(href)
+    })
+
+function tick(e) {
+  acs
+    .each(gravity(e.alpha * .1))
+    .each(collide(.5))
+    .attr('cx', function(d) { return d.x || -100 })
+    .attr('cy', function(d) { return d.y || -100 })
+}
+
+function gravity(k) {
+  return function(d) {
+    d.x += (d.x0 - d.x) * k
+    d.y += (d.y0 - d.y) * k
+  }
+}
+
+function collide(k) {
+  var q = d3.geom.quadtree(data)
+  return function(node) {
+    var nr = node.r,
+        nx1 = node.x - nr,
+        nx2 = node.x + nr,
+        ny1 = node.y - nr,
+        ny2 = node.y + nr
+    q.visit(function(quad, x1, y1, x2, y2) {
+      if (quad.point && (quad.point !== node)) {
+        var x = node.x - quad.point.x,
+            y = node.y - quad.point.y,
+            l = x * x + y * y,
+            r = nr + quad.point.r
+        if (l < r * r) {
+          l = ((l = Math.sqrt(l)) - r) / l * k
+          node.x -= x *= l
+          node.y -= y *= l
+          quad.point.x += x
+          quad.point.y += y
+        }
+      }
+      return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1
+    })
+  }
+}
+
+var num = d3.format(',.0f'),
+    $year = $('.year'),
+    $summary = $('.summary')
+
+function title(d, i) {
+  return d.AC_NAME + ': ' + num(d[year]) +
+         '{{ '%' if metric == 'MARGIN' else '' }} {{ metric_names[metric] }} in ' + year +
+         ' (' + party[i][year] + ')'
+}
+
+function refresh() {
+  $year.text(year)
+  force.start()
+  for (var i=0, sum=0, row; row=data[i]; i++) {
+    row.r = Math.pow(row[year] / {{ pivot.median().median() }}, .5) * 8
+    sum += row[year]
+  }
+  acs
+    .attr('r', function(d) { return d.r })
+    .attr('fill', function(d, i) { return colors[party[i][year]] || 'rgba(128,128,128,.5)' })
+    .attr('title', title)
+    .attr('data-original-title', title)
+  $summary.text(num(sum) + ' {{ metric_names[metric] }}')
+}
+
+function next_year() {
+  var index = years.indexOf(year)
+  if (index < years.length - 1) {
+    year = years[index + 1]
+    refresh()
+  }
+}
+
+function prev_year() {
+  var index = years.indexOf(year)
+  if (index > 0) {
+    year = years[index - 1]
+    refresh()
+  }
+}
+
+$('.next').on('click', next_year)
+$('.prev').on('click', prev_year)
+
+$('body')
+  .tooltip({
+    selector: '[title]',
+    container: 'body',
+    html: true
+  })
+  .urlfilter({
+    selector: '[href]:not(.popup)'
+  })
+  .aspect({
+    selector: '[data-height]'
+  })
+  .on('click', '[data-link]', function() {
+    window.open($(this).data('link'))
+  })
+  .on('keyup', function(e) {
+    if      (e.keyCode == 37) prev_year(e)
+    else if (e.keyCode == 39) next_year(e)
+  })
+
+refresh()
+
+</script>
+</body></html>

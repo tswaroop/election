@@ -1,15 +1,7 @@
 {{ GRAMEX(cache=['assembly.csv', 'colors.csv', 'latlong.csv'], max_age=30) }}{% code %}
-from common import slug
+from common import slug, R, latlong_setup
 from urllib import quote
 
-R = 0.1
-def latlong_setup(latlong):
-    latlong['X'] = latlong['Y'] = pd.np.empty(len(latlong))
-    for state, indices in latlong.groupby('ST_NAME').groups.iteritems():
-        xy = layout.unpack(latlong.ix[indices][['LONG', 'LAT']], [R] * len(indices), gravity=0, factor=.99)
-        latlong['X'][indices] = xy[:,0]
-        latlong['Y'][indices] = xy[:,1]
-    return latlong
 
 party_colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 data = DB.csv('assembly.csv', dtype=object)

@@ -1,4 +1,4 @@
-{% code %}
+{{ GRAMEX(cache=['parliament.csv']) }}{% code %}
 from urllib import quote
 data, elections = DB.csv('parliament.csv', dtype=object)
 data = data[data['PC'] == args['PC'][0]]

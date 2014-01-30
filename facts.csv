@@ -1,7 +1,7 @@
 type,image,link,title,content
-carousel,img/clip4.jpg,india?ST_NAME=Tamil%20Nadu&YEAR=1996&AC_NAME=MODAKKURICHI,"Modakkuruchi, TN: A deluge of candidates","1,033 candidates contested in Modakkurichi, Tamil Nadu in the 1996 elections: the largest number of candidates in the history of Indian elections. 88 of them didn't even vote for themselves."
-carousel,img/clip2.jpg,india?ST_NAME=Gujarat&AC_NAME=CHORASI&YEAR=2007,"Chorasi, Gujarat: The most votes ever",Narottambhai Patel of BJP won at Chorasi in Gujarat with 5.84 lakh votes. This is the largest number of votes that any candidate has ever received. This is also the largest margin of victory ever.
-carousel,img/clip3.jpg,india?ST_NAME=Jammu%20%26%20Kashmir&AC_NAME=RAJPORA&YEAR=1962,"Rajpora, J&K: The biggest margin ever","Ghulam Mohammad Rajpori of National Congress won by the largest margin ever in the 1962 J&K elections. He received 22,196 votes. The nearest competitor got 181."
-factoid,img/clip1.jpg,india,Every election's result,
-factoid,img/clip5.jpg,india?ST_NAME=Andhra Pradesh&BY=PARTY,Andhra: performance,
-factoid,img/clip6.jpg,india?ST_NAME=Tamil%20Nadu&YEAR=2011,"Tamil Nadu, 2011",
+carousel,img/clip4.jpg,#india?ST_NAME=Tamil%20Nadu&YEAR=1996&AC_NAME=MODAKKURICHI,"Modakkuruchi, TN: A deluge of candidates","1,033 candidates contested in Modakkurichi, Tamil Nadu in the 1996 elections: the largest number of candidates in the history of Indian elections. 88 of them didn't even vote for themselves."
+carousel,img/clip2.jpg,#india?ST_NAME=Gujarat&AC_NAME=CHORASI&YEAR=2007,"Chorasi, Gujarat: The most votes ever",Narottambhai Patel of BJP won at Chorasi in Gujarat with 5.84 lakh votes. This is the largest number of votes that any candidate has ever received. This is also the largest margin of victory ever.
+carousel,img/clip3.jpg,#india?ST_NAME=Jammu%20%26%20Kashmir&AC_NAME=RAJPORA&YEAR=1962,"Rajpora, J&K: The biggest margin ever","Ghulam Mohammad Rajpori of National Congress won by the largest margin ever in the 1962 J&K elections. He received 22,196 votes. The nearest competitor got 181."
+factoid,img/clip1.jpg,#india,Every election's result,
+factoid,img/clip5.jpg,#india?ST_NAME=Andhra Pradesh&BY=PARTY,Andhra: performance,
+factoid,img/clip6.jpg,cartogram?ST_NAME=Tamil%20Nadu&metric=MARGIN,"Tamil Nadu: Margins",

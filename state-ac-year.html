@@ -32,7 +32,7 @@ if light:
     <small class="link" {% if year_index < len(years) - 1 %} href="?YEAR={{ years[year_index + 1] }}" title="Show {{ years[year_index + 1] }} results"{% end %}>►</small>
   </h2>
 {% else %}
-  <h3>{{ ac_name }}</h3>
+  <h3>{{ ac_name }}, {{ year }}</h3>
 {% end %}
 
 <table class="table table-condensed state-ac-year">

@@ -47,7 +47,7 @@ data['COUNT'] = 1
         <small>in India</small>
       </span>
       <div class="pull-right">
-        <a class="fb-share popup" title="Share on Facebook" data-placement="bottom" target="_blank" href="https://www.facebook.com/dialog/feed?app_id=163328100435225&display=popup&caption=By%20Gramener&link={{ quote('https://gramener.com/election/') }}&redirect_uri=https://gramener.com/election/">
+        <a class="fb-share direct-link" title="Share on Facebook" data-placement="bottom" target="_blank" href="https://www.facebook.com/dialog/feed?app_id=163328100435225&display=popup&caption=By%20Gramener&link={{ quote('https://gramener.com/election/') }}&redirect_uri=https://gramener.com/election/">
           <svg viewBox="0 0 266.893 266.895" width="24px" height="24px">
             <path fill="#3C5A99" d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225H248.082z"/>
             <path fill="#FFFFFF" d="M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585v99.803H182.409z"/>
@@ -72,7 +72,7 @@ data['COUNT'] = 1
 
     <div class="carousel-inner">
       {% for index, row in facts[facts['type'] == 'carousel'].iterrows() %}
-        <div class="item{{ ' active' if index == 0 else '' }}" href="{{ row['link'] }}">
+        <div class="item{{ ' active' if index == 0 else '' }} direct-link" href="{{ row['link'] }}">
           <div class="img" style="background-image:url({{ static_url(row['image']) }})"></div>
           <div class="carousel-caption">
             <h3>{{ escape(row['title']) }}</h3>
@@ -93,7 +93,7 @@ data['COUNT'] = 1
   <div id="factoid" class="row">
     {% for index, row in facts[facts['type'] == 'factoid'].iterrows() %}
       <div class="col-sm-4">
-        <div class="thumbnail" href="{{ row['link'] }}">
+        <div class="thumbnail direct-link" href="{{ row['link'] }}">
           <div class="img" style="background-image:url({{ static_url(row['image']) }})"></div>
           <div class="caption">
             <h3>{{ escape(row['title']) }}</h3>
@@ -205,8 +205,11 @@ $('body')
     target: '.rank1,.rank2,.rank3'
   })
   .urlfilter({
-    selector: '[href]:not(.popup)',
+    selector: '[href]:not(.direct-link)',
     target: '#'
+  })
+  .on('click', '.direct-link', function() {
+    window.location = $(this).attr('href')
   })
   .aspect({
     selector: '[data-height]'

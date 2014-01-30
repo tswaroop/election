@@ -1,4 +1,6 @@
+import pandas as pd
 import re
+import layout
 
 re_slug = re.compile(r'[^A-Za-z0-9_]+')
 
@@ -32,3 +34,13 @@ def pc_setup(data):
     elections['WINNING PARTY'] = winners['PARTY'].min()
 
     return data, elections
+
+
+R = 0.1
+def latlong_setup(latlong):
+    latlong['X'] = latlong['Y'] = pd.np.empty(len(latlong))
+    for state, indices in latlong.groupby('ST_NAME').groups.iteritems():
+        xy = layout.unpack(latlong.ix[indices][['LONG', 'LAT']], [R] * len(indices), gravity=0, factor=.99)
+        latlong['X'][indices] = xy[:,0]
+        latlong['Y'][indices] = xy[:,1]
+    return latlong
