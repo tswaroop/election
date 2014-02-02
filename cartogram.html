@@ -94,10 +94,12 @@ W = 800
 
   <div class="row">
     <div class="col-sm-9">
-      <svg width="100%" data-height="1" viewBox="0 0 {{ W }} {{ W }}">
+      <svg width="100%" data-height="1" viewBox="0 0 {{ W }} {{ W }}" class="cartogram">
         {% set w = W / float(len(colors)) %}
         {% for i, (party, color) in enumerate(colors.iteritems()) %}
           <rect class="party-legend"
+            data-highlight="[data-party={{ slug(party) }}]"
+            data-party="{{ slug(party) }}"
             x="{{ w * i }}"
             width="{{ w }}"
             height="{{ 20 }}"
@@ -115,7 +117,7 @@ W = 800
 <script id="data" type="text/csv">{% set csv = StringIO() %}{% set pivot.to_csv(csv, float_format='%.3f') %}{{ csv.getvalue() }}</script>
 <script id="party" type="text/csv">{% set csv = StringIO() %}{% set party_pivot.to_csv(csv) %}{{ csv.getvalue() }}</script>
 
-<script src="{{ static_url('/js/jquery.min.js') }}"></script>
+<script src="{{ static_url('/js/jquery2.min.js') }}"></script>
 <script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
 <script src="{{ static_url('js/G.min.js') }}"></script>
 <script src="{{ static_url('/js/d3.v3.min.js') }}"></script>
@@ -228,6 +230,7 @@ function refresh() {
     .attr('r', function(d) { return d.r })
     .attr('fill', function(d, i) { return colors[party[i][year]] || 'rgba(128,128,128,.5)' })
     .attr('title', title)
+    .attr('data-party', function(d, i) { return party[i][year].replace(/[^A-Za-z0-9_]+/g, '-'); })
     .attr('data-original-title', title)
   $summary.html('<h3>' + num(sum) + '</h3>{{ metric_names[metric] }}')
 }
@@ -256,6 +259,12 @@ $('body')
     selector: '[title]',
     container: 'body',
     html: true
+  })
+  .highlight({
+    selector: '.party-legend',
+    target: '[data-party]',
+    toggle: true,
+    hideClass: 'fade'
   })
   .urlfilter({
     selector: '[href]:not(.popup)'
