@@ -1,0 +1,205 @@
+{{ GRAMEX(cache=['js/G.min.js', 'results.csv', 'colors.csv', 'style.css', 'all.html', 'analysis-table.html', '.head.html']) }}{% code %}
+from urllib import quote
+title = 'Assembly Elections'
+description = 'A visual guide to the history of Indian assembly elections, from 1951 until today, by Gramener.'
+data = DB.csv('assembly.csv', dtype=object)
+data['VOTES'] = data['VOTES'].astype(float)
+data['AGE'] = data['AGE'].astype(float)
+data['COUNT'] = 1
+{% end %}<!DOCTYPE html><html lang="en">
+<head>
+  {{ T('.head.html', title=title, static_url=static_url, description=description) }}
+</head><body>
+
+<header>
+  <div class="container">
+    <h1>
+      <a href="." class="home direct-link"><i class="glyphicon glyphicon-home"></i></a>
+      <span class="heading" href=".?ST_NAME=&YEAR=&AC_NAME=&PARTY=&BY=">
+        <span class="em">Assembly</span> Elections<span class="title"></span>
+        <small>in India</small>
+      </span>
+      <div class="pull-right">
+        <a class="fb-share direct-link" title="Share on Facebook" data-placement="bottom" target="_blank" href="https://www.facebook.com/dialog/feed?app_id=163328100435225&display=popup&caption=By%20Gramener&link={{ quote('https://gramener.com/election/') }}&redirect_uri=https://gramener.com/election/">
+          <svg viewBox="0 0 266.893 266.895" width="24px" height="24px">
+            <path fill="#3C5A99" d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225H248.082z"/>
+            <path fill="#FFFFFF" d="M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585v99.803H182.409z"/>
+          </svg>
+        </a>
+      </div>
+    </h1>
+  </div>
+</header>
+
+<div class="container main">
+  {{ T('all.html', DB=DB) }}
+
+  <div id="analyses">
+    <ul class="nav nav-pills">
+      <li class="active"><a data-toggle="pill" href="#none">Analysis</a></li>
+      <li><a data-toggle="pill" href="#margin">Winner margins</a></li>
+      <li><a data-toggle="pill" href="#candidates"># candidates</a></li>
+      <li><a data-toggle="pill" href="#voters"># voters</a></li>
+      <li><a data-toggle="pill" href="#votes">Vote counts</a></li>
+      <li><a data-toggle="pill" href="#gender"># women</a></li>
+      <li><a data-toggle="pill" href="#age">Young vs old</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane" id="none"></div>
+
+      <div class="tab-pane" id="margin">
+        {% code %}
+        N = 20
+        election_groups = data.groupby(['ST_NAME', 'AC_NAME', 'YEAR'])
+        margins = data[data['#'].isin(['1', '2'])]
+        margins = margins.pivot_table(rows=['ST_NAME', 'AC_NAME', 'YEAR'], cols=['#'], values='VOTES', aggfunc='max')
+        margins['DIFF'] = margins['1'] - margins['2']
+        diffs = margins.dropna().sort(['DIFF'], ascending=False).reset_index()
+        tables = (('Highest vote difference', diffs.head(N)), ('Closest elections', diffs.tail(N)[::-1]))
+        {% end %}
+        {{ T('analysis-table.html', tables=tables, column='Difference') }}
+      </div>
+
+      <div class="tab-pane" id="candidates">
+        {% set candidates = election_groups['COUNT'].sum().dropna().order(ascending=False).reset_index() %}
+        {% set tables = (('Most candidates', candidates.head(N)), ('Uncontested wins', candidates[candidates['COUNT'] == 1].sort(['ST_NAME', 'AC_NAME', 'YEAR']))) %}
+        {{ T('analysis-table.html', tables=tables, column='Candidates') }}
+      </div>
+
+      <div class="tab-pane" id="voters">
+        {% set voters = election_groups['VOTES'].sum().dropna().order(ascending=False).reset_index() %}
+        {% set tables = (('Most voters', voters.head(N)), ('Fewest voters', voters.tail(N)[::-1])) %}
+        {{ T('analysis-table.html', tables=tables, column='Votes') }}
+      </div>
+
+      <div class="tab-pane" id="votes">
+        {% set winner_votes = margins['1'].order(ascending=False).reset_index() %}
+        {% set zero_votes = data[['ST_NAME', 'AC_NAME', 'YEAR', 'NAME', 'VOTES']][data['VOTES'] == 0] %}
+        {% set tables = (('Most votes', winner_votes.head(N)), ('No votes, not even their own', zero_votes)) %}
+        {{ T('analysis-table.html', tables=tables, column='Votes') }}
+      </div>
+
+      <div class="tab-pane" id="gender">
+        {% set women_data = data[data['SEX'] == 'F'] %}
+        {% set women_candidates = women_data.groupby(['ST_NAME', 'AC_NAME', 'YEAR'])['COUNT'].sum().order(ascending=False).reset_index() %}
+        {% set women_winners = women_data[women_data['#'] == '1'][['ST_NAME', 'AC_NAME', 'YEAR', 'NAME', 'COUNT']].sort(['YEAR', 'ST_NAME', 'AC_NAME'], ascending=(True, True, True)) %}
+        {% set tables = (('Most women candidates', women_candidates.head(N)), ('Women winners', women_winners.head(N))) %}
+        {{ T('analysis-table.html', tables=tables, column='Women') }}
+      </div>
+
+      <div class="tab-pane" id="age">
+        {% set agewise = data[['ST_NAME', 'AC_NAME', 'YEAR', 'NAME', 'AGE']].dropna().sort('AGE') %}
+        {% set tables = (('Youngest candidates', agewise.head(N)), ('Oldest candidates', agewise.tail(N)[::-1])) %}
+        {{ T('analysis-table.html', tables=tables, column='Age') }}
+      </div>
+    </div>
+  </div>
+
+  <div id="results"></div>
+</div>
+
+<script>
+{{ T('js/helper.js') }}
+
+MBP.scaleFix()
+MBP.startupImage()
+MBP.hideUrlBarOnLoad()
+MBP.enableActive()
+
+// TODO: Add FastClick
+if (window.FastClick)
+  window.addEventListener('load', function() { FastClick.attach(document.body); }, false);
+
+{{ T('js/jquery2.min.js') }}
+{{ T('js/bootstrap.v3.min.js') }}
+{{ T('js/G.min.js') }}
+{{ T('js/jquery.scrollTo.min.js') }}
+
+$('body')
+  .tooltip({
+    selector: '[title]',
+    container: 'body',
+    html: true
+  })
+  .highlight({
+    selector: '.party-legend',
+    target: '[data-party]'
+  })
+  .highlight({
+    selector: '.state-legend',
+    target: '[data-state]'
+  })
+  .highlight({
+    selector: '.rank-legend',
+    target: '.rank1,.rank2,.rank3'
+  })
+  .urlfilter({
+    selector: '[href]:not(.direct-link)',
+    target: '#'
+  })
+  .on('click', '.direct-link', function() {
+    window.location = $(this).attr('href')
+  })
+  .aspect({
+    selector: '[data-height]'
+  })
+  .search()
+  .on('click', '.show-help', function() {
+    $(this).toggleClass('active')
+    if ($(this).is('.active'))
+      $('.help').dispatch(touch_device ? 'focus': 'mouseover')
+    else
+      $('.help').tooltip('hide')
+  })
+
+var scroll_options = {
+  duration: 300,
+  margin: true,
+  offset: {top: -20}
+};
+
+function post_load() {
+  $('.tooltip').remove();
+  $('.show-help').removeClass('active');
+  $('#results').show();
+  $(window).dispatch('resize');   // Aspect-ise the SVG we just loaded
+  scrolled = $.scrollTo('#results', scroll_options);
+}
+
+function redraw() {
+  var hash = location.hash.replace(/^#/, ''),
+      query = G.url.parse(hash);
+
+  $('.all-results').show();
+  $('.show-results').addClass('active');
+
+  if (!query.search) {
+      $('#results').empty()
+      $.scrollTo('h1', scroll_options);
+  }
+  else if (query.searchKey.ST_NAME && query.searchKey.AC_NAME && query.searchKey.YEAR)
+      $('#results').load('state-ac-year?' + query.search, post_load)
+  else if (query.searchKey.ST_NAME && query.searchKey.AC_NAME && query.searchKey.PARTY)
+      $('#results').load('state-ac-party?' + query.search, post_load)
+  else if (query.searchKey.ST_NAME && query.searchKey.YEAR && query.searchKey.PARTY)
+      $('#results').load('state-party-year?' + query.search, post_load)
+  else if (query.searchKey.ST_NAME && query.searchKey.AC_NAME)
+      $('#results').load('state-ac?' + query.search, post_load)
+  else if (query.searchKey.ST_NAME && query.searchKey.YEAR)
+      $('#results').load('state-year?' + query.search, post_load)
+  else if (query.searchKey.ST_NAME && query.searchKey.PARTY)
+      $('#results').load('state-party?' + query.search, post_load)
+  else if (query.searchKey.ST_NAME && query.searchKey.BY == 'PARTY')
+      $('#results').load('state-by-party?' + query.search, post_load)
+  else if (query.searchKey.ST_NAME && query.searchKey.BY == 'AC')
+      $('#results').load('state-by-ac?' + query.search, post_load)
+  else
+      $('#results').html('Did not understand ' + query.search)
+}
+
+$(window).on('hashchange', redraw);
+redraw();
+
+</script>
+</body></html>

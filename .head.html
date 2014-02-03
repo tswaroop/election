@@ -1,0 +1,28 @@
+  <meta charset="utf-8">
+  <title class="title">{{ title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="cleartype" content="on">
+  <link rel="stylesheet" href="{{ static_url('/css/bootstrap.v3.min.css') }}">
+  <link rel="stylesheet" href="{{ static_url('style.css') }}">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ static_url('img/apple-touch-icon-144x144-precomposed.png') }}">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ static_url('img/apple-touch-icon-114x114-precomposed.png') }}">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ static_url('img/apple-touch-icon-72x72-precomposed.png') }}">
+  <link rel="apple-touch-icon-precomposed" href="{{ static_url('img/apple-touch-icon-57x57-precomposed.png') }}">
+  <link rel="shortcut icon" sizes="196x196" href="{{ static_url('img/touch-icon-196x196-precomposed.png') }}">
+  <link rel="shortcut icon" href="{{ static_url('img/apple-touch-icon.png') }}">
+  <meta name="msapplication-TileImage" content="{{ static_url('img/apple-touch-icon-144x144-precomposed.png') }}">
+  <meta name="msapplication-TileColor" content="{{ _color.Office.accent_4 }}">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="{{ title }}">
+  <meta name="description" content="{{ description }}">
+  <meta property="og:image" content="{{ static_url('img/startup-tablet-landscape.png') }}">
+  <meta property="twitter:image" content="{{ static_url('img/startup-tablet-landscape.png') }}">
+  <meta property="og:description" content="{{ description }}">
+  <meta property="twitter:description" content="{{ static_url('img/startup-tablet-landscape.png') }}">
+  <script>
+      // Remove no-js class. Set no-touch upfront to ensure -webkit-scrollbar styling
+      var touch_device = 'ontouchend' in document;
+      document.documentElement.setAttribute('class', touch_device ? 'touch' : 'no-touch');
+  </script>
