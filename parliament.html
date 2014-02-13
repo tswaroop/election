@@ -10,13 +10,6 @@ party_colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PA
 
 winners = data[data['#'] == '1']
 
-# Merge some parties for practicality
-winners['PARTY'].replace({
-  'INC(I)': 'INC',
-  'ADK': 'ADMK',
-  'BLD': 'JNP',
-}, inplace=True)
-
 # These elections had very few seats. Merge them with the previous year
 winners['YEAR'].replace({
   '1985': '1980',
@@ -76,7 +69,7 @@ summary['Rest'] = seats - summary.T.sum()
 <div class="container">
 
   {% set W, H = 940, 500 %}
-  <svg width="100%" data-height="{{ float(H)/W }}" viewBox="0 0 {{ W }} {{ H }}">
+  <svg id="summary" width="100%" data-height="{{ float(H)/W }}" viewBox="0 0 {{ W }} {{ H }}">
     {% set w, pad, legend = 940. / len(parties), 5, 25 %}
     {% for i, party in enumerate(parties) %}
       <rect class="party-legend"
@@ -138,7 +131,7 @@ summary['Rest'] = seats - summary.T.sum()
     {% end %}
   </div>
 
-  <div class="btn btn-default back"><i class="glyphicon glyphicon-arrow-left"></i> Back</div>
+  <div><a class="btn btn-default back direct-link" href="#"><i class="glyphicon glyphicon-arrow-left"></i> Back</a></div>
   <div id="result"></div>
 </div>
 
@@ -177,7 +170,6 @@ $('body')
     selector: '[data-height]'
   })
 
-$('.back').on('click', function() { history.go(-1) })
 $('.home').on('click', function() { location.hash = '#' })
 
 function redraw() {
@@ -186,9 +178,11 @@ function redraw() {
 
   if (hash == '') {
     $('#result, .year-filter, .state-filter').hide()
-    $('#factoid').show()
+    $('#summary, #factoid').slideDown(250, function() {
+      $(window).dispatch('resize')
+    })
   } else {
-    $('#factoid').hide()
+    $('#summary, #factoid').slideUp(250)
     $('.year-filter').show()
     $('.state-filter')[hash.match(/^summary/) ? 'show' : 'hide']()
     $('#result').empty().load('pc-' + hash).show()
@@ -203,7 +197,6 @@ function redraw() {
 
   $('[data-year="' + query.YEAR + '"]').addClass('active')
   $('[data-state="' + query.STATE + '"]').addClass('active')
-
 }
 
 $(window).on('hashchange', redraw);

@@ -12,6 +12,13 @@ def pc_setup(data):
     data['AGE'] = data['AGE'].astype(float)
     data['COUNT'] = 1
 
+    # Merge some parties for practicality
+    data['PARTY'].replace({
+      'INC(I)': 'INC',
+      'ADK': 'ADMK',
+      'BLD': 'JNP',
+    }, inplace=True)
+
     electionwise = data.groupby(['YEAR', 'STATE', 'PC'])
     winners = data[data['#'] == '1'].groupby(['YEAR', 'STATE', 'PC'])
     women = data[data['SEX'] == 'F'].groupby(['YEAR', 'STATE', 'PC'])

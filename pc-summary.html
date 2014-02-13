@@ -59,6 +59,30 @@ if getarg('YEAR'):
     {% set table = data.sort('AGE', ascending=False) %}
     <h2>Oldest candidates</h2>
     {{ T('pc-table.html', table=table[['YEAR', 'STATE', 'PC', 'NAME', 'PARTY', 'AGE', 'VOTES', '#']].set_index(['YEAR', 'STATE', 'PC']).dropna(subset=['AGE']).head(20), sort='AGE', remove='age') }}
+
+{% elif getarg('partywin') %}
+    {% code %}
+    party = pd.DataFrame({
+        'WINS': elections['WINNING PARTY'].value_counts(),
+        'ELECTIONS': data['PARTY'].value_counts()
+    }).fillna(0)
+    party['LOSSES'] = party['ELECTIONS'] - party['WINS']
+    party['WIN %'] = party['WINS'] / party['ELECTIONS'].astype(float)
+    losers = party[party['WINS'] < 10].sort('LOSSES', ascending=False)
+    min_elections = 100 if len(elections) > 2000 else 10 if len(elections) > 100 else 1
+    winners = party[party['ELECTIONS'] >= min_elections].sort('WIN %', ascending=False)
+    formatters = {'WIN %': '{:.1%}'.format}
+    {% end %}
+    {% if getarg('partywin') == 'min' %}
+      <h2>Struggling parties</h2>
+      <p>Parties that have lost the largest number of seats (among those with less than 10 wins)</p>
+      {{ losers.head(20).to_html(classes='table table-condensed analysis', formatters=formatters) }}
+    {% elif getarg('partywin') == 'max' %}
+      <h2>Winning parties</h2>
+      <p>Parties that have the highest win ratio, among those that have contested at least {{ min_elections }} elections</p>
+      {{ winners.head(20).to_html(classes='table table-condensed analysis', formatters=formatters) }}
+    {% end %}
+
 {% else %}
     <h2>Not yet implemented</h2>
     <pre>{{ args }}</pre>

@@ -7,5 +7,5 @@ type,image,link,title,content
 ,img/clip6.jpg,summary?candidates=1,Uncontested wins,"Since 1989, no election was won uncontested. **Srinagar, J&K** was the last, where Mohammad Shafi Bhat of JKN won without competition."
 ,img/clip7.jpg,summary?women=max,Most women,"Only two elections had women candidates exclusively: **Karur, TN** (1967) and **Panskura, WB** (1977). Only 8 elections have had more women than men."
 ,img/clip8.jpg,summary?age=max,Old candidates,"**Arif Ahmed Shaikh Jafhar** (NBNP) contested the 2009 elections from Dhhule, MH at age 99, making him the oldest candidate ever in India."
-,img/clip9.jpg,summary?party=INC,INC strongholds,TBD
-,img/clipa.jpg,summary?party=BJP,BJP strongholds,TBD
+,img/clip9.jpg,summary?partywin=min,Struggling parties,"The **Doordarshi Party**, founded by Baba Jai Gurudev in 1980, has the record of contesting 716 seats across 3 years *without a single victory*"
+,img/clipa.jpg,summary?partywin=max,Winning parties,"The **INC** is among the most successful parties, being one of the few parties that has won more than 50% of the seats it has ever contested in"
