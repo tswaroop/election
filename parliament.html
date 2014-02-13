@@ -1,11 +1,33 @@
-{{ GRAMEX(cache=['js/G.min.js', 'style.css', 'parliament.csv', 'parliament-topics.csv', '.head.html']) }}{% code %}
+{{ GRAMEX(cache=['js/G.min.js', 'style.css', 'parliament.csv', 'parliament-topics.csv', 'colors.csv', '.head.html']) }}{% code %}
 title = 'Parliament Elections'
 description = 'A visual guide to the history of Indian Parliament elections, from 1951 until today, by Gramener.'
 
 from urllib import quote
-from common import pc_setup
+from common import pc_setup, slug
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 topics = pd.read_csv('parliament-topics.csv')
+party_colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
+
+winners = data[data['#'] == '1']
+
+# Merge some parties for practicality
+winners['PARTY'].replace({
+  'INC(I)': 'INC',
+  'ADK': 'ADMK',
+  'BLD': 'JNP',
+}, inplace=True)
+
+# These elections had very few seats. Merge them with the previous year
+winners['YEAR'].replace({
+  '1985': '1980',
+  '1992': '1991',
+}, inplace=True)
+
+parties = ['INC', 'BJP', 'CPM', 'JNP', 'JD', 'IND', 'CPI', 'DMK', 'SP', 'TDP', 'SWA', 'BJS', 'BSP', 'ADMK']
+summary = winners.pivot_table(cols='PARTY', rows='YEAR', values='NAME', aggfunc='count').fillna(0)
+seats = summary.T.sum()
+summary = summary[parties]
+summary['Rest'] = seats - summary.T.sum()
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
   {{ T('.head.html', title=title, static_url=static_url, description=description) }}
@@ -46,13 +68,62 @@ topics = pd.read_csv('parliament-topics.csv')
           </div>
         </div>
 
-        <div class="btn btn-default back"><i class="glyphicon glyphicon-arrow-left"></i> Back</div>
       </div>
     </h1>
   </div>
 </header>
 
 <div class="container">
+
+  {% set W, H = 940, 500 %}
+  <svg width="100%" data-height="{{ float(H)/W }}" viewBox="0 0 {{ W }} {{ H }}">
+    {% set w, pad, legend = 940. / len(parties), 5, 25 %}
+    {% for i, party in enumerate(parties) %}
+      <rect class="party-legend"
+        data-party="{{ slug(party) }}"
+        data-highlight="[data-party={{ slug(party) }}]"
+        data-toggle="highlight"
+        x="{{ w * i }}"
+        width="{{ w }}"
+        height="{{ legend - 5 }}"
+        fill="{{ party_colors.get(party, '#999') }}"></rect>
+      <text x="{{ w * (i + .5) }}" y="{{ (legend - 5) * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
+    {% end %}
+
+    {% set w = 940. / len(summary.T.columns) %}
+    {% for i, year in enumerate(summary.T) %}{% code %}
+      series = summary.ix[year]
+      height = series / float(series.sum()) * (H - legend - 20)
+      pos = pd.DataFrame({
+        'SEATS': series,
+        'h': height,
+        'y': H - height.cumsum()
+      })
+      {% end %}
+      <text x="{{ w * (i+.5) }}" y="{{ legend }}" dy="1em" text-anchor="middle">{{ year }}</text>
+      {% for party, row in pos.iterrows() %}
+        {% set fill = party_colors.get(party, '#999') %}
+        <rect x="{{ w * i + pad }}" width="{{ w - 2*pad }}" y="{{ row['y'] }}" height="{{ row['h'] }}"
+          data-party="{{ slug(party) }}"
+          title="{{ party }}: {{ int(row['SEATS']) }} seats in {{ year }}"
+          fill="{{ fill }}" stroke="#fff"/>
+        {% if row['h'] > 40 %}
+          <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
+            data-party="{{ slug(party) }}"
+            fill="#fff" dy="-.6em" text-anchor="middle">{{ int(row['SEATS']) }}</text>
+          <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
+            data-party="{{ slug(party) }}"
+            fill="#fff" dy=".6em" text-anchor="middle">{{ escape(party) }}</text>
+        {% elif row['h'] > 12 %}
+          <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
+            data-party="{{ slug(party) }}"
+            fill="#fff" dy=".35em" text-anchor="middle">{{ int(row['SEATS']) }}</text>
+        {% end %}
+      {% end %}
+    {% end %}
+
+  </svg>
+
   <div id="factoid">
     {% for i, row in topics.iterrows() %}
       <div class="topic" href="{{ row['link'] }}">
@@ -67,6 +138,7 @@ topics = pd.read_csv('parliament-topics.csv')
     {% end %}
   </div>
 
+  <div class="btn btn-default back"><i class="glyphicon glyphicon-arrow-left"></i> Back</div>
   <div id="result"></div>
 </div>
 
@@ -88,9 +160,21 @@ if (window.FastClick)
 {{ T('js/jquery.scrollTo.min.js') }}
 
 $('body')
+  .tooltip({
+    selector: '[title]',
+    container: 'body',
+    html: true
+  })
   .urlfilter({
     selector: '[href]:not(.direct-link)',
     target: '#'
+  })
+  .highlight({
+    selector: '.party-legend',
+    target: '[data-party]'
+  })
+  .aspect({
+    selector: '[data-height]'
   })
 
 $('.back').on('click', function() { history.go(-1) })
