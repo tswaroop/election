@@ -2,11 +2,11 @@
 import json
 from cStringIO import StringIO
 from urllib import quote
-from common import slug, latlong_setup
+from common import slug, latlong_setup, ac_setup
 
 title = 'Assembly Elections Cartogram'
 
-data = DB.csv('assembly.csv', dtype=object)
+data = DB.csv('assembly.csv', setup=ac_setup, dtype=object)
 states = data['ST_NAME'].unique()
 metric_names = {
   'COUNT': 'Candidates',
@@ -128,7 +128,7 @@ long_range = pivot['LONG'].max() - pivot['LONG'].min()
 scale = max(lat_range, long_range)
 {% end %}
 
-var colors = {{ colors.to_json() }}
+var colors = {{ json.dumps(colors.to_dict()) }}
 
 var data = d3.csv.parse($('#data').text(), function(row) {
   for (var key in row) {

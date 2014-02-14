@@ -42,6 +42,11 @@ def pc_setup(data):
 
     return data, elections
 
+def ac_setup(data):
+    data['VOTES'] = data['VOTES'].astype(float)
+    data['AGE'] = data['AGE'].astype(float)
+    data['COUNT'] = 1
+    return data
 
 R = 0.1
 def latlong_setup(latlong):

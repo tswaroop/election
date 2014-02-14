@@ -1,11 +1,10 @@
 {{ GRAMEX(cache=['js/G.min.js', 'results.csv', 'colors.csv', 'style.css', 'all.html', 'analysis-table.html', '.head.html']) }}{% code %}
 from urllib import quote
+from common import ac_setup
+
 title = 'Assembly Elections'
 description = 'A visual guide to the history of Indian assembly elections, from 1951 until today, by Gramener.'
-data = DB.csv('assembly.csv', dtype=object)
-data['VOTES'] = data['VOTES'].astype(float)
-data['AGE'] = data['AGE'].astype(float)
-data['COUNT'] = 1
+data = DB.csv('assembly.csv', setup=ac_setup, dtype=object)
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
   {{ T('.head.html', title=title, static_url=static_url, description=description) }}
