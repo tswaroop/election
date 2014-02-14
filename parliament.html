@@ -131,7 +131,17 @@ summary['Rest'] = seats - summary.T.sum()
     {% end %}
   </div>
 
-  <div><a class="btn btn-default back direct-link" href="#"><i class="glyphicon glyphicon-arrow-left"></i> Back</a></div>
+  <div id="result-controls">
+    <div class="pull-right">
+      Show:
+      <div class="btn-group">
+        <a class="btn btn-default" href="?n=10">10</a>
+        <a class="btn btn-default" href="?n=20">20</a>
+        <a class="btn btn-default" href="?n=50">50</a>
+      </div>
+    </div>
+    <a class="btn btn-default back direct-link" href="#"><i class="glyphicon glyphicon-arrow-left"></i> Back</a>
+  </div>
   <div id="result"></div>
 </div>
 
@@ -177,13 +187,13 @@ function redraw() {
       query = G.url.parse(hash).searchKey;
 
   if (hash == '') {
-    $('#result, .year-filter, .state-filter').hide()
+    $('#result, #result-controls, .year-filter, .state-filter').hide()
     $('#summary, #factoid').slideDown(250, function() {
       $(window).dispatch('resize')
     })
   } else {
     $('#summary, #factoid').slideUp(250)
-    $('.year-filter').show()
+    $('#result-controls, .year-filter').show()
     $('.state-filter')[hash.match(/^summary/) ? 'show' : 'hide']()
     $('#result').empty().load('pc-' + hash).show()
   }
