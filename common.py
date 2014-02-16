@@ -19,6 +19,12 @@ def pc_setup(data):
       'BLD': 'JNP',
     }, inplace=True)
 
+    # These elections had very few seats. Merge them with the previous year
+    data['YEAR'].replace({
+      '1985': '1984',
+      '1992': '1991',
+    }, inplace=True)
+
     electionwise = data.groupby(['YEAR', 'STATE', 'PC'])
     winners = data[data['#'] == '1'].groupby(['YEAR', 'STATE', 'PC'])
     women = data[data['SEX'] == 'F'].groupby(['YEAR', 'STATE', 'PC'])

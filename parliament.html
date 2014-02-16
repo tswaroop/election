@@ -10,12 +10,6 @@ party_colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PA
 
 winners = data[data['#'] == '1']
 
-# These elections had very few seats. Merge them with the previous year
-winners['YEAR'].replace({
-  '1985': '1980',
-  '1992': '1991',
-}, inplace=True)
-
 parties = ['INC', 'BJP', 'CPM', 'JNP', 'JD', 'IND', 'CPI', 'DMK', 'SP', 'TDP', 'SWA', 'BJS', 'BSP', 'ADMK']
 summary = winners.pivot_table(cols='PARTY', rows='YEAR', values='NAME', aggfunc='count').fillna(0)
 seats = summary.T.sum()
