@@ -1,0 +1,175 @@
+{{ GRAMEX(cache=[]) }}{% code %}
+title = 'The Most Persistent Party'
+story = 'stories/ddp.html'
+party, years = 'DDP', ('1984', '1989', '1991')
+description = ''
+
+import json, random
+from common import pc_setup, slug
+from textwrap import dedent
+
+data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
+latlong = pd.read_csv('pc-latlong.csv').set_index(['STATE', 'PC'])
+
+W, H = 940, 700
+
+result = []
+party_data = data[data['PARTY'] == party].set_index(['STATE', 'PC', 'YEAR'])
+year_data = data[data['YEAR'].isin(years)]
+for index, (state, pc) in year_data[['STATE', 'PC']].drop_duplicates().iterrows():
+    loc = latlong.ix[state, pc]
+    val = {
+        'x': H * .95 * (loc['Long'] - 69.) / (96. - 69.) + random.random() + (W - H)/2 + 40,
+        'y': H * (35. - loc['Lat']) / (35. - 8.) + random.random(),
+        'r': 6,
+        'STATE': state,
+        'PC': pc,
+    }
+    for year in years:
+        lookup = party_data.T.get((state, pc, year))
+        if lookup is not None:
+            val[year] = {'NAME': lookup['NAME'], '#': int(lookup['#']), 'VOTES': int(lookup['VOTES'])}
+        else:
+            val[year] = None
+    result.append(val)
+
+{% end %}<!DOCTYPE html><html lang="en">
+<head>
+  {{ T('.head.html', title=title, static_url=static_url, description=description) }}
+  <style>
+    body, h1 { font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif; }
+    .container { width: {{ W + 30 }}px;}
+    h1 { text-transform: uppercase; }
+    #pc circle, .legend circle {
+      stroke: rgba(0,0,0,.2);
+    -webkit-transition: all 0.5s ease-out;  /* Chrome 1-25, Safari 3.2+ */
+       -moz-transition: all 0.5s ease-out;  /* Firefox 4-15 */
+         -o-transition: all 0.5s ease-out;  /* Opera 10.50–12.00 */
+            transition: all 0.5s ease-out;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
+    }
+    .number { text-align: right; width: 3em; display: inline-block; color: {{ _color.Office[1] }};}
+    .year { color: {{ _color.Office[3] }}; font-weight: bold; }
+    .won { fill: #1a9641; }
+    .runnerup { fill: #fdae61;}
+    .lost { fill: #d7191c; }
+    .nul { fill: #dddddd; }
+    .visual { position: relative; height: {{ H }}px; }
+    #pc, #stories { position: absolute; width: {{ W }}px; height: {{ H }}px; }
+    .story { position: absolute; }
+    .story-left { width: 250px; }
+    .story-right { left: 600px; width: {{ W - 600 }}px; }
+    .drop-cap:first-letter { font-size: 500%; float:left; line-height: .77; font-weight: bold; margin-right: 2px; color: {{ _color.Office[3] }};}
+  </style>
+</head><body>
+
+<div class="container">
+  <h1>
+    {{ title }}: {{ party }}
+    <a class="pull-right btn btn-default" href=".">Back</a>
+  </h1>
+  <div class="visual">
+    <div id="stories">
+      {{ T(story) }}
+      <div class="story" style="left:390px">
+        <h2>
+          <span class="number year"></span> elections
+          <br><span class="number count"></span> candidates
+          <br><span class="number wins"></span> wins
+        </h2>
+      </div>
+      <div class="story legend" style="left:600px;width:{{ W - 600 }}px;background-color:{{ _color.brighten(_color.Office[0], .9) }};padding:0 10px">
+        <h2>How to read this visual</h2>
+        <p>Each circle represents one Lok Sabha constituency. Hover over it for details.</p>
+        <svg width="{{ W - 600 }}" height="50">
+          <circle cx="10"  cy="10" r="5" class="won"/>
+            <text  x="10"   y="10" dx="15" dy=".35em">{{ party }} won</text>
+          <circle cx="120" cy="10" r="5" class="runnerup"/>
+            <text  x="120"  y="10" dx="15" dy=".35em">{{ party }} was runner up</text>
+          <circle cx="10"  cy="35" r="5" class="lost"/>
+            <text  x="10"   y="35" dx="15" dy=".35em">{{ party }} lost</text>
+          <circle cx="120" cy="35" r="5" class="nul"/>
+            <text  x="120"  y="35" dx="15" dy=".35em">{{ party }} didn't contest</text>
+        </svg>
+      </div>
+      <div class="story" style="z-index:2;left:750px;top:180px;width:{{ W - 750 }}px;text-align:right">
+        <p>
+          <span class="btn btn-primary download-svg"><i class="glyphicon glyphicon-download-alt"></i> SVG</span>
+          <span class="play btn btn-default" data-toggle="button" title="Play / pause"><i class="glyphicon glyphicon-play"></i></span>
+        </p>
+        <p><span class="controls" data-toggle="buttons"></span></p>
+      </div>
+    </div>
+    <svg id="pc" viewBox ="0 0 {{ W }} {{ H }}"></svg>
+  </div>
+</div>
+
+<script src="{{ static_url('/js/d3.v3.min.js') }}"></script>
+<script src="{{ static_url('/js/jquery2.min.js') }}"></script>
+<script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
+<script src="{{ static_url('js/G.min.js') }}"></script>
+<script>
+var data = {{ json.dumps(result, separators=(',', ':')) }}
+var years = {{ json.dumps(years, separators=(',', ':')) }}
+var index
+var labels = d3.select('.controls').selectAll('label.choose-year')
+    .data(years)
+  .enter()
+    .append('label')
+    .attr('class', 'choose-year btn btn-default btn-sm')
+    .on('click', refresh)
+labels.append('input')
+    .attr('type', 'radio')
+    .attr('name', 'year')
+labels.append('span')
+    .text(String)
+
+var update = d3.select('#pc').selectAll('circle')
+    .data(data)
+  .enter()
+    .append('circle')
+    .attr('r', function(d) { return d.r })
+    .call(G.unpack()
+      .width({{ H }})
+      .height({{ H }}))
+
+function refresh(i) {
+  var year = years[i]
+  index = i
+  $('.year').text(year)
+  $('.count').text(d3.sum(data, function(d) { return d[year] ? 1 : 0 }))
+  $('.wins').text(d3.sum(data, function(d) { return d[year] ? d[year]['#'] == 1 : 0 }))
+  $('.controls input').eq(index).trigger('click')
+  update.attr('class', function(d) {
+    return d[year] ? (d[year]['#'] == 1 ? 'won' : d[year]['#'] == 2 ? 'runnerup' : 'lost') : 'nul'
+  })
+  .attr('title', function(d) {
+    var text = d.STATE + ': ' + d.PC,
+        node = d[years[index]]
+    if (node)
+      text += '<br>' + node.NAME + '<br>#' + node['#'] + ' with ' + node.VOTES + ' votes'
+    return text
+  })
+}
+refresh(0)
+
+var timer;
+$('.play').on('click', function() {
+  var $this = $(this);
+  if (timer) timer = clearInterval(timer)
+  if (!$this.is('.active'))
+    timer = setInterval(function() {
+      refresh(++index % years.length)
+    }, 3000)
+}).trigger('click')
+
+$('body')
+  .tooltip({
+    selector: '[title]',
+    container: 'body',
+    html: true
+  })
+  .on('click', '.download-svg', function() {
+    G.download({file: 'india-pc.svg', svg: $('#pc')})
+  })
+</script>
+</body></html>
