@@ -36,22 +36,23 @@ for index, (state, pc) in year_data[['STATE', 'PC']].drop_duplicates().iterrows(
 <head>
   {{ T('.head.html', title=title, static_url=static_url, description=description) }}
   <style>
-    body, h1 { font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif; }
-    .container { width: {{ W + 30 }}px;}
-    h1 { text-transform: uppercase; }
+    .storypage body, .story h1 { font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif; }
+    .storypage h1 { text-transform: uppercase; }
+    .storypage .container { width: {{ W + 30 }}px;}
     #pc circle, .legend circle {
       stroke: rgba(0,0,0,.2);
-    -webkit-transition: all 0.5s ease-out;  /* Chrome 1-25, Safari 3.2+ */
-       -moz-transition: all 0.5s ease-out;  /* Firefox 4-15 */
-         -o-transition: all 0.5s ease-out;  /* Opera 10.50–12.00 */
-            transition: all 0.5s ease-out;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
+    -webkit-transition: all 0.5s ease-out;
+       -moz-transition: all 0.5s ease-out;
+         -o-transition: all 0.5s ease-out;
+            transition: all 0.5s ease-out;
     }
     .number { text-align: right; width: 3em; display: inline-block; color: {{ _color.Office[1] }};}
     .year { color: {{ _color.Office[3] }}; font-weight: bold; }
-    .won { fill: #1a9641; }
-    .runnerup { fill: #fdae61;}
-    .lost { fill: #d7191c; }
-    .nul { fill: #dddddd; }
+    .new   { fill: #444; }
+    .rerun { fill: #999; }
+    .stop  { fill: {{ _color.Office[1] }}; }
+    .nul   { fill: #eee; }
+
     .visual { position: relative; height: {{ H }}px; }
     #pc, #stories { position: absolute; width: {{ W }}px; height: {{ H }}px; }
     .story { position: absolute; }
@@ -59,7 +60,7 @@ for index, (state, pc) in year_data[['STATE', 'PC']].drop_duplicates().iterrows(
     .story-right { left: 600px; width: {{ W - 600 }}px; }
     .drop-cap:first-letter { font-size: 500%; float:left; line-height: .77; font-weight: bold; margin-right: 2px; color: {{ _color.Office[3] }};}
   </style>
-</head><body>
+</head><body class="storypage">
 
 <div class="container">
   <h1>
@@ -123,14 +124,14 @@ for index, (state, pc) in year_data[['STATE', 'PC']].drop_duplicates().iterrows(
         <h2>How to read this visual</h2>
         <p>Each circle represents one Lok Sabha constituency. Hover over it for details.</p>
         <svg width="{{ W - 600 }}" height="50">
-          <circle cx="10"  cy="10" r="5" class="won"/>
-            <text  x="10"   y="10" dx="15" dy=".35em">{{ party }} won</text>
-          <circle cx="120" cy="10" r="5" class="runnerup"/>
-            <text  x="120"  y="10" dx="15" dy=".35em">{{ party }} was runner up</text>
-          <circle cx="10"  cy="35" r="5" class="lost"/>
-            <text  x="10"   y="35" dx="15" dy=".35em">{{ party }} lost</text>
-          <circle cx="120" cy="35" r="5" class="nul"/>
-            <text  x="120"  y="35" dx="15" dy=".35em">{{ party }} didn't contest</text>
+          <circle cx="10"  cy="10" r="5" class="new"/>
+            <text  x="10"   y="10" dx="15" dy=".35em">New seat</text>
+          <circle cx="140" cy="10" r="5" class="stop"/>
+            <text  x="140"  y="10" dx="15" dy=".35em">Stopped contesting</text>
+          <circle cx="10"  cy="35" r="5" class="rerun"/>
+            <text  x="10"   y="35" dx="15" dy=".35em">Re-contested</text>
+          <circle cx="140" cy="35" r="5" class="nul"/>
+            <text  x="140"  y="35" dx="15" dy=".35em">Never contested</text>
         </svg>
       </div>
       <div class="story" style="z-index:2;left:750px;top:180px;width:{{ W - 750 }}px;text-align:right">
@@ -141,7 +142,9 @@ for index, (state, pc) in year_data[['STATE', 'PC']].drop_duplicates().iterrows(
         <p><span class="controls" data-toggle="buttons"></span></p>
       </div>
     </div>
-    <svg id="pc" viewBox ="0 0 {{ W }} {{ H }}"></svg>
+    <svg id="pc" viewBox ="0 0 {{ W }} {{ H }}">
+      <image x="5" y="-10" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
+    </svg>
   </div>
 </div>
 
@@ -182,6 +185,7 @@ function refresh(i) {
   $('.wins').text(d3.sum(data, function(d) { return d[year] ? d[year]['#'] == 1 : 0 }))
   $('.controls input').eq(index).trigger('click')
   update.attr('class', function(d) {
+    return d[years[index-1]] ? (d[year] ? 'rerun' : 'stop') : (d[year] ? 'new' : 'nul')
     return d[year] ? (d[year]['#'] == 1 ? 'won' : d[year]['#'] == 2 ? 'runnerup' : 'lost') : 'nul'
   })
   .attr('title', function(d) {
@@ -194,15 +198,32 @@ function refresh(i) {
 }
 refresh(0)
 
-var timer;
-$('.play').on('click', function() {
-  var $this = $(this);
-  if (timer) timer = clearInterval(timer)
-  if (!$this.is('.active'))
-    timer = setInterval(function() {
+var timer, $play, last = 0
+if (window.requestAnimationFrame) {
+  function loop(now) {
+    if (now - last >= 3000) {
       refresh(++index % years.length)
-    }, 3000)
-}).trigger('click')
+      last = now
+    }
+    timer = requestAnimationFrame(loop)
+  }
+  $play = $('.play').on('click', function() {
+    var $this = $(this)
+    if (timer) cancelAnimationFrame(timer)
+    if (!$this.is('.active'))
+      timer = requestAnimationFrame(loop)
+  })
+} else {
+  $play = $('.play').on('click', function() {
+    var $this = $(this);
+    if (timer) timer = clearInterval(timer)
+    if (!$this.is('.active'))
+      timer = setInterval(function() {
+        refresh(++index % years.length)
+      }, 3000)
+  })
+}
+$play.trigger('click')
 
 $('body')
   .tooltip({
