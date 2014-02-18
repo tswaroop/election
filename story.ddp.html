@@ -1,6 +1,5 @@
 {{ GRAMEX(cache=[]) }}{% code %}
 title = 'The Most Persistent Party'
-story = 'stories/ddp.html'
 party, years = 'DDP', ('1984', '1989', '1991')
 description = ''
 
@@ -69,7 +68,50 @@ for index, (state, pc) in year_data[['STATE', 'PC']].drop_duplicates().iterrows(
   </h1>
   <div class="visual">
     <div id="stories">
-      {{ T(story) }}
+
+      <div class="story story-left">
+        <h2>The Doordarshi Party</h2>
+
+        <div style="float:right;width:80px;height:80px;background-size:cover;background-position:center;background-image:url(http://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Baba_Jai_gurudev.jpg/250px-Baba_Jai_gurudev.jpg)" class="img-circle"></div>
+
+        <p class="drop-cap"> Founded by <a
+        href="http://en.wikipedia.org/wiki/Jai_gurudev">Baba Jai Gurudev</a> at
+        Ahmedabad in March 1980, the DDP focused on spiritual growth. All candidates
+        were expected to be teetotallers and vegetarian.</p>
+
+        <p style="width:180px">The party contested in the 1984 elections at 24 of the
+        26 constituencies in Gujarat and 73 of the 85 constituencies in Uttar
+        Pradesh. But every single candidate lost their deposit.</p>
+
+        <p class="drop-cap">In 1989, the party
+        expanded its presence to cover Bihar (47 candidates), Maharashtra (40), Madhya
+        Pradesh (30), Rajasthan (24), West Bengal (18), Haryana (10), Delhi (7) and
+        also parts of Orissa, Punjab, Himachal Pradesh and Chandigarh.</p>
+
+        <p>Given its scale of operations, the DDP was the <em>second largest party</em>
+        in the 1989 elections, fielding more candidates than BSP (245), JD (244) and
+        the BJP (225).
+
+        <p>The results, however, were exactly the same as before. Every single candidate
+        lost their deposit.</p>
+      </div>
+      <div class="story story-right" style="top:380px">
+        <p class="drop-cap">Undeterred, the party tried again two years later,
+        fielding even more candidates, extending into all the south states as well as
+        Assam. Though 321 candidates contested this election, the party was not the
+        second largest in terms of candidates. The BJP (with 477 candidates) and JP
+        (with 350) were ahead.</p>
+
+        <p>Again, the results were disappointing. Every candidate lost their
+        deposit. In its entire history, no candidate even made it to runner-up,
+        nor garnered even 1 out of every 50 votes. Overall, the party received
+        less than 1 vote for every 600 voters.</p>
+
+        <p>At this point, the party withdrew from politics. Jai Gurudev continued
+        to be active until his death in May 2012 (aged 116 years.)</p>
+      </div>
+
+
       <div class="story" style="left:390px">
         <h2>
           <span class="number year"></span> elections
