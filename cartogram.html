@@ -223,7 +223,7 @@ function refresh() {
   $year.text(year)
   force.start()
   for (var i=0, sum=0, row; row=data[i]; i++) {
-    row.r = Math.pow(row[year] / {{ pivot.median().median() }}, .5) * 8
+    row.r = Math.pow(row[year] / {{ pivot.replace(0, pd.np.nan).median().median() }}, .5) * 8
     sum += row[year]
   }
   acs
