@@ -85,6 +85,7 @@ W = 800
             </ul>
           </div>
         {% end %}
+        <a href="#" class="btn btn-default download-svg" title="Download SVG"><i class="glyphicon glyphicon-download-alt"></i></a>
       </div>
     </h1>
   </div>
@@ -223,7 +224,7 @@ function refresh() {
   $year.text(year)
   force.start()
   for (var i=0, sum=0, row; row=data[i]; i++) {
-    row.r = Math.pow(row[year] / {{ pivot.replace(0, pd.np.nan).median().median() }}, .5) * 8
+    row.r = Math.pow(row[year] / {{ pivot.replace(0, pd.np.nan).median().median() }}, .5) * 14
     sum += row[year]
   }
   acs
@@ -267,7 +268,7 @@ $('body')
     hideClass: 'fade'
   })
   .urlfilter({
-    selector: '[href]:not(.popup)'
+    selector: '[href]:not(.popup):not([download])'
   })
   .aspect({
     selector: '[data-height]'
@@ -278,6 +279,13 @@ $('body')
   .on('keyup', function(e) {
     if      (e.keyCode == 37) prev_year(e)
     else if (e.keyCode == 39) next_year(e)
+  })
+  .on('click', '.download-svg', function(e) {
+    e.preventDefault()
+    G.download({
+      file: '{{ state }}-{{ metric }}-' + year + '.svg',
+      svg: $('svg.cartogram')
+    })
   })
 
 refresh()

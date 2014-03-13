@@ -134,7 +134,7 @@ $('body')
     target: '.rank1,.rank2,.rank3'
   })
   .urlfilter({
-    selector: '[href]:not(.direct-link)',
+    selector: '[href]:not(.direct-link):not([download])',
     target: '#'
   })
   .on('click', '.direct-link', function() {
