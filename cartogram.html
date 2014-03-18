@@ -12,6 +12,7 @@ metric_names = {
   'COUNT': 'Candidates',
   'VOTES': 'Voters',
   'MARGIN': 'Margin',
+  'CONSTANT': 'Constant'
 }
 metrics = metric_names.keys()
 state = args.get('ST_NAME', states)[0]
@@ -29,9 +30,12 @@ if metric == 'MARGIN':
 pivot = subset.pivot_table(
   rows='AC_NAME',
   cols='YEAR',
-  values=metric,
+  values='COUNT' if metric == 'CONSTANT' else metric,
   aggfunc='sum'
 ).fillna(0).astype(int)
+
+if metric == 'CONSTANT':
+  pivot[pivot>0] = 1
 
 # Create a pivot for parties
 party_pivot = winners['PARTY'].reset_index().pivot_table(
