@@ -18,8 +18,8 @@ year_data = data[data['YEAR'].isin(years)]
 for index, (state, pc) in year_data[['STATE', 'PC']].drop_duplicates().iterrows():
     loc = latlong.ix[state, pc]
     val = {
-        'x': H * .95 * (loc['Long'] - 69.) / (96. - 69.) + random.random() + (W - H)/2 + 40,
-        'y': H * (35. - loc['Lat']) / (35. - 8.) + random.random(),
+        'x': H * .95 * (loc['Long'] - 68.5) / (97 - 68.5) + random.random() + (W - H)/2 + 40,
+        'y': H * (36 - loc['Lat']) / (36 - 9.) + random.random(),
         'r': 6,
         'STATE': state,
         'PC': pc,
@@ -143,7 +143,7 @@ for index, (state, pc) in year_data[['STATE', 'PC']].drop_duplicates().iterrows(
       </div>
     </div>
     <svg id="pc" viewBox ="0 0 {{ W }} {{ H }}">
-      <image x="5" y="-10" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
+      <image x="5" y="-5" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
     </svg>
   </div>
 </div>
