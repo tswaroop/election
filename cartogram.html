@@ -72,12 +72,6 @@ W = 800
 <header>
   <div class="container">
     <h1 class="no-select">
-      <span class="heading" href=".?ST_NAME=&metric=">
-        <span class="em">Assembly</span> Elections<span class="title"></span>
-      </span>
-      <span class="prev clickable">◄</span>
-      <span class="year">Year</span>
-      <span class="next clickable">►</span>
       <div class="pull-right">
         {% for param, val, vals, names in (('ST_NAME', state, states, {}), ('metric', metric, metrics, metric_names)) %}
           <div class="btn-group">
@@ -90,6 +84,14 @@ W = 800
           </div>
         {% end %}
         <a href="#" class="btn btn-default download-svg" title="Download SVG"><i class="glyphicon glyphicon-download-alt"></i></a>
+      </div>
+      <div class="heading">
+        <span href=".?ST_NAME=&metric=">
+          <span class="em">Assembly</span> Elections<span class="title"></span>
+        </span>
+        <span class="prev clickable">◄</span>
+        <span class="year">Year</span>
+        <span class="next clickable">►</span>
       </div>
     </h1>
   </div>
@@ -112,6 +114,7 @@ W = 800
           <text x="{{ w * (i + .5) }}" y="{{ 20 * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
         {% end %}
       </svg>
+      <input class="radius" type="range" min="2" max="30" value="15" placeholder="Circle size">
     </div>
     <div class="col-sm-3">
       <p class="summary summary-title"></p>
@@ -132,6 +135,8 @@ lat_range = pivot['LAT'].max() - pivot['LAT'].min()
 long_range = pivot['LONG'].max() - pivot['LONG'].min()
 scale = max(lat_range, long_range)
 {% end %}
+
+var RADIUS = 14
 
 var colors = {{ json.dumps(colors.to_dict()) }}
 
@@ -228,7 +233,7 @@ function refresh() {
   $year.text(year)
   force.start()
   for (var i=0, sum=0, row; row=data[i]; i++) {
-    row.r = Math.pow(row[year] / {{ pivot.replace(0, pd.np.nan).median().median() }}, .5) * 14
+    row.r = Math.pow(row[year] / {{ pivot.replace(0, pd.np.nan).median().median() }}, .5) * RADIUS
     sum += row[year]
   }
   acs
@@ -290,6 +295,10 @@ $('body')
       file: '{{ state }}-{{ metric }}-' + year + '.svg',
       svg: $('svg.cartogram')
     })
+  })
+  .on('change', '.radius', function(e) {
+    RADIUS = +$(this).val()
+    refresh()
   })
 
 refresh()
