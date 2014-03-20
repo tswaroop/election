@@ -1,0 +1,176 @@
+{{ GRAMEX(cache=[]) }}{% code %}
+title = 'Lok Sabha elections cartogram'
+party, years = 'INC', ('2004', )
+description = ''
+
+import json, random
+from urllib import quote
+from common import pc_setup, slug
+
+data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
+latlong = DB.csv('pc-latlong.csv').set_index(['STATE', 'PC'])
+colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
+
+elections['CONSTANT'] = 1
+metric_names = {
+  'VOTES': 'Voters',
+  'CANDIDATES': 'Candidates',
+  'MARGIN': 'Margin',
+  'MARGIN %': 'Margin %',
+  'WIN %': 'Winner %',
+  'WOMEN %': 'Women %',
+  'AGE': 'Winner age',
+  'CONSTANT': 'Constant',
+}
+metrics = metric_names.keys()
+metric = args.get('metric', ['CONSTANT'])[0]
+
+years = sorted(data['YEAR'].unique())
+year = args.get('year', years)[-1]
+year_index = years.index(year)
+prev_year = years[year_index - 1] if year_index > 0 else None
+next_year = years[year_index + 1] if year_index < len(years) - 1 else None
+
+pivot = elections.ix[year][['WINNING PARTY', 'WINNER', metric]]
+
+W, H = 940, 700
+{% end %}<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title class="title">{{ title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ static_url('/css/bootstrap.v3.min.css') }}">
+  <link rel="stylesheet" href="{{ static_url('style.css') }}">
+  {{ T('.head.html', title=title, static_url=static_url, description=description) }}
+  <style>
+    #pc circle, .legend circle {
+      stroke: rgba(0,0,0,.2);
+    -webkit-transition: all 0.5s ease-out;
+       -moz-transition: all 0.5s ease-out;
+         -o-transition: all 0.5s ease-out;
+            transition: all 0.5s ease-out;
+    }
+  </style>
+</head><body class="storypage">
+
+<header>
+  <div class="container">
+    <h1 class="no-select">
+      <div class="pull-right">
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{ metric_names[metric] }} <span class="caret"></span></button>
+          <ul class="dropdown-menu pull-right" role="menu">
+            {% for v in sorted(metrics) %}
+              <li data-year="{{ v }}"{{ ' class="active"' if v == metric else '' }}><a href="?{{ quote('metric') }}={{ quote(v) }}">{{ metric_names[v] }}</a></li>
+            {% end %}
+          </ul>
+        </div>
+        <a href="#" class="btn btn-default download-svg" title="Download SVG"><i class="glyphicon glyphicon-download-alt"></i></a>
+      </div>
+      <div class="heading">
+        <span href="?year=&metric=">
+          <span class="em">Lok Sabha</span> Elections<span class="title"></span>
+        </span>
+        <span class="prev"{% if prev_year %} href="?year={{ prev_year }}"{% end %}>◄</span>
+        <span class="year">{{ year }}</span>
+        <span class="next"{% if next_year %} href="?year={{ next_year }}"{% end %}>►</span>
+      </div>
+    </h1>
+  </div>
+</header>
+
+<div class="container">
+  <svg id="pc" width="100%" data-height="{{ float(H) / W }}" viewBox ="0 0 {{ W }} {{ H }}">
+    {% set w = W / float(len(colors)) %}
+    {% for i, (party, color) in enumerate(colors.iteritems()) %}
+      <rect class="party-legend"
+        data-highlight="[data-party={{ slug(party) }}]"
+        data-party="{{ slug(party) }}"
+        x="{{ w * i }}"
+        width="{{ w }}"
+        height="{{ 20 }}"
+        fill="{{ color }}"></rect>
+      <text x="{{ w * (i + .5) }}" y="{{ 20 * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
+    {% end %}
+    <image x="5" y="-5" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
+  </svg>
+  <div class="row">
+    {% for name, table in [('Top', pivot.sort(metric, ascending=False)), ('Bottom', pivot.sort(metric, ascending=True))] %}
+      <div class="col-md-6">
+        <h3>{{ name }} {{ metric_names[metric] }}</h3>
+        <table class="table table-condensed">
+          <thead><tr><th>State</th><th>PC</th><th>Winner</th><th>Party</th><th>{{ metric_names[metric] }}</th></tr></thead>
+          <tbody>
+            {% for (state, pc), row in table.head(10).iterrows() %}
+              <tr class="direct" href="parliament#result?YEAR={{ quote(year) }}&STATE={{ quote(state) }}&PC={{ quote(pc) }}">
+                <td>{{ escape(state.title()) }}</td>
+                <td>{{ escape(pc.title()) }}</td>
+                <td>{{ escape(row['WINNER'].title()) }}</td>
+                <td>{{ escape(row['WINNING PARTY']) }}</td>
+                <td>{{ ('{:,.1%}' if metric.endswith('%') else '{:,.0f}').format(row[metric]) }}</td>
+              </tr>
+            {% end %}
+          </tbody>
+        </table>
+      </div>
+    {% end %}
+  </div>
+</div>
+
+{% code %}
+pivot['Lat'] = latlong['Lat']
+pivot['Long'] = latlong['Long']
+{% end %}
+<script id="data" type="text/csv">{% set csv = StringIO() %}{% set pivot.to_csv(csv) %}{{ csv.getvalue() }}</script>
+
+<script src="{{ static_url('/js/d3.v3.min.js') }}"></script>
+<script src="{{ static_url('/js/jquery2.min.js') }}"></script>
+<script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
+<script src="{{ static_url('js/G.min.js') }}"></script>
+<script>
+var colors = {{ json.dumps(colors.to_dict()) }}
+
+var data = d3.csv.parse($('#data').text(), function(row) {
+  for (var key in row) {
+    // Convert values to integers
+    if (key != 'STATE' && key != 'PC' && key != 'WINNING PARTY')
+      row[key] = +row[key]
+    // Get the scaled x,y coords
+    row.x = {{ H }} * .95 * (row['Long'] - 68.5) / (97 - 68.5) + Math.random() + {{ (W - H)/2 }} + 40,
+    row.y = {{ H }} * (36.7 - row['Lat']) / (36.7 - 8) + Math.random(),
+    row.r = 6 * Math.pow(row['{{ metric }}'] / {{ pivot[metric].mean() }}, .5)
+  }
+  return row
+})
+
+var update = d3.select('#pc').selectAll('circle')
+    .data(data)
+  .enter()
+    .append('circle')
+    .attr('r', function(d) { return d.r })
+    .attr('title', function(d) { return d.STATE + ': ' + d.PC + '<br>' + d['WINNING PARTY'] })
+    .attr('fill', function(d, i) { return colors[d['WINNING PARTY']] || 'rgba(128,128,128,.5)' })
+    .call(G.unpack()
+      .width({{ H }})
+      .height({{ H }}))
+
+$('body')
+  .tooltip({
+    selector: '[title]',
+    container: 'body',
+    html: true
+  })
+  .urlfilter({
+    selector: '[href]:not(.direct):not([download])'
+  })
+  .on('click', '.direct', function() {
+    window.location = $(this).attr('href')
+  })
+  .on('click', '.download-svg', function() {
+    G.download({file: 'india-pc.svg', svg: $('#pc')})
+  })
+  .aspect({
+    selector: '[data-height]'
+  })
+</script>
+</body></html>
