@@ -50,6 +50,7 @@ W, H = 940, 700
          -o-transition: all 0.5s ease-out;
             transition: all 0.5s ease-out;
     }
+    text { pointer-events: none; }
   </style>
 </head><body class="storypage">
 
@@ -80,19 +81,23 @@ W, H = 940, 700
 </header>
 
 <div class="container">
-  <svg id="pc" width="100%" data-height="{{ float(H) / W }}" viewBox ="0 0 {{ W }} {{ H }}">
+  <svg id="pc" width="100%" data-height="{{ float(H + 25) / W }}" viewBox ="0 -25 {{ W }} {{ H }}">
+    <g>
+    <image x="5" y="-5" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
     {% set w = W / float(len(colors)) %}
     {% for i, (party, color) in enumerate(colors.iteritems()) %}
       <rect class="party-legend"
         data-highlight="[data-party={{ slug(party) }}]"
         data-party="{{ slug(party) }}"
+        data-toggle="1"
         x="{{ w * i }}"
+        y="-25"
         width="{{ w }}"
         height="{{ 20 }}"
         fill="{{ color }}"></rect>
-      <text x="{{ w * (i + .5) }}" y="{{ 20 * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
+      <text x="{{ w * (i + .5) }}" y="{{ -25 + 20 * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
     {% end %}
-    <image x="5" y="-5" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
+    </g>
   </svg>
   <div class="row">
     {% for name, table in [('Top', pivot.sort(metric, ascending=False)), ('Bottom', pivot.sort(metric, ascending=True))] %}
@@ -143,13 +148,16 @@ var data = d3.csv.parse($('#data').text(), function(row) {
   return row
 })
 
-var update = d3.select('#pc').selectAll('circle')
+var update = d3.select('#pc g').selectAll('circle')
     .data(data)
   .enter()
     .append('circle')
     .attr('r', function(d) { return d.r })
     .attr('title', function(d) { return d.STATE + ': ' + d.PC + '<br>' + d['WINNING PARTY'] })
     .attr('fill', function(d, i) { return colors[d['WINNING PARTY']] || 'rgba(128,128,128,.5)' })
+    .attr('data-party', function(d) { return d['WINNING PARTY'] })
+    .attr('href', function(d) { return 'parliament#result?YEAR={{ year }}&STATE=' + encodeURIComponent(d.STATE) + '&PC=' + encodeURIComponent(d.PC) })
+    .classed('direct', true)
     .call(G.unpack()
       .width({{ H }})
       .height({{ H }}))
@@ -163,8 +171,12 @@ $('body')
   .urlfilter({
     selector: '[href]:not(.direct):not([download])'
   })
+  .highlight({
+    selector: '.party-legend',
+    target: '[data-party]'
+  })
   .on('click', '.direct', function() {
-    window.location = $(this).attr('href')
+    window.open($(this).attr('href'))
   })
   .on('click', '.download-svg', function() {
     G.download({file: 'india-pc.svg', svg: $('#pc')})
@@ -172,5 +184,8 @@ $('body')
   .aspect({
     selector: '[data-height]'
   })
+
+G.zoom({selector: '#pc'})
+
 </script>
 </body></html>
