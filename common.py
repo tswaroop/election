@@ -62,3 +62,14 @@ def latlong_setup(latlong):
         latlong['X'][indices] = xy[:,0]
         latlong['Y'][indices] = xy[:,1]
     return latlong
+
+metric_names = {
+  'VOTES': 'Voters',
+  'CANDIDATES': 'Candidates',
+  'MARGIN': 'Margin',
+  'MARGIN %': 'Margin %',
+  'WIN %': 'Winner %',
+  'WOMEN %': 'Women %',
+  'AGE': 'Winner age',
+  'CONSTANT': 'Constant',
+}

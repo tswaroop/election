@@ -3,7 +3,7 @@ title = 'Parliament Elections'
 description = 'A visual guide to the history of Indian Parliament elections, from 1951 until today, by Gramener.'
 
 from urllib import quote
-from common import pc_setup, slug
+from common import pc_setup, slug, metric_names
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 topics = pd.read_csv('parliament-topics.csv')
 party_colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
@@ -23,8 +23,8 @@ summary['Rest'] = seats - summary.T.sum()
 <header>
   <div class="container">
     <h1>
-      <a href="." class="home direct-link"><i class="glyphicon glyphicon-home"></i></a>
-      <span class="heading">
+      <span class="heading" href=".?YEAR=&METRIC=&STATE=">
+        <i class="glyphicon glyphicon-home"></i>
         <span class="em">Parliament</span> Elections<span class="title"></span>
         <small>in India</small>
       </span>
@@ -53,6 +53,17 @@ summary['Rest'] = seats - summary.T.sum()
               <li data-state="{{ s }}"><a href="?STATE={{ quote(s) }}">{{ s.title() }}</a></li>
             {% end %}
           </div>
+        </div>
+
+        <div class="btn-group metric-filter">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="current-metric">Metric</span> <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right" role="menu">
+            {% for v in sorted(metric_names) %}
+              <li data-year="{{ v }}"><a href="?METRIC={{ quote(v) }}">{{ metric_names[v] }}</a></li>
+            {% end %}
+          </ul>
         </div>
 
       </div>
@@ -93,6 +104,7 @@ summary['Rest'] = seats - summary.T.sum()
         <rect x="{{ w * i + pad }}" width="{{ w - 2*pad }}" y="{{ row['y'] }}" height="{{ row['h'] }}"
           data-party="{{ slug(party) }}"
           title="{{ party }}: {{ int(row['SEATS']) }} seats in {{ year }}"
+          href="cartogram?YEAR={{ year }}"
           fill="{{ fill }}" stroke="#fff"/>
         {% if row['h'] > 40 %}
           <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
@@ -125,7 +137,7 @@ summary['Rest'] = seats - summary.T.sum()
     {% end %}
   </div>
 
-  <div id="result-controls">
+  <div class="result-controls clearfix">
     <div class="pull-right">
       Show:
       <div class="btn-group">
@@ -134,7 +146,6 @@ summary['Rest'] = seats - summary.T.sum()
         <a class="btn btn-default" href="?n=50">50</a>
       </div>
     </div>
-    <a class="btn btn-default back direct-link" href="#"><i class="glyphicon glyphicon-arrow-left"></i> Back</a>
   </div>
   <div id="result"></div>
 </div>
@@ -155,6 +166,7 @@ if (window.FastClick)
 {{ T('js/bootstrap.v3.min.js') }}
 {{ T('js/G.min.js') }}
 {{ T('js/jquery.scrollTo.min.js') }}
+{{ T('js/d3.v3.min.js') }}
 
 $('body')
   .tooltip({
@@ -173,33 +185,46 @@ $('body')
   .aspect({
     selector: '[data-height]'
   })
-
-$('.home').on('click', function() { location.hash = '#' })
+  .on('click', '.home', function() {
+    location.hash = '#'
+  })
 
 function redraw() {
   var hash = location.hash.replace(/^#/, ''),
-      query = G.url.parse(hash).searchKey;
+      q = G.url.parse(hash),
+      query = q.searchKey;
 
-  if (hash == '') {
-    $('#result, #result-controls, .year-filter, .state-filter').hide()
+  if (q.pathname.match(/^(summary|year|result|cartogram|table)$/)) {
+    $('#summary, #factoid').slideUp(250)
+    $('.year-filter').show()
+    $('.result-controls, .state-filter')[q.pathname == 'cartogram' ? 'hide' : 'show']()
+    $('.metric-filter')[q.pathname == 'cartogram' ? 'show' : 'hide']()
+    $('#result').empty().load('pc-' + hash, function() {
+      if (q.pathname == 'cartogram') {
+        $(window).dispatch('resize')
+        $('#summary, #factoid').slideUp(250)
+      }
+      $('.tooltip').remove()
+    }).show()
+  } else {
+    $('#result, .result-controls, .year-filter, .state-filter, .metric-filter').hide()
     $('#summary, #factoid').slideDown(250, function() {
       $(window).dispatch('resize')
+      $('.tooltip').remove()
     })
-  } else {
-    $('#summary, #factoid').slideUp(250)
-    $('#result-controls, .year-filter').show()
-    $('.state-filter')[hash.match(/^summary/) ? 'show' : 'hide']()
-    $('#result').empty().load('pc-' + hash).show()
   }
 
   // Set the filters
   $('.current-year').text(query.YEAR || 'Year')
+  $('.current-metric').text(query.METRIC || 'Metric')
   $('.current-state').text(query.STATE || 'State')
 
   $('.active[data-year]').removeClass('active')
+  $('.active[data-metric]').removeClass('active')
   $('.active[data-state]').removeClass('active')
 
   $('[data-year="' + query.YEAR + '"]').addClass('active')
+  $('[data-metric="' + query.METRIC + '"]').addClass('active')
   $('[data-state="' + query.STATE + '"]').addClass('active')
 }
 
@@ -207,5 +232,4 @@ $(window).on('hashchange', redraw);
 redraw();
 
 </script>
-
 </body></html>

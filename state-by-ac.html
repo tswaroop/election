@@ -25,6 +25,8 @@ groups = winners.groupby(['AC_NAME', 'YEAR']).groups
       {% for year in ac_year %}
         <th class="year" href="?YEAR={{ year }}&BY=" title="View {{ escape(state) }} results for {{ year }}">{{  year }}</th>
       {% end %}
+      <th>&#160;</th>
+      {% for rank in range(1, 4) %}<th>#{{ rank }}</th>{% end %}
     </tr>
   </thead>
   <tbody>
@@ -43,6 +45,16 @@ groups = winners.groupby(['AC_NAME', 'YEAR']).groups
               style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}"
             >{{ party }}</td>
           {% end %}
+        {% end %}
+        <td></td>
+        {% set freq = ac_year.ix[ac].value_counts() %}
+        {% for party, count in freq.head(3).iteritems() %}
+          {% set fill = party_colors.get(party, '#ccc') if party else '#fff' %}
+          <td
+            href="?AC_NAME={{ quote(ac) }}&PARTY={{ quote(party) }}&BY="
+              title="{{ escape(party) }} won {{ count }} times at {{ escape(ac) }}"
+            style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}"
+          >{{ count }}</td>
         {% end %}
       </tr>
     {% end %}
