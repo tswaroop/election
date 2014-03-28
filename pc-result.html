@@ -5,7 +5,7 @@ data = data[data['PC'] == args['PC'][0]]
 data = data[data['STATE'] == args['STATE'][0]]
 data = data[data['YEAR'] == args['YEAR'][0]]
 data.sort('VOTES', ascending=False, inplace=True)
-columns = ['#', 'NAME', 'SEX', 'PARTY', 'AGE', 'CATEGORY', 'VOTES']
+columns = ['#', 'PARTY', 'NAME', 'VOTES', 'SEX', 'AGE', 'CATEGORY', ]
 {% end %}
 <h2>{{ args['PC'][0].title() }}, {{ args['STATE'][0].title() }}: {{ args['YEAR'][0] }}</h2>
 <table class="table table-condensed analysis">

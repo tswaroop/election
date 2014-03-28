@@ -6,6 +6,8 @@ header {
 header .heading {
   font-family: "Franklin Gothic Medium Cond", sans-serif;
   text-transform: uppercase;
+  color: inherit;
+  text-decoration: none;
 }
 header .em {
   opacity: 0.75;
@@ -243,4 +245,8 @@ h2 a:hover {
      -moz-transition: all 0.5s ease-out;
        -o-transition: all 0.5s ease-out;
           transition: all 0.5s ease-out;
+}
+
+#carto-contents text {
+  font-family: "Franklin Gothic Medium Cond", sans-serif;
 }

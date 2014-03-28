@@ -1,6 +1,7 @@
 import pandas as pd
 import re
 import layout
+from collections import OrderedDict
 
 re_slug = re.compile(r'[^A-Za-z0-9_]+')
 
@@ -63,13 +64,13 @@ def latlong_setup(latlong):
         latlong['Y'][indices] = xy[:,1]
     return latlong
 
-metric_names = {
-  'VOTES': 'Voters',
-  'CANDIDATES': 'Candidates',
-  'MARGIN': 'Margin',
-  'MARGIN %': 'Margin %',
-  'WIN %': 'Winner %',
-  'WOMEN %': 'Women %',
-  'AGE': 'Winner age',
-  'CONSTANT': 'Constant',
-}
+metric_names = OrderedDict((
+  ('VOTES', 'Voters'),
+  ('CANDIDATES', 'Candidates'),
+  ('MARGIN', 'Margin'),
+  ('MARGIN %', 'Margin %'),
+  ('WIN %', 'Winner %'),
+  ('WOMEN %', 'Women %'),
+  ('AGE', 'Winner age'),
+  ('CONSTANT', 'Constant'),
+))

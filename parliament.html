@@ -23,11 +23,11 @@ summary['Rest'] = seats - summary.T.sum()
 <header>
   <div class="container">
     <h1>
-      <span class="heading" href=".?YEAR=&METRIC=&STATE=">
+      <a class="heading direct-link" href="parliament">
         <i class="glyphicon glyphicon-home"></i>
         <span class="em">Parliament</span> Elections<span class="title"></span>
         <small>in India</small>
-      </span>
+      </a>
 
       <div class="pull-right">
 
@@ -60,7 +60,7 @@ summary['Rest'] = seats - summary.T.sum()
             <span class="current-metric">Metric</span> <span class="caret"></span>
           </button>
           <ul class="dropdown-menu pull-right" role="menu">
-            {% for v in sorted(metric_names) %}
+            {% for v in metric_names %}
               <li data-year="{{ v }}"><a href="?METRIC={{ quote(v) }}">{{ metric_names[v] }}</a></li>
             {% end %}
           </ul>
@@ -137,6 +137,8 @@ summary['Rest'] = seats - summary.T.sum()
     {% end %}
   </div>
 
+  <div id="result"></div>
+
   <div class="result-controls clearfix">
     <div class="pull-right">
       Show:
@@ -147,7 +149,6 @@ summary['Rest'] = seats - summary.T.sum()
       </div>
     </div>
   </div>
-  <div id="result"></div>
 </div>
 
 <script>

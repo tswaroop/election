@@ -1,9 +1,7 @@
 {{ GRAMEX(cache=[]) }}{% code %}
 title = 'Lok Sabha elections cartogram'
-party, years = 'INC', ('2004', )
-description = ''
 
-import json, random
+import json
 from urllib import quote
 from common import pc_setup, slug, metric_names
 
@@ -11,9 +9,9 @@ data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 latlong = DB.csv('pc-latlong.csv').set_index(['STATE', 'PC'])
 colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 
+winners = data[data['#'] == '1']
 elections['CONSTANT'] = 1
 metric = args.get('METRIC', ['CONSTANT'])[0]
-print metric
 
 years = sorted(data['YEAR'].unique())
 year = args.get('YEAR', years)[-1]
@@ -22,14 +20,15 @@ prev_year = years[year_index - 1] if year_index > 0 else None
 next_year = years[year_index + 1] if year_index < len(years) - 1 else None
 
 pivot = elections.ix[year][['WINNING PARTY', 'WINNER', metric]]
+win_count = pivot['WINNING PARTY'].value_counts()
+max_wins = float(max(win_count))
 
 W, H = 940, 700
+w = W / float(len(colors))
+h = 40    # bar height
 {% end %}
 
-<svg id="pc" width="100%" data-height="{{ float(H + 25) / W }}" viewBox ="0 -25 {{ W }} {{ H }}">
-  <g>
-  <image x="5" y="-5" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
-  {% set w = W / float(len(colors)) %}
+<svg id="carto-legend" width="100%" data-height="{{ 25. / W }}" viewBox ="0 -25 {{ W }} 25">
   {% for i, (party, color) in enumerate(colors.iteritems()) %}
     <rect class="party-legend"
       data-highlight="[data-party={{ slug(party) }}]"
@@ -42,29 +41,49 @@ W, H = 940, 700
       fill="{{ color }}"></rect>
     <text x="{{ w * (i + .5) }}" y="{{ -25 + 20 * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
   {% end %}
+</svg>
+<svg id="carto" width="100%" data-height="{{ float(H) / W }}" viewBox ="0 0 {{ W }} {{ H }}">
+  <g id="carto-contents">
+    <image x="-170" y="-5" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
+    <g transform="translate(640,0)">
+      {% for i, (party, wins) in enumerate(win_count.head(H // h).iteritems()) %}
+        <text x="50" y="{{ (i + .5) * h }}" dy=".38em" text-anchor="end" font-size="20">{{ party }}</text>
+        <text x="100" y="{{ (i + .5) * h }}" dy=".38em" text-anchor="end" font-size="20">{{ wins }}</text>
+        <rect x="110" y="{{ (i + .5) * h - 15 }}" height="{{ 30 }}" width="{{ 190 * wins / max_wins }}"
+          fill="{{ colors.get(party, 'rgba(128,128,128,.5)') }}"
+          class="party-legend"
+          data-highlight="[data-party={{ slug(party) }}]"
+          data-party="{{ slug(party) }}"
+          data-toggle="1"
+        />
+      {% end %}
+    </text>
   </g>
 </svg>
-<div class="row">
-  {% for name, table in [('Top', pivot.sort(metric, ascending=False)), ('Bottom', pivot.sort(metric, ascending=True))] %}
-    <div class="col-md-6">
-      <h3>{{ name }} {{ metric_names[metric] }}</h3>
-      <table class="table table-condensed">
-        <thead><tr><th>State</th><th>PC</th><th>Winner</th><th>Party</th><th>{{ metric_names[metric] }}</th></tr></thead>
-        <tbody>
-          {% for (state, pc), row in table.head(10).iterrows() %}
-            <tr class="direct" href="result?YEAR={{ quote(year) }}&STATE={{ quote(state) }}&PC={{ quote(pc) }}">
-              <td>{{ escape(state.title()) }}</td>
-              <td>{{ escape(pc.title()) }}</td>
-              <td>{{ escape(row['WINNER'].title()) }}</td>
-              <td>{{ escape(row['WINNING PARTY']) }}</td>
-              <td>{{ ('{:,.1%}' if metric.endswith('%') else '{:,.0f}').format(row[metric]) }}</td>
-            </tr>
-          {% end %}
-        </tbody>
-      </table>
-    </div>
-  {% end %}
-</div>
+<button class="btn btn-default reset-zoom" title="Reset zoom"><i class="glyphicon glyphicon-search"></i></button>
+{% if metric != 'CONSTANT' %}
+  <div class="row">
+    {% for name, table in [('Top', pivot.sort(metric, ascending=False)), ('Bottom', pivot.sort(metric, ascending=True))] %}
+      <div class="col-md-6">
+        <h3>{{ name }} {{ metric_names[metric] }}</h3>
+        <table class="table table-condensed">
+          <thead><tr><th>State</th><th>PC</th><th>Winner</th><th>Party</th><th>{{ metric_names[metric] }}</th></tr></thead>
+          <tbody>
+            {% for (state, pc), row in table.head(10).iterrows() %}
+              <tr class="direct" href="result?YEAR={{ quote(year) }}&STATE={{ quote(state) }}&PC={{ quote(pc) }}">
+                <td>{{ escape(state.title()) }}</td>
+                <td>{{ escape(pc.title()) }}</td>
+                <td>{{ escape(row['WINNER'].title()) }}</td>
+                <td>{{ escape(row['WINNING PARTY']) }}</td>
+                <td>{{ ('{:,.1%}' if metric.endswith('%') else '{:,.0f}').format(row[metric]) }}</td>
+              </tr>
+            {% end %}
+          </tbody>
+        </table>
+      </div>
+    {% end %}
+  </div>
+{% end %}
 
 {% code %}
 pivot['Lat'] = latlong['Lat']
@@ -80,14 +99,14 @@ var data = d3.csv.parse($('#data').text(), function(row) {
     if (key != 'STATE' && key != 'PC' && key != 'WINNING PARTY')
       row[key] = +row[key]
     // Get the scaled x,y coords
-    row.x = {{ H }} * .95 * (row['Long'] - 68.5) / (97 - 68.5) + Math.random() + {{ (W - H)/2 }} + 40,
+    row.x = {{ H }} * .95 * (row['Long'] - 68.5) / (97 - 68.5) + Math.random() + {{ (W - H)/2 }} - 150,
     row.y = {{ H }} * (36.7 - row['Lat']) / (36.7 - 8) + Math.random(),
     row.r = 6 * Math.pow(row['{{ metric }}'] / {{ pivot[metric].mean() }}, .5)
   }
   return row
 })
 
-var update = d3.select('#pc g').selectAll('circle')
+var update = d3.select('#carto-contents').selectAll('circle')
     .data(data)
   .enter()
     .append('circle')
@@ -102,7 +121,10 @@ var update = d3.select('#pc g').selectAll('circle')
       .height({{ H }}))
 
 
-G.zoom({selector: '#pc'})
+G.zoom({selector: '#carto'})
 
+d3.select('.reset-zoom').on('click', function() {
+  d3.selectAll('#carto > *').attr('transform', null)
+})
 </script>
 </body></html>
