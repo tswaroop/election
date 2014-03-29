@@ -250,3 +250,7 @@ h2 a:hover {
 #carto-contents text {
   font-family: "Franklin Gothic Medium Cond", sans-serif;
 }
+
+.carto-summary th {
+  white-space: nowrap;
+}

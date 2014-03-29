@@ -62,19 +62,19 @@ h = 40    # bar height
 </svg>
 <button class="btn btn-default reset-zoom" title="Reset zoom"><i class="glyphicon glyphicon-search"></i></button>
 {% if metric != 'CONSTANT' %}
-  <div class="row">
+  <div class="row carto-summary">
     {% for name, table in [('Top', pivot.sort(metric, ascending=False)), ('Bottom', pivot.sort(metric, ascending=True))] %}
       <div class="col-md-6">
         <h3>{{ name }} {{ metric_names[metric] }}</h3>
         <table class="table table-condensed">
-          <thead><tr><th>State</th><th>PC</th><th>Winner</th><th>Party</th><th>{{ metric_names[metric] }}</th></tr></thead>
+          <thead><tr><th>State</th><th>PC</th><th>Party</th><th>Winner</th><th>{{ metric_names[metric] }}</th></tr></thead>
           <tbody>
             {% for (state, pc), row in table.head(10).iterrows() %}
               <tr class="direct" href="result?YEAR={{ quote(year) }}&STATE={{ quote(state) }}&PC={{ quote(pc) }}">
                 <td>{{ escape(state.title()) }}</td>
                 <td>{{ escape(pc.title()) }}</td>
-                <td>{{ escape(row['WINNER'].title()) }}</td>
                 <td>{{ escape(row['WINNING PARTY']) }}</td>
+                <td>{{ escape(row['WINNER'].title()) }}</td>
                 <td>{{ ('{:,.1%}' if metric.endswith('%') else '{:,.0f}').format(row[metric]) }}</td>
               </tr>
             {% end %}

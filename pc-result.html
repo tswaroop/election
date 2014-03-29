@@ -6,6 +6,7 @@ data = data[data['STATE'] == args['STATE'][0]]
 data = data[data['YEAR'] == args['YEAR'][0]]
 data.sort('VOTES', ascending=False, inplace=True)
 columns = ['#', 'PARTY', 'NAME', 'VOTES', 'SEX', 'AGE', 'CATEGORY', ]
+colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 {% end %}
 <h2>{{ args['PC'][0].title() }}, {{ args['STATE'][0].title() }}: {{ args['YEAR'][0] }}</h2>
 <table class="table table-condensed analysis">
@@ -26,6 +27,9 @@ columns = ['#', 'PARTY', 'NAME', 'VOTES', 'SEX', 'AGE', 'CATEGORY', ]
             <td>{{ '' if pd.isnull(row[c]) else row[c] }}</td>
           {% elif c in ('AGE',) %}
             <td>{{ '' if pd.isnull(row[c]) else '{:,.0f}'.format(row[c]) }}</td>
+          {% elif c in ('PARTY', ) %}
+            {% set fill = colors.get(row[c], '#eee') %}
+            <td style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ row[c] }}</td>
           {% else %}
             <td>{{ row[c] }}</td>
           {% end %}
