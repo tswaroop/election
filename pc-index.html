@@ -1,0 +1,65 @@
+{{ GRAMEX(cache=['parliament.csv', 'colors.csv'], max_age=10*60) }}{% code %}
+
+from common import pc_setup, slug, metric_names
+data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
+party_colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
+winners = data[data['#'] == '1']
+
+parties = ['INC', 'BJP', 'CPM', 'JNP', 'JD', 'IND', 'CPI', 'DMK', 'SP', 'TDP', 'SWA', 'BJS', 'BSP', 'ADMK']
+summary = winners.pivot_table(cols='PARTY', rows='YEAR', values='NAME', aggfunc='count').fillna(0)
+seats = summary.T.sum()
+summary = summary[parties]
+summary['Rest'] = seats - summary.T.sum()
+if 'Y' in args:
+    summary = summary.ix[args['Y']]
+W, H = 940, 500
+{% end %}
+<svg width="100%" data-height="{{ float(H)/W }}" viewBox="0 0 {{ W }} {{ H }}">
+  {% set w, pad, legend = 920. / len(parties), 5, 30 %}
+  <rect width="30" height="{{ legend - 5 }}" class="party-unhighlight" fill="#000" title="Show all parties"/>
+  <text x="15" y="{{ (legend - 5) * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">x</text>
+  {% for i, party in enumerate(parties) %}
+    <rect class="party-legend"
+      data-party="{{ slug(party) }}"
+      data-highlight="[data-party={{ slug(party) }}]"
+      data-toggle="highlight"
+      x="{{ 30 + w * i }}"
+      width="{{ w }}"
+      height="{{ legend - 5 }}"
+      fill="{{ party_colors.get(party, '#999') }}"></rect>
+    <text x="{{ 30 + w * (i + .5) }}" y="{{ (legend - 5) * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
+  {% end %}
+
+  {% set w = 940. / len(summary.T.columns) %}
+  {% for i, year in enumerate(summary.T) %}{% code %}
+    series = summary.ix[year]
+    height = series / float(series.sum()) * (H - legend - 20)
+    pos = pd.DataFrame({
+      'SEATS': series,
+      'h': height,
+      'y': H - height.cumsum()
+    })
+    {% end %}
+    <text x="{{ w * (i+.5) }}" y="{{ legend }}" dy="1em" text-anchor="middle">{{ year }}</text>
+    {% for party, row in pos.iterrows() %}
+      {% set fill = party_colors.get(party, '#999') %}
+      <rect x="{{ w * i + pad }}" width="{{ w - 2*pad }}" y="{{ row['y'] }}" height="{{ row['h'] }}"
+        data-party="{{ slug(party) }}"
+        title="{{ party }}: {{ int(row['SEATS']) }} seats in {{ year }}"
+        href="cartogram?Y=&YEAR={{ year }}"
+        fill="{{ fill }}" stroke="#fff"/>
+      {% if row['h'] > 40 %}
+        <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
+          data-party="{{ slug(party) }}"
+          fill="#fff" dy="-.6em" text-anchor="middle">{{ int(row['SEATS']) }}</text>
+        <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
+          data-party="{{ slug(party) }}"
+          fill="#fff" dy=".6em" text-anchor="middle">{{ escape(party) }}</text>
+      {% elif row['h'] > 12 %}
+        <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
+          data-party="{{ slug(party) }}"
+          fill="#fff" dy=".35em" text-anchor="middle">{{ int(row['SEATS']) }}</text>
+      {% end %}
+    {% end %}
+  {% end %}
+</svg>

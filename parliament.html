@@ -5,20 +5,9 @@ description = 'A visual guide to the history of Indian Parliament elections, fro
 from urllib import quote
 from common import pc_setup, slug, metric_names
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
-elections.to_csv('girish-elections.csv', index=True)
-
-
-
 topics = pd.read_csv('parliament-topics.csv')
-party_colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
+years = sorted(data['YEAR'].unique())
 
-winners = data[data['#'] == '1']
-
-parties = ['INC', 'BJP', 'CPM', 'JNP', 'JD', 'IND', 'CPI', 'DMK', 'SP', 'TDP', 'SWA', 'BJS', 'BSP', 'ADMK']
-summary = winners.pivot_table(cols='PARTY', rows='YEAR', values='NAME', aggfunc='count').fillna(0)
-seats = summary.T.sum()
-summary = summary[parties]
-summary['Rest'] = seats - summary.T.sum()
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
   {{ T('.head.html', title=title, static_url=static_url, description=description) }}
@@ -41,10 +30,26 @@ summary['Rest'] = seats - summary.T.sum()
           </button>
           <ul class="dropdown-menu" role="menu">
             <li data-year=""><a href="?YEAR=">All years</a></li>
-            {% for y in sorted(data['YEAR'].unique()) %}
+            {% for y in years %}
               <li data-year="{{ y }}"><a href="?YEAR={{ y }}">{{ y }}</a></li>
             {% end %}
           </ul>
+        </div>
+
+        <div class="btn-group years-filter">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="current-years">Years</span> <span class="caret"></span>
+          </button>
+          <div class="dropdown-menu pull-right" role="menu">
+            <form class="years">
+              {% for y in years %}
+                <label>
+                  <input type="checkbox" name="Y" value="{{ y }}"{{ ' checked' if y in args.get('Y', []) else '' }}> {{ y }}
+                </label>
+              {% end %}
+              <p><button class="btn btn-primary" type="submit">Submit</button></p>
+            </form>
+          </div>
         </div>
 
         <div class="btn-group state-filter">
@@ -77,57 +82,7 @@ summary['Rest'] = seats - summary.T.sum()
 
 <div class="container">
 
-  {% set W, H = 940, 500 %}
-  <svg id="summary" width="100%" data-height="{{ float(H)/W }}" viewBox="0 0 {{ W }} {{ H }}">
-    {% set w, pad, legend = 920. / len(parties), 5, 30 %}
-    <rect width="30" height="{{ legend - 5 }}" class="party-unhighlight" fill="#000" title="Show all parties"/>
-    <text x="15" y="{{ (legend - 5) * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">x</text>
-    {% for i, party in enumerate(parties) %}
-      <rect class="party-legend"
-        data-party="{{ slug(party) }}"
-        data-highlight="[data-party={{ slug(party) }}]"
-        data-toggle="highlight"
-        x="{{ 30 + w * i }}"
-        width="{{ w }}"
-        height="{{ legend - 5 }}"
-        fill="{{ party_colors.get(party, '#999') }}"></rect>
-      <text x="{{ 30 + w * (i + .5) }}" y="{{ (legend - 5) * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
-    {% end %}
-
-    {% set w = 940. / len(summary.T.columns) %}
-    {% for i, year in enumerate(summary.T) %}{% code %}
-      series = summary.ix[year]
-      height = series / float(series.sum()) * (H - legend - 20)
-      pos = pd.DataFrame({
-        'SEATS': series,
-        'h': height,
-        'y': H - height.cumsum()
-      })
-      {% end %}
-      <text x="{{ w * (i+.5) }}" y="{{ legend }}" dy="1em" text-anchor="middle">{{ year }}</text>
-      {% for party, row in pos.iterrows() %}
-        {% set fill = party_colors.get(party, '#999') %}
-        <rect x="{{ w * i + pad }}" width="{{ w - 2*pad }}" y="{{ row['y'] }}" height="{{ row['h'] }}"
-          data-party="{{ slug(party) }}"
-          title="{{ party }}: {{ int(row['SEATS']) }} seats in {{ year }}"
-          href="cartogram?YEAR={{ year }}"
-          fill="{{ fill }}" stroke="#fff"/>
-        {% if row['h'] > 40 %}
-          <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
-            data-party="{{ slug(party) }}"
-            fill="#fff" dy="-.6em" text-anchor="middle">{{ int(row['SEATS']) }}</text>
-          <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
-            data-party="{{ slug(party) }}"
-            fill="#fff" dy=".6em" text-anchor="middle">{{ escape(party) }}</text>
-        {% elif row['h'] > 12 %}
-          <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
-            data-party="{{ slug(party) }}"
-            fill="#fff" dy=".35em" text-anchor="middle">{{ int(row['SEATS']) }}</text>
-        {% end %}
-      {% end %}
-    {% end %}
-
-  </svg>
+  <div id="summary"></div>
 
   <div id="factoid">
     {% for i, row in topics.iterrows() %}
@@ -198,6 +153,14 @@ $('body')
   .on('click', '.party-unhighlight', function() {
     $(this).trigger('clear.g.highlight')
   })
+  .on('click', '.dropdown-menu form', function(e) {
+    e.stopPropagation()
+  })
+  .on('submit', '.years', function(e) {
+    e.preventDefault()
+    location.hash = '?' + $(this).serialize()
+    $(this).parents('.dropdown-menu').trigger('click')
+  })
 
 function redraw() {
   var hash = location.hash.replace(/^#/, ''),
@@ -206,7 +169,8 @@ function redraw() {
 
   if (q.pathname.match(/^(summary|year|result|cartogram|table|scatter)$/)) {
     $('#summary, #factoid').slideUp(250)
-    $('.year-filter')[q.pathname.match(/scatter/) ? 'hide' : 'show']()
+    $('.year-filter')[q.pathname.match(/scatter/) ? 'slideU' : 'show']()
+    $('.years-filter')[q.pathname.match(/^$/) ? 'show' : 'hide']()
     $('.result-controls')[q.pathname.match(/cartogram|scatter/) ? 'hide' : 'show']()
     $('.state-filter')[q.pathname.match(/cartogram/) ? 'hide' : 'show']()
     $('.metric-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
@@ -219,7 +183,8 @@ function redraw() {
     }).show()
   } else {
     $('#result, .result-controls, .year-filter, .state-filter, .metric-filter').hide()
-    $('#summary, #factoid').slideDown(250, function() {
+    $('#summary').empty().load('pc-index' + hash, function() {
+      $('#summary, #factoid').show()
       $(window).dispatch('resize')
       $('.tooltip').remove()
     })
@@ -229,6 +194,11 @@ function redraw() {
   $('.current-year').text(query.YEAR || 'Year')
   $('.current-metric').text(query.METRIC || 'Size')
   $('.current-state').text(query.STATE || 'State')
+  $('.years-filter input[type="checkbox"]').each(function() {
+    var $this = $(this),
+        years = q.searchKey.Y || []
+    if (years.indexOf($(this).val()) >= 0) $this.prop('checked', true)
+  })
 
   $('.active[data-year]').removeClass('active')
   $('.active[data-metric]').removeClass('active')
