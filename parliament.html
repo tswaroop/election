@@ -161,6 +161,12 @@ $('body')
     location.hash = '?' + $(this).serialize()
     $(this).parents('.dropdown-menu').trigger('click')
   })
+  .on('click', 'a.heading', function(e) {
+    if (!location.hash.replace(/^#/, '')) {
+      e.preventDefault()
+      location = '.'
+    }
+  })
 
 function redraw() {
   var hash = location.hash.replace(/^#/, ''),
