@@ -7,14 +7,15 @@ data = data[data['YEAR'] == args['YEAR'][0]]
 data.sort('VOTES', ascending=False, inplace=True)
 columns = ['#', 'PARTY', 'NAME', 'VOTES', 'SEX', 'AGE', 'CATEGORY', ]
 colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
+N = int(args.get('n', [20])[0])
 {% end %}
-<h2>{{ args['PC'][0].title() }}, {{ args['STATE'][0].title() }}: {{ args['YEAR'][0] }}</h2>
+<h2>{{ args['PC'][0].title() }}, {{ args['STATE'][0].title() }} {{ args['YEAR'][0] }} <small>{{ min(N, len(data)) }} / {{ len(data) }} candidates</small></h2>
 <table class="table table-condensed analysis">
   <thead>
     {% for c in columns %}<th>{{ c }}</th>{% end %}
   </thead>
   <tbody>
-    {% for i, row in data.iterrows() %}
+    {% for i, row in data.head(N).iterrows() %}
       <tr>
         {% for c in columns %}
           {% if c in ('WINNER', 'NAME') %}
