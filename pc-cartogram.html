@@ -26,10 +26,12 @@ max_wins = float(max(win_count))
 W, H = 940, 700
 w = W / float(len(colors))
 h = 40    # bar height
+
+top_parties = win_count.head(H // h)
 {% end %}
 
 <svg id="carto-legend" width="100%" data-height="{{ 25. / W }}" viewBox ="0 -25 {{ W }} 25">
-  {% for i, (party, color) in enumerate(colors.iteritems()) %}
+  {% for i, (party, wins) in enumerate(top_parties.iteritems()) %}
     <rect class="party-legend"
       data-highlight="[data-party={{ slug(party) }}]"
       data-party="{{ slug(party) }}"
@@ -38,7 +40,7 @@ h = 40    # bar height
       y="-25"
       width="{{ w }}"
       height="{{ 20 }}"
-      fill="{{ color }}"></rect>
+      fill="{{ colors.get(party, '#ccc') }}"></rect>
     <text x="{{ w * (i + .5) }}" y="{{ -25 + 20 * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
   {% end %}
 </svg>
@@ -46,7 +48,7 @@ h = 40    # bar height
   <g id="carto-contents">
     <image x="-170" y="-5" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
     <g transform="translate(640,0)">
-      {% for i, (party, wins) in enumerate(win_count.head(H // h).iteritems()) %}
+      {% for i, (party, wins) in enumerate(top_parties.iteritems()) %}
         <text x="50" y="{{ (i + .5) * h }}" dy=".38em" text-anchor="end" font-size="20">{{ party }}</text>
         <text x="100" y="{{ (i + .5) * h }}" dy=".38em" text-anchor="end" font-size="20">{{ wins }}</text>
         <rect x="110" y="{{ (i + .5) * h - 15 }}" height="{{ 30 }}" width="{{ 190 * wins / max_wins }}"
@@ -113,7 +115,7 @@ var update = d3.select('#carto-contents').selectAll('circle')
     .attr('r', function(d) { return d.r })
     .attr('title', function(d) { return d.STATE + ': ' + d.PC + '<br>' + d['WINNING PARTY'] })
     .attr('fill', function(d, i) { return colors[d['WINNING PARTY']] || 'rgba(128,128,128,.5)' })
-    .attr('data-party', function(d) { return d['WINNING PARTY'] })
+    .attr('data-party', function(d) { return d['WINNING PARTY'].replace(/[^A-Za-z0-9_]/g, '-') })
     .attr('href', function(d) { return 'result?YEAR={{ year }}&STATE=' + encodeURIComponent(d.STATE) + '&PC=' + encodeURIComponent(d.PC) })
     .classed('direct', true)
     .call(G.unpack()
