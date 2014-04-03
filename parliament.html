@@ -5,6 +5,10 @@ description = 'A visual guide to the history of Indian Parliament elections, fro
 from urllib import quote
 from common import pc_setup, slug, metric_names
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
+elections.to_csv('girish-elections.csv', index=True)
+
+
+
 topics = pd.read_csv('parliament-topics.csv')
 party_colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 
@@ -57,7 +61,7 @@ summary['Rest'] = seats - summary.T.sum()
 
         <div class="btn-group metric-filter">
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            <span class="current-metric">Metric</span> <span class="caret"></span>
+            <span class="current-metric">Size</span> <span class="caret"></span>
           </button>
           <ul class="dropdown-menu pull-right" role="menu">
             {% for v in metric_names %}
@@ -75,17 +79,19 @@ summary['Rest'] = seats - summary.T.sum()
 
   {% set W, H = 940, 500 %}
   <svg id="summary" width="100%" data-height="{{ float(H)/W }}" viewBox="0 0 {{ W }} {{ H }}">
-    {% set w, pad, legend = 940. / len(parties), 5, 25 %}
+    {% set w, pad, legend = 920. / len(parties), 5, 30 %}
+    <rect width="30" height="{{ legend - 5 }}" class="party-unhighlight" fill="#000" title="Show all parties"/>
+    <text x="15" y="{{ (legend - 5) * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">x</text>
     {% for i, party in enumerate(parties) %}
       <rect class="party-legend"
         data-party="{{ slug(party) }}"
         data-highlight="[data-party={{ slug(party) }}]"
         data-toggle="highlight"
-        x="{{ w * i }}"
+        x="{{ 30 + w * i }}"
         width="{{ w }}"
         height="{{ legend - 5 }}"
         fill="{{ party_colors.get(party, '#999') }}"></rect>
-      <text x="{{ w * (i + .5) }}" y="{{ (legend - 5) * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
+      <text x="{{ 30 + w * (i + .5) }}" y="{{ (legend - 5) * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
     {% end %}
 
     {% set w = 940. / len(summary.T.columns) %}
@@ -189,19 +195,23 @@ $('body')
   .on('click', '.home', function() {
     location.hash = '#'
   })
+  .on('click', '.party-unhighlight', function() {
+    $(this).trigger('clear.g.highlight')
+  })
 
 function redraw() {
   var hash = location.hash.replace(/^#/, ''),
       q = G.url.parse(hash),
       query = q.searchKey;
 
-  if (q.pathname.match(/^(summary|year|result|cartogram|table)$/)) {
+  if (q.pathname.match(/^(summary|year|result|cartogram|table|scatter)$/)) {
     $('#summary, #factoid').slideUp(250)
-    $('.year-filter').show()
-    $('.result-controls, .state-filter')[q.pathname == 'cartogram' ? 'hide' : 'show']()
-    $('.metric-filter')[q.pathname == 'cartogram' ? 'show' : 'hide']()
+    $('.year-filter')[q.pathname.match(/scatter/) ? 'hide' : 'show']()
+    $('.result-controls')[q.pathname.match(/cartogram|scatter/) ? 'hide' : 'show']()
+    $('.state-filter')[q.pathname.match(/cartogram/) ? 'hide' : 'show']()
+    $('.metric-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('#result').empty().load('pc-' + hash, function() {
-      if (q.pathname == 'cartogram') {
+      if (q.pathname.match(/cartogram|scatter/)) {
         $(window).dispatch('resize')
         $('#summary, #factoid').slideUp(250)
       }
@@ -217,7 +227,7 @@ function redraw() {
 
   // Set the filters
   $('.current-year').text(query.YEAR || 'Year')
-  $('.current-metric').text(query.METRIC || 'Metric')
+  $('.current-metric').text(query.METRIC || 'Size')
   $('.current-state').text(query.STATE || 'State')
 
   $('.active[data-year]').removeClass('active')

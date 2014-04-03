@@ -254,3 +254,7 @@ h2 a:hover {
 .carto-summary th {
   white-space: nowrap;
 }
+
+.no-pointer {
+  pointer-events: none;
+}
