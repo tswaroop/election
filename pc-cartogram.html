@@ -14,7 +14,7 @@ colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color']
 
 winners = data[data['#'] == '1']
 elections['CONSTANT'] = 1
-metric = args.get('METRIC', ['CONSTANT'])[0]
+metric = 'CONSTANT' if groupby.startswith('2014') else args.get('METRIC', ['CONSTANT'])[0]
 
 # Add constituency related metrics
 constituencies = DB.csv('pc.csv')
