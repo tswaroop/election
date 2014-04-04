@@ -280,3 +280,8 @@ h2 a:hover {
   display: inline-block;
   width: 5em
 }
+
+.back {
+  color: #D9E1EB;
+  cursor: pointer;
+}

@@ -10,7 +10,7 @@ columns = ['#', 'PARTY', 'NAME', 'VOTES', 'SEX', 'AGE', 'CATEGORY', ]
 colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 N = int(args.get('n', [20])[0])
 {% end %}
-<h2>{{ args['PC'][0].title() }}, {{ args['STATE'][0].title() }} {{ args['YEAR'][0] }} <small>{{ min(N, len(data)) }} / {{ len(data) }} candidates</small></h2>
+<h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> {{ args['PC'][0].title() }}, {{ args['STATE'][0].title() }} {{ args['YEAR'][0] }} <small>{{ min(N, len(data)) }} / {{ len(data) }} candidates</small></h2>
 <table class="table table-condensed analysis">
   <thead>
     {% for c in columns %}<th>{{ c }}</th>{% end %}
