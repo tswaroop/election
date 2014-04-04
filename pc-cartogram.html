@@ -24,7 +24,7 @@ elections['2014 Schedule'] = constituencies['2014 Schedule']
 elections['2014 Star Candidate'] = constituencies['2014 Star Candidate']
 
 years = sorted(data['YEAR'].unique())
-year = args.get('YEAR', years)[-1]
+year = '2009' if groupby.startswith('2014') else args.get('YEAR', years)[-1]
 year_index = years.index(year)
 prev_year = years[year_index - 1] if year_index > 0 else None
 next_year = years[year_index + 1] if year_index < len(years) - 1 else None
