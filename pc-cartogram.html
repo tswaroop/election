@@ -154,10 +154,13 @@ var update = d3.select('#carto-contents').selectAll('circle')
       .width({{ H }})
       .height({{ H }}))
 
+try {
+  G.zoom({selector: '#carto'})
 
-G.zoom({selector: '#carto'})
-
-d3.select('.reset-zoom').on('click', function() {
-  d3.selectAll('#carto > *').attr('transform', null)
-})
+  d3.select('.reset-zoom').on('click', function() {
+    d3.selectAll('#carto > *').attr('transform', null)
+  })
+} catch(e) {
+  $('.reset-zoom').hide()
+}
 </script>
