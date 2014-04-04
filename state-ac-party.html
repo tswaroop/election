@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['assembly.csv', 'colors.csv'], max_age=30) }}{% code %}
+{{ GRAMEX(cache=['assembly.csv', 'colors.csv'], max_age=10*60) }}{% code %}
 data = DB.csv('assembly.csv', dtype=object)
 
 state, ac, party = args['ST_NAME'][0], args['AC_NAME'][0], args['PARTY'][0]

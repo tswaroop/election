@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['assembly.csv', 'colors.csv', 'state-by-common.html'], max_age=30) }}
+{{ GRAMEX(cache=['assembly.csv', 'colors.csv', 'state-by-common.html'], max_age=10*60) }}
 {% include state-by-common.html %}
 {% code %}
 ac_year = winners.pivot_table(rows='AC_NAME', cols='YEAR', values='PARTY', aggfunc='max')

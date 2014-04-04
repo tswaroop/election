@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['parliament.csv']) }}{% code %}
+{{ GRAMEX(cache=['parliament.csv', 'colors.csv'], max_age=10*60) }}{% code %}
 from urllib import quote
 from common import pc_setup
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
