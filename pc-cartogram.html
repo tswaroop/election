@@ -1,17 +1,27 @@
-{{ GRAMEX(cache=['parliament.csv', 'pc-latlong.csv', 'colors.csv'], max_age=10*60) }}{% code %}
+{{ GRAMEX(cache=['parliament.csv', 'pc.csv', 'pc-latlong.csv', 'colors.csv'], max_age=10*60) }}{% code %}
 title = 'Lok Sabha elections cartogram'
 
 import json
 from urllib import quote
 from common import pc_setup, slug, metric_names
 
+groupbys = ['PARTY', '2014 Schedule', '2014 Star Candidate']
+
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 latlong = DB.csv('pc-latlong.csv').set_index(['STATE', 'PC'])
-colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
+groupby = args.get('BY', ['PARTY'])[0]
+colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color']
 
 winners = data[data['#'] == '1']
 elections['CONSTANT'] = 1
 metric = args.get('METRIC', ['CONSTANT'])[0]
+
+# Add constituency related metrics
+constituencies = DB.csv('pc.csv')
+constituencies['YEAR'] = '2009'
+constituencies = constituencies.set_index(['YEAR', 'STATE', 'PC'])
+elections['2014 Schedule'] = constituencies['2014 Schedule']
+elections['2014 Star Candidate'] = constituencies['2014 Star Candidate']
 
 years = sorted(data['YEAR'].unique())
 year = args.get('YEAR', years)[-1]
@@ -19,65 +29,79 @@ year_index = years.index(year)
 prev_year = years[year_index - 1] if year_index > 0 else None
 next_year = years[year_index + 1] if year_index < len(years) - 1 else None
 
-pivot = elections.ix[year][['WINNING PARTY', 'WINNER', metric]]
-win_count = pivot['WINNING PARTY'].value_counts()
+pivot = elections.ix[year][[groupby, 'WINNER', metric]]
+win_count = pivot[groupby].value_counts()
 max_wins = float(max(win_count))
 
 W, H = 940, 700
-h = 40    # bar height
-top_parties = win_count.head(H // h)
-{% end %}
+bar_height = 40
+top_groups = win_count.head(min(20, H // bar_height))
 
+if groupby in colors.index:
+    colors = colors.ix[groupby]
+else:
+    colors = pd.Series(dict(zip(top_groups.index, _color.distinct(20 if len(top_groups) > 10 else 10))))
+
+{% end %}
 <svg id="carto-legend" width="100%" data-height="{{ 25. / W }}" viewBox ="0 -25 {{ W }} 25">
-  <rect y="-25" width="30" height="30" class="party-unhighlight" fill="#000" title="Show all parties"/>
+  <rect y="-25" width="30" height="30" class="party-unhighlight" fill="#000" title="Show all {{ groupby }}"/>
   <text x="15" y="-12" text-anchor="middle" dy=".35em" fill="#fff">x</text>
-  {% set w = (W - 30) / float(len(top_parties)) %}
-  {% for i, (party, wins) in enumerate(top_parties.iteritems()) %}
+  {% set w = (W - 30) / float(len(top_groups)) %}
+  {% for i, (group, wins) in enumerate(top_groups.iteritems()) %}
     <rect class="party-legend"
-      data-highlight="[data-party={{ slug(party) }}]"
-      data-party="{{ slug(party) }}"
+      data-highlight="[data-party={{ slug(group) }}]"
+      data-party="{{ slug(group) }}"
       data-toggle="1"
       x="{{ 30 + w * i }}"
       y="-25"
       width="{{ w }}"
       height="30"
-      fill="{{ colors.get(party, '#ccc') }}"></rect>
-    <text x="{{ 30 + w * (i + .5) }}" y="-12" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
+      fill="{{ colors.get(group, '#ccc') }}"></rect>
+    <text x="{{ 30 + w * (i + .5) }}" y="-12" text-anchor="middle" dy=".35em" fill="#fff">{{ group }}</text>
   {% end %}
 </svg>
 <svg id="carto" width="100%" data-height="{{ float(H) / W }}" viewBox ="0 0 {{ W }} {{ H }}">
   <g id="carto-contents">
     <image x="-170" y="-5" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
     <g transform="translate(640,0)">
-      {% for i, (party, wins) in enumerate(top_parties.iteritems()) %}
-        <rect y="{{ i * h }}" width="300" height="{{ h }}"
+      {% for i, (group, wins) in enumerate(top_groups.iteritems()) %}
+        <rect y="{{ i * bar_height }}" width="300" height="{{ bar_height }}"
           fill="#f8f8f8"
           class="party-legend"
-          data-highlight="[data-party={{ slug(party) }}]"
-          data-party="{{ slug(party) }}"
+          data-highlight="[data-party={{ slug(group) }}]"
+          data-party="{{ slug(group) }}"
           data-toggle="1"
         />
-        <text x="50" y="{{ (i + .5) * h }}" dy=".38em" text-anchor="end" font-size="20">{{ party }}</text>
-        <text x="100" y="{{ (i + .5) * h }}" dy=".38em" text-anchor="end" font-size="20">{{ wins }}</text>
-        <rect class="no-pointer" x="110" y="{{ (i + .5) * h - 15 }}" height="{{ 30 }}" width="{{ 190 * wins / max_wins }}" fill="{{ colors.get(party, 'rgba(128,128,128,.5)') }}"/>
+        <text x="50" y="{{ (i + .5) * bar_height }}" dy=".38em" text-anchor="end" font-size="20">{{ group }}</text>
+        <text x="100" y="{{ (i + .5) * bar_height }}" dy=".38em" text-anchor="end" font-size="20">{{ wins }}</text>
+        <rect class="no-pointer" x="110" y="{{ (i + .5) * bar_height - 15 }}" height="{{ 30 }}" width="{{ 190 * wins / max_wins }}" fill="{{ colors.get(group, 'rgba(128,128,128,.5)') }}"/>
       {% end %}
     </text>
   </g>
 </svg>
-<button class="btn btn-default reset-zoom" title="Reset zoom"><i class="glyphicon glyphicon-search"></i></button>
+
+<p>
+  <button class="btn btn-default reset-zoom" title="Reset zoom"><i class="glyphicon glyphicon-search"></i></button>
+  <span class="btn-group">
+    {% for by in groupbys %}
+      <a class="btn btn-default{{ ' active' if by == groupby else '' }}" href="?BY={{ by }}">{{ by.title() }}</a>
+    {% end %}
+  </span>
+</p>
+
 {% if metric != 'CONSTANT' %}
   <div class="row carto-summary">
     {% for name, table in [('Top', pivot.sort(metric, ascending=False)), ('Bottom', pivot.sort(metric, ascending=True))] %}
       <div class="col-md-6">
         <h3>{{ name }} {{ metric_names[metric] }}</h3>
         <table class="table table-condensed">
-          <thead><tr><th>State</th><th>PC</th><th>Party</th><th>Winner</th><th>{{ metric_names[metric] }}</th></tr></thead>
+          <thead><tr><th>State</th><th>PC</th><th>{{ groupby.title() }}</th><th>Winner</th><th>{{ metric_names[metric] }}</th></tr></thead>
           <tbody>
             {% for (state, pc), row in table.head(10).iterrows() %}
-              <tr class="direct" href="result?YEAR={{ quote(year) }}&STATE={{ quote(state) }}&PC={{ quote(pc) }}">
+              <tr class="direct" href="result?BY=&YEAR={{ quote(year) }}&STATE={{ quote(state) }}&PC={{ quote(pc) }}">
                 <td>{{ escape(state.title()) }}</td>
                 <td>{{ escape(pc.title()) }}</td>
-                <td>{{ escape(row['WINNING PARTY']) }}</td>
+                <td>{{ escape(row[groupby]) }}</td>
                 <td>{{ escape(row['WINNER'].title()) }}</td>
                 <td>{{ ('{:,.1%}' if metric.endswith('%') else '{:,.0f}').format(row[metric]) }}</td>
               </tr>
@@ -95,12 +119,13 @@ pivot['Long'] = latlong['Long']
 {% end %}
 <script id="data" type="text/csv">{% set csv = StringIO() %}{% set pivot.to_csv(csv) %}{{ csv.getvalue() }}</script>
 <script>
-var colors = {{ json.dumps(colors.to_dict()) }}
+var colors = {{ json.dumps(colors.to_dict()) }},
+    groupby = '{{ groupby }}'
 
 var data = d3.csv.parse($('#data').text(), function(row) {
   for (var key in row) {
     // Convert values to integers
-    if (key != 'STATE' && key != 'PC' && key != 'WINNING PARTY')
+    if (key != 'STATE' && key != 'PC' && key != groupby)
       row[key] = +row[key]
     // Get the scaled x,y coords
     row.x = {{ H }} * .95 * (row['Long'] - 68.5) / (97 - 68.5) + Math.random() + {{ (W - H)/2 }} - 150,
@@ -115,10 +140,10 @@ var update = d3.select('#carto-contents').selectAll('circle')
   .enter()
     .append('circle')
     .attr('r', function(d) { return d.r })
-    .attr('title', function(d) { return d.STATE + ': ' + d.PC + '<br>' + d['WINNING PARTY'] })
-    .attr('fill', function(d, i) { return colors[d['WINNING PARTY']] || 'rgba(128,128,128,.5)' })
-    .attr('data-party', function(d) { return d['WINNING PARTY'].replace(/[^A-Za-z0-9_]/g, '-') })
-    .attr('href', function(d) { return 'result?YEAR={{ year }}&STATE=' + encodeURIComponent(d.STATE) + '&PC=' + encodeURIComponent(d.PC) })
+    .attr('title', function(d) { return d.STATE + ': ' + d.PC + '<br>' + d[groupby] })
+    .attr('fill', function(d, i) { return colors[d[groupby]] || 'rgba(128,128,128,.5)' })
+    .attr('data-party', function(d) { return d[groupby].replace(/[^A-Za-z0-9_]/g, '-') })
+    .attr('href', function(d) { return 'result?BY=&YEAR={{ year }}&STATE=' + encodeURIComponent(d.STATE) + '&PC=' + encodeURIComponent(d.PC) })
     .classed('direct', true)
     .call(G.unpack()
       .width({{ H }})
@@ -131,4 +156,3 @@ d3.select('.reset-zoom').on('click', function() {
   d3.selectAll('#carto > *').attr('transform', null)
 })
 </script>
-</body></html>

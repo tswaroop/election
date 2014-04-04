@@ -1,6 +1,7 @@
 {{ GRAMEX(cache=['parliament.csv']) }}{% code %}
 from urllib import quote
-data, elections = DB.csv('parliament.csv', dtype=object)
+from common import pc_setup
+data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 data = data[data['PC'] == args['PC'][0]]
 data = data[data['STATE'] == args['STATE'][0]]
 data = data[data['YEAR'] == args['YEAR'][0]]

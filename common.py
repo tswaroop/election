@@ -6,7 +6,7 @@ from collections import OrderedDict
 re_slug = re.compile(r'[^A-Za-z0-9_]+')
 
 def slug(s):
-    return re_slug.sub('-', s)
+    return re_slug.sub('-', str(s))
 
 def pc_setup(data):
     data['VOTES'] = data['VOTES'].astype(float)
@@ -45,7 +45,7 @@ def pc_setup(data):
     elections['WOMEN'] = women['COUNT'].sum()
     elections['WOMEN %'] = elections['WOMEN'] / elections['CANDIDATES'].astype(float)
     elections['WINNER'] = winners['NAME'].min()
-    elections['WINNING PARTY'] = winners['PARTY'].min()
+    elections['PARTY'] = winners['PARTY'].min()
 
     return data, elections
 
