@@ -175,7 +175,7 @@ $('body')
     var hash = location.hash.replace(/^#/, ''),
         match = hash.match(/YEAR=(\d+)/),
         index
-    if ($(e.target).is('body') && match) {
+    if ($(e.target).is('body') && match && !e.altKey && !e.ctrlKey && !e.shiftKey) {
       index = years.indexOf(match[1])
       if (e.keyCode == 37 && index > 0) {
         location.hash = hash.replace(/YEAR=\d+/, 'YEAR=' + years[index - 1])
