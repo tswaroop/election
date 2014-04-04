@@ -116,6 +116,7 @@ else:
 {% code %}
 pivot['Lat'] = latlong['Lat']
 pivot['Long'] = latlong['Long']
+metric_mean = pivot[metric].mean()
 {% end %}
 <script id="data" type="text/csv">{% set csv = StringIO() %}{% set pivot.to_csv(csv) %}{{ csv.getvalue() }}</script>
 <script>
@@ -130,7 +131,11 @@ var data = d3.csv.parse($('#data').text(), function(row) {
     // Get the scaled x,y coords
     row.x = {{ H }} * .95 * (row['Long'] - 68.5) / (97 - 68.5) + Math.random() + {{ (W - H)/2 }} - 150,
     row.y = {{ H }} * (36.7 - row['Lat']) / (36.7 - 8) + Math.random(),
-    row.r = 6 * Math.pow(row['{{ metric }}'] / {{ pivot[metric].mean() }}, .5)
+    {% if pd.isnull(metric_mean) %}
+      row.r = 6
+    {% else %}
+      row.r = 6 * Math.pow(row['{{ metric }}'] / {{ metric_mean }}, .5)
+    {% end %}
   }
   return row
 })
