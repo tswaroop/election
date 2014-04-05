@@ -27,7 +27,6 @@ header .home {
   h1 { font-size: 125%; margin: 5px 0; }
   h2 { font-size: 110%; margin: 5px 0; }
   h3 { margin: 5px 0; }
-  .header-controls { display: none; }
 }
 
 text { pointer-events: none; }
@@ -268,18 +267,13 @@ h2 a:hover {
   pointer-events: none;
 }
 
-.dropdown-menu form {
-  text-align: center;
-  padding: 0 10px;
-  width: 17em;
+.years {
+  padding: 10px 10px 0 10px;
+  width: 18em;
 }
-.dropdown-menu form p {
-  text-align: left;
-}
-.dropdown-menu label {
-  color: #000;
+.years label {
   display: inline-block;
-  width: 5em
+  width: 5em;
 }
 
 .back {
