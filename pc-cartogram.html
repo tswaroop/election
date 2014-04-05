@@ -21,8 +21,7 @@ metric = 'CONSTANT' if groupby.startswith('2014') else args.get('METRIC', ['CONS
 constituencies = DB.csv('pc.csv')
 constituencies['YEAR'] = '2009'
 constituencies = constituencies.set_index(['YEAR', 'STATE', 'PC'])
-elections['2014 Schedule'] = constituencies['2014 Schedule']
-elections['2014 Star Candidate'] = constituencies['2014 Star Candidate']
+elections[['2014 Schedule', '2014 Star Candidate']] = constituencies[['2014 Schedule', '2014 Star Candidate']]
 
 years = sorted(data['YEAR'].unique())
 year = '2009' if groupby.startswith('2014') else args.get('YEAR', years)[-1]
@@ -38,7 +37,7 @@ if chosen_states:
 metric_mean = pivot[metric].mean()
 
 win_count = pivot[groupby].value_counts()
-max_wins = float(max(win_count))
+max_wins = float(win_count.max())
 
 W, H, R = 940, 700, 6
 bar_height = 40
@@ -54,20 +53,24 @@ if groupby in colors.index:
     colors = colors.ix[groupby]
 else:
     colors = pd.Series(dict(zip(top_groups.index, _color.distinct(20 if len(top_groups) > 10 else 10))))
+
+TOPH = 25
 {% end %}
-<svg id="state-legend" width="100%" data-height="{{ 25. / W }}" viewBox ="0 -25 {{ W }} 25">
+<svg id="state-legend" width="100%" data-height="{{ float(TOPH * 2) / W }}" viewBox ="0 0 {{ W }} {{ TOPH * 2 }}">
   {% set w = W / float(len(states)) %}
   {% for i, state in enumerate(states) %}
-    <rect class="state-legend"
-      href="?STATE={{ quote(state) }}"
-      x="{{ w * i }}"
-      y="-25"
-      width="{{ w }}"
-      height="25"
-      title="{{ escape(state or 'All states') }}"
-      fill="{{ '#c0504d' if not state else '#aec7e8' if state in chosen_states else '#f8f8f8' }}"
-      stroke="rgba(0,0,0,.3)"></rect>
-    <text x="{{ w * (i + .5) }}" y="-12" text-anchor="middle" dy=".35em" font-size="12">{{ abbr.get(state, state) or 'X' }}</text>
+    <g{% if state %} data-grp="{{ state }}"{% end %}>
+      <rect class="state-legend"
+        href="?STATE={{ quote(state) }}"
+        x="{{ w * i }}"
+        width="{{ w }}"
+        height="{{ TOPH }}"
+        title="{{ escape(state or 'All states') }}"
+        fill="{{ '#e66' if not state else '#aec7e8' if state in chosen_states else '#f8f8f8' }}"
+        stroke="rgba(0,0,0,.3)"></rect>
+      <text x="{{ w * (i + .5) }}" y="{{ TOPH / 2 }}" text-anchor="middle" dy=".35em" font-size="12">{{ abbr.get(state, state) or 'X' }}</text>
+      <text class="value" x="{{ w * (i + .5) }}" y="{{ TOPH + TOPH / 2 }}" text-anchor="middle" dy=".35em" font-size="14"></text>
+    </g>
   {% end %}
 </svg>
 
@@ -100,15 +103,6 @@ else:
     </text>
   </g>
 </svg>
-
-<p>
-  <button class="btn btn-default reset-zoom" title="Reset zoom"><i class="glyphicon glyphicon-search"></i></button>
-  <span class="btn-group">
-    {% for by in groupbys %}
-      <a class="btn btn-default{{ ' active' if by == groupby else '' }}" href="?BY={{ by }}">{{ by.title() }}</a>
-    {% end %}
-  </span>
-</p>
 
 {% if metric != 'CONSTANT' %}
   <div class="row carto-summary">
@@ -186,18 +180,29 @@ d3.selectAll('input[type="range"]').on('change', function() {
     .classed('hide', function(d) { return (d.r < lo) || (d.r > hi) })
 })
 
+var statemap = $('[data-grp]').map(function() {
+  var $this = d3.select(this)
+  return {
+    rect: $this.select('rect'),
+    text: $this.select('text.value'),
+    state: $this.attr('data-grp')
+  }
+}).get()
 
-/*
-  // Disable zoom. Clashes with native browser zoom on large screens
+var color = d3.scale().range()
 
-  var zoom = G.zoom({selector: '#carto'})
-
-  d3.select('.reset-zoom').on('click', function() {
-    d3.selectAll('#carto > *').attr('transform', null)
+window.on_highlight = function(e) {
+  var count = {},
+      i=0,
+      cell, match
+  e.highlighted.each(function() {
+    var row = this.__data__
+    if (row) count[row.STATE] = (count[row.STATE] || 0) + 1
   })
-} catch(e) {
-  $('.reset-zoom').hide()
+  for (; cell=statemap[i]; i++) {
+    match = cell.state in count
+    cell.text.text(match ? count[cell.state] : '')
+    cell.rect.attr('fill', match ? '#ff8060' : '#fff')
+  }
 }
-*/
-$('.reset-zoom').hide()
 </script>

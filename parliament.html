@@ -34,6 +34,14 @@ years = sorted(data['YEAR'].unique())
       <ul class="nav navbar-nav">
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown shortcut-filter">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Go to <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a class="direct-link" href="#cartogram?BY=2014%20Schedule">2014 Schedule</a></li>
+            <li><a class="direct-link" href="#cartogram?BY=2014%20Star%20Candidate">2014 Stars</a></li>
+            <li><a class="direct-link" href="#cartogram?YEAR=2009">2009 Results</a></li>
+          </ul>
+        </li>
         <li class="dropdown year-filter">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <span class="current-year">Year</span> <span class="caret"></span>
@@ -41,7 +49,7 @@ years = sorted(data['YEAR'].unique())
           <ul class="dropdown-menu" role="menu">
             <li data-year=""><a href="?YEAR=">All years</a></li>
             {% for y in years %}
-              <li data-year="{{ y }}"><a href="?YEAR={{ y }}">{{ y }}</a></li>
+              <li data-year="{{ y }}"><a href="?BY=&YEAR={{ y }}">{{ y }}</a></li>
             {% end %}
           </ul>
         </li>
@@ -82,6 +90,7 @@ years = sorted(data['YEAR'].unique())
             </p>
           </form>
         </li>
+        <li><a class="reload" href="#" title="Refresh" data-placement="bottom"><i class="glyphicon glyphicon-refresh"></i></a></li>
       </ul>
     </div>
   </div>
@@ -154,6 +163,9 @@ $('body')
     selector: '.party-legend',
     target: '[data-party]'
   })
+  .on('shown.g.highlight', function(e) {
+    window.on_highlight(e)
+  })
   .aspect({
     selector: '[data-height]'
   })
@@ -162,6 +174,10 @@ $('body')
   })
   .on('click', '.back', function() {
     history.go(-1)
+  })
+  .on('click', '.reload', function(e) {
+    e.preventDefault()
+    location.reload()
   })
   .on('click', '.party-unhighlight', function() {
     $(this).trigger('clear.g.highlight')
