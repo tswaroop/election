@@ -62,7 +62,7 @@ years = sorted(data['YEAR'].unique())
           </a>
           <ul class="dropdown-menu" role="menu">
             {% for v in metric_names %}
-              <li data-year="{{ v }}"><a href="?METRIC={{ quote(v) }}">{{ metric_names[v] }}</a></li>
+              <li data-year="{{ v }}"><a href="?BY=&METRIC={{ quote(v) }}">{{ metric_names[v] }}</a></li>
             {% end %}
           </ul>
         </li>

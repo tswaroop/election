@@ -67,12 +67,12 @@ def latlong_setup(latlong):
     return latlong
 
 metric_names = OrderedDict((
-  ('VOTES', 'Voters'),
-  ('CANDIDATES', 'Candidates'),
   ('MARGIN', 'Margin'),
   ('MARGIN %', 'Margin %'),
-  ('WIN %', 'Winner %'),
-  ('WOMEN %', 'Women %'),
+  ('CANDIDATES', 'Candidates'),
   ('AGE', 'Winner age'),
+  ('WOMEN %', 'Women %'),
+  ('VOTES', 'Voters'),
+  ('WIN %', 'Winner %'),
   ('CONSTANT', 'Constant'),
 ))

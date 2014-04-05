@@ -35,11 +35,12 @@ chosen_states = args.get('STATE', [])
 pivot = elections.ix[year][[groupby, 'WINNER', metric]]
 if chosen_states:
     pivot = pivot.ix[chosen_states]
+metric_mean = pivot[metric].mean()
 
 win_count = pivot[groupby].value_counts()
 max_wins = float(max(win_count))
 
-W, H = 940, 700
+W, H, R = 940, 700, 6
 bar_height = 40
 top_groups = win_count.head(min(20, H // bar_height))
 
@@ -69,6 +70,15 @@ else:
     <text x="{{ w * (i + .5) }}" y="-12" text-anchor="middle" dy=".35em" font-size="12">{{ abbr.get(state, state) or 'X' }}</text>
   {% end %}
 </svg>
+
+{% if metric != 'CONSTANT' %}
+  <div class="row">
+    {% set R_hi = 6 if pd.isnull(metric_mean) else R * (pivot[metric].max() / metric_mean) ** .5 %}
+    <div class="col-xs-6"><input class="lo" type="range" min="0" max="{{ R_hi }}" step="0.1" value="0"></div>
+    <div class="col-xs-6"><input class="hi" type="range" min="0" max="{{ R_hi }}" step="0.1" value="{{ R_hi }}"></div>
+  </div>
+{% end %}
+
 <svg id="carto" width="100%" data-height="{{ float(H) / W }}" viewBox ="0 0 {{ W }} {{ H }}">
   <g id="carto-contents">
     <image x="-170" y="-5" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
@@ -127,12 +137,12 @@ else:
 {% code %}
 pivot['Lat'] = latlong['Lat']
 pivot['Long'] = latlong['Long']
-metric_mean = pivot[metric].mean()
 {% end %}
 <script id="data" type="text/csv">{% set csv = StringIO() %}{% set pivot.to_csv(csv) %}{{ csv.getvalue() }}</script>
 <script>
 var colors = {{ json.dumps(colors.to_dict()) }},
-    groupby = '{{ groupby }}'
+    groupby = '{{ groupby }}',
+    R = {{ R }}
 
 var data = d3.csv.parse($('#data').text(), function(row) {
   for (var key in row) {
@@ -143,9 +153,9 @@ var data = d3.csv.parse($('#data').text(), function(row) {
     row.x = {{ H }} * .95 * (row['Long'] - 68.5) / (97 - 68.5) + Math.random() + {{ (W - H)/2 }} - 150,
     row.y = {{ H }} * (36.7 - row['Lat']) / (36.7 - 8) + Math.random(),
     {% if pd.isnull(metric_mean) %}
-      row.r = 6
+      row.r = R
     {% else %}
-      row.r = 6 * Math.pow(row['{{ metric }}'] / {{ metric_mean }}, .5)
+      row.r = R * Math.pow(row['{{ metric }}'] / {{ metric_mean }}, .5)
     {% end %}
   }
   return row
@@ -166,7 +176,20 @@ var update = d3.select('#carto-contents').selectAll('circle')
       .width({{ H }})
       .height({{ H }}))
 
-try {
+var $lo = d3.select('input.lo'),
+    $hi = d3.select('input.hi')
+
+d3.selectAll('input[type="range"]').on('change', function() {
+  var lo = +$lo.property('value'),
+      hi = +$hi.property('value')
+  update
+    .classed('hide', function(d) { return (d.r < lo) || (d.r > hi) })
+})
+
+
+/*
+  // Disable zoom. Clashes with native browser zoom on large screens
+
   var zoom = G.zoom({selector: '#carto'})
 
   d3.select('.reset-zoom').on('click', function() {
@@ -175,4 +198,6 @@ try {
 } catch(e) {
   $('.reset-zoom').hide()
 }
+*/
+$('.reset-zoom').hide()
 </script>
