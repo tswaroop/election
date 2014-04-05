@@ -1,0 +1,145 @@
+{{ GRAMEX(cache=[]) }}{% code %}
+import json
+
+title = 'Candidates 2014'
+description = 'The total wealth of the 2014 election candidates'
+
+data = DB.csv('candidate.csv')
+data = data[data['Net Assets'] > 1e5]
+partywise = data.groupby('Party')
+assets_by_party = partywise['Net Assets'].sum()
+assets_by_party.sort(ascending=False)
+party_colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
+
+W, H, aspect = 800, 450, 2.
+rects = treemap.squarified(0, 0, W, H * aspect, assets_by_party)
+rects[:, [1,3]] /= aspect
+colors = _color.distinct(20)
+
+top_parties = ['INC', 'BJP', 'BSP', 'AAP', 'IND', 'SP']
+w = W / float(len(top_parties))
+{% end %}<!DOCTYPE html><html lang="en">
+<head>
+  {{ T('.head.html', title=title, static_url=static_url, description=description) }}
+  <style>
+  .wealth-control { font-size: 18px; margin-bottom: 10px;}
+  </style>
+</head><body>
+
+<header>
+  <div class="container">
+    <h1>
+      <span class="heading home">
+        Wealth <small>of 2014 election candidates</small>
+      </span>
+      <div class="pull-right header-controls">
+        <div class="btn-group year-filter">
+          <input type="search" class="form-control" placeholder="Search" data-search="title" data-target="rect,text">
+        </div>
+      </div>
+    </h1>
+  </div>
+</header>
+
+<div class="container">
+
+<div class="row wealth-control">
+  <div class="col-md-4">
+    Candidates with over Rs <span id="wealth"></span> (lks)
+  </div>
+  <div class="col-md-8">
+    <input class="min-wealth" style="width:100%" type="range" min="0.1" max="100" value="0">
+  </div>
+</div>
+
+<svg class="partymap" width="100%" data-height="{{ 50. / W }}" viewBox="0 0 {{ W }} 50">
+  {% for i, party in enumerate(top_parties) %}
+    {% set fill = party_colors.get(party, '#ccc') %}
+    <rect x="{{ i * w }}" width="{{ w }}" height="50" fill="{{ fill }}"/>
+    <text x="{{ (i + .5) * w }}" y="25" dy=".37em" text-anchor="middle" font-size="20" fill="{{ _color.contrast(fill) }}">{{ party }}: <tspan data-party="{{ party }}"></tspan></text>
+  {% end %}
+</svg>
+
+<svg class="wealthmap" width="100%" data-height="{{ float(H) / W }}" viewBox="0 0 {{ W }} {{ H }}">
+  {% for i, (x, y, w, h) in enumerate(rects) %}
+    {% code %}
+    party = assets_by_party.index[i]
+    candidate_assets = data.ix[partywise.groups[party]]['Net Assets'].order(ascending=False)
+    subrects = treemap.squarified(x, y * aspect, w, h * aspect, candidate_assets)
+    subrects[:, [1,3]] /= aspect
+    fill = party_colors.get(party, colors[i % 20])
+    {% end %}
+    {% for j, (x1, y1, w1, h1) in enumerate(subrects) %}
+      {% code %}
+      row = data.ix[candidate_assets.index[j]]
+      {% end %}
+      <rect x="{{ x1 }}" y="{{ y1 }}" width="{{ w1 }}" height="{{ h1 }}"
+       fill="{{ fill }}"
+       stroke="#fff"
+       title="{{ '{:s}<br>{:s}<br>{:,.2f}cr'.format(escape(row['Candidate']), escape(party), row['Net Assets'] / 1e7) }}"
+      />
+    {% end %}
+  {% end %}
+  {% for i, (x, y, w, h) in enumerate(rects) %}
+    {% code %}
+    party = assets_by_party.index[i]
+    namesize = layout.fontwidth(party)
+    fontsize = min(50, h, w * 15. / namesize)
+    {% end %}
+    {% if w > 20 and h > 5 and len(party) < 50 %}
+      <text x="{{ x + w/2 }}" y="{{ y + h/2 }}" dy=".37em" text-anchor="middle" font-size="{{ fontsize }}">{{ party }}</text>
+    {% end %}
+  {% end %}
+</svg>
+
+<p>Each box is one candidate. The size is based on their wealth. Data from <a href="http://myneta.info/">myneta.info</a></p>
+
+</div>
+
+<script src="{{ static_url('/js/jquery2.min.js') }}"></script>
+<script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
+<script src="{{ static_url('js/G.min.js') }}"></script>
+<script>
+var wealthmap = $('.wealthmap rect').map(function() {
+      var $this = $(this),
+          match = $this.attr('title').match('<br>(.*?)<br>([0-9\.]+)cr')
+      if (match)
+        return {node: $this, wealth: +match[2], party: match[1]}
+    }),
+    wealth_filter = function(e) {
+      var wealth = $(this).val(),
+          i = 0,
+          count = {},
+          $parties = $('tspan[data-party]'),
+          cell
+      $('#wealth').text(wealth)
+      for (; cell = wealthmap[i]; i++) {
+        if (cell.wealth >= wealth) {
+          count[cell.party] = (count[cell.party] || 0) + 1
+          cell.node.removeClass('fade')
+        } else {
+          cell.node.addClass('fade')
+        }
+      }
+
+      for (i=0; i<{{ len(top_parties) }}; i++) {
+        $parties.eq(i).text(count[parties[i]] || 0)
+      }
+    },
+    parties = {{ json.dumps(top_parties) }}
+$('body')
+  .tooltip({
+    selector: '[title]',
+    container: 'body',
+    html: true
+  })
+  .aspect({
+    selector: '[data-height]'
+  })
+  .search()
+  .on('change', '.min-wealth', wealth_filter)
+
+$('.min-wealth').trigger('change')
+
+</script>
+</body></html>
