@@ -56,7 +56,7 @@ text { pointer-events: none; }
 .bar-legend.active { fill: #eec; }
 .state-legend.fade { opacity: .3; }
 .rank-legend.fade { opacity: .3; }
-.cartogram .fade { opacity: .05; }
+.cartogram .fade { opacity: .05; pointer-events: none; }
 .wealthmap .fade { opacity: .1; }
 
 .link[href] { color: {{ _color.Office[0] }}; }
@@ -281,4 +281,8 @@ h2 a:hover {
 .back {
   color: #8AAFDD;
   cursor: pointer;
+}
+
+.match {
+  fill: #ff8060;
 }

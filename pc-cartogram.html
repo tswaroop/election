@@ -189,8 +189,6 @@ var statemap = $('[data-grp]').map(function() {
   }
 }).get()
 
-var color = d3.scale().range()
-
 window.on_highlight = function(e) {
   var count = {},
       i=0,
@@ -202,7 +200,7 @@ window.on_highlight = function(e) {
   for (; cell=statemap[i]; i++) {
     match = cell.state in count
     cell.text.text(match ? count[cell.state] : '')
-    cell.rect.attr('fill', match ? '#ff8060' : '#fff')
+    cell.rect.classed('match', match)
   }
 }
 </script>
