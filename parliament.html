@@ -207,7 +207,7 @@ function redraw() {
     $('.year-filter')[q.pathname.match(/scatter/) ? 'slideU' : 'show']()
     $('.years-filter')[q.pathname.match(/^$/) ? 'show' : 'hide']()
     $('.result-controls')[q.pathname.match(/cartogram|scatter/) ? 'hide' : 'show']()
-    $('.state-filter')[q.pathname.match(/cartogram/) ? 'hide' : 'show']()
+    $('.state-filter')[q.pathname.match(/cartogram|result/) ? 'hide' : 'show']()
     $('.metric-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('#result').empty().load('pc-' + hash, function() {
       if (q.pathname.match(/cartogram|scatter/)) {

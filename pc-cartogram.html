@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['parliament.csv', 'pc.csv', 'pc-latlong.csv', 'colors.csv'], max_age=10*60) }}{% code %}
+{{ GRAMEX(cache=['parliament.csv', 'pc.csv', 'pc-latlong.csv', 'colors.csv', 'abbr.csv'], max_age=10*60) }}{% code %}
 title = 'Lok Sabha elections cartogram'
 
 import json
@@ -11,6 +11,7 @@ data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 latlong = DB.csv('pc-latlong.csv').set_index(['STATE', 'PC'])
 groupby = args.get('BY', ['PARTY'])[0]
 colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color']
+abbr = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr'].ix['STATE']
 
 winners = data[data['#'] == '1']
 elections['CONSTANT'] = 1
@@ -29,7 +30,12 @@ year_index = years.index(year)
 prev_year = years[year_index - 1] if year_index > 0 else None
 next_year = years[year_index + 1] if year_index < len(years) - 1 else None
 
+chosen_states = args.get('STATE', [])
+
 pivot = elections.ix[year][[groupby, 'WINNER', metric]]
+if chosen_states:
+    pivot = pivot.ix[chosen_states]
+
 win_count = pivot[groupby].value_counts()
 max_wins = float(max(win_count))
 
@@ -37,27 +43,30 @@ W, H = 940, 700
 bar_height = 40
 top_groups = win_count.head(min(20, H // bar_height))
 
+# Eventually, don't hard-code it
+if groupby == '2014 Schedule':
+    top_groups = top_groups.ix[['07-Apr', '09-Apr', '10-Apr', '12-Apr', '17-Apr', '24-Apr', '30-Apr', '07-May', '12-May', ]].dropna().astype(int)
+
+states = [''] + sorted(elections.ix[year].reset_index()['STATE'].unique())
+
 if groupby in colors.index:
     colors = colors.ix[groupby]
 else:
     colors = pd.Series(dict(zip(top_groups.index, _color.distinct(20 if len(top_groups) > 10 else 10))))
-
 {% end %}
-<svg id="carto-legend" width="100%" data-height="{{ 25. / W }}" viewBox ="0 -25 {{ W }} 25">
-  <rect y="-25" width="30" height="30" class="party-unhighlight" fill="#000" title="Show all {{ groupby }}"/>
-  <text x="15" y="-12" text-anchor="middle" dy=".35em" fill="#fff">x</text>
-  {% set w = (W - 30) / float(len(top_groups)) %}
-  {% for i, (group, wins) in enumerate(top_groups.iteritems()) %}
-    <rect class="party-legend"
-      data-highlight="[data-party={{ slug(group) }}]"
-      data-party="{{ slug(group) }}"
-      data-toggle="1"
-      x="{{ 30 + w * i }}"
+<svg id="state-legend" width="100%" data-height="{{ 25. / W }}" viewBox ="0 -25 {{ W }} 25">
+  {% set w = W / float(len(states)) %}
+  {% for i, state in enumerate(states) %}
+    <rect class="state-legend"
+      href="?STATE={{ quote(state) }}"
+      x="{{ w * i }}"
       y="-25"
       width="{{ w }}"
-      height="30"
-      fill="{{ colors.get(group, '#ccc') }}"></rect>
-    <text x="{{ 30 + w * (i + .5) }}" y="-12" text-anchor="middle" dy=".35em" fill="#fff">{{ group }}</text>
+      height="25"
+      title="{{ escape(state or 'All states') }}"
+      fill="{{ '#c0504d' if not state else '#aec7e8' if state in chosen_states else '#f8f8f8' }}"
+      stroke="rgba(0,0,0,.3)"></rect>
+    <text x="{{ w * (i + .5) }}" y="-12" text-anchor="middle" dy=".35em" font-size="12">{{ abbr.get(state, state) or 'X' }}</text>
   {% end %}
 </svg>
 <svg id="carto" width="100%" data-height="{{ float(H) / W }}" viewBox ="0 0 {{ W }} {{ H }}">
@@ -65,16 +74,18 @@ else:
     <image x="-170" y="-5" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
     <g transform="translate(640,0)">
       {% for i, (group, wins) in enumerate(top_groups.iteritems()) %}
-        <rect y="{{ i * bar_height }}" width="300" height="{{ bar_height }}"
-          fill="#f8f8f8"
-          class="party-legend"
+        {% set fill = colors.get(group, 'rgba(128,128,128,.5)') %}
+        <rect x="-5" y="{{ i * bar_height }}" width="305" height="{{ bar_height }}"
+          fill="#fff"
+          class="party-legend bar-legend"
           data-highlight="[data-party={{ slug(group) }}]"
           data-party="{{ slug(group) }}"
           data-toggle="1"
         />
-        <text x="50" y="{{ (i + .5) * bar_height }}" dy=".38em" text-anchor="end" font-size="20">{{ group }}</text>
+        <rect class="no-pointer" width="65" y="{{ i * bar_height + 5 }}" height="{{ bar_height - 10 }}" fill="{{ fill }}"/>
+        <text x="5" y="{{ (i + .5) * bar_height }}" dy=".38em" font-size="20" fill="{{ _color.contrast(fill) }}">{{ group }}</text>
         <text x="100" y="{{ (i + .5) * bar_height }}" dy=".38em" text-anchor="end" font-size="20">{{ wins }}</text>
-        <rect class="no-pointer" x="110" y="{{ (i + .5) * bar_height - 15 }}" height="{{ 30 }}" width="{{ 190 * wins / max_wins }}" fill="{{ colors.get(group, 'rgba(128,128,128,.5)') }}"/>
+        <rect class="no-pointer" x="110" y="{{ (i + .5) * bar_height - 15 }}" height="{{ 30 }}" width="{{ 185 * wins / max_wins }}" fill="{{ fill }}"/>
       {% end %}
     </text>
   </g>
@@ -149,13 +160,14 @@ var update = d3.select('#carto-contents').selectAll('circle')
     .attr('fill', function(d, i) { return colors[d[groupby]] || 'rgba(128,128,128,.5)' })
     .attr('data-party', function(d) { return d[groupby].replace(/[^A-Za-z0-9_]/g, '-') })
     .attr('href', function(d) { return 'result?BY=&YEAR={{ year }}&STATE=' + encodeURIComponent(d.STATE) + '&PC=' + encodeURIComponent(d.PC) })
+    .attr('stroke', 'rgba(0,0,0,.3)')
     .classed('direct', true)
     .call(G.unpack()
       .width({{ H }})
       .height({{ H }}))
 
 try {
-  G.zoom({selector: '#carto'})
+  var zoom = G.zoom({selector: '#carto'})
 
   d3.select('.reset-zoom').on('click', function() {
     d3.selectAll('#carto > *').attr('transform', null)
