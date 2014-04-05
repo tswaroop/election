@@ -56,6 +56,7 @@ text { pointer-events: none; }
 .state-legend.fade { opacity: .3; }
 .rank-legend.fade { opacity: .3; }
 .cartogram .fade { opacity: .05; }
+.wealthmap .fade { opacity: .1; }
 
 .link[href] { color: {{ _color.Office[0] }}; }
 

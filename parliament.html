@@ -4,7 +4,7 @@ description = 'A visual guide to the history of Indian Parliament elections, fro
 
 import json
 from urllib import quote
-from common import pc_setup, slug, metric_names
+from common import pc_setup, slug, metric_names, NONE_COLOR
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 topics = pd.read_csv('parliament-topics.csv')
 years = sorted(data['YEAR'].unique())

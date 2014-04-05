@@ -3,6 +3,8 @@ import re
 import layout
 from collections import OrderedDict
 
+NONE_COLOR = '#a0a0a0'
+
 re_slug = re.compile(r'[^A-Za-z0-9_]+')
 
 def slug(s):
