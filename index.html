@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['style.css', '.head.html', 'facts.csv'], max_age=10*60) }}{% code %}
+{{ GRAMEX(cache=['style.css', '.head.html', 'facts.csv', 'img/parliament.png', 'img/assembly.png'], max_age=10*60) }}{% code %}
 title = 'Elections in India'
 description = 'A visual guide to the history of Indian elections, from 1951 until today, by Gramener.'
 facts = DB.csv('facts.csv')
@@ -33,50 +33,16 @@ facts = DB.csv('facts.csv')
     </div>
 
     <div class="col-md-6">
+      <h2 class="summary-title"><a href="assembly">Parliament maps</a></h2>
+      <a href="parliament#cartogram"><img class="main" src="{{ static_url('img/parliament-cartogram.png') }}"></a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
       <h2 class="summary-title"><a href="assembly">Assembly elections</a></h2>
       <a href="assembly"><img class="main" src="{{ static_url('img/assembly.png') }}"></a>
-
-      <!--
-      <h2>Insights</h2>
-      <div id="facts" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          {% for index, row in facts[facts['type'] == 'carousel'].iterrows() %}
-            <li data-target="#facts" data-slide-to="{{ index }}"{{ ' class="active"' if index == 0 else ''}}></li>
-          {% end %}
-        </ol>
-        <div class="carousel-inner">
-          {% for index, row in facts[facts['type'] == 'carousel'].iterrows() %}
-            <div class="item{{ ' active' if index == 0 else '' }} direct-link" href="{{ row['link'] }}">
-              <div class="img" style="background-image:url({{ static_url(row['image']) }})"></div>
-              <div class="carousel-caption">
-                <h3>{{ escape(row['title']) }}</h3>
-                <p>{{ row['content'] }}</p>
-              </div>
-            </div>
-          {% end %}
-        </div>
-        <a class="left carousel-control" href="#facts" data-slide="prev">
-          <span class="glyphicon glyphicon-chevron-left"></span>
-        </a>
-        <a class="right carousel-control" href="#facts" data-slide="next">
-          <span class="glyphicon glyphicon-chevron-right"></span>
-        </a>
-      </div>
-      <div id="factoid" class="row">
-        {% for index, row in facts[facts['type'] == 'factoid'].iterrows() %}
-          <div class="col-sm-4">
-            <div class="thumbnail direct-link" href="{{ row['link'] }}">
-              <div class="img" style="background-image:url({{ static_url(row['image']) }})"></div>
-              <div class="caption">
-                <h3>{{ escape(row['title']) }}</h3>
-                <p>{{ row['content'] }}</p>
-              </div>
-            </div>
-          </div>
-        {% end %}
-      </div>
     </div>
-    -->
   </div>
 </div>
 
