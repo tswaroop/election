@@ -268,9 +268,9 @@ h2 a:hover {
   font-family: "Franklin Gothic Medium Cond", sans-serif;
 }
 
-.carto-summary th {
-  white-space: nowrap;
-}
+.carto-summary { font-size: 12px; }
+.carto-summary h3 { margin: 0 0 10px 5px; padding: 0;}
+.carto-summary th { white-space: nowrap; }
 
 .no-pointer {
   pointer-events: none;
@@ -306,6 +306,6 @@ h2 a:hover {
 .state-table thead th, .state-table tbody td { text-align: center; }
 .state-table tbody th { text-align: right; }
 
-.winner-story { font-size: 18px; }
+.winner-story { font-size: 18px; line-height: 1.3; }
 .winner-name { color: #c0504d; }
 .winner-party { padding: 0 .5em; }
