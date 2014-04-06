@@ -7,6 +7,9 @@ colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 
 states = args.get('STATE', [])
 state_data = elections.reset_index().set_index(['STATE']).ix[args['STATE']]
+if 'Y' in args:
+    state_data = state_data[state_data['YEAR'].isin(args['Y'])]
+
 by_pc = state_data.pivot_table(rows=['PC'], cols=['YEAR'], values=['PARTY'], aggfunc='min')['PARTY'].fillna('')
 by_party = state_data.pivot_table(rows=['PARTY'], cols=['YEAR'], values=['PC'], aggfunc='count')['PC'].fillna(0).astype(int)
 
@@ -21,7 +24,7 @@ pad, legend = 5, 25
 {% end %}
 <h2>
   <div class="pull-right">
-    <i class="glyphicon glyphicon-map-marker text-danger" href="cartogram?PC=" title="Cartogram"></i>
+    <i class="glyphicon glyphicon-map-marker text-danger" href="cartogram?Y=&PC=" title="Cartogram"></i>
   </div>
   <i class="back glyphicon glyphicon-circle-arrow-left"></i>
   {{ ', '.join(states) }} History

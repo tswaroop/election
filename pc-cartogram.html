@@ -66,8 +66,7 @@ TOPH = 25
         width="{{ w }}"
         height="{{ TOPH }}"
         title="{{ escape(state or 'All states') }}"
-        fill="{{ '#e66' if not state else '#aec7e8' if state in chosen_states else '#f8f8f8' }}"
-        stroke="rgba(0,0,0,.3)"></rect>
+        fill="{{ '#e66' if not state else '#aec7e8' if state in chosen_states else '#f8f8f8' }}"/>
       <text x="{{ w * (i + .5) }}" y="{{ TOPH / 2 }}" text-anchor="middle" dy=".35em" font-size="12">{{ abbr.get(state, state) or 'X' }}</text>
       <text class="value" x="{{ w * (i + .5) }}" y="{{ TOPH + TOPH / 2 }}" text-anchor="middle" dy=".35em" font-size="14"></text>
     </g>
@@ -82,12 +81,12 @@ TOPH = 25
   </div>
 {% end %}
 
-<svg id="carto" width="100%" data-height="{{ float(H) / W }}" viewBox ="0 0 {{ W }} {{ H }}">
+<svg class="cartogram" width="100%" data-height="{{ float(H) / W }}" viewBox ="0 0 {{ W }} {{ H }}">
   <g id="carto-contents">
     <image x="-170" y="-5" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
     <g transform="translate(640,30)">
       {% if len(chosen_states) %}
-        <text font-size="28" dy="-.2em" href="state?{{ '&'.join('STATE=' + quote(state) for state in chosen_states) }}">
+        <text font-size="28" dy="-.2em" href="state?YEAR=&{{ '&'.join('STATE=' + quote(state) for state in chosen_states) }}">
           {{ ', '.join(chosen_states) }}
           &raquo;
         </text>
@@ -180,11 +179,14 @@ var $lo = d3.select('input.lo'),
     $hi = d3.select('input.hi')
 
 d3.selectAll('input[type="range"]').on('change', function() {
-  var lo = +$lo.property('value'),
-      hi = +$hi.property('value')
+  var lo = DB.lo = +$lo.property('value'),
+      hi = DB.hi = +$hi.property('value')
   update
     .classed('hide', function(d) { return (d.r < lo) || (d.r > hi) })
 })
+
+if (DB.lo && $lo.node()) $lo.property('value', DB.lo).on('change')()
+if (DB.hi && $hi.node()) $hi.property('value', DB.hi).on('change')()
 
 var statemap = $('[data-grp]').map(function() {
   var $this = d3.select(this)

@@ -57,8 +57,11 @@ text { pointer-events: none; }
 .state-legend.fade { opacity: .3; }
 .state-table .fade { pointer-events: none; }
 .rank-legend.fade { opacity: .3; }
-.cartogram .fade { opacity: .05; pointer-events: none; }
+.cartogram .fade { opacity: .05; }
+.cartogram circle.fade { pointer-events: none; }
 .wealthmap .fade { opacity: .1; }
+
+rect.state-legend { stroke: rgba(0,0,0,.2); }
 
 .link[href] { color: {{ _color.Office[0] }}; }
 
@@ -152,7 +155,10 @@ table.state-ac > tbody > tr > th {
 }
 
 .cartogram circle {
-  stroke: rgba(0,0,0,.5);
+  stroke: rgba(0,0,0,.4);
+}
+
+.ac-cartogram circle {
   stroke-width: .01;
 }
 
@@ -299,3 +305,7 @@ h2 a:hover {
 }
 .state-table thead th, .state-table tbody td { text-align: center; }
 .state-table tbody th { text-align: right; }
+
+.winner-story { font-size: 18px; }
+.winner-name { color: #c0504d; }
+.winner-party { padding: 0 .5em; }

@@ -1,11 +1,13 @@
 {{ GRAMEX(cache=['parliament.csv', 'colors.csv'], max_age=10*60) }}{% code %}
 from urllib import quote
-from common import pc_setup
+from common import pc_setup, NONE_COLOR
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 data = data[data['PC'] == args['PC'][0]]
 data = data[data['STATE'] == args['STATE'][0]]
 data = data[data['YEAR'] == args['YEAR'][0]]
 data.sort('VOTES', ascending=False, inplace=True)
+result = elections.ix[args['YEAR'][0], args['STATE'][0], args['PC'][0]]
+
 columns = ['#', 'PARTY', 'NAME', 'VOTES', 'SEX', 'AGE', 'CATEGORY', ]
 colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 N = int(args.get('n', [20])[0])
@@ -20,6 +22,23 @@ N = int(args.get('n', [20])[0])
   {{ args['YEAR'][0] }}
   <small>{{ min(N, len(data)) }} / {{ len(data) }} candidates</small>
 </h2>
+
+<h3 class="winner-story">
+  <span class="winner-name">{{ result['WINNER'] }}</span> of 
+  {% set fill = colors.get(result['PARTY'], NONE_COLOR) %}
+  <span class="winner-party" style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ result['PARTY'] }}</span> won by
+  {{ '{:.1%} ({:,.0f} votes)'.format(result['MARGIN %'], result['MARGIN']) }}
+  {% if len(data) > 1 %}
+    {% set opponent = data.irow(1) %}
+    against
+    {{ opponent['NAME'] }} of
+    {% set fill = colors.get(opponent['PARTY'], NONE_COLOR) %}
+    <span class="winner-party" style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ opponent['PARTY'] }}</span>.
+  {% else %}
+    uncontested.
+  {% end %}
+</h3>
+
 <table class="table table-condensed analysis">
   <thead>
     {% for c in columns %}<th>{{ c }}</th>{% end %}
@@ -39,7 +58,7 @@ N = int(args.get('n', [20])[0])
           {% elif c in ('AGE',) %}
             <td>{{ '' if pd.isnull(row[c]) else '{:,.0f}'.format(row[c]) }}</td>
           {% elif c in ('PARTY', ) %}
-            {% set fill = colors.get(row[c], '#eee') %}
+            {% set fill = colors.get(row[c], NONE_COLOR) %}
             <td style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ row[c] }}</td>
           {% else %}
             <td>{{ row[c] }}</td>

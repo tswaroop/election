@@ -37,7 +37,7 @@ years = sorted(data['YEAR'].unique())
         <li class="dropdown shortcut-filter">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Go to <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a class="direct-link" href="#cartogram?BY=2014%20Schedule">2014 Schedule</a></li>
+            <li><a href="cartogram?PC=&YEAR=&Y=&BY=2014%20Schedule">2014 Schedule</a></li>
             <li><a class="direct-link" href="#cartogram?BY=2014%20Star%20Candidate">2014 Stars</a></li>
             <li><a class="direct-link" href="#cartogram?YEAR=2009">2009 Results</a></li>
           </ul>
@@ -52,6 +52,22 @@ years = sorted(data['YEAR'].unique())
               <li data-year="{{ y }}"><a href="?BY=&YEAR={{ y }}">{{ y }} results</a></li>
             {% end %}
           </ul>
+        </li>
+        <li class="dropdown years-filter">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="current-years">Years</span> <span class="caret"></span>
+          </a>
+          <form class="dropdown-menu years" role="menu">
+            {% for y in years %}
+              <label>
+                <input type="checkbox" name="Y" value="{{ y }}"{{ ' checked' if y in args.get('Y', []) else '' }}> {{ y }}
+              </label>
+            {% end %}
+            <p>
+              <button class="btn btn-primary" type="submit">Submit</button>
+              <button class="btn btn-default no-years" type="button">All years</button>
+            </p>
+          </form>
         </li>
         <li class="dropdown state-filter">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -73,22 +89,6 @@ years = sorted(data['YEAR'].unique())
               <li data-year="{{ v }}"><a href="?BY=&METRIC={{ quote(v) }}">{{ metric_names[v] }}</a></li>
             {% end %}
           </ul>
-        </li>
-        <li class="dropdown years-filter">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <span class="current-years">Years</span> <span class="caret"></span>
-          </a>
-          <form class="dropdown-menu years" role="menu">
-            {% for y in years %}
-              <label>
-                <input type="checkbox" name="Y" value="{{ y }}"{{ ' checked' if y in args.get('Y', []) else '' }}> {{ y }}
-              </label>
-            {% end %}
-            <p>
-              <button class="btn btn-primary" type="submit">Submit</button>
-              <button class="btn btn-default no-years" type="button">All years</button>
-            </p>
-          </form>
         </li>
         <li><a class="reload" href="#" title="Refresh" data-placement="bottom"><i class="glyphicon glyphicon-refresh"></i></a></li>
       </ul>
@@ -193,7 +193,15 @@ $('body')
   })
   .on('submit', '.years', function(e) {
     e.preventDefault()
-    location.hash = '?' + $(this).serialize()
+    var hash = location.hash.replace(/^#/, ''),
+        q = G.url.parse(hash)
+        query = q.searchKey;
+    if (q.pathname.match(/state/)) {
+      q.update({Y: $('input:checked').map(function() { return $(this).attr('value') }).get() })
+      location.hash = q.toString()
+    } else {
+      location.hash = '?' + $(this).serialize()
+    }
     $('.current-years').trigger('click')
   })
   .on('click', 'a.heading', function(e) {
@@ -221,7 +229,7 @@ $('body')
     }
   })
 
-function highlight_parties() {
+function highlight_groups() {
   // Based on pased highlighting, preserve party highlights
   var groups = (DB.groups || '').split(','),
       legends = $('.party-legend').map(function() {
@@ -247,7 +255,7 @@ function redraw() {
   if (q.pathname.match(/^(summary|year|result|cartogram|table|scatter|state)$/)) {
     $('#summary, #factoid').slideUp(250)
     $('.year-filter')[q.pathname.match(/scatter|state/) ? 'hide' : 'show']()
-    $('.years-filter')[q.pathname.match(/^$/) ? 'show' : 'hide']()
+    $('.years-filter')[q.pathname.match(/^$|state/) ? 'show' : 'hide']()
     $('.result-controls')[q.pathname.match(/cartogram|scatter|state/) ? 'hide' : 'show']()
     $('.state-filter')[q.pathname.match(/cartogram|result/) ? 'hide' : 'show']()
     $('.metric-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
@@ -257,7 +265,7 @@ function redraw() {
         $('#summary, #factoid').slideUp(250)
       }
       $('.tooltip').remove()
-      highlight_parties()
+      highlight_groups()
     }).show()
   } else {
     $('#result, .result-controls, .year-filter, .state-filter, .metric-filter').hide()
@@ -265,7 +273,7 @@ function redraw() {
       $('#summary, #factoid').show()
       $(window).dispatch('resize')
       $('.tooltip').remove()
-      highlight_parties()
+      highlight_groups()
     })
   }
 
