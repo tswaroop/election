@@ -24,7 +24,7 @@ pad, legend = 5, 25
 {% end %}
 <h2>
   <div class="pull-right">
-    <i class="glyphicon glyphicon-map-marker text-danger" href="cartogram?Y=&PC=" title="Cartogram"></i>
+    <i class="glyphicon glyphicon-map-marker text-danger" href="cartogram?Y=&PC=&YEAR=2009" title="Cartogram"></i>
   </div>
   <i class="back glyphicon glyphicon-circle-arrow-left"></i>
   {{ ', '.join(states) }} History
@@ -54,7 +54,7 @@ pad, legend = 5, 25
       <tr>
         <th style="width:{{ x0 }}px">Constituency</th>
         {% for year in by_pc.columns %}
-          <th>{{ escape(year) }}</th>
+          <th href="cartogram?YEAR={{ quote(year) }}">{{ escape(year) }}</th>
         {% end %}
       </tr>
     </thead>
@@ -62,7 +62,7 @@ pad, legend = 5, 25
       <tr>
         <th></th>
         {% for year, col in by_party.iteritems() %}
-          <td class="svg-cell">
+          <td class="svg-cell" href="cartogram?YEAR={{ quote(year) }}">
             <svg width="40" height="{{ H }}">
               {% for party, wins in col.iteritems() %}
                 {% code %}

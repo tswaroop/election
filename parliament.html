@@ -32,43 +32,6 @@ years = sorted(data['YEAR'].unique())
 
     <div class="collapse navbar-collapse" id="header-collapse">
       <ul class="nav navbar-nav">
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown shortcut-filter">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Go to <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="cartogram?PC=&YEAR=&Y=&BY=2014%20Schedule">2014 Schedule</a></li>
-            <li><a class="direct-link" href="#cartogram?BY=2014%20Star%20Candidate">2014 Stars</a></li>
-            <li><a class="direct-link" href="#cartogram?YEAR=2009">2009 Results</a></li>
-          </ul>
-        </li>
-        <li class="dropdown year-filter">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <span class="current-year">Year</span> <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li data-year=""><a href="?YEAR=">All years</a></li>
-            {% for y in years %}
-              <li data-year="{{ y }}"><a href="?BY=&YEAR={{ y }}">{{ y }} results</a></li>
-            {% end %}
-          </ul>
-        </li>
-        <li class="dropdown years-filter">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <span class="current-years">Years</span> <span class="caret"></span>
-          </a>
-          <form class="dropdown-menu years" role="menu">
-            {% for y in years %}
-              <label>
-                <input type="checkbox" name="Y" value="{{ y }}"{{ ' checked' if y in args.get('Y', []) else '' }}> {{ y }}
-              </label>
-            {% end %}
-            <p>
-              <button class="btn btn-primary" type="submit">Submit</button>
-              <button class="btn btn-default no-years" type="button">All years</button>
-            </p>
-          </form>
-        </li>
         <li class="dropdown state-page-filter">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <span class="current-state">State</span> <span class="caret"></span>
@@ -91,14 +54,51 @@ years = sorted(data['YEAR'].unique())
             {% end %}
           </ul>
         </li>
+        <li class="dropdown years-filter">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="current-years">Years</span> <span class="caret"></span>
+          </a>
+          <form class="dropdown-menu years" role="menu">
+            {% for y in years %}
+              <label>
+                <input type="checkbox" name="Y" value="{{ y }}"{{ ' checked' if y in args.get('Y', []) else '' }}> {{ y }}
+              </label>
+            {% end %}
+            <p>
+              <button class="btn btn-primary" type="submit">Submit</button>
+              <button class="btn btn-default no-years" type="button">All years</button>
+            </p>
+          </form>
+        </li>
+        <li class="dropdown year-filter">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="current-year">Year</span> <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li data-year=""><a href="?YEAR=">All years</a></li>
+            {% for y in years %}
+              <li data-year="{{ y }}"><a href="?BY=&YEAR={{ y }}">{{ y }} results</a></li>
+            {% end %}
+          </ul>
+        </li>
         <li class="btn-group metric-filter">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <span class="current-metric">Size</span> <span class="caret"></span>
+            <span class="current-metric">{{ metric_names.values()[-1] }}</span> <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
             {% for v in metric_names %}
               <li data-year="{{ v }}"><a href="?BY=&METRIC={{ quote(v) }}">{{ metric_names[v] }}</a></li>
             {% end %}
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown shortcut-filter">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Go to <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="cartogram?PC=&YEAR=&Y=&BY=2014%20Schedule">2014 Schedule</a></li>
+            <li><a class="direct-link" href="#cartogram?BY=2014%20Star%20Candidate">2014 Stars</a></li>
+            <li><a class="direct-link" href="#cartogram?YEAR=2009">2009 Results</a></li>
           </ul>
         </li>
         <li><a class="reload" href="#" title="Refresh" data-placement="bottom"><i class="glyphicon glyphicon-refresh"></i></a></li>
@@ -194,7 +194,7 @@ $('body')
   })
   .on('click', '.reload', function(e) {
     e.preventDefault()
-    location.reload()
+    location.reload(true)
   })
   .on('click', '.party-unhighlight', function() {
     $(this).trigger('clear.g.highlight')
@@ -268,7 +268,7 @@ function redraw() {
     $('.year-filter')[q.pathname.match(/scatter|state/) ? 'hide' : 'show']()
     $('.years-filter')[q.pathname.match(/state/) ? 'show' : 'hide']()
     $('.result-controls')[q.pathname.match(/cartogram|scatter|state/) ? 'hide' : 'show']()
-    $('.state-filter')[q.pathname.match(/cartogram|result/) ? 'hide' : 'show']()
+    $('.state-filter')[q.pathname.match(/result/) ? 'hide' : 'show']()
     $('.metric-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('.state-page-filter').hide()
     $('#result').empty().load('pc-' + hash, function() {
@@ -293,7 +293,7 @@ function redraw() {
 
   // Set the filters
   $('.current-year').text(query.YEAR || 'Year')
-  $('.current-metric').text(metric_names[query.METRIC] || 'Size')
+  $('.current-metric').text(metric_names[query.METRIC] || '{{ metric_names.values()[-1] }}')
   $('.current-state').text(query.STATE || 'State')
   $('.years-filter input[type="checkbox"]').each(function() {
     var $this = $(this),
