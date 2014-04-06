@@ -32,7 +32,7 @@ years = sorted(data['YEAR'].unique())
 
     <div class="collapse navbar-collapse" id="header-collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown state-page-filter">
+        <li class="dropdown state-page-filter" title="Select state" data-placement="right">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <span class="current-state">State</span> <span class="caret"></span>
           </a>
@@ -43,7 +43,7 @@ years = sorted(data['YEAR'].unique())
             {% end %}
           </ul>
         </li>
-        <li class="dropdown state-filter">
+        <li class="dropdown state-filter" title="Select state" data-placement="right">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <span class="current-state">State</span> <span class="caret"></span>
           </a>
@@ -54,7 +54,7 @@ years = sorted(data['YEAR'].unique())
             {% end %}
           </ul>
         </li>
-        <li class="dropdown years-filter">
+        <li class="dropdown years-filter" title="Select years" data-placement="right">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <span class="current-years">Years</span> <span class="caret"></span>
           </a>
@@ -70,7 +70,7 @@ years = sorted(data['YEAR'].unique())
             </p>
           </form>
         </li>
-        <li class="dropdown year-filter">
+        <li class="dropdown year-filter" title="Select year" data-placement="right">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <span class="current-year">Year</span> <span class="caret"></span>
           </a>
@@ -81,7 +81,7 @@ years = sorted(data['YEAR'].unique())
             {% end %}
           </ul>
         </li>
-        <li class="btn-group metric-filter">
+        <li class="btn-group metric-filter" title="View by" data-placement="right">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <span class="current-metric">{{ metric_names.values()[-1] }}</span> <span class="caret"></span>
           </a>
@@ -93,7 +93,7 @@ years = sorted(data['YEAR'].unique())
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown shortcut-filter">
+        <li class="dropdown shortcut-filter" title="Shortcuts" data-placement="left">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Go to <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="cartogram?PC=&YEAR=&Y=&BY=2014%20Schedule">2014 Schedule</a></li>

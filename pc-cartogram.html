@@ -53,13 +53,32 @@ else:
     colors = pd.Series(dict(zip(top_groups.index, _color.distinct(20 if len(top_groups) > 10 else 10))))
 
 TOPH = 25
+
+names = {
+    ('AGE',        'Highest')   : 'Oldest winners',
+    ('AGE',        'Lowest')    : 'Yougest winners',
+    ('CANDIDATES', 'Highest')   : 'Most candidates',
+    ('CANDIDATES', 'Lowest')    : 'Least candidates',
+    ('CONSTANT',   'Highest')   : '',
+    ('CONSTANT',   'Lowest')    : '',
+    ('MARGIN %',   'Highest')   : 'Biggest winner margin %',
+    ('MARGIN %',   'Lowest')    : 'Smallest winner margin %',
+    ('MARGIN',     'Highest')   : 'Highest vote margin',
+    ('MARGIN',     'Lowest')    : 'Lowest vote margin',
+    ('VOTES',      'Highest')   : 'Most votes',
+    ('VOTES',      'Lowest')    : 'Least votes',
+    ('WIN %',      'Highest')   : 'Highest winner voteshare%',
+    ('WIN %',      'Lowest')    : 'Lowest winner voteshare%',
+    ('WOMEN %',    'Highest')   : 'Most women candidates %',
+    ('WOMEN %',    'Lowest')    : 'Least women candidates %',
+}
 {% end %}
 
 {% if metric != 'CONSTANT' %}
   <div class="row carto-summary">
     {% for name, table in [('Highest', pivot.fillna(0).sort(metric, ascending=False)), ('Lowest', pivot.fillna(0).sort(metric, ascending=True))] %}
       <div class="col-sm-6">
-        <h3>{{ name }} {{ metric_names[metric] }} <small>{{ year }}</small></h3>
+        <h3>{{ names.get((metric, name), name + ' ' + metric_names[metric]) }} <small>{{ year }}</small></h3>
         <table class="table table-condensed table-striped">
           <thead><tr><th>State</th><th>PC</th><th>{{ groupby.title() }}</th><th>Winner</th><th>{{ metric_names[metric] }}</th></tr></thead>
           <tbody>

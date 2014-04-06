@@ -73,6 +73,6 @@ metric_names = OrderedDict((
   ('AGE',        'Winner age'),
   ('WOMEN %',    'Women %'),
   ('VOTES',      'Voters'),
-  ('WIN %',      'Winner %'),
+  ('WIN %',      'Winner voteshare%'),
   ('CONSTANT',   'Constant size'),
 ))
