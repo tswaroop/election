@@ -3,7 +3,7 @@ import json
 from urllib import quote
 from common import pc_setup, slug, metric_names, NONE_COLOR
 
-groupbys = ['PARTY', '2014 Schedule', '2014 Star Candidate']
+groupbys = ['PARTY', '2014-Schedule', '2014-Star-Candidate']
 
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 latlong = DB.csv('pc-latlong.csv').set_index(['STATE', 'PC'])
@@ -19,7 +19,7 @@ metric = 'CONSTANT' if groupby.startswith('2014') else args.get('METRIC', ['CONS
 constituencies = DB.csv('pc.csv')
 constituencies['YEAR'] = '2009'
 constituencies = constituencies.set_index(['YEAR', 'STATE', 'PC'])
-elections[['2014 Schedule', '2014 Star Candidate']] = constituencies[['2014 Schedule', '2014 Star Candidate']]
+elections[['2014-Schedule', '2014-Star-Candidate']] = constituencies[['2014-Schedule', '2014-Star-Candidate']]
 
 years = sorted(data['YEAR'].unique())
 year = '2009' if groupby.startswith('2014') else args.get('YEAR', years)[-1]
@@ -42,7 +42,7 @@ bar_height = 33
 top_groups = win_count.head(min(20, H // bar_height))
 
 # Eventually, don't hard-code it
-if groupby == '2014 Schedule':
+if groupby == '2014-Schedule':
     top_groups = top_groups.ix[['07-Apr', '09-Apr', '10-Apr', '12-Apr', '17-Apr', '24-Apr', '30-Apr', '07-May', '12-May', ]].dropna().astype(int)
 
 states = [''] + sorted(elections.ix[year].reset_index()['STATE'].unique())
