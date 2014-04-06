@@ -118,6 +118,8 @@ TOPH = 25
           <tspan class="small" fill="#888">{{ win_count.sum() }}</tspan> &raquo;
         </text>
       {% end %}
+      <rect class="party-unhighlight" x="273" y="-24" width="22" height="20" fill="#e66" stroke="rgba(0,0,0,.4)" title="Clear selections"/>
+      <text x="284" y="-14" text-anchor="middle" dy=".37em">X</text>
       {% for i, (group, wins) in enumerate(top_groups.iteritems()) %}
         {% set fill = colors.get(group, 'rgba(128,128,128,.5)') %}
         <rect x="-5" y="{{ i * bar_height }}" width="305" height="{{ bar_height }}"
@@ -132,7 +134,7 @@ TOPH = 25
         <text x="100" y="{{ (i + .5) * bar_height }}" dy=".38em" text-anchor="end" font-size="20">{{ wins }}</text>
         <rect class="no-pointer" x="110" y="{{ (i + .5) * bar_height - 15 }}" height="{{ 30 }}" width="{{ 185 * wins / max_wins }}" fill="{{ fill }}"/>
       {% end %}
-    </text>
+    </g>
   </g>
 </svg>
 
