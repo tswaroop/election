@@ -69,6 +69,17 @@ years = sorted(data['YEAR'].unique())
             </p>
           </form>
         </li>
+        <li class="dropdown state-page-filter">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="current-state">State</span> <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu multicolumn" role="menu">
+            <li data-state=""><a class="direct-link" href="parliament">All states</a></li>
+            {% for s in sorted(data['STATE'].unique()) %}
+              <li data-state="{{ s }}"><a href="state?STATE={{ quote(s) }}">{{ s.title() }}</a></li>
+            {% end %}
+          </ul>
+        </li>
         <li class="dropdown state-filter">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <span class="current-state">State</span> <span class="caret"></span>
@@ -259,6 +270,7 @@ function redraw() {
     $('.result-controls')[q.pathname.match(/cartogram|scatter|state/) ? 'hide' : 'show']()
     $('.state-filter')[q.pathname.match(/cartogram|result/) ? 'hide' : 'show']()
     $('.metric-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
+    $('.state-page-filter').hide()
     $('#result').empty().load('pc-' + hash, function() {
       if (q.pathname.match(/cartogram|scatter|state/)) {
         $(window).dispatch('resize')
@@ -269,7 +281,7 @@ function redraw() {
     }).show()
   } else {
     $('#result, .result-controls, .year-filter, .state-filter, .metric-filter').hide()
-    $('.years-filter').show()
+    $('.years-filter, .state-page-filter').show()
     $('#summary').empty().load('pc-index' + hash, function() {
       $('#summary, #factoid').show()
       $(window).dispatch('resize')
