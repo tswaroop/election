@@ -20,6 +20,14 @@ def pc_setup(data):
       'INC(I)': 'INC',
       'ADK': 'ADMK',
       'BLD': 'JNP',
+      'INC': 'CONG',
+      'SHS': 'SS',
+      'JD(U)': 'JDU',
+      'AITC': 'TMC',
+      'JKN': 'NC',
+      'MUL': 'IUML',
+      'JD(S)': 'JDS',
+      'KEC(M)': 'KECM',
     }, inplace=True)
 
     # These elections had very few seats. Merge them with the previous year
