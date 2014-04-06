@@ -2,11 +2,12 @@
 from urllib import quote
 from common import pc_setup, NONE_COLOR
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
+year = args.get('YEAR', ['2009'])[0]
 data = data[data['PC'] == args['PC'][0]]
 data = data[data['STATE'] == args['STATE'][0]]
-data = data[data['YEAR'] == args['YEAR'][0]]
+data = data[data['YEAR'] == year]
 data.sort('VOTES', ascending=False, inplace=True)
-result = elections.ix[args['YEAR'][0], args['STATE'][0], args['PC'][0]]
+result = elections.ix[year, args['STATE'][0], args['PC'][0]]
 
 columns = ['#', 'PARTY', 'NAME', 'VOTES', 'SEX', 'AGE', 'CATEGORY', ]
 colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
@@ -19,12 +20,12 @@ N = int(args.get('n', [20])[0])
   <i class="back glyphicon glyphicon-circle-arrow-left"></i>
   {{ args['PC'][0].title() }},
   <a href="state?PC=&YEAR=">{{ args['STATE'][0].title() }}</a>
-  {{ args['YEAR'][0] }}
+  {{ year }}
   <small>{{ min(N, len(data)) }} / {{ len(data) }} candidates</small>
 </h2>
 
 <h3 class="winner-story">
-  <span class="winner-name">{{ result['WINNER'] }}</span> of 
+  <span class="winner-name">{{ result['WINNER'] }}</span> of
   {% set fill = colors.get(result['PARTY'], NONE_COLOR) %}
   <span class="winner-party" style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ result['PARTY'] }}</span> won by
   {{ '{:.1%} ({:,.0f} votes)'.format(result['MARGIN %'], result['MARGIN']) }}
