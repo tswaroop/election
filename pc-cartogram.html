@@ -1,6 +1,4 @@
 {{ GRAMEX(cache=['parliament.csv', 'pc.csv', 'pc-latlong.csv', 'colors.csv', 'abbr.csv'], max_age=10*60) }}{% code %}
-title = 'Lok Sabha elections cartogram'
-
 import json
 from urllib import quote
 from common import pc_setup, slug, metric_names, NONE_COLOR
@@ -111,15 +109,15 @@ TOPH = 25
 <svg class="cartogram" width="100%" data-height="{{ float(H) / W }}" viewBox ="0 0 {{ W }} {{ H }}">
   <g id="carto-contents">
     <image x="-170" y="-5" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
-    <g transform="translate(640,30)">
-      {% if len(chosen_states) %}
-        <text font-size="28" dy="-.2em" href="state?YEAR=&{{ '&'.join('STATE=' + quote(state) for state in chosen_states) }}">
-          {{ ', '.join(chosen_states) }}
+    <g transform="translate(640, 45)">
+        <text font-size="28" y="-20" dy="-.2em" href="state?YEAR=&{{ '&'.join('STATE=' + quote(state) for state in chosen_states) }}">
+          {{ ', '.join(chosen_states) if len(chosen_states) else 'India' }}
           <tspan class="small" fill="#888">{{ win_count.sum() }}</tspan> &raquo;
         </text>
-      {% end %}
-      <rect class="party-unhighlight" x="273" y="-24" width="22" height="20" fill="#e66" stroke="rgba(0,0,0,.4)" title="Clear selections"/>
-      <text x="284" y="-14" text-anchor="middle" dy=".37em">X</text>
+      <text y="-5">Party</text>
+      <text x="70" y="-5">No. of Constituencies</text>
+      <rect class="party-unhighlight" x="273" y="-44" width="22" height="20" fill="#e66" stroke="rgba(0,0,0,.4)" title="Clear selections"/>
+      <text x="284" y="-34" text-anchor="middle" dy=".37em">X</text>
       {% for i, (group, wins) in enumerate(top_groups.iteritems()) %}
         {% set fill = colors.get(group, 'rgba(128,128,128,.5)') %}
         <rect x="-5" y="{{ i * bar_height }}" width="305" height="{{ bar_height }}"
