@@ -40,7 +40,7 @@ win_count = pivot[groupby].value_counts()
 max_wins = float(win_count.max())
 
 W, H, R = 940, 700, 6
-bar_height = 40
+bar_height = 33
 top_groups = win_count.head(min(20, H // bar_height))
 
 # Eventually, don't hard-code it
@@ -130,9 +130,9 @@ TOPH = 25
           data-toggle="1"
         />
         <rect class="no-pointer" width="65" y="{{ i * bar_height + 5 }}" height="{{ bar_height - 10 }}" fill="{{ fill }}"/>
-        <text x="5" y="{{ (i + .5) * bar_height }}" dy=".38em" font-size="20" fill="{{ _color.contrast(fill) }}">{{ group }}</text>
-        <text x="100" y="{{ (i + .5) * bar_height }}" dy=".38em" text-anchor="end" font-size="20">{{ wins }}</text>
-        <rect class="no-pointer" x="110" y="{{ (i + .5) * bar_height - 15 }}" height="{{ 30 }}" width="{{ 185 * wins / max_wins }}" fill="{{ fill }}"/>
+        <text x="5" y="{{ (i + .5) * bar_height }}" dy=".35em" font-size="{{ bar_height / 2 }}" fill="{{ _color.contrast(fill) }}">{{ group }}</text>
+        <text x="100" y="{{ (i + .5) * bar_height }}" dy=".35em" text-anchor="end" font-size="{{ bar_height / 2 }}">{{ wins }}</text>
+        <rect class="no-pointer" x="110" y="{{ (i + .5) * bar_height - bar_height / 2 + 5 }}" height="{{ bar_height - 10 }}" width="{{ 185 * wins / max_wins }}" fill="{{ fill }}"/>
       {% end %}
     </g>
   </g>
@@ -142,7 +142,10 @@ TOPH = 25
 pivot['Lat'] = latlong['Lat']
 pivot['Long'] = latlong['Long']
 {% end %}
-<script id="data" type="text/csv">{% set csv = StringIO() %}{% set pivot.to_csv(csv) %}{{ csv.getvalue() }}</script>
+<script id="data" type="text/csv">{% code %}
+csv = StringIO()
+pivot.to_csv(csv)
+{% end %}{{ csv.getvalue() }}</script>
 <script>
 var colors = {{ json.dumps(colors.to_dict()) }},
     groupby = '{{ groupby }}',
