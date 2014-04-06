@@ -66,7 +66,7 @@ pad, legend = 5, 25
             <svg width="40" height="{{ H }}">
               {% for party, wins in col.iteritems() %}
                 {% code %}
-                background_color = colors.get(party, NONE_COLOR) 
+                background_color = colors.get(party, NONE_COLOR)
                 foreground_color = _color.contrast(background_color)
                 {% end %}
                 <rect width="80" y="{{ y[year][party] }}" height="{{ h[year][party] }}"
@@ -96,7 +96,7 @@ pad, legend = 5, 25
           <th style="width:{{ x0 }}px">{{ escape(pc) }}</th>
           {% for year in by_pc.columns %}
             {% set fill = colors.get(row[year], NONE_COLOR if row[year] else '#fff') %}
-            <td 
+            <td
               data-party="{{ slug(row[year]) }}"
               style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}"
               href="result?PC={{ escape(pc) }}&YEAR={{ escape(year) }}"

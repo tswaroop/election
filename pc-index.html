@@ -13,7 +13,7 @@ seats = summary.T.sum()
 summary = summary[parties]
 summary['Rest'] = seats - summary.T.sum()
 W, H = 940, 500
-w, pad, legend = 920. / len(parties), 5, 30
+w, pad, legend, yearheight = 920. / len(parties), 5, 30, 30
 {% end %}
 <svg width="100%" data-height="{{ float(H)/W }}" viewBox="0 0 {{ W }} {{ H }}">
   <rect width="30" height="{{ legend - 5 }}" class="party-unhighlight" fill="#000" title="Show all parties"/>
@@ -34,14 +34,14 @@ w, pad, legend = 920. / len(parties), 5, 30
   {% set w = 940. / len(summary.T.columns) %}
   {% for i, year in enumerate(summary.T) %}{% code %}
     series = summary.ix[year]
-    height = series / float(series.sum()) * (H - legend - 20)
+    height = series / float(series.sum()) * (H - legend - yearheight)
     pos = pd.DataFrame({
       'SEATS': series,
       'h': height,
       'y': H - height.cumsum()
     })
     {% end %}
-    <text x="{{ w * (i+.5) }}" y="{{ legend }}" dy="1em" text-anchor="middle">{{ year }}</text>
+    <text x="{{ w * (i+.5) }}" y="{{ legend }}" dy="1em" text-anchor="middle" font-size="24" font-weight="bold">{{ year }}</text>
     {% for party, row in pos.iterrows() %}
       {% code %}
       background_color = party_colors.get(party, NONE_COLOR)
@@ -66,5 +66,5 @@ w, pad, legend = 920. / len(parties), 5, 30
       {% end %}
     {% end %}
   {% end %}
-  <path class="no-pointer" d="M0,{{ legend + 20 + (H - legend - 20) / 2 }}h{{ W }}" stroke="#000"/>
+  <path class="no-pointer" d="M0,{{ legend + yearheight + (H - legend - yearheight) / 2 }}h{{ W }}" stroke="#000"/>
 </svg>
