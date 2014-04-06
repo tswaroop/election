@@ -156,13 +156,14 @@ names = {
 </svg>
 
 {% code %}
-pivot['Lat'] = latlong['Lat']
-pivot['Long'] = latlong['Long']
-{% end %}
-<script id="data" type="text/csv">{% code %}
 csv = StringIO()
-pivot.to_csv(csv)
-{% end %}{{ csv.getvalue() }}</script>
+if len(pivot):
+    pivot['Lat'] = latlong['Lat']
+    pivot['Long'] = latlong['Long']
+    if len(pivot):
+        pivot.to_csv(csv)
+{% end %}
+<script id="data" type="text/csv">{{ csv.getvalue() }}</script>
 <script>
 var colors = {{ json.dumps(colors.to_dict()) }},
     groupby = '{{ groupby }}',
