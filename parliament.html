@@ -12,7 +12,12 @@ years = sorted(data['YEAR'].unique())
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
   {{ T('.head.html', title=title, static_url=static_url, description=description) }}
-</head><body style="background-color:#b1b180">
+  {% if args.get('tv') %}
+  <style>
+  body { background-color: #b1b180; }
+  </style>
+  {% end %}
+</head><body>
 
 <nav class="navbar navbar-default" role="navigation">
   <div class="container">
