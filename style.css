@@ -55,6 +55,7 @@ text { pointer-events: none; }
 .party-legend.active { stroke: rgba(0,0,0,.5); }
 .bar-legend.active { fill: #eec; }
 .state-legend.fade { opacity: .3; }
+.state-table .fade { pointer-events: none; }
 .rank-legend.fade { opacity: .3; }
 .cartogram .fade { opacity: .05; pointer-events: none; }
 .wealthmap .fade { opacity: .1; }
@@ -286,3 +287,15 @@ h2 a:hover {
 .match {
   fill: #ff8060;
 }
+
+.state-table>tbody>tr>td.svg-cell {
+    padding: 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+.state-table {
+    font-size: 12px;
+}
+.state-table thead th, .state-table tbody td { text-align: center; }
+.state-table tbody th { text-align: right; }

@@ -1,0 +1,106 @@
+{{ GRAMEX(cache=['parliament.csv', 'colors.csv'], max_age=10*60) }}{% code %}
+
+from urllib import quote
+from common import pc_setup, slug, NONE_COLOR
+data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
+colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
+
+states = args.get('STATE', [])
+state_data = elections.reset_index().set_index(['STATE']).ix[args['STATE']]
+by_pc = state_data.pivot_table(rows=['PC'], cols=['YEAR'], values=['PARTY'], aggfunc='min')['PARTY'].fillna('')
+by_party = state_data.pivot_table(rows=['PARTY'], cols=['YEAR'], values=['PC'], aggfunc='count')['PC'].fillna(0).astype(int)
+
+top_parties = by_party.sum(axis=1).order(ascending=True)
+by_party = by_party.ix[top_parties.index]
+top_parties = top_parties[::-1].head(15)
+
+x0, W, H = 150, 940, 200
+h = float(H) * by_party / by_party.sum()
+y = h.cumsum() - h
+pad, legend = 5, 25
+{% end %}
+<h2>
+  <div class="pull-right">
+    <i class="glyphicon glyphicon-map-marker text-danger" href="cartogram?PC=" title="Cartogram"></i>
+  </div>
+  <i class="back glyphicon glyphicon-circle-arrow-left"></i>
+  {{ ', '.join(states) }} History
+</h2>
+
+{% set w = float(W - 30) / len(top_parties) %}
+<svg width="100%" data-height="{{ float(legend)/W }}" viewBox="0 0 {{ W }} {{ legend }}">
+  <rect width="30" height="{{ legend }}" class="party-unhighlight" fill="#000" title="Show all parties"/>
+  <text x="15" y="{{ legend /2 }}" text-anchor="middle" dy=".35em" fill="#fff">x</text>
+  {% for i, party in enumerate(top_parties.index) %}
+    {% set background_color = colors.get(party, NONE_COLOR) %}
+    <rect class="party-legend"
+      data-party="{{ slug(party) }}"
+      data-highlight="[data-party={{ slug(party) }}]"
+      data-toggle="highlight"
+      x="{{ 30 + w * i }}"
+      width="{{ w }}"
+      height="{{ legend }}"
+      fill="{{ background_color }}"></rect>
+    <text x="{{ 30 + w * (i + .5) }}" y="{{ legend / 2 }}" text-anchor="middle" dy=".35em" fill="{{ _color.contrast(background_color) }}">{{ party }}</text>
+  {% end %}
+</svg>
+
+<div class="table-responsive">
+  <table class="table table-condensed state-table" style="table-layout:fixed">
+    <thead>
+      <tr>
+        <th style="width:{{ x0 }}px">Constituency</th>
+        {% for year in by_pc.columns %}
+          <th>{{ escape(year) }}</th>
+        {% end %}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th></th>
+        {% for year, col in by_party.iteritems() %}
+          <td class="svg-cell">
+            <svg width="40" height="{{ H }}">
+              {% for party, wins in col.iteritems() %}
+                {% code %}
+                background_color = colors.get(party, NONE_COLOR) 
+                foreground_color = _color.contrast(background_color)
+                {% end %}
+                <rect width="80" y="{{ y[year][party] }}" height="{{ h[year][party] }}"
+                  data-party="{{ slug(party) }}"
+                  title="{{ escape(party) }}: {{ wins }}"
+                  data-placement="left"
+                  fill="{{ background_color }}" stroke="#fff"/>
+                {% if h[year][party] > 40 %}
+                  <text x="{{ 20 }}" y="{{ y[year][party] + h[year][party] * .5 }}"
+                    data-party="{{ slug(party) }}"
+                    fill="{{ foreground_color }}" dy="-.6em" text-anchor="middle">{{ int(wins) }}</text>
+                  <text x="{{ 20 }}" y="{{ y[year][party] + h[year][party] * .5 }}"
+                    data-party="{{ slug(party) }}"
+                    fill="{{ foreground_color }}" dy=".6em" text-anchor="middle">{{ escape(party) }}</text>
+                {% elif h[year][party] > 12 %}
+                  <text x="{{ 20 }}" y="{{ y[year][party] + h[year][party] * .5 }}"
+                    data-party="{{ slug(party) }}"
+                    fill="{{ foreground_color }}" dy=".35em" text-anchor="middle">{{ int(wins) }}</text>
+                {% end %}
+              {% end %}
+            </svg>
+          </td>
+        {% end %}
+      </tr>
+      {% for pc, row in by_pc.iterrows() %}
+        <tr>
+          <th style="width:{{ x0 }}px">{{ escape(pc) }}</th>
+          {% for year in by_pc.columns %}
+            {% set fill = colors.get(row[year], NONE_COLOR if row[year] else '#fff') %}
+            <td 
+              data-party="{{ slug(row[year]) }}"
+              style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}"
+              href="result?PC={{ escape(pc) }}&YEAR={{ escape(year) }}"
+            >{{ row[year] }}</td>
+          {% end %}
+        </tr>
+      {% end %}
+    </tbody>
+  </table>
+</div>

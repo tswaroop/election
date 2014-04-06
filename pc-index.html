@@ -5,17 +5,17 @@ data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 party_colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 winners = data[data['#'] == '1']
 
-parties = ['INC', 'BJP', 'CPM', 'JNP', 'JD', 'IND', 'CPI', 'DMK', 'SP', 'TDP', 'SWA', 'BJS', 'BSP', 'ADMK']
 summary = winners.pivot_table(cols='PARTY', rows='YEAR', values='NAME', aggfunc='count').fillna(0)
+if 'Y' in args:
+    summary = summary.ix[args['Y']]
+parties = summary.sum().order(ascending=False).head(15).index
 seats = summary.T.sum()
 summary = summary[parties]
 summary['Rest'] = seats - summary.T.sum()
-if 'Y' in args:
-    summary = summary.ix[args['Y']]
 W, H = 940, 500
+w, pad, legend = 920. / len(parties), 5, 30
 {% end %}
 <svg width="100%" data-height="{{ float(H)/W }}" viewBox="0 0 {{ W }} {{ H }}">
-  {% set w, pad, legend = 920. / len(parties), 5, 30 %}
   <rect width="30" height="{{ legend - 5 }}" class="party-unhighlight" fill="#000" title="Show all parties"/>
   <text x="15" y="{{ (legend - 5) * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">x</text>
   {% for i, party in enumerate(parties) %}

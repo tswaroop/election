@@ -49,7 +49,7 @@ years = sorted(data['YEAR'].unique())
           <ul class="dropdown-menu" role="menu">
             <li data-year=""><a href="?YEAR=">All years</a></li>
             {% for y in years %}
-              <li data-year="{{ y }}"><a href="?BY=&YEAR={{ y }}">{{ y }}</a></li>
+              <li data-year="{{ y }}"><a href="?BY=&YEAR={{ y }}">{{ y }} results</a></li>
             {% end %}
           </ul>
         </li>
@@ -86,7 +86,7 @@ years = sorted(data['YEAR'].unique())
             {% end %}
             <p>
               <button class="btn btn-primary" type="submit">Submit</button>
-              <button class="btn btn-default no-years" type="button">Clear</button>
+              <button class="btn btn-default no-years" type="button">All years</button>
             </p>
           </form>
         </li>
@@ -147,7 +147,10 @@ if (window.FastClick)
 {{ T('js/jquery.scrollTo.min.js') }}
 {{ T('js/d3.v3.min.js') }}
 
-var years = {{ json.dumps(years) }}
+var years = {{ json.dumps(years) }},
+    metric_names = {{ json.dumps(metric_names) }},
+    on_highlight = function(e) {},
+    DB = sessionStorage
 
 $('body')
   .tooltip({
@@ -165,6 +168,9 @@ $('body')
   })
   .on('shown.g.highlight', function(e) {
     window.on_highlight(e)
+    if ($('.party-legend').length) {
+      DB.groups = e.selected.map(function() { return $(this).data('party') }).get().join(',')
+    }
   })
   .aspect({
     selector: '[data-height]'
@@ -197,7 +203,9 @@ $('body')
     }
   })
   .on('click', '.no-years', function(e) {
-    $(this).parents('form').find('input[type="checkbox"]').prop('checked', false)
+    var $form = $(this).parents('form')
+    $form.find('input[type="checkbox"]').prop('checked', false)
+    $form.trigger('submit')
   })
   .on('keyup', function(e) {
     var hash = location.hash.replace(/^#/, ''),
@@ -213,24 +221,43 @@ $('body')
     }
   })
 
+function highlight_parties() {
+  // Based on pased highlighting, preserve party highlights
+  var groups = (DB.groups || '').split(','),
+      legends = $('.party-legend').map(function() {
+        var $this = $(this)
+        return {node: $this, group: $this.data('party')}
+      }).get(),
+      i = 0,
+      legend
+  $('body').trigger('clear.g.highlight')
+  for (; legend = legends[i]; i++) {
+    if (groups.indexOf(legend.group) >= 0) {
+      legend.node.trigger('click')
+    }
+  }
+}
+
+
 function redraw() {
   var hash = location.hash.replace(/^#/, ''),
       q = G.url.parse(hash),
       query = q.searchKey;
 
-  if (q.pathname.match(/^(summary|year|result|cartogram|table|scatter)$/)) {
+  if (q.pathname.match(/^(summary|year|result|cartogram|table|scatter|state)$/)) {
     $('#summary, #factoid').slideUp(250)
-    $('.year-filter')[q.pathname.match(/scatter/) ? 'slideU' : 'show']()
+    $('.year-filter')[q.pathname.match(/scatter|state/) ? 'hide' : 'show']()
     $('.years-filter')[q.pathname.match(/^$/) ? 'show' : 'hide']()
-    $('.result-controls')[q.pathname.match(/cartogram|scatter/) ? 'hide' : 'show']()
+    $('.result-controls')[q.pathname.match(/cartogram|scatter|state/) ? 'hide' : 'show']()
     $('.state-filter')[q.pathname.match(/cartogram|result/) ? 'hide' : 'show']()
     $('.metric-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('#result').empty().load('pc-' + hash, function() {
-      if (q.pathname.match(/cartogram|scatter/)) {
+      if (q.pathname.match(/cartogram|scatter|state/)) {
         $(window).dispatch('resize')
         $('#summary, #factoid').slideUp(250)
       }
       $('.tooltip').remove()
+      highlight_parties()
     }).show()
   } else {
     $('#result, .result-controls, .year-filter, .state-filter, .metric-filter').hide()
@@ -238,12 +265,14 @@ function redraw() {
       $('#summary, #factoid').show()
       $(window).dispatch('resize')
       $('.tooltip').remove()
+      highlight_parties()
     })
   }
 
+
   // Set the filters
   $('.current-year').text(query.YEAR || 'Year')
-  $('.current-metric').text(query.METRIC || 'Size')
+  $('.current-metric').text(metric_names[query.METRIC] || 'Size')
   $('.current-state').text(query.STATE || 'State')
   $('.years-filter input[type="checkbox"]').each(function() {
     var $this = $(this),

@@ -85,7 +85,13 @@ TOPH = 25
 <svg id="carto" width="100%" data-height="{{ float(H) / W }}" viewBox ="0 0 {{ W }} {{ H }}">
   <g id="carto-contents">
     <image x="-170" y="-5" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
-    <g transform="translate(640,0)">
+    <g transform="translate(640,30)">
+      {% if len(chosen_states) %}
+        <text font-size="28" dy="-.2em" href="state?{{ '&'.join('STATE=' + quote(state) for state in chosen_states) }}">
+          {{ ', '.join(chosen_states) }}
+          &raquo;
+        </text>
+      {% end %}
       {% for i, (group, wins) in enumerate(top_groups.iteritems()) %}
         {% set fill = colors.get(group, 'rgba(128,128,128,.5)') %}
         <rect x="-5" y="{{ i * bar_height }}" width="305" height="{{ bar_height }}"

@@ -15,7 +15,9 @@ N = int(args.get('n', [20])[0])
     <i class="glyphicon glyphicon-map-marker text-danger" href="cartogram?PC=" title="Cartogram"></i>
   </div>
   <i class="back glyphicon glyphicon-circle-arrow-left"></i>
-  {{ args['PC'][0].title() }}, {{ args['STATE'][0].title() }} {{ args['YEAR'][0] }}
+  {{ args['PC'][0].title() }},
+  <a href="state?PC=&YEAR=">{{ args['STATE'][0].title() }}</a>
+  {{ args['YEAR'][0] }}
   <small>{{ min(N, len(data)) }} / {{ len(data) }} candidates</small>
 </h2>
 <table class="table table-condensed analysis">
