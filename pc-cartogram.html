@@ -124,15 +124,15 @@ names = {
   </div>
 {% end %}
 
-
 <svg class="cartogram" width="100%" data-height="{{ float(H) / W }}" viewBox ="0 0 {{ W }} {{ H }}">
   <g id="carto-contents">
     <image x="-170" y="-5" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
     <g transform="translate(640, 45)">
-        <text font-size="28" y="-20" dy="-.2em" href="state?YEAR=&{{ '&'.join('STATE=' + quote(state) for state in chosen_states) }}">
-          {{ ', '.join(chosen_states) if len(chosen_states) else 'India' }}
-          <tspan class="small" fill="#888">{{ win_count.sum() }}</tspan> &raquo;
-        </text>
+      <text x="-10" font-size="28" y="-20" dy="-.2em" text-anchor="end">{{ '2014' if groupby.startswith('2014') else year }}</text>
+      <text font-size="28" y="-20" dy="-.2em" href="state?YEAR=&{{ '&'.join('STATE=' + quote(state) for state in chosen_states) }}">
+        {{ ', '.join(chosen_states) if len(chosen_states) else 'India' }}
+        <tspan class="small" fill="#888">{{ win_count.sum() }}</tspan> &raquo;
+      </text>
       <text y="-5">Party</text>
       <text x="70" y="-5">No. of Constituencies</text>
       <rect class="party-unhighlight" x="273" y="-44" width="22" height="20" fill="#e66" stroke="rgba(0,0,0,.4)" title="Clear selections"/>
