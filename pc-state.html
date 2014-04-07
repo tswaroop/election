@@ -100,10 +100,10 @@ pad, legend = 5, 25
         <tr>
           <th style="width:{{ x0 }}em">{{ escape(pc) }}</th>
           {% for year in by_pc.columns %}
-            {% set fill = colors.get(row[year], NONE_COLOR if row[year] else '#fff') %}
+            {% set fill = colors.get(row[year], NONE_COLOR if row[year] else None) %}
             <td
               data-party="{{ slug(row[year]) }}"
-              style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}"
+              {% if fill %}style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}"{% end %}
               href="result?PC={{ escape(pc) }}&YEAR={{ escape(year) }}"
             >{{ row[year] }}</td>
           {% end %}

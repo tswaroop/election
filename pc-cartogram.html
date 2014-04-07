@@ -140,7 +140,6 @@ names = {
       {% for i, (group, wins) in enumerate(top_groups.iteritems()) %}
         {% set fill = colors.get(group, 'rgba(128,128,128,.5)') %}
         <rect x="-5" y="{{ i * bar_height }}" width="305" height="{{ bar_height }}"
-          fill="#fff"
           class="party-legend bar-legend"
           data-highlight="[data-party={{ slug(group) }}]"
           data-party="{{ slug(group) }}"
