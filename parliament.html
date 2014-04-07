@@ -14,7 +14,7 @@ tv = args.get('tv')
   {{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv) }}
 </head><body{% if tv %} class="tv"{% end %}>
 
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default{% if tv %} navbar-fixed-top{% end %}" role="navigation">
   <div class="container">
 
     <div class="navbar-header">

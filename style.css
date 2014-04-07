@@ -1,11 +1,14 @@
-body.tv { background-color: #b1b180; }
+body.tv {
+  background-color: #b1b180;
+  padding-top: 70px;
+}
 
 @media (min-width: 1920px) {
   .tv .container { width: 1900px; }
   .tv .pc-result { font-size: 48px; }
   .tv .pc-state { font-size: 40px; }
 
-  .tv .pc-stack { font-weight: bold; font-size: 18px; }
+  .tv .pc-stack { font-weight: bold; }
   .tv .pc-stack .year-legend { font-size: 24px; }
 
   .tv .pc-summary { font-size: 32px; }

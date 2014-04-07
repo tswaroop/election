@@ -55,10 +55,10 @@ w, pad, legend, yearheight = 920. / len(parties), 5, 30, 30
       {% if row['h'] > 40 %}
         <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
           data-party="{{ slug(party) }}"
-          fill="{{ foreground_color }}" dy="-.6em" text-anchor="middle">{{ int(row['SEATS']) }}</text>
+          fill="{{ foreground_color }}" text-anchor="middle">{{ int(row['SEATS']) }}</text>
         <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
           data-party="{{ slug(party) }}"
-          fill="{{ foreground_color }}" dy=".6em" text-anchor="middle">{{ escape(party) }}</text>
+          fill="{{ foreground_color }}" dy="1em" text-anchor="middle">{{ escape(party) }}</text>
       {% elif row['h'] > 12 %}
         <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
           data-party="{{ slug(party) }}"
@@ -66,5 +66,4 @@ w, pad, legend, yearheight = 920. / len(parties), 5, 30, 30
       {% end %}
     {% end %}
   {% end %}
-  <path class="no-pointer" d="M0,{{ legend + yearheight + (H - legend - yearheight) / 2 }}h{{ W }}" stroke="#000"/>
 </svg>
