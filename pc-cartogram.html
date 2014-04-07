@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['parliament.csv', 'pc.csv', 'pc-latlong.csv', 'colors.csv', 'abbr.csv'], max_age=10*60) }}{% code %}
+{{ GRAMEX(cache=['parliament.csv', 'pc.csv', 'pc-latlong.csv', 'colors.csv', 'abbr.csv', 'india-states.png'], max_age=10*60) }}{% code %}
 import json
 from urllib import quote
 from common import pc_setup, slug, metric_names, NONE_COLOR
@@ -99,28 +99,34 @@ names = {
   </div>
 {% end %}
 
-<svg id="state-legend" width="100%" data-height="{{ float(TOPH * 2) / W }}" viewBox ="0 0 {{ W }} {{ TOPH * 2 }}">
-  {% set w = W / float(len(states)) %}
-  {% for i, state in enumerate(states) %}
-    <g{% if state %} data-grp="{{ state }}"{% end %}>
-      <rect class="state-legend"
-        href="?STATE={{ quote(state) }}"
-        x="{{ w * i }}"
-        width="{{ w }}"
-        height="{{ TOPH }}"
-        title="{{ escape(state or 'All states') }}"
-        fill="{{ '#e66' if not state else '#aec7e8' if state in chosen_states else '#f8f8f8' }}"/>
-      <text x="{{ w * (i + .5) }}" y="{{ TOPH / 2 }}" text-anchor="middle" dy=".35em" font-size="12">{{ abbr.get(state, state) or 'X' }}</text>
-      <text class="value" x="{{ w * (i + .5) }}" y="{{ TOPH + TOPH / 2 }}" text-anchor="middle" dy=".35em" font-size="14"></text>
-    </g>
-  {% end %}
-</svg>
+<div id="state-legend-container">
+  <svg id="state-legend" width="100%" data-height="{{ float(TOPH * 2) / W }}" viewBox ="0 0 {{ W }} {{ TOPH * 2 }}">
+    {% set w = W / float(len(states)) %}
+    {% for i, state in enumerate(states) %}
+      <g{% if state %} data-grp="{{ state }}"{% end %}>
+        <rect class="state-legend"
+          href="?STATE={{ quote(state) }}"
+          x="{{ w * i }}"
+          width="{{ w }}"
+          height="{{ TOPH }}"
+          title="{{ escape(state or 'All states') }}"
+          fill="{{ '#e66' if not state else '#aec7e8' if state in chosen_states else '#f8f8f8' }}"/>
+        <text x="{{ w * (i + .5) }}" y="{{ TOPH / 2 }}" text-anchor="middle" dy=".35em" font-size="12">{{ abbr.get(state, state) or 'X' }}</text>
+        <text class="value" x="{{ w * (i + .5) }}" y="{{ TOPH + TOPH / 2 }}" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    {% end %}
+  </svg>
+</div>
 
 {% if metric != 'CONSTANT' %}
   <div class="row">
     {% set R_hi = 6 if pd.isnull(metric_mean) else R * (pivot[metric].max() / metric_mean) ** .5 %}
-    <div class="col-xs-6"><input class="lo" type="range" min="0" max="{{ R_hi }}" step="0.1" value="0"></div>
-    <div class="col-xs-6"><input class="hi" type="range" min="0" max="{{ R_hi }}" step="0.1" value="{{ R_hi }}"></div>
+    <div class="col-xs-6">
+      Min <input class="lo" type="range" min="0" max="{{ R_hi }}" step="0.1" value="0">
+    </div>
+    <div class="col-xs-6">
+      Max <input class="hi" type="range" min="0" max="{{ R_hi }}" step="0.1" value="{{ R_hi }}">
+    </div>
   </div>
 {% end %}
 
@@ -133,7 +139,7 @@ names = {
         {{ ', '.join(chosen_states) if len(chosen_states) else 'India' }}
         <tspan class="small" fill="#888">{{ win_count.sum() }}</tspan> &raquo;
       </text>
-      <text font-size="16" y="-5">Party</text>
+      {% if not groupby.startswith('2014') %}<text font-size="16" y="-5">Party</text>{% end %}
       <text font-size="16" x="70" y="-5">No. of Constituencies</text>
       <rect class="party-unhighlight" x="273" y="-44" width="22" height="20" fill="#e66" stroke="rgba(0,0,0,.4)" title="Clear selections"/>
       <text x="284" y="-34" text-anchor="middle" dy=".37em">X</text>
