@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['style.css', '.head.html', 'facts.csv', 'img/parliament.png', 'img/assembly.png'], max_age=10*60) }}{% code %}
+{{ GRAMEX(cache=['style.css', '.head.html', '.tail.html', 'facts.csv', 'img/parliament.png', 'img/assembly.png'], max_age=10*60) }}{% code %}
 title = 'Elections in India'
 description = 'A visual guide to the history of Indian elections, from 1951 until today, by Gramener.'
 facts = DB.csv('facts.csv')
@@ -58,5 +58,7 @@ facts = DB.csv('facts.csv')
   #}
 
 </div>
+
+{{ T('.tail.html') }}
 
 </body></html>

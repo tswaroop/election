@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['js/G.min.js', 'style.css', 'parliament.csv', 'parliament-topics.csv', 'colors.csv', '.head.html'], max_age=10*60) }}{% code %}
+{{ GRAMEX(cache=['js/G.min.js', 'style.css', 'parliament.csv', 'parliament-topics.csv', 'colors.csv', '.head.html', '.tail.html'], max_age=10*60) }}{% code %}
 title = 'Parliament Elections'
 description = 'A visual guide to the history of Indian Parliament elections, from 1951 until today, by Gramener.'
 
@@ -314,4 +314,6 @@ $(window).on('hashchange', redraw);
 redraw();
 
 </script>
+
+{{ T('.tail.html') }}
 </body></html>
