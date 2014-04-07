@@ -41,7 +41,7 @@ w, pad, legend, yearheight = 920. / len(parties), 5, 30, 30
       'y': H - height.cumsum()
     })
     {% end %}
-    <text x="{{ w * (i+.5) }}" y="{{ legend }}" dy="1em" text-anchor="middle" font-size="24" font-weight="bold">{{ year }}</text>
+    <text x="{{ w * (i+.5) }}" y="{{ legend }}" dy="1em" text-anchor="middle" class="year-legend">{{ year }}</text>
     {% for party, row in pos.iterrows() %}
       {% code %}
       background_color = party_colors.get(party, NONE_COLOR)

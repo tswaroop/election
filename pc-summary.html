@@ -13,7 +13,7 @@ if getarg('YEAR'):
     elections = elections.reset_index()
     elections = elections[elections['YEAR'] == getarg('YEAR')].set_index(['YEAR', 'STATE', 'PC'])
 {% end %}
-
+<div class="pc-summary">
 {% if getarg('margin') %}
   {% set margin    = elections.sort('MARGIN'  , ascending=False).dropna(subset=['MARGIN'  ])[['WINNER', 'PARTY', '1', '2', 'MARGIN', 'MARGIN %']] %}
   {% set margin_pc = elections.sort('MARGIN %', ascending=False).dropna(subset=['MARGIN %'])[['WINNER', 'PARTY', '1', '2', 'MARGIN', 'MARGIN %']] %}
@@ -90,3 +90,4 @@ if getarg('YEAR'):
     <pre>{{ args }}</pre>
 
 {% end %}
+</div>
