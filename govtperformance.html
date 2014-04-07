@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>cnn ibn</title>
+	<link rel="stylesheet" href="{{ static_url('/css/bootstrap.v3.min.css') }}"/>
+	<style type="text/css">
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  stroke-width:1px;
+  shape-rendering: crispEdges;
+}
+
+.line {
+  fill: none;
+  stroke-width: 4.5px;
+}
+
+.showpath {
+	display: inline-block;
+}
+.hidepath {
+	display: none;
+}
+
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.7;
+}
+.grid path {
+      stroke-width: 0;
+}
+
+#xDropdown, #yDropdown {
+	overflow:scroll;
+	height:200px;
+	width:300px;
+}
+
+@media screen and (min-width: 768px)  and (max-width: 1000px){
+
+    #chartsvg{
+        width:770px;
+        height:422px;
+    }
+
+}
+
+@media screen and (min-width: 468px)  and (max-width: 768px){
+
+    #chartsvg{
+        width:480px;
+        height:264px;
+    }
+
+}
+
+@media screen and (max-width: 468px){
+
+    #chartsvg{
+        width:300px;
+        height:150px;
+    }
+
+}
+
+@media screen and (min-width: 1200px){
+
+    #chartsvg{
+        width:750px;
+        height:413px;
+    }
+
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1199px){
+
+    #chartsvg{
+        width:1000px;
+        height:550px;
+    }
+
+}
+
+	</style>
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">CNN IBN</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <ul class="nav navbar-nav">
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">States <b class="caret"></b></a>
+          <ul class="dropdown-menu" id="stateDropdown">
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">X Parameter <b class="caret"></b></a>
+          <ul class="dropdown-menu xydropdowns" id="xDropdown">
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Y Parameter <b class="caret"></b></a>
+          <ul class="dropdown-menu xydropdowns" id="yDropdown">
+          </ul>
+        </li>
+
+      </ul>
+
+      <form class="navbar-form navbar-left" role="search" id="select_params">
+		<input type="hidden" name="xparam" value="YEAR" id="xparam">
+		<input type="hidden" name="yparam" id="yparam">
+        <button type="submit" class="btn btn-default" id="submit_params">Submit</button>
+      </form>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container">
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="btn-group" id="termButtons">
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-4" style="top:20px">
+			<p><span>State: </span><span id="statename"></span></p>
+		</div>
+		<div class="col-md-4" style="top:20px">
+			<p><span>X Parameter: </span><span id="xparamname"></span></p>
+		</div>
+		<div class="col-md-4" style="top:20px">
+			<p><span>Y Parameter: </span><span id="yparamname"></span></p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div id="party_boxes"></div>
+	</div>
+
+
+	<div class="row">
+
+		<div class="col-md-8">
+			<div id="chart"></div>
+		</div>
+
+		<div class="col-md-4" style="top:30px">
+			<div class="row">
+				<div class="btn-group" id="nextButtons">
+					  <button type="button" class="btn btn-default" id="startNext"><<</button>
+					  <button type="button" class="btn btn-default" id="prevButton"><</button>
+					  <button type="button" class="btn btn-default" id="nextButton">></button>
+					  <button type="button" class="btn btn-default" id="endNext">>></button>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+				<p id="nextStories"></p>
+				</div>
+			</div>
+			<div class="row">
+				<h4 id="party_name"></h4>
+				<div id="party_color" style="width:100px;height:50px"></div>
+				<p><span>PM Name: </span><span id="pm_name"></span></p>
+				<img id="party_symbol" src="" style="width:120px;height:120px;left:40px">
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<script src="{{ static_url('/js/d3.v3.min.js') }}"></script>
+<script src="{{ static_url('/js/jquery2.min.js') }}"></script>
+<script src="{{ static_url('/js/underscore-min.js') }}"></script>
+<script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
+<script src="{{ static_url('js/G.min.js') }}"></script>
+
+<script>
+
+var story_urls = ["?datasource=country&state=India&xparam=YEAR&yparam=Inflation%2C%20consumer%20prices%20(annual%20%25)",
+					"?datasource=country&state=India&xparam=YEAR&yparam=Foreign%20direct%20investment%2C%20net%20inflows%20(%25%20of%20GDP)",
+					"?datasource=country&state=India&xparam=YEAR&yparam=GDP%20per%20capita%20growth%20(annual%20%25)",
+					"?datasource=country&state=India&xparam=YEAR&yparam=Gross%20capital%20formation%20(%25%20of%20GDP)",
+					"?datasource=country&state=India&xparam=YEAR&yparam=Military%20expenditure%20(%25%20of%20GDP)"];
+
+var stories = ["Inflation was constant",
+				"FDI has increased",
+				"GDP varies a lot",
+				"Gross Capital formation has increased",
+				"Military expenditure went down"];
+
+var nextcounter = 0;
+
+if(window.location.hash == "")
+	window.location.hash = "?datasource=country&state=India&xparam=YEAR&yparam=Gross%20capital%20formation%20(%25%20of%20GDP)";
+
+var margin = {top:50,bottom:90,left:80,right:50},
+	width = 1350 - margin.left - margin.right,
+	height = 740 - margin.top - margin.bottom;
+
+var svg = d3.select("#chart").append("svg")
+		.attr("id","chartsvg")
+		.attr("width",margin.left+width+margin.right)
+		.attr("height",margin.top+height+margin.bottom)
+		.attr("viewBox","0 0 "+(margin.left+width+margin.right)+" "+(margin.top+height+margin.bottom))
+		.attr("preserveAspectRatio","none")
+		.append("g")
+		.attr("transform","translate("+margin.left+","+margin.top+")");
+
+var y = d3.scale.linear()
+		.range([height,0]);
+
+var x;
+var filtered_data,columnx,columny,colcolor;
+var data;
+var stateData,countryData;
+var state_selected;
+var term_click = false;
+var party_symbol_dict, pm_name_dict;
+var colors_dict;
+
+function color(party){
+	// console.log(colors_dict);
+	return colors_dict[party];
+}
+
+// var color = d3.scale.category20();
+
+var xAxis = d3.svg.axis();
+
+var yAxis = d3.svg.axis();
+
+var line = d3.svg.line()
+	.interpolate("cardinal");
+
+var startvalueline = d3.svg.line()
+    .x(function(d) { return x("1980-81") })
+    .y(function(d) { return y(0); });
+
+var termcount = 0;
+var prevParty,prevState;
+
+function make_x_axis(x) {
+    return d3.svg.axis()
+        .scale(x)
+         .orient("bottom")
+         .ticks(5)
+}
+
+function make_y_axis(y) {
+    return d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(10)
+}
+
+d3.csv("gdpdata.csv",function(d){
+	// d["GDP at constant prices (in billions)"] = + d["GDP at constant prices (in billions)"] || 0;
+
+	d3.keys(d).forEach(function(k){
+		if(["STATE","Party in power","YEAR"].indexOf(k) == -1){
+			d[k] = +d[k]; //|| 0;
+		}
+	});
+
+	if(prevState != d["STATE"]){
+		termcount = 0;
+		prevParty = "";
+	}
+	if(prevParty != d["Party in power"]){
+		++termcount;
+	}
+	prevParty = prevParty != d["Party in power"] ? d["Party in power"] : prevParty;
+	prevState = prevState != d["STATE"] ? d["STATE"] : prevState;
+	d["Term"] = termcount;
+	d["YEAR"] = d["YEAR"].trim();
+	d["Random"] = +d["Random"];
+	return d;
+},function(error,data_state){
+
+	termcount = 0;
+	prevParty = "";
+	prevState = "";
+
+	d3.csv("data_india_new.csv",function(d){
+		// d["GDP at constant prices (in billions)"] = + d["GDP at constant prices (in billions)"] || 0;
+		d3.keys(d).forEach(function(k){
+			if(["STATE","Party in power","YEAR","Party filename","PM Name"].indexOf(k) == -1){
+				if(d[k] != "")
+					d[k] = +d[k];// || 0;
+			}
+		});
+
+		if(prevState != d["STATE"]){
+			termcount = 0;
+			prevParty = "";
+		}
+		if(prevParty != d["Party in power"]){
+			++termcount;
+		}
+		prevParty = prevParty != d["Party in power"] ? d["Party in power"] : prevParty;
+		prevState = prevState != d["STATE"] ? d["STATE"] : prevState;
+		d["Term"] = termcount;
+		d["YEAR"] = d["YEAR"].trim();
+		return d;
+	},function(error_country,data_country){
+
+		d3.csv("colors.csv",function(d){
+			var temp_dict = {"Name":d["Name"],"Color":d["Color"]};
+			// var temp_dict = {};
+			// temp_dict[ d["Name"] ] = d["Color"];
+			return temp_dict;
+		},function(e,colors_data){
+			// console.log(colors_data);
+
+		colors_dict = {};
+		colors_data.forEach(function(k){
+			// console.log(k);
+			colors_dict[k["Name"]] = k["Color"];
+		});
+
+		// console.log(colors_dict);
+		// colors_dict = colors_data;
+
+
+		if(error){
+			console.log("error reading data");
+		}
+
+		if(error_country){
+			console.log("error reading data");
+		}
+
+		// console.log(data_country);
+
+		stateData = data_state;
+		countryData = data_country;
+
+		var test = countryData.concat(stateData);
+		// console.log(test);
+
+		// stateData = stateData.filter(function(d){
+		// 	return ["2012-13","2011-12","2010-11"].indexOf(d["YEAR"]) == -1;
+		// });
+
+		// countryData = countryData.filter(function(d){
+		// 	return ["2013","2012","2011","2010"].indexOf(d["YEAR"]) == -1;
+		// });
+
+		getData();
+
+		});
+
+	});
+
+});
+
+function getData(){
+
+	term_click = false;
+
+	var data;
+
+	var hash = window.location.hash.replace("#?","").split("&");
+	var dict = {};
+	hash.forEach(function(d){
+		var temp = d.split("=");
+		dict[temp[0]] = decodeURIComponent(temp[1]);
+	});
+	// console.log(dict);
+
+	columny = dict.yparam;
+	columnx = dict.xparam;
+	state_selected = dict.state;
+	if(dict.datasource == "state"){
+		data = stateData;
+	} else {
+		data = countryData;
+	}
+		// data = data_country;
+
+	party_symbol_dict = {};
+	pm_name_dict = {};
+
+	var data_temp = data.map(function(k){
+				return {"Term" : k["Term"], "Party filename" : k["Party filename"], "PM Name" : k["PM Name"]};
+			});
+	data_temp = _.uniq(data_temp);
+
+	data_temp.forEach(function(k){
+		party_symbol_dict[k["Term"]] = k["Party filename"];
+		pm_name_dict[k["Term"]] = k["PM Name"];
+	});
+
+	// console.log(party_symbol_dict);
+	// console.log(pm_name_dict);
+
+	var states = _.uniq( _.pluck(data,"STATE") );
+
+	var columns_temp = d3.keys(data[0]);
+
+	var columns = [];
+
+	columns_temp.forEach(function(col){
+		var index = ["STATE","Party in power","YEAR","Term","Party filename","PM Name"].indexOf(col);
+		if(index == -1){
+			columns.push(col);
+		}
+	});
+
+	// columny = columns[1],
+	// columnx = "YEAR"//columns[1],
+	colcolor = "Party in power";
+
+	$("#xparamname").text(columnx);
+	$("#yparamname").text(columny);
+
+	line.x(function(d) { return x(d[columnx]); })
+    	.y(function(d) { return y(d[columny]); });
+
+    d3.selectAll("#xDropdown li").remove();
+
+	 d3.select("#xDropdown").append("li")
+	 	.append("input")
+	 	.attr("type","search")
+	 	.attr("id","xparamsearch")
+	 	.attr("class","form-control")
+	 	.style("margin-left","20px")
+	 	.style("width","240px")
+	 	.attr("data-target",".xparamname")
+	 	.attr("data-search","@text")
+	 	.attr("data-hide-class","hidepath")
+	 	.on("click",function(d){
+	 		d3.event.stopPropagation();
+	 	});
+
+    d3.select("#xDropdown").selectAll("li")
+		.data(["YEAR"].concat(columns),function(d){ return d; })
+		.enter().append("li")
+		.attr("class","xparamname")
+		.append("a")
+		.attr("class","gselect xparamname")
+		.attr("href",function(d){ return "?xparam="+encodeURIComponent(d) })
+		.text(String)
+		.on("click",function(d){
+			$("#xparam").val(d);
+		});
+
+	d3.selectAll("#yDropdown li").remove();
+
+	 d3.select("#yDropdown").append("li")
+	 	.append("input")
+	 	.attr("type","search")
+	 	.attr("id","yparamsearch")
+	 	.attr("class","form-control")
+	 	.style("margin-left","20px")
+	 	.style("width","240px")
+	 	.attr("data-target",".yparamname")
+	 	.attr("data-search","@text")
+	 	.attr("data-hide-class","hidepath")
+	 	.on("click",function(d){
+	 		d3.event.stopPropagation();
+	 	});
+
+    d3.select("#yDropdown").selectAll("li")
+		.data(columns,function(d){ return d; })
+		.enter().append("li")
+		.attr("class","yparamname")
+		.append("a")
+		.attr("class","gselect")
+		.attr("href",function(d){ return "?yparam="+encodeURIComponent(d) })
+		.text(String)
+		.on("click",function(d){
+			$("#yparam").val(d);
+		});
+
+	data = data.filter(function(d){
+		return !(d[columnx]=="" || d[columny]=="");
+	});
+
+	console.log(data);
+
+	$("#statename").text(states[0]);
+	filtered_data = data.filter(function(k){ return k["STATE"] == state_selected }); //states[0] });
+
+	var term_num = filtered_data.slice(-1)[0]["Term"];
+	var party_n = filtered_data.slice(-1)[0][colcolor];
+	$("#party_symbol").attr("src","img/"+party_symbol_dict[term_num]);
+	$("#pm_name").text(pm_name_dict[term_num]);
+	$("#party_name").text(party_n);
+	$("#party_color").css("background-color",color(party_n) );
+
+	fillTerms(filtered_data,columny,columnx,colcolor,x,y,"All");
+	drawAxes(filtered_data,columny,columnx,colcolor,"All")
+	drawChart(filtered_data,columny,columnx,colcolor,x,y,"All");
+
+	d3.selectAll("#stateDropdown li").remove();
+
+	d3.select("#stateDropdown").selectAll("li")
+		.data(states)
+		.enter().append("li")
+		.append("a")
+		.attr("class","gselect")
+		.attr("href",function(d){ return "?state="+encodeURIComponent(d) })
+		.text(String)
+		.on("click",function(d){
+			$("#statename").text(d);
+			term_click = false;
+			// $("circle").remove();
+			// $("#party_symbol").attr("src","img/"+party_symbol_dict[d]);
+			// $("#pm_name").text(pm_name_dict[d]);
+			filtered_data = data.filter(function(k){ return k["STATE"] == d });
+			var term_num = filtered_data.slice(-1)[0]["Term"];
+			var party_n = filtered_data.slice(-1)[0][colcolor];
+
+			$("#party_symbol").attr("src","img/"+party_symbol_dict[term_num]);
+			$("#pm_name").text(pm_name_dict[term_num]);
+			$("#party_name").text(party_n);
+			$("#party_color").css("background-color",color(party_n) );
+
+			fillTerms(filtered_data,columny,columnx,colcolor,x,y,"All");
+			drawAxes(filtered_data,columny,columnx,colcolor,"All")
+			drawChart(filtered_data,columny,columnx,colcolor,x,y,"All");
+		});
+}
+
+function fillTerms(data,columny,columnx,colcolor,x,y,term){
+
+	$("#termButtons").children().remove();
+
+	d3.select("#termButtons").selectAll("button")
+	.data(_.uniq(_.pluck(data,"Term")).concat(["All"]) )
+	.enter().append("button")
+	.attr("class","btn btn-default")
+	.attr("type","button")
+	.append("a")
+	.attr("class","gselect")
+	.attr("href",function(d){
+		if(d=="All")
+			return "?term=All";
+		else
+			return "?term=term"+d ;
+	})
+	.text(function(d){ return "Term"+d } )
+	.on("click",function(d){
+		// $("circle").remove();
+		// var temp = data.filter(function(k){
+		// 			return k["Term"] = "Term"+d;
+		// 		});
+		// console.log(party_symbol_dict[d]);
+		// console.log(pm_name_dict[d]);
+		var term_num;
+		if(d == "All"){
+			term_num = _.uniq(_.pluck(data,"Term")).slice(-1)[0];
+		} else {
+			term_num = d;
+			party_n = data.filter(function(k){ return k["Term"] == d;})[0]["Party in power"];//[0][colcolor];
+		}
+		console.log(party_n);
+		$("#party_symbol").attr("src","img/"+party_symbol_dict[term_num]);
+		$("#pm_name").text(pm_name_dict[term_num]);
+		$("#party_name").text(party_n);
+		$("#party_color").css("background-color",color(party_n) );
+		term_click = true;
+		drawChart(data,columny,columnx,colcolor,x,y,d);
+	});
+
+}
+
+
+function pathTween(d){
+
+	var interpolate = d3.scale.quantile()
+						.domain([0,1])
+						.range(d3.range(1,d.length+1) );
+	return function(t){
+		return line(d.slice(0, interpolate(t) ));
+	};
+}
+
+function drawAxes(data,columny,columnx,colcolor,term){
+
+	console.log(columnx);
+
+	if(columnx == "YEAR"){
+			x = d3.scale.ordinal();
+			x.rangePoints([0,width]);
+			x.domain(_.uniq(_.pluck(data,columnx)));
+			xAxis = d3.svg.axis();
+			xAxis.tickValues(x.domain().filter(function(d, i) { return !(i % 4); }));
+			// xAxis.tickValues(x.domain().filter(function(d, i) { return !(i % 2); }));
+			// x.interpolate("cardinal");
+	} else {
+			x = d3.scale.linear();
+			x.range([0,width]);
+			x.domain(d3.extent(data,function(d){return d[columnx] }));
+			xAxis = d3.svg.axis();
+			// xAxis.tickValues();
+			// x.interpolate("cardinal");
+	}
+
+	y.domain(d3.extent(data,function(d){return d[columny] }));
+	// y.interpolate("cardinal");
+
+	// console.log(x.domain(),x.range());
+
+	yAxis
+	.scale(y)
+    .orient("left");
+
+	xAxis
+	.scale(x)
+    .tickSize(5)
+    .tickPadding(6)
+    // .tickValues(x.domain().filter(function(d, i) { return !(i % 4); }))
+    .ticks(10)
+    .orient("bottom");
+
+	d3.selectAll(".axis").transition().remove();
+	d3.selectAll(".grid").transition().remove();
+
+	svg.append("g")
+	.transition().duration(1000)
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis)
+	    .selectAll("text")
+	    .style("text-anchor", "end")
+	    .attr("dx", "-.8em")
+	    .attr("dy", ".15em")
+	    .attr("transform", function(d) {
+	        return "rotate(-90)";
+	        });
+
+	svg.append("g")
+		.attr("transform", "translate("+width+ ")")
+		.transition().duration(1000)
+		.attr("transform", "translate(0)")
+      .attr("class", "y axis")
+      .call(yAxis);
+
+    svg.append("g")
+    	.transition().duration(1000)
+        .attr("class", "grid")
+        .attr("transform", "translate(0," + height + ")")
+        .call(make_x_axis(x)
+            .tickSize(-height, 0, 0)
+            .tickFormat("")
+        );
+
+    svg.append("g")
+    	.transition().duration(1000)
+        .attr("class", "grid")
+        .call(make_y_axis(y)
+            .tickSize(-width, 0, 0)
+            .tickFormat("")
+        );
+
+    d3.selectAll(".label").remove();
+
+    svg.append("text")      // text label for the x axis
+        .attr("class","label")
+        .attr("x", width / 2 )
+        .attr("y",  height + margin.bottom)
+        .attr("dy", "-1em")
+        .style("text-anchor", "middle")
+        .style("font-size","19px")
+        .text(columnx);
+
+    svg.append("text")
+    	.attr("class","label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x",0 - (height / 2))
+        .attr("dy", "1em")
+        .style("font-size","19px")
+        .style("text-anchor", "middle")
+        .text(columny);
+}
+
+function drawCircle(data,columny,columnx,colcolor,x,y,term){
+
+	$("circle").remove();
+
+	var getdat = svg.selectAll("circle")
+			.data(data,function(d){ return d[columny] });
+
+	getdat.enter().insert("circle",".line")
+	// .attr("class","hidepath")
+	// .classed("hidepath",function(d){
+	// 	if(term == "All"){
+// 				return false;
+// 			} else {
+// 				return d["Term"] != term;
+// 			}
+// 		})
+	.transition().delay(2050)
+	.attr("cy",function(d){ return y(d[columny]) })
+	.attr("cx",function(d){ return x(d[columnx]) })
+	.attr("r","8px")
+	.style("cursor","pointer")
+	.attr("data-term",function(d){ return d["Term"]})
+	.attr("title",function(d){ return columnx+" :"+d[columnx]+", "+columny+" :"+d[columny] })
+	.attr("fill",function(d){ return color(d[colcolor]) });
+
+}
+
+function drawChart(data,columny,columnx,colcolor,x,y,term){
+
+	if(! term_click)
+		drawCircle(data,columny,columnx,colcolor,x,y,term);
+	else {
+		$("circle").hide();
+		$("circle").each(function(d){
+			var t = $(this).attr("data-term");
+			if(t != term && term != "All"){
+				$(this).hide();
+			} else {
+				$(this).show(2050);
+			}
+			// if(term == "All"){
+			// 	$(this).show();
+			// }
+		});
+	}
+
+	$("body").tooltip({selector: '[title]', container: 'body', placement:"auto top"});
+
+  	var test = _.groupBy(data,function(d){ return [ d[colcolor], d["Term"] ] });
+  	// var partyData = d3.keys(test).map(function(d){
+			//   		var dict = {};
+			//   		dict["party"] = d;
+			//   		dict["values"] = test[d];
+			//   		return dict;
+			//   	});
+
+  	var keys = d3.keys(test);
+
+  	var svgline = svg.selectAll(".line")
+		  		.data(d3.keys(test),function(d){ return d});
+
+
+	svgline.exit().transition().remove();
+
+	svgline.enter().append("path")
+  		.attr("class", function(d){ return "hidepath line term"+d.split(",")[1]})
+  		.attr("stroke",function(d){ return color( d.split(",")[0] )})
+  		.attr("fill","none")
+  		// .attr("stroke-width","10px")
+  		.classed("hidepath",function(d){
+  			if(term == "All"){
+  				return false;
+  			} else {
+  				return d.split(",")[1] != term;
+  			}
+  		})
+		.datum(function(d,i){
+			var temp = i == keys.length-1 ? [] : test[keys[i+1]][0];
+			return test[d].concat(temp);
+		})
+        .attr("d", line(test[keys[0]] ) )
+        .transition()
+        .duration(2000)
+        .attrTween('d', pathTween);
+
+	// getdat.exit().transition().remove();
+	// d3.selectAll("circle").remove();
+
+	// console.log(data);
+
+}
+
+$("#select_params").on("submit",function(e){
+	e.preventDefault();
+	columnx = $("#xparam").val();
+	columny = $("#yparam").val();
+	$("#xparamname").text(columnx);
+	$("#yparamname").text(columny);
+	// console.log(filtered_data);
+	// $("circle").remove();
+
+	// fillTerms(filtered_data,columny,columnx,colcolor,x,y,"All");
+	// drawAxes(filtered_data,columny,columnx,colcolor,"All")
+	// drawChart(filtered_data,columny,columnx,colcolor,x,y,"All");
+	getData();
+});
+
+$("#stateLevel").on("click",function(){
+
+	// var hash = window.location.hash.replace("#","").split("&");
+	// hash.forEach(function(d){
+	// 	var index = d.indexOf("datasource");
+	// 	hash.splice(index,1)
+	// });
+	// hash += "&datasource=state";
+	// window.location.hash = hash;
+
+	$(this).parent().addClass("active");
+	$("#countryLevel").parent().removeClass("active");
+	window.location.hash = "?datasource=state&state="+encodeURIComponent("ANDAMAN & NICOBAR ISLANDS")+"&xparam=YEAR&yparam="+encodeURIComponent("GDP at constant prices (in billions)");
+	getData();
+});
+
+$("#countryLevel").on("click",function(){
+
+	// var hash = window.location.hash.replace("#","").split("&");
+	// hash.forEach(function(d){
+	// 	var index = d.indexOf("datasource");
+	// 	hash.splice(index,1)
+	// });
+	// hash += "&datasource=country";
+	// window.location.hash = hash;
+
+	$(this).parent().addClass("active");
+	$("#stateLevel").parent().removeClass("active");
+	window.location.hash = "?datasource=country&state=India&xparam=YEAR&yparam=Gross%20capital%20formation%20(%25%20of%20GDP)";
+	getData();
+});
+
+$("#startNext").on("click",function(){
+	nextcounter = 0;
+	window.location.hash = story_urls[nextcounter];
+	$("#nextStories").text(stories[nextcounter]);
+	console.log(story_urls[nextcounter])
+	getData();
+});
+$("#prevButton").on("click",function(){
+	--nextcounter;
+	nextcounter = nextcounter < 0 ? story_urls.length-1:nextcounter;
+	window.location.hash = story_urls[nextcounter];
+	$("#nextStories").text(stories[nextcounter]);
+	getData();
+});
+$("#nextButton").on("click",function(){
+	++nextcounter;
+	nextcounter %= story_urls.length;
+	console.log(nextcounter);
+	window.location.hash = story_urls[nextcounter];
+	$("#nextStories").text(stories[nextcounter]);
+	getData();
+});
+$("#endNext").on("click",function(){
+	nextcounter = story_urls.length-1;
+	window.location.hash = story_urls[nextcounter];
+	$("#nextStories").text(stories[nextcounter]);
+	getData();
+});
+
+
+$('body').urlfilter({
+    selector: '.gselect',
+    target: "#"
+  }).search();
+
+</script>
+
+</body>
+</html>
