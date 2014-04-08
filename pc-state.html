@@ -9,7 +9,7 @@ state = args['STATE'][0] if 'STATE' in args else None
 if state:
     state_data = elections.reset_index().set_index(['STATE'])
     if state in state_data.index:
-        state_data = state_data.ix[state]
+        state_data = state_data.ix[[state]]
         if 'Y' in args:
             state_data = state_data[state_data['YEAR'].isin(args['Y'])]
     else:
