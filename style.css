@@ -3,13 +3,13 @@ body.tv {
   padding-top: 70px;
   padding-bottom: 540px;
 }
+.tv .back { color: #000; }
 
+/* Large screen-related TV settings */
 @media (min-width: 1920px) {
   .tv .container { width: 1900px; }
   .tv .pc-result { font-size: 48px; }
   .tv .pc-state { font-size: 40px; }
-
-  .tv .back { color: #000; }
 
   .tv #state-legend-container { position: fixed; top: 60px; width: 1880px; }
   .tv .cartogram { margin-top: 100px; }
