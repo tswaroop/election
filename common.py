@@ -17,7 +17,7 @@ def pc_setup(data):
 
     # Merge some parties for practicality
     data['PARTY'].replace({
-      'INC(I)': 'INC',
+      'INC(I)': 'CONG',
       'ADK': 'ADMK',
       'BLD': 'JNP',
       'INC': 'CONG',
