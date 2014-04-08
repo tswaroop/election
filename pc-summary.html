@@ -48,8 +48,8 @@ if getarg('YEAR'):
     <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Most candidates <small>{{ ', '.join(selection) }}</small></h2>
     {{ T('pc-table.html', table=table[['CANDIDATES', 'WINNER', 'PARTY']].dropna(subset=['CANDIDATES']).head(N or 20), sort='CANDIDATES', remove='candidates') }}
   {% elif getarg('candidates') == '1' %}
-    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> All uncontested victories <small>{{ ', '.join(selection) }}</small></h2>
-    {{ T('pc-table.html', table=table[table['CANDIDATES'] == 1][['CANDIDATES', 'WINNER', 'PARTY']].dropna(subset=['CANDIDATES']), sort='CANDIDATES', remove='candidates') }}
+    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Uncontested wins <small>{{ ', '.join(selection) }}</small></h2>
+    {{ T('pc-table.html', table=table[table['CANDIDATES'] == 1][['CANDIDATES', 'WINNER', 'PARTY']].dropna(subset=['CANDIDATES']).head(N or 20), sort='CANDIDATES', remove='candidates') }}
   {% end %}
 
 {% elif getarg('women') == 'max' %}
