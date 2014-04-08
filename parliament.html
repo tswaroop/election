@@ -257,7 +257,6 @@ function highlight_groups() {
   }
 }
 
-
 function redraw() {
   var hash = location.hash.replace(/^#/, ''),
       q = G.url.parse(hash),
@@ -286,7 +285,7 @@ function redraw() {
       $('#summary, #factoid').show()
       $(window).dispatch('resize')
       $('.tooltip').remove()
-      highlight_groups()
+      DB.groups = ''
     })
   }
 
