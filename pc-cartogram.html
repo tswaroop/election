@@ -43,7 +43,7 @@ top_groups = win_count.head(min(20, H // bar_height))
 
 # Eventually, don't hard-code it
 if groupby == '2014-Schedule':
-    top_groups = top_groups.ix[['07-Apr', '09-Apr', '10-Apr', '12-Apr', '17-Apr', '24-Apr', '30-Apr', '07-May', '12-May', ]].dropna().astype(int)
+    top_groups = top_groups.ix[['07-Apr', '09-Apr', '10-Apr', '11-Apr', '12-Apr', '17-Apr', '24-Apr', '30-Apr', '07-May', '12-May', ]].dropna().astype(int)
 
 states = [''] + sorted(elections.ix[year].reset_index()['STATE'].unique())
 

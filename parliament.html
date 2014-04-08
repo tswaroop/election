@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['js/G.min.js', 'style.css', 'parliament.csv', 'parliament-topics.csv', 'colors.csv', '.head.html', '.tail.html'], max_age=10*60) }}{% code %}
+{{ GRAMEX(cache=['js/G.min.js', 'style.css', 'parliament.csv', 'pc.csv', 'parliament-topics.csv', 'colors.csv', '.head.html', '.tail.html'], max_age=10*60) }}{% code %}
 title = 'Parliament Elections'
 description = 'A visual guide to the history of Indian Parliament elections, from 1951 until today, by Gramener.'
 
@@ -270,7 +270,7 @@ function redraw() {
     $('.state-filter')[q.pathname.match(/result/) ? 'hide' : 'show']()
     $('.metric-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('.state-page-filter')[q.pathname.match(/result/) ? 'show' : 'hide']()
-    $('#result').empty().load('pc-' + encodeURI(hash), function() {
+    $('#result').empty().load('pc-' + hash, function() {
       if (q.pathname.match(/cartogram|scatter|state/)) {
         $(window).dispatch('resize')
         $('#summary, #factoid').slideUp(250)
