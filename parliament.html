@@ -39,7 +39,7 @@ tv = args.get('tv')
           <ul class="dropdown-menu multicolumn" role="menu">
             <li data-state=""><a class="direct-link" href="#">All states</a></li>
             {% for s in sorted(data['STATE'].unique()) %}
-              <li data-state="{{ s }}"><a href="state?STATE={{ quote(s) }}">{{ s.title() }}</a></li>
+              <li data-state="{{ s }}"><a href="state?STATE={{ quote(s) }}">{{ s.title().replace('Nct Of Delhi', 'NCT of Delhi') }}</a></li>
             {% end %}
           </ul>
         </li>
@@ -50,7 +50,7 @@ tv = args.get('tv')
           <ul class="dropdown-menu multicolumn" role="menu">
             <li data-state=""><a href="?STATE=">All states</a></li>
             {% for s in sorted(data['STATE'].unique()) %}
-              <li data-state="{{ s }}"><a href="?STATE={{ quote(s) }}">{{ s.title() }}</a></li>
+              <li data-state="{{ s }}"><a href="?STATE={{ quote(s) }}">{{ s.title().replace('Nct Of Delhi', 'NCT of Delhi') }}</a></li>
             {% end %}
           </ul>
         </li>
