@@ -1,14 +1,17 @@
-{{ GRAMEX(cache=['parliament.csv'], max_age=10*60) }}{% code %}
+{{ GRAMEX(cache=['parliament.csv', 'pc-table.html'], max_age=10*60) }}{% code %}
 from common import pc_setup
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 getarg = lambda v: args.get(v, [None])[0]
 N = int(args.get('n', [0])[0])
+selection = []
 
 if getarg('STATE'):
+    selection.append(getarg('STATE'))
     data = data[data['STATE'] == getarg('STATE')]
     elections = elections.reset_index()
     elections = elections[elections['STATE'] == getarg('STATE')].set_index(['YEAR', 'STATE', 'PC'])
 if getarg('YEAR'):
+    selection.append(getarg('YEAR'))
     data = data[data['YEAR'] == getarg('YEAR')]
     elections = elections.reset_index()
     elections = elections[elections['YEAR'] == getarg('YEAR')].set_index(['YEAR', 'STATE', 'PC'])
@@ -18,48 +21,48 @@ if getarg('YEAR'):
   {% set margin    = elections.sort('MARGIN'  , ascending=False).dropna(subset=['MARGIN'  ])[['WINNER', 'PARTY', '1', '2', 'MARGIN', 'MARGIN %']] %}
   {% set margin_pc = elections.sort('MARGIN %', ascending=False).dropna(subset=['MARGIN %'])[['WINNER', 'PARTY', '1', '2', 'MARGIN', 'MARGIN %']] %}
   {% if getarg('margin') == 'max' %}
-    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Highest margins</h2>
+    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Highest margins <small>{{ ', '.join(selection) }}</small></h2>
     {{ T('pc-table.html', table=margin.head(N or 10), sort='MARGIN', remove='margin') }}
-    <h2>Highest % margins</h2>
+    <h2>Highest % margins <small>{{ ', '.join(selection) }}</small></h2>
     {{ T('pc-table.html', table=margin_pc.head(N or 10), sort='MARGIN %', remove='margin') }}
   {% elif getarg('margin') == 'min' %}
-    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Lowest margins</h2>
+    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Lowest margins <small>{{ ', '.join(selection) }}</small></h2>
     {{ T('pc-table.html', table=margin.tail(N or 10)[::-1], sort='MARGIN', decimals=3, remove='margin') }}
-    <h2>Lowest % margins</h2>
+    <h2>Lowest % margins <small>{{ ', '.join(selection) }}</small></h2>
     {{ T('pc-table.html', table=margin_pc.tail(N or 10)[::-1], sort='MARGIN %', decimals=3, remove='margin') }}
   {% end %}
 
 {% elif getarg('votes') %}
   {% set table = elections.sort('VOTES', ascending=False) %}
   {% if getarg('votes') == 'max' %}
-    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Most voters</h2>
+    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Most voters <small>{{ ', '.join(selection) }}</small></h2>
     {{ T('pc-table.html', table=table[['VOTES', 'WINNER', 'PARTY']].dropna(subset=['VOTES']).head(N or 20), sort='VOTES', remove='votes') }}
   {% elif getarg('votes') == 'min' %}
-    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Fewest voters</h2>
+    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Fewest voters <small>{{ ', '.join(selection) }}</small></h2>
     {{ T('pc-table.html', table=table[table['VOTES'] > 0][['VOTES', 'WINNER', 'PARTY']].dropna(subset=['VOTES']).tail(N or 20)[::-1], sort='VOTES', remove='votes') }}</pre>
   {% end %}
 
 {% elif getarg('candidates') %}
   {% set table = elections.sort('CANDIDATES', ascending=False) %}
   {% if getarg('candidates') == 'max' %}
-    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Most candidates</h2>
+    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Most candidates <small>{{ ', '.join(selection) }}</small></h2>
     {{ T('pc-table.html', table=table[['CANDIDATES', 'WINNER', 'PARTY']].dropna(subset=['CANDIDATES']).head(N or 20), sort='CANDIDATES', remove='candidates') }}
   {% elif getarg('candidates') == '1' %}
-    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> All uncontested victories</h2>
+    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> All uncontested victories <small>{{ ', '.join(selection) }}</small></h2>
     {{ T('pc-table.html', table=table[table['CANDIDATES'] == 1][['CANDIDATES', 'WINNER', 'PARTY']].dropna(subset=['CANDIDATES']), sort='CANDIDATES', remove='candidates') }}
   {% end %}
 
 {% elif getarg('women') == 'max' %}
-    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Most WOMEN</h2>
+    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Most WOMEN <small>{{ ', '.join(selection) }}</small></h2>
     {% set table = elections.sort('WOMEN', ascending=False) %}
     {{ T('pc-table.html', table=table[['WOMEN', 'CANDIDATES', 'WOMEN %', 'WINNER', 'PARTY']].dropna(subset=['WOMEN']).head(N or 10), sort='WOMEN', remove='women') }}
-    <h2>Highest % of WOMEN</h2>
+    <h2>Highest % of WOMEN <small>{{ ', '.join(selection) }}</small></h2>
     {% set table = elections.sort('WOMEN %', ascending=False) %}
     {{ T('pc-table.html', table=table[['WOMEN', 'CANDIDATES', 'WOMEN %', 'WINNER', 'PARTY']].dropna(subset=['WOMEN %']).head(N or 10), sort='WOMEN %', remove='women') }}
 
 {% elif getarg('age') == 'max' %}
     {% set table = data.sort('AGE', ascending=False) %}
-    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Oldest candidates</h2>
+    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Oldest candidates <small>{{ ', '.join(selection) }}</small></h2>
     {{ T('pc-table.html', table=table[['YEAR', 'STATE', 'PC', 'NAME', 'PARTY', 'AGE', 'VOTES', '#']].set_index(['YEAR', 'STATE', 'PC']).dropna(subset=['AGE']).head(N or 20), sort='AGE', remove='age') }}
 
 {% elif getarg('partywin') %}
@@ -76,11 +79,11 @@ if getarg('YEAR'):
     formatters = {'WIN %': '{:.1%}'.format}
     {% end %}
     {% if getarg('partywin') == 'min' %}
-      <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Struggling parties</h2>
+      <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Struggling parties <small>{{ ', '.join(selection) }}</small></h2>
       <p>Parties that have lost the largest number of seats (among those with less than 10 wins)</p>
       {{ losers.head(N or 20).to_html(classes='table table-condensed analysis', formatters=formatters) }}
     {% elif getarg('partywin') == 'max' %}
-      <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Winning parties</h2>
+      <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Winning parties <small>{{ ', '.join(selection) }}</small></h2>
       <p>Parties that have the highest win ratio, among those that have contested at least {{ min_elections }} elections</p>
       {{ winners.head(N or 20).to_html(classes='table table-condensed analysis', formatters=formatters) }}
     {% end %}
