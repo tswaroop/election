@@ -56,7 +56,7 @@ w, pad, legend, yearheight = 920. / len(parties), 5, 30, 30
       {% end %}
       <rect x="{{ w * i + pad }}" width="{{ w - 2*pad }}" y="{{ row['y'] }}" height="{{ row['h'] }}"
         data-party="{{ slug(party) }}"
-        title="{{ party }}: {{ int(row['CONSTITUENCIES']) }} constituencies in {{ year }}"
+        title="{{ escape(party) }}: {{ int(row['CONSTITUENCIES']) }} constituencies in {{ year }}"
         href="cartogram?Y=&YEAR={{ year }}"
         fill="{{ background_color }}" stroke="#fff"/>
       {% if row['h'] > 40 %}

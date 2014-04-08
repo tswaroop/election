@@ -115,13 +115,18 @@ if state:
           </tr>
           {% for pc, row in by_pc.iterrows() %}
             <tr>
-              <th style="width:{{ x0 }}em">{{ escape(pc) }}</th>
+              <th
+                style="width:{{ x0 }}em"
+                href="result?PC={{ escape(pc) }}&YEAR={{ escape(row[row != ''].index[-1]) }}"
+              >{{ escape(pc) }}</th>
               {% for year in by_pc.columns %}
                 {% set fill = colors.get(row[year], NONE_COLOR if row[year] else None) %}
                 <td
                   data-party="{{ slug(row[year]) }}"
-                  {% if fill %}style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}"{% end %}
-                  href="result?PC={{ escape(pc) }}&YEAR={{ escape(year) }}"
+                  {% if fill %}
+                    style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}"
+                    href="result?PC={{ escape(pc) }}&YEAR={{ escape(year) }}"
+                  {% end %}
                 >{{ row[year] }}</td>
               {% end %}
             </tr>

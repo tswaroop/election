@@ -1,18 +1,23 @@
 {{ GRAMEX(cache=['parliament.csv', 'colors.csv'], max_age=10*60) }}{% code %}
 from urllib import quote
-from common import pc_setup, NONE_COLOR
+from common import pc_setup, slug, NONE_COLOR
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 year = args.get('YEAR', ['2009'])[0]
 try:
-    noresult = False
+    no_result = False
     data = data[data['PC'] == args['PC'][0]]
-    data = data[data['STATE'] == args['STATE'][0]]
+    history = data = data[data['STATE'] == args['STATE'][0]]
+except KeyError:
+    logging.error('KeyError: %s', handler.request.uri)
+    no_result = True
+try:
+    year_matched = True
     data = data[data['YEAR'] == year]
     data.sort('VOTES', ascending=False, inplace=True)
     result = elections.ix[year, args['STATE'][0], args['PC'][0]]
 except KeyError:
     logging.error('KeyError: %s', handler.request.uri)
-    noresult = True
+    year_matched = False
 
 columns = ['#', 'PARTY', 'NAME', 'VOTES', 'SEX', 'AGE', 'CATEGORY', ]
 colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
@@ -29,53 +34,128 @@ N = int(args.get('n', [20])[0])
   {{ year }}
   <small>{{ min(N, len(data)) }} / {{ len(data) }} candidates</small>
 </h2>
-{% if noresult %}
+{% if no_result %}
   <p>No results. Please try a <a href=".?STATE=&Y=">different option</a>.</p>
 {% else %}
-  <h3 class="winner-story">
-    <span class="winner-name">{{ result['WINNER'] }}</span> of
-    {% set fill = colors.get(result['PARTY'], NONE_COLOR) %}
-    <span class="winner-party" style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ result['PARTY'] }}</span> won by
-    {{ '{:.1%} ({:,.0f} votes)'.format(result['MARGIN %'], result['MARGIN']) }}
-    {% if len(data) > 1 %}
-      {% set opponent = data.irow(1) %}
-      against
-      {{ opponent['NAME'] }} of
-      {% set fill = colors.get(opponent['PARTY'], NONE_COLOR) %}
-      <span class="winner-party" style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ opponent['PARTY'] }}</span>.
-    {% else %}
-      uncontested.
-    {% end %}
-  </h3>
-
-  <table class="table table-condensed analysis">
-    <thead>
-      {% for c in columns %}<th>{{ c }}</th>{% end %}
-    </thead>
-    <tbody>
-      {% for i, row in data.head(N).iterrows() %}
-        <tr>
-          {% for c in columns %}
-            {% if c in ('WINNER', 'NAME') %}
-              <td>{{ escape(row[c].title()) }}</td>
-            {% elif c in ('MARGIN', 'VOTES', '1', '2', 'WOMEN') %}
-              <td>{{ 0 if pd.isnull(row[c]) else '{:,.0f}'.format(row[c]) }}</td>
-            {% elif c.endswith('%') %}
-              <td>{{ pc_format.format(0 if pd.isnull(row[c]) else row[c]) }}</td>
-            {% elif c in ('CATEGORY', 'SEX') %}
-              <td>{{ '' if pd.isnull(row[c]) else row[c] }}</td>
-            {% elif c in ('AGE',) %}
-              <td>{{ '' if pd.isnull(row[c]) else '{:,.0f}'.format(row[c]) }}</td>
-            {% elif c in ('PARTY', ) %}
-              {% set fill = colors.get(row[c], NONE_COLOR) %}
-              <td style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ row[c] }}</td>
-            {% else %}
-              <td>{{ row[c] }}</td>
-            {% end %}
-          {% end %}
-        </tr>
+  {% if year_matched %}
+    <h3 class="winner-story">
+      <span class="winner-name">{{ result['WINNER'] }}</span> of
+      {% set fill = colors.get(result['PARTY'], NONE_COLOR) %}
+      <span class="winner-party" style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ result['PARTY'] }}</span> won by
+      {{ '{:.1%} ({:,.0f} votes)'.format(result['MARGIN %'], result['MARGIN']) }}
+      {% if len(data) > 1 %}
+        {% set opponent = data.irow(1) %}
+        against
+        {{ opponent['NAME'] }} of
+        {% set fill = colors.get(opponent['PARTY'], NONE_COLOR) %}
+        <span class="winner-party" style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ opponent['PARTY'] }}</span>.
+      {% else %}
+        uncontested.
       {% end %}
-    </tbody>
-  </table>
+    </h3>
+
+    <table class="table table-condensed analysis">
+      <thead>
+        {% for c in columns %}<th>{{ c }}</th>{% end %}
+      </thead>
+      <tbody>
+        {% for i, row in data.head(N).iterrows() %}
+          <tr>
+            {% for c in columns %}
+              {% if c in ('WINNER', 'NAME') %}
+                <td>{{ escape(row[c].title()) }}</td>
+              {% elif c in ('MARGIN', 'VOTES', '1', '2', 'WOMEN') %}
+                <td>{{ 0 if pd.isnull(row[c]) else '{:,.0f}'.format(row[c]) }}</td>
+              {% elif c.endswith('%') %}
+                <td>{{ pc_format.format(0 if pd.isnull(row[c]) else row[c]) }}</td>
+              {% elif c in ('CATEGORY', 'SEX') %}
+                <td>{{ '' if pd.isnull(row[c]) else row[c] }}</td>
+              {% elif c in ('AGE',) %}
+                <td>{{ '' if pd.isnull(row[c]) else '{:,.0f}'.format(row[c]) }}</td>
+              {% elif c in ('PARTY', ) %}
+                {% set fill = colors.get(row[c], NONE_COLOR) %}
+                <td style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ row[c] }}</td>
+              {% else %}
+                <td>{{ row[c] }}</td>
+              {% end %}
+            {% end %}
+          </tr>
+        {% end %}
+      </tbody>
+    </table>
+  {% end %}
+
+  {% code %}
+
+  # TODO: merge with pc-index code
+
+  groups = history.groupby('YEAR')
+  years = sorted(groups.groups.keys())
+  W, H = 940, 400
+  yearheight = 30
+  parties = history.groupby('PARTY')['VOTES'].sum().order(ascending=False).head(15).index
+  w, pad, legend, yearheight = float(W - 30) / len(parties), 5, 30, 30
+  {% end %}
+  <svg class="const-stack" width="100%" data-height="{{ float(H)/W }}" viewBox="0 0 {{ W }} {{ H }}">
+    <rect width="30" height="{{ legend - 5 }}" class="party-unhighlight" fill="#000" title="Show all parties"/>
+    <text x="15" y="{{ (legend - 5) * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">x</text>
+    {% for i, party in enumerate(parties) %}
+      {% set background_color = colors.get(party, NONE_COLOR) %}
+      <rect class="party-legend"
+        data-party="{{ slug(party) }}"
+        data-highlight="[data-party={{ slug(party) }}]"
+        data-toggle="highlight"
+        x="{{ 30 + w * i }}"
+        width="{{ w }}"
+        height="{{ legend - 5 }}"
+        fill="{{ background_color }}"></rect>
+      <text class="party-legend-text"
+        x="{{ 30 + w * (i + .5) }}"
+        y="{{ (legend - 5) * .5 }}"
+        text-anchor="middle"
+        dy=".35em"
+        fill="{{ _color.contrast(background_color) }}"
+        data-party="{{ slug(party) }}">{{ party }}</text>
+    {% end %}
+    {% set w = float(W) / len(years) %}
+    <g class="pc-stack">
+      {% for i, year in enumerate(years) %}
+        {% code %}
+        chosen_year = year in args.get('YEAR', [])
+        results = history.ix[groups.groups[year]].copy()
+        results['%'] = results['VOTES'].astype(float) / results['VOTES'].sum()
+        results['h'] = h = (H - yearheight - legend) * results['%']
+        results['y'] = H - h.cumsum()
+        {% end %}
+        <text x="{{ w * (i+.5) }}" y="{{ legend }}" dy="1em" text-anchor="middle"
+          href="?YEAR={{ year }}"
+          class="year-legend{{ ' active' if chosen_year else '' }}">{{ year }}</text>
+        {% for index, row in results.iterrows() %}
+          {% code %}
+          party = row['PARTY']
+          background_color = colors.get(party, NONE_COLOR)
+          foreground_color = _color.contrast(background_color)
+          {% end %}
+          <rect x="{{ w * i + pad }}" width="{{ w - 2*pad }}" y="{{ row['y'] }}" height="{{ row['h'] }}"
+            data-party="{{ slug(party) }}"
+            title="{{ escape(row['NAME']) }}<br>{{ escape(party) }}: {{ '{:,d}'.format(int(row['VOTES'])) }} votes in {{ year }}"
+            href="?YEAR={{ year }}"
+            fill="{{ background_color }}" stroke="#fff"/>
+          {% if row['#'] in ('1', '2') %}
+            <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
+              data-party="{{ slug(party) }}"
+              fill="{{ foreground_color }}" text-anchor="middle">{{ '{:.0%}'.format(row['%']) }}</text>
+            <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
+              data-party="{{ slug(party) }}"
+              fill="{{ foreground_color }}" dy="1em" text-anchor="middle">{{ escape(party) }}</text>
+          {% elif row['h'] > 13 %}
+            <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
+              data-party="{{ slug(party) }}"
+              fill="{{ foreground_color }}" dy=".35em" text-anchor="middle">{{ escape(party) }}</text>
+          {% end %}
+        {% end %}
+      {% end %}
+    </g>
+  </svg>
 {% end %}
 </div>
