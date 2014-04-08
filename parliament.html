@@ -270,7 +270,7 @@ function redraw() {
     $('.state-filter')[q.pathname.match(/result/) ? 'hide' : 'show']()
     $('.metric-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('.state-page-filter')[q.pathname.match(/result/) ? 'show' : 'hide']()
-    $('#result').empty().load('pc-' + hash, function() {
+    $('#result').empty().load('pc-' + hash.replace(/ /g, '+'), function() {
       if (q.pathname.match(/cartogram|scatter|state/)) {
         $(window).dispatch('resize')
         $('#summary, #factoid').slideUp(250)
