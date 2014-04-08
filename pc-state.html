@@ -50,13 +50,13 @@ pad, legend = 5, 25
     {% end %}
   </svg>
 
-  <div class="table-responsive">
+  <div class="table-responsive"{% if len(by_pc.columns) < 7 %} style="width:{{ 100 * (1 + len(by_pc.columns)) // 7 }}%"{% end %}>
     <table class="table table-condensed state-table" style="table-layout:fixed">
       <thead>
         <tr>
-          <th style="width:{{ x0 }}em">Constituency</th>
+          <th style="width:{{ x0 }}em">Constituencies</th>
           {% for year in by_pc.columns %}
-            <th href="cartogram?YEAR={{ quote(year) }}">{{ escape(year) }}</th>
+            <th href="cartogram?YEAR={{ quote(year) }}">{{ escape(year) }}<br><em>{{ (by_pc[year] != '').sum() }}</em></th>
           {% end %}
         </tr>
       </thead>
