@@ -141,9 +141,9 @@ names = {
     {% end %}
     <g transform="translate(640, 45)">
       <text x="-10" font-size="28" y="-20" dy="-.2em" text-anchor="end">{{ '2014' if groupby.startswith('2014') else year }}</text>
-      <text font-size="28" y="-20" dy="-.2em" href="state?YEAR=&{{ '&'.join('STATE=' + quote(state) for state in chosen_states) }}">
+      <text font-size="28" y="-20" dy="-.2em"{% if len(chosen_states) %} href="state?YEAR=&{{ '&'.join('STATE=' + quote(state) for state in chosen_states) }}"{% end %}>
         {{ ', '.join(chosen_states) if len(chosen_states) else 'India' }}
-        <tspan class="small" fill="#888">{{ win_count.sum() }}</tspan> &raquo;
+        <tspan class="small" fill="#888">{{ win_count.sum() }}</tspan>{% if len(chosen_states) %} &raquo;{% end %}
       </text>
       {% if not groupby.startswith('2014') %}<text font-size="16" y="-5">Party</text>{% end %}
       <text font-size="16" x="70" y="-5">No. of Constituencies</text>
