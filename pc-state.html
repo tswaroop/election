@@ -13,6 +13,7 @@ if state:
         if 'Y' in args:
             state_data = state_data[state_data['YEAR'].isin(args['Y'])]
     else:
+        logging.error('KeyError: %s', state)
         state = None
 {% end %}
 
