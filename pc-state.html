@@ -54,7 +54,14 @@ if state:
           width="{{ w }}"
           height="{{ legend }}"
           fill="{{ background_color }}"></rect>
-        <text x="{{ 30 + w * (i + .5) }}" y="{{ legend / 2 }}" font-size="16" text-anchor="middle" dy=".35em" fill="{{ _color.contrast(background_color) }}">{{ party }}</text>
+        <text class="party-legend-text"
+          x="{{ 30 + w * (i + .5) }}"
+          y="{{ legend / 2 }}"
+          font-size="16"
+          text-anchor="middle"
+          dy=".35em"
+          fill="{{ _color.contrast(background_color) }}"
+          data-party="{{ slug(party) }}">{{ party }}</text>
       {% end %}
     </svg>
 
