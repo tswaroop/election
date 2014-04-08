@@ -68,6 +68,7 @@ pad, legend = 5, 25
               <svg width="100%" data-height="{{ H/40. }}" viewBox="0 0 40 {{ H }}">
                 {% for party, wins in col.iteritems() %}
                   {% code %}
+                  if wins == 0: continue
                   background_color = colors.get(party, NONE_COLOR)
                   foreground_color = _color.contrast(background_color)
                   {% end %}
