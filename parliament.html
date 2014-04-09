@@ -91,6 +91,9 @@ tv = args.get('tv')
             {% end %}
           </ul>
         </li>
+        <form class="navbar-form navbar-left search-filter">
+          <input type="search" class="form-control" placeholder="Find" data-search="title" data-target="circle" data-hide-class="hide">
+        </form>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown shortcut-filter" title="Shortcuts" data-placement="left">
@@ -184,6 +187,7 @@ $('body')
     selector: '.party-legend',
     target: '[data-party]'
   })
+  .search()
   .on('shown.g.highlight', function(e) {
     window.on_highlight(e)
     if ($('.party-legend').length) {
@@ -275,18 +279,20 @@ function redraw() {
     $('.years-filter')[q.pathname.match(/state/) ? 'show' : 'hide']()
     $('.result-controls')[q.pathname.match(/cartogram|scatter|state/) ? 'hide' : 'show']()
     $('.state-filter')[q.pathname.match(/result/) ? 'hide' : 'show']()
+    $('.search-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('.metric-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('.state-page-filter')[q.pathname.match(/result/) ? 'show' : 'hide']()
     $('#result').empty().load('pc-' + hash, function() {
       if (q.pathname.match(/cartogram|scatter|state|result/)) {
         $(window).dispatch('resize')
+        $('input[type="search"]').val('').trigger('refresh')
         $('#summary, #factoid').slideUp(250)
       }
       $('.tooltip').remove()
       highlight_groups()
     }).show()
   } else {
-    $('#result, .result-controls, .year-filter, .state-filter, .metric-filter').hide()
+    $('#result, .result-controls, .year-filter, .state-filter, .search-filter, .metric-filter').hide()
     $('.years-filter, .state-page-filter').show()
     $('#summary').empty().load('pc-index' + hash, function() {
       $('#summary, #factoid').show()

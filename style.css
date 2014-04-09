@@ -363,3 +363,6 @@ footer {
   fill: #c0504d;
   font-weight: bold;
 }
+.search-filter input.form-control {
+  width: 5em;
+}
