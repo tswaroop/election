@@ -81,11 +81,19 @@ if getarg('YEAR'):
     {% if getarg('partywin') == 'min' %}
       <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Struggling parties <small>{{ ', '.join(selection) }}</small></h2>
       <p>Parties that have lost the largest number of seats (among those with less than 10 wins)</p>
-      {{ losers.head(N or 20).to_html(classes='table table-condensed analysis', formatters=formatters) }}
+      {% if len(losers) > 0 %}
+        {{ losers.head(N or 20).to_html(classes='table table-condensed analysis', formatters=formatters) }}
+      {% else %}
+        <p>No results. <a href="?STATE=&n=&YEAR=">Try deselecting states and years.</a></p>
+      {% end %}
     {% elif getarg('partywin') == 'max' %}
       <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Winning parties <small>{{ ', '.join(selection) }}</small></h2>
       <p>Parties that have the highest win ratio, among those that have contested at least {{ min_elections }} elections</p>
-      {{ winners.head(N or 20).to_html(classes='table table-condensed analysis', formatters=formatters) }}
+      {% if len(winners) > 0 %}
+        {{ winners.head(N or 20).to_html(classes='table table-condensed analysis', formatters=formatters) }}
+      {% else %}
+        <p>No results. <a href="?STATE=&n=&YEAR=">Try deselecting states and years.</a></p>
+      {% end %}
     {% end %}
 
 {% else %}

@@ -3,8 +3,7 @@ from urllib import quote
 _ = globals().get
 sort = _('sort', None)
 pc_format = '{:.%d%%}' % _('decimals', 1)
-{% end %}
-{% if len(table) %}
+{% end %}{% if len(table) %}
 <table class="table table-condensed analysis">
   <thead>
     <th>Year</th>
@@ -31,7 +30,6 @@ pc_format = '{:.%d%%}' % _('decimals', 1)
         {% end %}
       </tr>
     {% end %}
-
   </tbody>
 </table>
 {% else %}
