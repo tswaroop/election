@@ -139,7 +139,7 @@ names = {
         <text text-anchor="middle" dy="60" font-size="40">{{ ', '.join(chosen_states) }} {{ year }}</text>
       </g>
     {% end %}
-    <g transform="translate(640, 45)">
+    <g transform="translate(640, 46)">
       <text x="-10" font-size="28" y="-20" dy="-.2em" text-anchor="end">{{ '2014' if groupby.startswith('2014') else year }}</text>
       <text font-size="28" y="-20" dy="-.2em"{% if len(chosen_states) %} href="state?YEAR=&{{ '&'.join('STATE=' + quote(state) for state in chosen_states) }}"{% end %}>
         {{ ', '.join(chosen_states) if len(chosen_states) else 'India' }}
