@@ -302,6 +302,9 @@ h2 a:hover {
 #carto-contents text {
   font-family: "Franklin Gothic Medium Cond", sans-serif;
 }
+.carto-title {
+  font-size: 28px;
+}
 
 .carto-summary { font-size: 12px; }
 .carto-summary h3 { margin: 0 0 10px 5px; padding: 0;}
