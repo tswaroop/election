@@ -167,7 +167,7 @@ function post_load() {
 }
 
 function redraw() {
-  var hash = location.hash.replace(/^#/, ''),
+  var hash = location.href.split("#")[1] || '',
       query = G.url.parse(hash);
 
   $('.all-results').show();

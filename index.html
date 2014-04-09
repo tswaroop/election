@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['style.css', '.head.html', 'facts.csv', 'img/parliament.png', 'img/assembly.png'], max_age=10*60) }}{% code %}
+{{ GRAMEX(cache=['style.css', '.head.html', '.tail.html', 'facts.csv', 'img/parliament.png', 'img/assembly.png'], max_age=10*60) }}{% code %}
 title = 'Elections in India'
 description = 'A visual guide to the history of Indian elections, from 1951 until today, by Gramener.'
 facts = DB.csv('facts.csv')
@@ -15,22 +15,6 @@ facts = DB.csv('facts.csv')
   </style>
 </head><body>
 
-<nav class="navbar navbar-default" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand heading home" href=".">
-        Elections <small>in India</small>
-      </a>
-    </div>
-  </div>
-</nav>
-
 <div class="container">
   <div class="row">
     <div class="col-md-6">
@@ -44,12 +28,25 @@ facts = DB.csv('facts.csv')
     </div>
   </div>
 
+  {#
   <div class="row">
     <div class="col-md-6">
       <h2 class="summary-title"><a href="assembly">Assembly elections</a></h2>
       <a href="assembly"><img class="main" src="{{ static_url('img/assembly.png') }}"></a>
     </div>
+    <div class="col-md-6">
+      <h2 class="summary-title"><a href="parliament?TV">Parliament elections for TV</a></h2>
+      <a href="parliament"><img class="main" src="{{ static_url('img/parliament.png') }}"></a>
+    </div>
   </div>
+  #}
 </div>
+
+<footer>
+  <div class="container">
+    Powered by <a href="https://gramener.com/">Gramener.com</a>
+  </div>
+</footer>
+{{ T('.tail.html') }}
 
 </body></html>

@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['js/G.min.js', 'style.css', 'parliament.csv', 'parliament-topics.csv', 'colors.csv', '.head.html'], max_age=10*60) }}{% code %}
+{{ GRAMEX(cache=['js/G.min.js', 'style.css', 'parliament.csv', 'pc.csv', 'parliament-topics.csv', 'colors.csv', '.head.html', '.tail.html'], max_age=10*60) }}{% code %}
 title = 'Parliament Elections'
 description = 'A visual guide to the history of Indian Parliament elections, from 1951 until today, by Gramener.'
 
@@ -39,7 +39,7 @@ tv = args.get('tv')
           <ul class="dropdown-menu multicolumn" role="menu">
             <li data-state=""><a class="direct-link" href="#">All states</a></li>
             {% for s in sorted(data['STATE'].unique()) %}
-              <li data-state="{{ s }}"><a href="state?STATE={{ quote(s) }}">{{ s.title() }}</a></li>
+              <li data-state="{{ s }}"><a href="state?STATE={{ quote(s) }}">{{ s.title().replace('Nct Of Delhi', 'NCT of Delhi') }}</a></li>
             {% end %}
           </ul>
         </li>
@@ -50,7 +50,7 @@ tv = args.get('tv')
           <ul class="dropdown-menu multicolumn" role="menu">
             <li data-state=""><a href="?STATE=">All states</a></li>
             {% for s in sorted(data['STATE'].unique()) %}
-              <li data-state="{{ s }}"><a href="?STATE={{ quote(s) }}">{{ s.title() }}</a></li>
+              <li data-state="{{ s }}"><a href="?STATE={{ quote(s) }}">{{ s.title().replace('Nct Of Delhi', 'NCT of Delhi') }}</a></li>
             {% end %}
           </ul>
         </li>
@@ -140,6 +140,12 @@ tv = args.get('tv')
   </div>
 </div>
 
+<footer>
+  <div class="container">
+    Powered by <a href="https://gramener.com/">Gramener.com</a>
+  </div>
+</footer>
+
 <script>
 {{ T('js/helper.js') }}
 
@@ -161,7 +167,8 @@ if (window.FastClick)
 var years = {{ json.dumps(years) }},
     metric_names = {{ json.dumps(metric_names) }},
     on_highlight = function(e) {},
-    DB = sessionStorage
+    DB = sessionStorage,
+    get_hash = function() { return location.href.split("#")[1] || '' }
 
 $('body')
   .tooltip({
@@ -204,7 +211,7 @@ $('body')
   })
   .on('submit', '.years', function(e) {
     e.preventDefault()
-    var hash = location.hash.replace(/^#/, ''),
+    var hash = get_hash(),
         q = G.url.parse(hash)
         query = q.searchKey;
     if (q.pathname.match(/state/)) {
@@ -216,7 +223,7 @@ $('body')
     $('.current-years').trigger('click')
   })
   .on('click', 'a.heading', function(e) {
-    if (!location.hash.replace(/^#/, '')) {
+    if (!get_hash()) {
       e.preventDefault()
       location = '.'
     }
@@ -227,7 +234,7 @@ $('body')
     $form.trigger('submit')
   })
   .on('keyup', function(e) {
-    var hash = location.hash.replace(/^#/, ''),
+    var hash = get_hash(),
         match = hash.match(/YEAR=(\d+)/),
         index
     if ($(e.target).is('body') && match && !e.altKey && !e.ctrlKey && !e.shiftKey) {
@@ -257,9 +264,8 @@ function highlight_groups() {
   }
 }
 
-
 function redraw() {
-  var hash = location.hash.replace(/^#/, ''),
+  var hash = get_hash(),
       q = G.url.parse(hash),
       query = q.searchKey;
 
@@ -270,9 +276,9 @@ function redraw() {
     $('.result-controls')[q.pathname.match(/cartogram|scatter|state/) ? 'hide' : 'show']()
     $('.state-filter')[q.pathname.match(/result/) ? 'hide' : 'show']()
     $('.metric-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
-    $('.state-page-filter').hide()
+    $('.state-page-filter')[q.pathname.match(/result/) ? 'show' : 'hide']()
     $('#result').empty().load('pc-' + hash, function() {
-      if (q.pathname.match(/cartogram|scatter|state/)) {
+      if (q.pathname.match(/cartogram|scatter|state|result/)) {
         $(window).dispatch('resize')
         $('#summary, #factoid').slideUp(250)
       }
@@ -286,7 +292,7 @@ function redraw() {
       $('#summary, #factoid').show()
       $(window).dispatch('resize')
       $('.tooltip').remove()
-      highlight_groups()
+      DB.groups = ''
     })
   }
 
@@ -314,4 +320,6 @@ $(window).on('hashchange', redraw);
 redraw();
 
 </script>
+
+{{ T('.tail.html') }}
 </body></html>

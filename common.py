@@ -17,7 +17,7 @@ def pc_setup(data):
 
     # Merge some parties for practicality
     data['PARTY'].replace({
-      'INC(I)': 'INC',
+      'INC(I)': 'CONG',
       'ADK': 'ADMK',
       'BLD': 'JNP',
       'INC': 'CONG',
@@ -75,12 +75,12 @@ def latlong_setup(latlong):
     return latlong
 
 metric_names = OrderedDict((
-  ('MARGIN',     'Margin'),
-  ('MARGIN %',   'Margin %'),
-  ('CANDIDATES', 'Candidates'),
-  ('AGE',        'Winner age'),
-  ('WOMEN %',    'Women %'),
-  ('VOTES',      'Voters'),
-  ('WIN %',      'Winner voteshare%'),
-  ('CONSTANT',   'Constant size'),
+  ('MARGIN',     "Margin"),
+  ('MARGIN %',   "Margin %"),
+  ('CANDIDATES', "Candidates"),
+  ('AGE',        "Winners' age"),
+  ('WOMEN %',    "Women %"),
+  ('VOTES',      "Voters"),
+  ('WIN %',      "Winners' voteshare%"),
+  ('CONSTANT',   "Constituency"),
 ))

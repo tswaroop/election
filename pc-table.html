@@ -4,6 +4,7 @@ _ = globals().get
 sort = _('sort', None)
 pc_format = '{:.%d%%}' % _('decimals', 1)
 {% end %}
+{% if len(table) %}
 <table class="table table-condensed analysis">
   <thead>
     <th>Year</th>
@@ -33,3 +34,8 @@ pc_format = '{:.%d%%}' % _('decimals', 1)
 
   </tbody>
 </table>
+{% else %}
+<p>No results for this selection.</p>
+
+<p><a href="?STATE=&n=&YEAR=">Try deselecting all states and years.</a></p>
+{% end %}

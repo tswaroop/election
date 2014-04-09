@@ -9,13 +9,13 @@ summary = winners.pivot_table(cols='PARTY', rows='YEAR', values='NAME', aggfunc=
 if 'Y' in args:
     summary = summary.ix[args['Y']]
 parties = summary.sum().order(ascending=False).head(15).index
-seats = summary.T.sum()
+constituencies = summary.T.sum()
 summary = summary[parties]
-summary['Rest'] = seats - summary.T.sum()
+summary['Rest'] = constituencies - summary.T.sum()
 W, H = 940, 500
 w, pad, legend, yearheight = 920. / len(parties), 5, 30, 30
 {% end %}
-<svg class="pc-stack" width="100%" data-height="{{ float(H)/W }}" viewBox="0 0 {{ W }} {{ H }}">
+<svg class="pc-index" width="100%" data-height="{{ float(H)/W }}" viewBox="0 0 {{ W }} {{ H }}">
   <rect width="30" height="{{ legend - 5 }}" class="party-unhighlight" fill="#000" title="Show all parties"/>
   <text x="15" y="{{ (legend - 5) * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">x</text>
   {% for i, party in enumerate(parties) %}
@@ -28,15 +28,22 @@ w, pad, legend, yearheight = 920. / len(parties), 5, 30, 30
       width="{{ w }}"
       height="{{ legend - 5 }}"
       fill="{{ background_color }}"></rect>
-    <text x="{{ 30 + w * (i + .5) }}" y="{{ (legend - 5) * .5 }}" text-anchor="middle" dy=".35em" fill="{{ _color.contrast(background_color) }}">{{ party }}</text>
+    <text class="party-legend-text"
+      x="{{ 30 + w * (i + .5) }}"
+      y="{{ (legend - 5) * .5 }}"
+      text-anchor="middle"
+      dy=".35em"
+      fill="{{ _color.contrast(background_color) }}"
+      data-party="{{ slug(party) }}">{{ party }}</text>
   {% end %}
 
+  <g class="pc-stack">
   {% set w = 940. / len(summary.T.columns) %}
   {% for i, year in enumerate(summary.T) %}{% code %}
     series = summary.ix[year]
     height = series / float(series.sum()) * (H - legend - yearheight)
     pos = pd.DataFrame({
-      'SEATS': series,
+      'CONSTITUENCIES': series,
       'h': height,
       'y': H - height.cumsum()
     })
@@ -49,21 +56,22 @@ w, pad, legend, yearheight = 920. / len(parties), 5, 30, 30
       {% end %}
       <rect x="{{ w * i + pad }}" width="{{ w - 2*pad }}" y="{{ row['y'] }}" height="{{ row['h'] }}"
         data-party="{{ slug(party) }}"
-        title="{{ party }}: {{ int(row['SEATS']) }} seats in {{ year }}"
+        title="{{ escape(party) }}: {{ int(row['CONSTITUENCIES']) }} constituencies in {{ year }}"
         href="cartogram?Y=&YEAR={{ year }}"
         fill="{{ background_color }}" stroke="#fff"/>
       {% if row['h'] > 40 %}
         <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
           data-party="{{ slug(party) }}"
-          fill="{{ foreground_color }}" text-anchor="middle">{{ int(row['SEATS']) }}</text>
+          fill="{{ foreground_color }}" text-anchor="middle">{{ int(row['CONSTITUENCIES']) }}</text>
         <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
           data-party="{{ slug(party) }}"
           fill="{{ foreground_color }}" dy="1em" text-anchor="middle">{{ escape(party) }}</text>
       {% elif row['h'] > 12 %}
         <text x="{{ w * (i+.5) }}" y="{{ row['y'] + row['h'] * .5 }}"
           data-party="{{ slug(party) }}"
-          fill="{{ foreground_color }}" dy=".35em" text-anchor="middle">{{ int(row['SEATS']) }}</text>
+          fill="{{ foreground_color }}" dy=".35em" text-anchor="middle">{{ int(row['CONSTITUENCIES']) }}</text>
       {% end %}
     {% end %}
   {% end %}
+  </g>
 </svg>

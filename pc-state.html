@@ -5,111 +5,139 @@ from common import pc_setup, slug, NONE_COLOR
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 
-states = args.get('STATE', [])
-state_data = elections.reset_index().set_index(['STATE']).ix[args['STATE']]
-if 'Y' in args:
-    state_data = state_data[state_data['YEAR'].isin(args['Y'])]
-
-by_pc = state_data.pivot_table(rows=['PC'], cols=['YEAR'], values=['PARTY'], aggfunc='min')['PARTY'].fillna('')
-by_party = state_data.pivot_table(rows=['PARTY'], cols=['YEAR'], values=['PC'], aggfunc='count')['PC'].fillna(0).astype(int)
-
-top_parties = by_party.sum(axis=1).order(ascending=True)
-by_party = by_party.ix[top_parties.index]
-top_parties = top_parties[::-1].head(15)
-
-W, H = 940, 200
-x0 = 12
-h = float(H) * by_party / by_party.sum()
-y = h.cumsum() - h
-pad, legend = 5, 25
+state = args['STATE'][0] if 'STATE' in args else None
+if state:
+    state_data = elections.reset_index().set_index(['STATE'])
+    if state in state_data.index:
+        state_data = state_data.ix[[state]]
+        if 'Y' in args:
+            state_data = state_data[state_data['YEAR'].isin(args['Y'])]
+    else:
+        logging.error('KeyError: %s', state)
+        state = None
 {% end %}
+
 <div class="pc-state">
-<h2>
-  <div class="pull-right">
-    <i class="glyphicon glyphicon-map-marker text-danger" href="cartogram?Y=&PC=&YEAR=2009" title="Cartogram"></i>
-  </div>
-  <i class="back glyphicon glyphicon-circle-arrow-left"></i>
-  {{ ', '.join(states) }} History
-</h2>
+  <h2>
+    <div class="pull-right">
+      <i class="glyphicon glyphicon-map-marker text-danger" href="cartogram?Y=&PC=&YEAR=2009" title="Cartogram"></i>
+    </div>
+    <i class="back glyphicon glyphicon-circle-arrow-left"></i>
+    {{ state or 'No State' }} History
+  </h2>
 
-{% set w = float(W - 30) / len(top_parties) %}
-<svg width="100%" data-height="{{ float(legend)/W }}" viewBox="0 0 {{ W }} {{ legend }}">
-  <rect width="30" height="{{ legend }}" class="party-unhighlight" fill="#000" title="Show all parties"/>
-  <text x="15" y="{{ legend /2 }}" font-size="16" text-anchor="middle" dy=".35em" fill="#fff">x</text>
-  {% for i, party in enumerate(top_parties.index) %}
-    {% set background_color = colors.get(party, NONE_COLOR) %}
-    <rect class="party-legend"
-      data-party="{{ slug(party) }}"
-      data-highlight="[data-party={{ slug(party) }}]"
-      data-toggle="highlight"
-      x="{{ 30 + w * i }}"
-      width="{{ w }}"
-      height="{{ legend }}"
-      fill="{{ background_color }}"></rect>
-    <text x="{{ 30 + w * (i + .5) }}" y="{{ legend / 2 }}" font-size="16" text-anchor="middle" dy=".35em" fill="{{ _color.contrast(background_color) }}">{{ party }}</text>
-  {% end %}
-</svg>
+  {% if state and len(state_data) %}{% code %}
+    by_pc = state_data.pivot_table(rows=['PC'], cols=['YEAR'], values=['PARTY'], aggfunc='min')['PARTY'].fillna('')
+    by_party = state_data.pivot_table(rows=['PARTY'], cols=['YEAR'], values=['PC'], aggfunc='count')['PC'].fillna(0).astype(int)
 
-<div class="table-responsive">
-  <table class="table table-condensed state-table" style="table-layout:fixed">
-    <thead>
-      <tr>
-        <th style="width:{{ x0 }}em">Constituency</th>
-        {% for year in by_pc.columns %}
-          <th href="cartogram?YEAR={{ quote(year) }}">{{ escape(year) }}</th>
-        {% end %}
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th></th>
-        {% for year, col in by_party.iteritems() %}
-          <td class="svg-cell" href="cartogram?YEAR={{ quote(year) }}">
-            <svg width="100%" data-height="{{ H/40. }}" viewBox="0 0 40 {{ H }}">
-              {% for party, wins in col.iteritems() %}
-                {% code %}
-                background_color = colors.get(party, NONE_COLOR)
-                foreground_color = _color.contrast(background_color)
-                {% end %}
-                <rect x="0" width="40" y="{{ y[year][party] }}" height="{{ h[year][party] }}"
-                  data-party="{{ slug(party) }}"
-                  title="{{ escape(party) }}: {{ wins }}"
-                  data-placement="left"
-                  fill="{{ background_color }}" stroke="#fff"/>
-                {% if h[year][party] > 40 %}
-                  <text x="50%" y="{{ y[year][party] + h[year][party] * .5 }}"
-                    font-size="12"
-                    data-party="{{ slug(party) }}"
-                    fill="{{ foreground_color }}" dy="-.6em" text-anchor="middle">{{ int(wins) }}</text>
-                  <text x="50%" y="{{ y[year][party] + h[year][party] * .5 }}"
-                    font-size="12"
-                    data-party="{{ slug(party) }}"
-                    fill="{{ foreground_color }}" dy=".6em" text-anchor="middle">{{ escape(party) }}</text>
-                {% elif h[year][party] > 12 %}
-                  <text x="50%" y="{{ y[year][party] + h[year][party] * .5 }}"
-                    font-size="12"
-                    data-party="{{ slug(party) }}"
-                    fill="{{ foreground_color }}" dy=".35em" text-anchor="middle">{{ int(wins) }}</text>
-                {% end %}
-              {% end %}
-            </svg>
-          </td>
-        {% end %}
-      </tr>
-      {% for pc, row in by_pc.iterrows() %}
-        <tr>
-          <th style="width:{{ x0 }}em">{{ escape(pc) }}</th>
-          {% for year in by_pc.columns %}
-            {% set fill = colors.get(row[year], NONE_COLOR if row[year] else None) %}
-            <td
-              data-party="{{ slug(row[year]) }}"
-              {% if fill %}style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}"{% end %}
-              href="result?PC={{ escape(pc) }}&YEAR={{ escape(year) }}"
-            >{{ row[year] }}</td>
-          {% end %}
-        </tr>
+    top_parties = by_party.sum(axis=1).order(ascending=True)
+    by_party = by_party.ix[top_parties.index]
+    top_parties = top_parties[::-1].head(15)
+
+    W, H = 940, 200
+    x0 = 12
+    h = float(H) * by_party / by_party.sum()
+    w = float(W - 30) / len(top_parties)
+    y = h.cumsum() - h
+    pad, legend = 5, 25
+    MAX = 8
+    {% end %}
+    <svg width="100%" data-height="{{ float(legend)/W }}" viewBox="0 0 {{ W }} {{ legend }}">
+      <rect width="30" height="{{ legend }}" class="party-unhighlight" fill="#000" title="Show all parties"/>
+      <text x="15" y="{{ legend /2 }}" font-size="16" text-anchor="middle" dy=".35em" fill="#fff">x</text>
+      {% for i, party in enumerate(top_parties.index) %}
+        {% set background_color = colors.get(party, NONE_COLOR) %}
+        <rect class="party-legend"
+          data-party="{{ slug(party) }}"
+          data-highlight="[data-party={{ slug(party) }}]"
+          data-toggle="highlight"
+          x="{{ 30 + w * i }}"
+          width="{{ w }}"
+          height="{{ legend }}"
+          fill="{{ background_color }}"></rect>
+        <text class="party-legend-text"
+          x="{{ 30 + w * (i + .5) }}"
+          y="{{ legend / 2 }}"
+          font-size="16"
+          text-anchor="middle"
+          dy=".35em"
+          fill="{{ _color.contrast(background_color) }}"
+          data-party="{{ slug(party) }}">{{ party }}</text>
       {% end %}
-    </tbody>
-  </table>
-</div>
+    </svg>
+
+    <div class="table-responsive"{% if len(by_pc.columns) < MAX %} style="width:{{ 100 * (2 + len(by_pc.columns)) // (1 + MAX) }}%"{% end %}>
+      <table class="table table-condensed state-table" style="table-layout:fixed">
+        <thead>
+          <tr>
+            <th style="width:{{ x0 }}em">Constituencies</th>
+            {% for year in by_pc.columns %}
+              <th href="cartogram?YEAR={{ quote(year) }}">{{ escape(year) }}<br><em>{{ (by_pc[year] != '').sum() }}</em></th>
+            {% end %}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th></th>
+            {% for year, col in by_party.iteritems() %}
+              <td class="svg-cell" href="cartogram?YEAR={{ quote(year) }}">
+                <svg width="100%" data-height="{{ H/40. }}" viewBox="0 0 40 {{ H }}">
+                  {% for party, wins in col.iteritems() %}
+                    {% code %}
+                    if wins == 0: continue
+                    background_color = colors.get(party, NONE_COLOR)
+                    foreground_color = _color.contrast(background_color)
+                    {% end %}
+                    <rect x="0" width="40" y="{{ y[year][party] }}" height="{{ h[year][party] }}"
+                      data-party="{{ slug(party) }}"
+                      title="{{ escape(party) }}: {{ wins }}"
+                      data-placement="left"
+                      fill="{{ background_color }}" stroke="#fff"/>
+                    {% if h[year][party] > 40 %}
+                      <text x="50%" y="{{ y[year][party] + h[year][party] * .5 }}"
+                        font-size="12"
+                        data-party="{{ slug(party) }}"
+                        fill="{{ foreground_color }}" dy="-.6em" text-anchor="middle">{{ int(wins) }}</text>
+                      <text x="50%" y="{{ y[year][party] + h[year][party] * .5 }}"
+                        font-size="12"
+                        data-party="{{ slug(party) }}"
+                        fill="{{ foreground_color }}" dy=".6em" text-anchor="middle">{{ escape(party) }}</text>
+                    {% elif h[year][party] > 12 %}
+                      <text x="50%" y="{{ y[year][party] + h[year][party] * .5 }}"
+                        font-size="12"
+                        data-party="{{ slug(party) }}"
+                        fill="{{ foreground_color }}" dy=".35em" text-anchor="middle">{{ int(wins) }}</text>
+                    {% end %}
+                  {% end %}
+                </svg>
+              </td>
+            {% end %}
+          </tr>
+          {% for pc, row in by_pc.iterrows() %}
+            <tr>
+              <th
+                style="width:{{ x0 }}em"
+                href="result?PC={{ escape(pc) }}&YEAR={{ escape(row[row != ''].index[-1]) }}"
+              >{{ escape(pc) }}</th>
+              {% for year in by_pc.columns %}
+                {% set fill = colors.get(row[year], NONE_COLOR if row[year] else None) %}
+                <td
+                  data-party="{{ slug(row[year]) }}"
+                  {% if fill %}
+                    style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}"
+                    href="result?PC={{ escape(pc) }}&YEAR={{ escape(year) }}"
+                  {% end %}
+                >{{ row[year] }}</td>
+              {% end %}
+            </tr>
+          {% end %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p>No results{% if 'Y' in args %} for year {{ ', '.join(args['Y']) }}{% end %}.</p>
+    {% if state %}<p><a href="?Y=">Try for all years.</a></p>
+    {% else %}<p><a href=".?STATE=&Y=">Back home</a></p>
+    {% end %}
+  {% end %}
 </div>
