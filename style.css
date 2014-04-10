@@ -359,8 +359,9 @@ input.lo, input.hi {
 footer {
   border-top: 1px solid #ddd;
   padding-top: 1em;
-  margin: 3em 0;
+  margin: 2em 0 3em 0;
 }
+
 .year-legend.active {
   fill: #c0504d;
   font-weight: bold;
