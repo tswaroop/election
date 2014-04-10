@@ -28,11 +28,11 @@ elections[constituencies_columns] = constituencies[constituencies_columns]
 # Various filters, explicitly ordered
 filters = (
   ('2014-Schedule', schedule),
-  ('Hindi-speaking', ['Hindi', 'Rest']),
-  ('Bi-polar', ['Bi-polar', 'Rest']),
-  ('Rural', ['Rural', 'Semi Urban', 'Urban']),
-  ('SC', ['Below 10%', '10-19.9%', '20-29.9%', '30% and above']),
-  ('ST', ['Below 10%', '10-29.9%', '30-49.9%', '50% and above']),
+  # ('Hindi-speaking', ['Hindi', 'Rest']),
+  # ('Bi-polar', ['Bi-polar', 'Rest']),
+  # ('Rural', ['Rural', 'Semi Urban', 'Urban']),
+  # ('SC', ['Below 10%', '10-19.9%', '20-29.9%', '30% and above']),
+  # ('ST', ['Below 10%', '10-29.9%', '30-49.9%', '50% and above']),
   # ('Muslim', ['No information', 'Less than 10%', '10-19.9%', '20-39.9%', '40% and above']),
 )
 
@@ -203,9 +203,9 @@ names = {
   {% for key, series in filters %}
     <div class="btn-group">
       {% set keyargs = args.get(key, []) %}
-      <a class="btn btn-sm {{ 'btn-success active' if len(keyargs) else 'btn-primary' }}" href="?{{ quote(key) }}=">{{ key.replace('-', ' ') }}</a>
+      <a class="btn btn-sm {{ 'btn-success active' if len(keyargs) else 'btn-primary' }}" href="?YEAR=2009&{{ quote(key) }}=">{{ key.replace('-', ' ') }}</a>
       {% for item in series %}
-        <a class="btn btn-sm {{ 'btn-success active' if item in keyargs else 'btn-default' }}" href="?{{ quote(key) }}={{ quote(item) }}">{{ item }}</a>
+        <a class="btn btn-sm {{ 'btn-success active' if item in keyargs else 'btn-default' }}" href="?YEAR=2009&{{ quote(key) }}={{ quote(item) }}">{{ item }}</a>
       {% end %}
     </div>
   {% end %}
