@@ -11,6 +11,9 @@ groupby = args.get('BY', ['PARTY'])[0]
 colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color']
 abbr = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr'].ix['STATE']
 
+# Manually define this for ordering
+schedule = ['07-Apr', '09-Apr', '10-Apr', '11-Apr', '12-Apr', '17-Apr', '24-Apr', '30-Apr', '07-May', '12-May', ]
+
 winners = data[data['#'] == '1']
 elections['CONSTANT'] = 1
 metric = 'CONSTANT' if groupby.startswith('2014') else args.get('METRIC', ['CONSTANT'])[0]
@@ -19,7 +22,19 @@ metric = 'CONSTANT' if groupby.startswith('2014') else args.get('METRIC', ['CONS
 constituencies = DB.csv('pc.csv')
 constituencies['YEAR'] = '2009'
 constituencies = constituencies.set_index(['YEAR', 'STATE', 'PC'])
-elections[['2014-Schedule', '2014-Star-Candidate']] = constituencies[['2014-Schedule', '2014-Star-Candidate']]
+constituencies_columns = ['2014-Schedule', '2014-Star-Candidate', 'Hindi-speaking', 'Bi-polar', 'Rural', 'SC', 'ST', 'Muslim']
+elections[constituencies_columns] = constituencies[constituencies_columns]
+
+# Various filters, explicitly ordered
+filters = (
+  ('2014-Schedule', schedule),
+  ('Hindi-speaking', ['Hindi', 'Rest']),
+  ('Bi-polar', ['Bi-polar', 'Rest']),
+  ('Rural', ['Rural', 'Semi Urban', 'Urban']),
+  ('SC', ['Below 10%', '10-19.9%', '20-29.9%', '30% and above']),
+  ('ST', ['Below 10%', '10-29.9%', '30-49.9%', '50% and above']),
+  # ('Muslim', ['No information', 'Less than 10%', '10-19.9%', '20-39.9%', '40% and above']),
+)
 
 subset = elections.reset_index()
 
@@ -35,6 +50,10 @@ year_index = years.index(year)
 prev_year = years[year_index - 1] if year_index > 0 else None
 next_year = years[year_index + 1] if year_index < len(years) - 1 else None
 
+for key, series in filters:
+    if key in args:
+        subset = subset[subset[key].isin(args[key])]
+
 subset = subset[subset['YEAR'] == year]
 pivot = subset[['STATE', 'PC', groupby, 'WINNER', metric]].set_index(['STATE', 'PC'])
 metric_mean = pivot[metric].mean()
@@ -46,9 +65,8 @@ W, H, R = 940, 700, 6
 bar_height = 33
 top_groups = win_count.head(min(20, H // bar_height))
 
-# Eventually, don't hard-code it
 if groupby == '2014-Schedule':
-    top_groups = top_groups.ix[['07-Apr', '09-Apr', '10-Apr', '11-Apr', '12-Apr', '17-Apr', '24-Apr', '30-Apr', '07-May', '12-May', ]].dropna().astype(int)
+    top_groups = top_groups.ix[schedule].dropna().astype(int)
 
 states = [''] + sorted(elections.ix[year].reset_index()['STATE'].unique())
 
@@ -139,9 +157,15 @@ names = {
   <g id="carto-contents">
     <image x="-170" y="-5" width="{{ W }}" height="{{ H - 10 }}" xlink:href="{{ static_url('img/india-states.png') }}"></image>
     {% if len(pivot) == 0 %}
+      {% code %}
+      applied_filters = list(chosen_states) + [year]
+      for key, series in filters:
+          if key in args:
+              applied_filters.append(args[key][0])
+      {% end %}
       <g transform="rotate(-30)translate(100,450)" fill="#777">
         <text text-anchor="middle" font-size="80">No constituencies</text>
-        <text text-anchor="middle" dy="60" font-size="30">{{ ', '.join(chosen_states) }} {{ year }}</text>
+        <text text-anchor="middle" dy="60" font-size="30">{{ ', '.join(applied_filters) }}</text>
       </g>
     {% end %}
     <g transform="translate(640, 46)">
@@ -175,6 +199,17 @@ names = {
     </g>
   </g>
 </svg>
+<div class="const-filters">
+  {% for key, series in filters %}
+    <div class="btn-group">
+      {% set keyargs = args.get(key, []) %}
+      <a class="btn btn-sm {{ 'btn-success active' if len(keyargs) else 'btn-primary' }}" href="?{{ quote(key) }}=">{{ key.replace('-', ' ') }}</a>
+      {% for item in series %}
+        <a class="btn btn-sm {{ 'btn-success active' if item in keyargs else 'btn-default' }}" href="?{{ quote(key) }}={{ quote(item) }}">{{ item }}</a>
+      {% end %}
+    </div>
+  {% end %}
+</div>
 
 {% code %}
 csv = StringIO()

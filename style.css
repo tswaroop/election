@@ -19,6 +19,8 @@ body.tv {
   .tv .pc-result .year-legend { font-size: 24px; }
   .tv .pc-result .const-stack { font-size: 16px; }
 
+  .tv .btn { font-size: 30px; }
+
   .tv .pc-summary { font-size: 32px; }
   .tv .pc-summary h2 { margin-top: 1em; }
   .tv .pc-summary .table-condensed>thead>tr>th,
@@ -365,4 +367,9 @@ footer {
 }
 .search-filter input.form-control {
   width: 5em;
+}
+
+.const-filters .btn-group {
+  white-space: nowrap;
+  margin: 0 1em .5em 0;
 }
