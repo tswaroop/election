@@ -1,0 +1,46 @@
+{{ GRAMEX(cache=['style.css', '.head.html', '.tail.html'], max_age=10*60) }}{% code %}
+title = 'Elections 2014 Apps'
+description = 'Election applications built by Gramener'
+{% end %}<!DOCTYPE html><html lang="en">
+<head>
+  {{ T('.head.html', title=title, static_url=static_url, description=description) }}
+  <style>
+  .tiles {
+    margin: 20px 0 0 0;
+    padding: 0;
+  }
+  .tiles a, .tiles a:visited {
+    list-style: none;
+    display: inline-block;
+    width: 7em;
+    height: 3em;
+    font-size: 200%;
+    border: 1px solid #ccf;
+    padding: 10px 5px;
+    text-align: center;
+    vertical-align: top;
+    color: #fff;
+    text-decoration: none;
+    background-color: {{ _color.Office[0] }};
+  }
+  </style>
+</head><body>
+
+<div class="container">
+  <h1>Election apps by Gramener</h1>
+
+  <div class="tiles">
+    <a href="https://gramener.com/twitterask/">Ask Twitter</a>
+    <a href="https://gramener.com/cartogram/">Cartogram</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="container">
+    Powered by <a href="https://gramener.com/">Gramener.com</a>
+  </div>
+</footer>
+{{ T('.tail.html') }}
+
+</body></html>
