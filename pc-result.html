@@ -14,7 +14,7 @@ try:
     year_matched = True
     data = data[data['YEAR'] == year]
     data.sort('VOTES', ascending=False, inplace=True)
-    result = elections.ix[year, args['STATE'][0], args['PC'][0]]
+    result = elections.ix[year].ix[args['STATE'][0]].ix[args['PC'][0]]
 except KeyError:
     logging.error('KeyError: %s', handler.request.uri)
     year_matched = False
