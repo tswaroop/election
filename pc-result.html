@@ -19,6 +19,9 @@ except KeyError:
     logging.error('KeyError: %s', handler.request.uri)
     year_matched = False
 
+affidavits = DB.csv('affidavits.csv')
+affidavit_groups = affidavits.groupby(['STATE', 'PC']).groups
+
 columns = ['#', 'PARTY', 'NAME', 'VOTES', 'SEX', 'AGE', 'CATEGORY', ]
 colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 N = int(args.get('n', [20])[0])
@@ -158,4 +161,18 @@ N = int(args.get('n', [20])[0])
     </g>
   </svg>
 {% end %}
+
+{% set key = (args['STATE'][0], args['PC'][0]) %}
+{% if key in affidavit_groups %}
+  {% code %}
+  candidates = affidavits.ix[affidavit_groups[key]]
+  {% end %}
+  <h2>2014 affidavits filed
+    <a class="small direct-link" href="http://affidavitarchive.nic.in/DynamicAffidavitDisplay/CANDIDATEAFFIDAVIT.aspx?YEARID=May-2014&AC_No={{ candidates['PC_CODE'].iget(0) }}&st_code={{ candidates['ST_CODE'].iget(0) }}&constType=PC">on ECI website</a></h2>
+  {{ candidates[['PARTY', 'NAME']].to_html(index=False, classes='table table-condensed').replace('border="1" ', '') }}
+{% else %}
+  <h2>No affidavits available on ECI website for 2014</h2>
+{% end %}
+
+
 </div>
