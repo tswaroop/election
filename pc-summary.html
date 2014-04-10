@@ -1,6 +1,7 @@
-{{ GRAMEX(cache=['parliament.csv', 'pc-table.html'], max_age=10*60) }}{% code %}
-from common import pc_setup
+{{ GRAMEX(cache=['parliament.csv', 'colors.csv', 'pc-table.html'], max_age=10*60) }}{% code %}
+from common import pc_setup, NONE_COLOR
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
+colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 getarg = lambda v: args.get(v, [None])[0]
 N = int(args.get('n', [0])[0])
 selection = []
@@ -22,48 +23,48 @@ if getarg('YEAR'):
   {% set margin_pc = elections.sort('MARGIN %', ascending=False).dropna(subset=['MARGIN %'])[['WINNER', 'PARTY', '1', '2', 'MARGIN', 'MARGIN %']] %}
   {% if getarg('margin') == 'max' %}
     <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Highest margins <small>{{ ', '.join(selection) }}</small></h2>
-    {{ T('pc-table.html', table=margin.head(N or 10), sort='MARGIN', remove='margin') }}
+    {{ T('pc-table.html', colors=colors, table=margin.head(N or 10), sort='MARGIN', remove='margin') }}
     <h2>Highest % margins <small>{{ ', '.join(selection) }}</small></h2>
-    {{ T('pc-table.html', table=margin_pc.head(N or 10), sort='MARGIN %', remove='margin') }}
+    {{ T('pc-table.html', colors=colors, table=margin_pc.head(N or 10), sort='MARGIN %', remove='margin') }}
   {% elif getarg('margin') == 'min' %}
     <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Lowest margins <small>{{ ', '.join(selection) }}</small></h2>
-    {{ T('pc-table.html', table=margin.tail(N or 10)[::-1], sort='MARGIN', decimals=3, remove='margin') }}
+    {{ T('pc-table.html', colors=colors, table=margin.tail(N or 10)[::-1], sort='MARGIN', decimals=3, remove='margin') }}
     <h2>Lowest % margins <small>{{ ', '.join(selection) }}</small></h2>
-    {{ T('pc-table.html', table=margin_pc.tail(N or 10)[::-1], sort='MARGIN %', decimals=3, remove='margin') }}
+    {{ T('pc-table.html', colors=colors, table=margin_pc.tail(N or 10)[::-1], sort='MARGIN %', decimals=3, remove='margin') }}
   {% end %}
 
 {% elif getarg('votes') %}
   {% set table = elections.sort('VOTES', ascending=False) %}
   {% if getarg('votes') == 'max' %}
     <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Most voters <small>{{ ', '.join(selection) }}</small></h2>
-    {{ T('pc-table.html', table=table[['VOTES', 'WINNER', 'PARTY']].dropna(subset=['VOTES']).head(N or 20), sort='VOTES', remove='votes') }}
+    {{ T('pc-table.html', colors=colors, table=table[['VOTES', 'WINNER', 'PARTY']].dropna(subset=['VOTES']).head(N or 20), sort='VOTES', remove='votes') }}
   {% elif getarg('votes') == 'min' %}
     <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Fewest voters <small>{{ ', '.join(selection) }}</small></h2>
-    {{ T('pc-table.html', table=table[table['VOTES'] > 0][['VOTES', 'WINNER', 'PARTY']].dropna(subset=['VOTES']).tail(N or 20)[::-1], sort='VOTES', remove='votes') }}</pre>
+    {{ T('pc-table.html', colors=colors, table=table[table['VOTES'] > 0][['VOTES', 'WINNER', 'PARTY']].dropna(subset=['VOTES']).tail(N or 20)[::-1], sort='VOTES', remove='votes') }}</pre>
   {% end %}
 
 {% elif getarg('candidates') %}
   {% set table = elections.sort('CANDIDATES', ascending=False) %}
   {% if getarg('candidates') == 'max' %}
     <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Most candidates <small>{{ ', '.join(selection) }}</small></h2>
-    {{ T('pc-table.html', table=table[['CANDIDATES', 'WINNER', 'PARTY']].dropna(subset=['CANDIDATES']).head(N or 20), sort='CANDIDATES', remove='candidates') }}
+    {{ T('pc-table.html', colors=colors, table=table[['CANDIDATES', 'WINNER', 'PARTY']].dropna(subset=['CANDIDATES']).head(N or 20), sort='CANDIDATES', remove='candidates') }}
   {% elif getarg('candidates') == '1' %}
     <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Uncontested wins <small>{{ ', '.join(selection) }}</small></h2>
-    {{ T('pc-table.html', table=table[table['CANDIDATES'] == 1][['CANDIDATES', 'WINNER', 'PARTY']].dropna(subset=['CANDIDATES']).head(N or 20), sort='CANDIDATES', remove='candidates') }}
+    {{ T('pc-table.html', colors=colors, table=table[table['CANDIDATES'] == 1][['CANDIDATES', 'WINNER', 'PARTY']].dropna(subset=['CANDIDATES']).head(N or 20), sort='CANDIDATES', remove='candidates') }}
   {% end %}
 
 {% elif getarg('women') == 'max' %}
     <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Most WOMEN <small>{{ ', '.join(selection) }}</small></h2>
     {% set table = elections.sort('WOMEN', ascending=False) %}
-    {{ T('pc-table.html', table=table[['WOMEN', 'CANDIDATES', 'WOMEN %', 'WINNER', 'PARTY']].dropna(subset=['WOMEN']).head(N or 10), sort='WOMEN', remove='women') }}
+    {{ T('pc-table.html', colors=colors, table=table[['WOMEN', 'CANDIDATES', 'WOMEN %', 'WINNER', 'PARTY']].dropna(subset=['WOMEN']).head(N or 10), sort='WOMEN', remove='women') }}
     <h2>Highest % of WOMEN <small>{{ ', '.join(selection) }}</small></h2>
     {% set table = elections.sort('WOMEN %', ascending=False) %}
-    {{ T('pc-table.html', table=table[['WOMEN', 'CANDIDATES', 'WOMEN %', 'WINNER', 'PARTY']].dropna(subset=['WOMEN %']).head(N or 10), sort='WOMEN %', remove='women') }}
+    {{ T('pc-table.html', colors=colors, table=table[['WOMEN', 'CANDIDATES', 'WOMEN %', 'WINNER', 'PARTY']].dropna(subset=['WOMEN %']).head(N or 10), sort='WOMEN %', remove='women') }}
 
 {% elif getarg('age') == 'max' %}
     {% set table = data.sort('AGE', ascending=False) %}
     <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Oldest candidates <small>{{ ', '.join(selection) }}</small></h2>
-    {{ T('pc-table.html', table=table[['YEAR', 'STATE', 'PC', 'NAME', 'PARTY', 'AGE', 'VOTES', '#']].set_index(['YEAR', 'STATE', 'PC']).dropna(subset=['AGE']).head(N or 20), sort='AGE', remove='age') }}
+    {{ T('pc-table.html', colors=colors, table=table[['YEAR', 'STATE', 'PC', 'NAME', 'PARTY', 'AGE', 'VOTES', '#']].set_index(['YEAR', 'STATE', 'PC']).dropna(subset=['AGE']).head(N or 20), sort='AGE', remove='age') }}
 
 {% elif getarg('partywin') %}
     {% code %}
@@ -76,13 +77,13 @@ if getarg('YEAR'):
     losers = party[party['WINS'] < 10].sort('LOSSES', ascending=False)
     min_elections = 100 if len(elections) > 2000 else 10 if len(elections) > 100 else 1
     winners = party[party['ELECTIONS'] >= min_elections].sort('WIN %', ascending=False)
-    formatters = {'WIN %': '{:.1%}'.format}
     {% end %}
     {% if getarg('partywin') == 'min' %}
       <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Struggling parties <small>{{ ', '.join(selection) }}</small></h2>
       <p>Parties that have lost the largest number of seats (among those with less than 10 wins)</p>
       {% if len(losers) > 0 %}
-        {{ losers.head(N or 20).to_html(classes='table table-condensed analysis', formatters=formatters) }}
+        {% set table = losers.head(N or 20) %}
+        {% block winner_loser_table %}{% end %}
       {% else %}
         <p>No results. <a href="?STATE=&n=&YEAR=">Try deselecting states and years.</a></p>
       {% end %}
@@ -90,7 +91,27 @@ if getarg('YEAR'):
       <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Winning parties <small>{{ ', '.join(selection) }}</small></h2>
       <p>Parties that have the highest win ratio, among those that have contested at least {{ min_elections }} elections</p>
       {% if len(winners) > 0 %}
-        {{ winners.head(N or 20).to_html(classes='table table-condensed analysis', formatters=formatters) }}
+        {% set table = winners.head(N or 20) %}
+        {% block winner_loser_table %}
+          <table class="table table-condensed analysis">
+            <thead>
+              <tr>
+                <th>PARTY</th>
+                {% for col in table %}<th>{{ escape(col) }}</th>{% end %}
+              </tr>
+            </thead><tbody>
+              {% for party, row in table.iterrows() %}
+                {% set fill = colors.get(party, NONE_COLOR) %}
+                <tr>
+                  <th style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ escape(party) }}</th>
+                  {% for col, val in row.iteritems() %}
+                    <td>{{ ('{:,.1%}' if col == 'WIN %' else '{:,.0f}').format(val) }}</td>
+                  {% end %}
+                </tr>
+              {% end %}
+            </tbody>
+          </table>
+        {% end %}
       {% else %}
         <p>No results. <a href="?STATE=&n=&YEAR=">Try deselecting states and years.</a></p>
       {% end %}

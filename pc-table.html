@@ -1,5 +1,6 @@
 {% code %}
 from urllib import quote
+from common import NONE_COLOR
 _ = globals().get
 sort = _('sort', None)
 pc_format = '{:.%d%%}' % _('decimals', 1)
@@ -24,6 +25,9 @@ pc_format = '{:.%d%%}' % _('decimals', 1)
             <td>{{ 0 if pd.isnull(row[c]) else '{:,.0f}'.format(row[c]) }}</td>
           {% elif c.endswith('%') %}
             <td>{{ pc_format.format(0 if pd.isnull(row[c]) else row[c]) }}</td>
+          {% elif c == 'PARTY' %}
+            {% set fill = colors.get(row[c], NONE_COLOR) %}
+            <td style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ row[c] }}</td>
           {% else %}
             <td>{{ row[c] }}</td>
           {% end %}
