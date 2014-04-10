@@ -9,10 +9,11 @@ data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 topics = pd.read_csv('parliament-topics.csv')
 years = sorted(data['YEAR'].unique())
 tv = args.get('tv')
+app = args.get('app')
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
   {{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv) }}
-</head><body{% if tv %} class="tv"{% end %}>
+</head><body{% if tv %} class="tv"{% end %}{% if app %} class="app"{% end %}>
 
 <nav class="navbar navbar-default{% if tv %} navbar-fixed-top{% end %}" role="navigation">
   <div class="container">
