@@ -1,0 +1,74 @@
+{{ GRAMEX(cache=['parliament.csv', 'colors.csv'], max_age=10*60) }}{% code %}
+from common import pc_setup, NONE_COLOR
+from urllib import quote
+
+data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
+colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
+N = int(args.get('n', [0])[0])
+
+pivot = elections['PARTY'].unstack(0)
+if 'party' in args:
+    title = '{:s} Bastions <small>Constituences that mostly vote for {:s}</small>'.format(args['party'][0], args['party'][0])
+    pattern = None
+    matches = pivot == pd.Series(args['party'] * 15, index=pivot.columns)
+    count = matches.sum(axis=1)
+elif 'winning' in args:
+    title = 'Winning streaks <small>Constituencies that mostly vote for the national winner</small>'
+    pattern = pd.Series(['CONG', 'CONG', 'CONG', 'CONG', 'CONG', 'JNP', 'CONG', 'CONG', 'CONG', 'CONG', 'BJP', 'BJP', 'BJP', 'CONG', 'CONG'], index=pivot.columns)
+    matches = pivot == pattern
+    count = matches.sum(axis=1)
+elif 'anti-incumbent' in args:
+    title = 'Anti-incumbents <small>Parties that invariably vote against the ruling party</small>'
+    pattern = None
+    matches = pivot.fillna('') != pivot.fillna('').T.shift(1).T
+    count = matches.sum(axis=1) - 1
+
+points = pd.Series([1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 6, 6, 9, 10, 12], index=pivot.columns)
+notnulls = pd.notnull(pivot).sum(axis=1)
+score = matches.mul(points).sum(axis=1)
+result = pivot.reindex(score.order(ascending=False).index)
+
+{% end %}
+<div class="pc-pattern table-responsive">
+
+<h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> {{ title }}</h2>
+
+<table class="table table-condensed state-table">
+  <thead>
+    {% if pattern is not None %}
+      <tr>
+        <th colspan="2">Matching</th>
+        {% for year in pivot.columns %}
+          {% set fill = colors.get(pattern[year], NONE_COLOR) %}
+          <td style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ escape(pattern[year]) }}</td>
+        {% end %}
+      </tr>
+    {% end %}
+    <tr>
+      <th>Constituency</th>
+      <th>#</th>
+      {% for year in pivot.columns %}
+        <th>{{ year }}</th>
+      {% end %}
+    </tr>
+  </thead><tbody>
+    {% for (state, pc), row in result.head(N or 20).fillna('').iterrows() %}
+      <tr>
+        <th>{{ escape(pc) }}, {{ escape(state) }}</th>
+        <td{% if count[state, pc] >= notnulls[state, pc] %} class="danger"{% end %}>{{ count[state, pc] }}/{{ notnulls[state, pc] }}</td>
+        {% for year in pivot.columns %}
+          {% if row[year] %}
+            {% set fill = colors.get(row[year], NONE_COLOR) %}
+            <td
+              style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}"
+              href="result?STATE={{ quote(state) }}&PC={{ quote(pc) }}&YEAR={{ quote(year) }}"
+            >{{ escape(row[year]) }}</td>
+          {% else %}
+            <td></td>
+          {% end %}
+        {% end %}
+      </tr>
+    {% end %}
+  </tbody>
+</table>
+</div>

@@ -9,3 +9,7 @@ type,image,link,title,content
 ,img/clip8.jpg,summary?age=max,Old candidates,"**Arif Ahmed Shaikh Jafhar** (NBNP) contested the 2009 elections from Dhhule, MH at age 99, making him the oldest candidate ever in India."
 ,img/clip9.jpg,summary?partywin=min,Struggling parties,"The **Doordarshi Party**, founded by Baba Jai Gurudev in 1980, has the record of contesting 716 seats across 3 years *without a single victory*"
 ,img/clipa.jpg,summary?partywin=max,Winning parties,"The **INC** is among the most successful parties, being one of the few parties that has won more than 50% of the seats it has ever contested in"
+,img/clipb.jpg,pattern?party=CONG,Congress bastions,"**Chhindwara, in Madhya Pradesh**, is the only constituency to have voted for the Congress <em>every election</em> for the last 15 elections."
+,img/clipe.jpg,pattern?party=BJP,BJP bastions,"Only 8 constituencies have voted for BJP every time since 1989. 5 are in Madhya Pradesh, 2 in Gujarat, and 1 in Rajasthan."
+,img/clipc.jpg,pattern?winning=1,Bellweathers,"**Faridabad, in Haryana**, is the only constituency that has constistently voted for the national winning party in every election since 1977."
+,img/clipd.jpg,pattern?anti-incumbent=1,Anti-incumbents,"**Bara Banki, in Uttar Pradesh**, has voted against the incumbent party in every single election since its inception in 1957."

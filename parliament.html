@@ -9,6 +9,7 @@ data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 topics = pd.read_csv('parliament-topics.csv')
 years = sorted(data['YEAR'].unique())
 tv = args.get('tv')
+colors = _color.distinct(10)
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
   {{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv) }}
@@ -117,8 +118,7 @@ tv = args.get('tv')
   <div id="factoid">
     {% for i, row in topics.iterrows() %}
       <div class="topic" href="{{ row['link'] }}">
-        <div class="thumbnail">
-          <div class="img" style="background-image:url({{ static_url(row['image']) }})"></div>
+        <div class="thumbnail" style="background-color:{{ colors[i % len(colors)] }}">
           <div class="caption">
             <h3>{{ row['title'] }}</h3>
             <p>{{ markdown(row['content']) }}</p>
@@ -271,12 +271,12 @@ function redraw() {
       q = G.url.parse(hash),
       query = q.searchKey;
 
-  if (q.pathname.match(/^(summary|year|result|cartogram|table|scatter|state)$/)) {
+  if (q.pathname.match(/^(summary|year|result|cartogram|table|scatter|state|pattern)$/)) {
     $('#summary, #factoid').slideUp(250)
-    $('.year-filter')[q.pathname.match(/scatter|state/) ? 'hide' : 'show']()
+    $('.year-filter')[q.pathname.match(/scatter|state|pattern/) ? 'hide' : 'show']()
     $('.years-filter')[q.pathname.match(/state/) ? 'show' : 'hide']()
     $('.result-controls')[q.pathname.match(/cartogram|scatter|state/) ? 'hide' : 'show']()
-    $('.state-filter')[q.pathname.match(/result/) ? 'hide' : 'show']()
+    $('.state-filter')[q.pathname.match(/result|pattern/) ? 'hide' : 'show']()
     $('.search-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('.metric-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('.state-page-filter')[q.pathname.match(/result/) ? 'show' : 'hide']()
