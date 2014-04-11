@@ -27,6 +27,7 @@ def pc_setup(data):
       'JKN': 'NC',
       'MUL': 'IUML',
       'JD(S)': 'JDS',
+      'BOPF': 'BPF',
       'KEC(M)': 'KECM',
     }, inplace=True)
 
