@@ -61,7 +61,7 @@ result = pivot.reindex(score.order(ascending=False).index)
             {% set fill = colors.get(row[year], NONE_COLOR) %}
             <td
               style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}"
-              href="result?STATE={{ quote(state) }}&PC={{ quote(pc) }}&YEAR={{ quote(year) }}"
+              href="result?{{ '&'.join(key + '=' for key in args) }}&STATE={{ quote(state) }}&PC={{ quote(pc) }}&YEAR={{ quote(year) }}"
             >{{ escape(row[year]) }}</td>
           {% else %}
             <td></td>
