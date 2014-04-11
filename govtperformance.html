@@ -3,6 +3,7 @@
 <head>
 	<title>cnn ibn</title>
 	<link rel="stylesheet" href="{{ static_url('/css/bootstrap.v3.min.css') }}"/>
+	<link rel="stylesheet" href="bootstrap-multiselect.css" type="text/css"/>
 	<style type="text/css">
 .axis path,
 .axis line {
@@ -98,7 +99,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">CNN IBN</a>
+      <a class="navbar-brand" href="#">Government Performance</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -106,7 +107,7 @@
 
       <ul class="nav navbar-nav">
 
-        <li class="dropdown">
+ <!--        <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">States <b class="caret"></b></a>
           <ul class="dropdown-menu" id="stateDropdown">
           </ul>
@@ -116,10 +117,10 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">X Parameter <b class="caret"></b></a>
           <ul class="dropdown-menu xydropdowns" id="xDropdown">
           </ul>
-        </li>
+        </li> -->
 
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Y Parameter <b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Metric <b class="caret"></b></a>
           <ul class="dropdown-menu xydropdowns" id="yDropdown">
           </ul>
         </li>
@@ -155,16 +156,16 @@
 
 	<div class="row">
 		<div class="col-sm-4" style="top:20px">
-			<p><span style="font-weight:bold">State: </span><span id="statename"></span></p>
-			<p><span style="font-weight:bold">X Parameter: </span><span id="xparamname"></span></p>
-			<p><span style="font-weight:bold">Y Parameter: </span><span id="yparamname"></span></p>
+			<!-- <p><span style="font-weight:bold">State: </span><span id="statename"></span></p> -->
+			<!-- <p><span style="font-weight:bold">X Parameter: </span><span id="xparamname"></span></p> -->
+			<p><span style="font-weight:bold">Metric: </span><span id="yparamname"></span></p>
 		</div>
-		<div class="col-sm-2">
+		<div class="col-sm-3">
 			<div style="margin-top:20px"><h5 id="party_name"></h5></div>
 			<div id="party_color" style="width:75px;height:25px"></div>
-			<p><span>PM Name: </span><span id="pm_name"></span></p>
+			<p><span id="pm_name"></span></p>
 		</div>
-		<div class="col-sm-2">
+		<div class="col-sm-1">
 			<img id="party_symbol" src="" style="margin-top:20px">
 		</div>
 		<div class="col-sm-4">
@@ -184,6 +185,9 @@
 		</div>
 
 	</div>
+
+	<footer>Data sourced from <a href="http://data.worldbank.org/products/wdi" target="_blank">World Bank</a>.All currency values in ($USD).</footer>
+
 </div>
 
 <script src="{{ static_url('/js/d3.v3.min.js') }}"></script>
@@ -191,14 +195,17 @@
 <script src="{{ static_url('/js/underscore-min.js') }}"></script>
 <script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
 <script src="{{ static_url('js/G.min.js') }}"></script>
+<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
 
 <script>
 
-var story_urls = ["?datasource=country&state=India&xparam=YEAR&yparam=Inflation%2C%20consumer%20prices%20(annual%20%25)",
-					"?datasource=country&state=India&xparam=YEAR&yparam=Foreign%20direct%20investment%2C%20net%20inflows%20(%25%20of%20GDP)",
-					"?datasource=country&state=India&xparam=YEAR&yparam=GDP%20per%20capita%20growth%20(annual%20%25)",
-					"?datasource=country&state=India&xparam=YEAR&yparam=Gross%20capital%20formation%20(%25%20of%20GDP)",
-					"?datasource=country&state=India&xparam=YEAR&yparam=Military%20expenditure%20(%25%20of%20GDP)"];
+ $('.multiselect').multiselect();
+
+var story_urls = ["?yparam=Inflation%2C%20consumer%20prices%20(annual%20%25)",
+					"?yparam=Foreign%20direct%20investment%2C%20net%20inflows%20(%25%20of%20GDP)",
+					"?yparam=GDP%20per%20capita%20growth%20(annual%20%25)",
+					"?yparam=Gross%20capital%20formation%20(%25%20of%20GDP)",
+					"?yparam=Military%20expenditure%20(%25%20of%20GDP)"];
 
 var stories = ["Inflation was constant",
 				"FDI has increased",
@@ -209,7 +216,7 @@ var stories = ["Inflation was constant",
 var nextcounter = 0;
 
 if(window.location.hash == "")
-	window.location.hash = "?datasource=country&state=India&xparam=YEAR&yparam=Gross%20capital%20formation%20(%25%20of%20GDP)";
+	window.location.hash = "?yparam=Gross%20capital%20formation%20(%25%20of%20GDP)";//datasource=country&state=India&xparam=YEAR&
 
 var margin = {top:50,bottom:90,left:80,right:50},
 	width = 1170 - margin.left - margin.right,
@@ -271,7 +278,7 @@ function make_y_axis(y) {
         .ticks(10)
 }
 
-d3.csv("gdpdata.csv",function(d){
+/*d3.csv("gdpdata.csv",function(d){
 	// d["GDP at constant prices (in billions)"] = + d["GDP at constant prices (in billions)"] || 0;
 
 	d3.keys(d).forEach(function(k){
@@ -293,7 +300,7 @@ d3.csv("gdpdata.csv",function(d){
 	d["YEAR"] = d["YEAR"].trim();
 	d["Random"] = +d["Random"];
 	return d;
-},function(error,data_state){
+},function(error,data_state){*/
 
 	termcount = 0;
 	prevParty = "";
@@ -340,9 +347,9 @@ d3.csv("gdpdata.csv",function(d){
 		// colors_dict = colors_data;
 
 
-		if(error){
-			console.log("error reading data");
-		}
+		// if(error){
+		// 	console.log("error reading data");
+		// }
 
 		if(error_country){
 			console.log("error reading data");
@@ -350,10 +357,10 @@ d3.csv("gdpdata.csv",function(d){
 
 		// console.log(data_country);
 
-		stateData = data_state;
+		// stateData = data_state;
 		countryData = data_country;
 
-		var test = countryData.concat(stateData);
+		// var test = countryData.concat(stateData);
 		// console.log(test);
 
 		// stateData = stateData.filter(function(d){
@@ -370,7 +377,7 @@ d3.csv("gdpdata.csv",function(d){
 
 	});
 
-});
+// });
 
 function getData(){
 
@@ -387,13 +394,13 @@ function getData(){
 	// console.log(dict);
 
 	columny = dict.yparam;
-	columnx = dict.xparam;
-	state_selected = dict.state;
-	if(dict.datasource == "state"){
-		data = stateData;
-	} else {
-		data = countryData;
-	}
+	columnx = "YEAR";//dict.xparam;
+	state_selected = "India";//dict.state;
+	// if(dict.datasource == "state"){
+	// 	data = stateData;
+	// } else {
+	data = countryData;
+	// }
 		// data = data_country;
 
 	party_symbol_dict = {};
@@ -435,33 +442,33 @@ function getData(){
 	line.x(function(d) { return x(d[columnx]); })
     	.y(function(d) { return y(d[columny]); });
 
-    d3.selectAll("#xDropdown li").remove();
+  //   d3.selectAll("#xDropdown li").remove();
 
-	 d3.select("#xDropdown").append("li")
-	 	.append("input")
-	 	.attr("type","search")
-	 	.attr("id","xparamsearch")
-	 	.attr("class","form-control")
-	 	.style("margin-left","20px")
-	 	.style("width","240px")
-	 	.attr("data-target",".xparamname")
-	 	.attr("data-search","@text")
-	 	.attr("data-hide-class","hidepath")
-	 	.on("click",function(d){
-	 		d3.event.stopPropagation();
-	 	});
+	 // d3.select("#xDropdown").append("li")
+	 // 	.append("input")
+	 // 	.attr("type","search")
+	 // 	.attr("id","xparamsearch")
+	 // 	.attr("class","form-control")
+	 // 	.style("margin-left","20px")
+	 // 	.style("width","240px")
+	 // 	.attr("data-target",".xparamname")
+	 // 	.attr("data-search","@text")
+	 // 	.attr("data-hide-class","hidepath")
+	 // 	.on("click",function(d){
+	 // 		d3.event.stopPropagation();
+	 // 	});
 
-    d3.select("#xDropdown").selectAll("li")
-		.data(["YEAR"].concat(columns),function(d){ return d; })
-		.enter().append("li")
-		.attr("class","xparamname")
-		.append("a")
-		.attr("class","gselect xparamname")
-		.attr("href",function(d){ return "?xparam="+encodeURIComponent(d) })
-		.text(String)
-		.on("click",function(d){
-			$("#xparam").val(d);
-		});
+  //   d3.select("#xDropdown").selectAll("li")
+		// .data(["YEAR"].concat(columns),function(d){ return d; })
+		// .enter().append("li")
+		// .attr("class","xparamname")
+		// .append("a")
+		// .attr("class","gselect xparamname")
+		// .attr("href",function(d){ return "?xparam="+encodeURIComponent(d) })
+		// .text(String)
+		// .on("click",function(d){
+		// 	$("#xparam").val(d);
+		// });
 
 	d3.selectAll("#yDropdown li").remove();
 
@@ -479,7 +486,7 @@ function getData(){
 	 		d3.event.stopPropagation();
 	 	});
 
-    d3.select("#yDropdown").selectAll("li")
+   	d3.select("#yDropdown").selectAll("li")
 		.data(columns,function(d){ return d; })
 		.enter().append("li")
 		.attr("class","yparamname")
@@ -491,54 +498,72 @@ function getData(){
 			$("#yparam").val(d);
 		});
 
+  //  	d3.select("#yDropdown").append("li")
+  //  	   			.on("click",function(d){
+		// 			d3.event.stopPropagation();
+		// 		})
+  //  			.append("select")
+  //  			.attr("class","multiselect")
+  //  			.attr("multiple","multiple")
+  //  			.selectAll("option")
+		// .data(columns,function(d){ return d; })
+		// .enter().append("option")
+		// .attr("class","yparamname")
+		// .attr("value",function(d){ return d })
+		// .text(String)
+		// .on("click",function(d){
+		// 	d3.event.stopPropagation();
+		// 	$("#yparam").val(d);
+		// });
+
 	data = data.filter(function(d){
 		return !(d[columnx]=="" || d[columny]=="");
 	});
+ 
+	// console.log(data);
 
-	console.log(data);
-
-	$("#statename").text(states[0]);
+	// $("#statename").text(states[0]);
 	filtered_data = data.filter(function(k){ return k["STATE"] == state_selected }); //states[0] });
 
-	var term_num = filtered_data.slice(-1)[0]["Term"];
-	var party_n = filtered_data.slice(-1)[0][colcolor];
-	$("#party_symbol").attr("src","img/"+party_symbol_dict[term_num]);
-	$("#pm_name").text(pm_name_dict[term_num]);
-	$("#party_name").text(party_n);
-	$("#party_color").css("background-color",color(party_n) );
+	// var term_num = filtered_data.slice(-1)[0]["Term"];
+	// var party_n = filtered_data.slice(-1)[0][colcolor];
+	// $("#party_symbol").attr("src","img/"+party_symbol_dict[term_num]);
+	// $("#pm_name").text(pm_name_dict[term_num]);
+	// $("#party_name").text(party_n);
+	// $("#party_color").css("background-color",color(party_n) );
 
 	fillTerms(filtered_data,columny,columnx,colcolor,x,y,"All");
 	drawAxes(filtered_data,columny,columnx,colcolor,"All")
 	drawChart(filtered_data,columny,columnx,colcolor,x,y,"All");
 
-	d3.selectAll("#stateDropdown li").remove();
+	// d3.selectAll("#stateDropdown li").remove();
 
-	d3.select("#stateDropdown").selectAll("li")
-		.data(states)
-		.enter().append("li")
-		.append("a")
-		.attr("class","gselect")
-		.attr("href",function(d){ return "?state="+encodeURIComponent(d) })
-		.text(String)
-		.on("click",function(d){
-			$("#statename").text(d);
-			term_click = false;
-			// $("circle").remove();
-			// $("#party_symbol").attr("src","img/"+party_symbol_dict[d]);
-			// $("#pm_name").text(pm_name_dict[d]);
-			filtered_data = data.filter(function(k){ return k["STATE"] == d });
-			var term_num = filtered_data.slice(-1)[0]["Term"];
-			var party_n = filtered_data.slice(-1)[0][colcolor];
+	// d3.select("#stateDropdown").selectAll("li")
+	// 	.data(states)
+	// 	.enter().append("li")
+	// 	.append("a")
+	// 	.attr("class","gselect")
+	// 	.attr("href",function(d){ return "?state="+encodeURIComponent(d) })
+	// 	.text(String)
+	// 	.on("click",function(d){
+	// 		$("#statename").text(d);
+	// 		term_click = false;
+	// 		// $("circle").remove();
+	// 		// $("#party_symbol").attr("src","img/"+party_symbol_dict[d]);
+	// 		// $("#pm_name").text(pm_name_dict[d]);
+	// 		filtered_data = data.filter(function(k){ return k["STATE"] == d });
+	// 		var term_num = filtered_data.slice(-1)[0]["Term"];
+	// 		var party_n = filtered_data.slice(-1)[0][colcolor];
 
-			$("#party_symbol").attr("src","img/"+party_symbol_dict[term_num]);
-			$("#pm_name").text(pm_name_dict[term_num]);
-			$("#party_name").text(party_n);
-			$("#party_color").css("background-color",color(party_n) );
+	// 		$("#party_symbol").attr("src","img/"+party_symbol_dict[term_num]);
+	// 		$("#pm_name").text(pm_name_dict[term_num]);
+	// 		$("#party_name").text(party_n);
+	// 		$("#party_color").css("background-color",color(party_n) );
 
-			fillTerms(filtered_data,columny,columnx,colcolor,x,y,"All");
-			drawAxes(filtered_data,columny,columnx,colcolor,"All")
-			drawChart(filtered_data,columny,columnx,colcolor,x,y,"All");
-		});
+	// 		fillTerms(filtered_data,columny,columnx,colcolor,x,y,"All");
+	// 		drawAxes(filtered_data,columny,columnx,colcolor,"All")
+	// 		drawChart(filtered_data,columny,columnx,colcolor,x,y,"All");
+	// 	});
 }
 
 function fillTerms(data,columny,columnx,colcolor,x,y,term){
@@ -569,15 +594,19 @@ function fillTerms(data,columny,columnx,colcolor,x,y,term){
 		var term_num;
 		if(d == "All"){
 			term_num = _.uniq(_.pluck(data,"Term")).slice(-1)[0];
+			$("#party_symbol").attr("src","");
+			$("#pm_name").text("");
+			$("#party_name").text("");
+			$("#party_color").css("background-color","transparent" );			
 		} else {
 			term_num = d;
 			party_n = data.filter(function(k){ return k["Term"] == d;})[0]["Party in power"];//[0][colcolor];
+			$("#party_symbol").attr("src","img/"+party_symbol_dict[term_num]);
+			$("#pm_name").text("PM Name: " + pm_name_dict[term_num]);
+			$("#party_name").text(party_n);
+			$("#party_color").css("background-color",color(party_n) );
 		}
-		console.log(party_n);
-		$("#party_symbol").attr("src","img/"+party_symbol_dict[term_num]);
-		$("#pm_name").text(pm_name_dict[term_num]);
-		$("#party_name").text(party_n);
-		$("#party_color").css("background-color",color(party_n) );
+
 		term_click = true;
 		drawChart(data,columny,columnx,colcolor,x,y,d);
 	});
@@ -714,7 +743,7 @@ function drawCircle(data,columny,columnx,colcolor,x,y,term){
 	.transition().delay(2050)
 	.attr("cy",function(d){ return y(d[columny]) })
 	.attr("cx",function(d){ return x(d[columnx]) })
-	.attr("r","8px")
+	.attr("r","7px")
 	.style("cursor","pointer")
 	.attr("data-term",function(d){ return d["Term"]})
 	.attr("title",function(d){ return columnx+" :"+d[columnx]+", "+columny+" :"+d[columny] })
