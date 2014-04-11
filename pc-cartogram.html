@@ -27,13 +27,13 @@ elections[constituencies_columns] = constituencies[constituencies_columns]
 
 # Various filters, explicitly ordered
 filters = (
-  ('2014-Schedule', schedule),
-  # ('Hindi-speaking', ['Hindi', 'Rest']),
-  # ('Bi-polar', ['Bi-polar', 'Rest']),
-  # ('Rural', ['Rural', 'Semi Urban', 'Urban']),
-  # ('SC', ['Below 10%', '10-19.9%', '20-29.9%', '30% and above']),
-  # ('ST', ['Below 10%', '10-29.9%', '30-49.9%', '50% and above']),
-  # ('Muslim', ['No information', 'Less than 10%', '10-19.9%', '20-39.9%', '40% and above']),
+  {'key': '2014-Schedule' , 'only-tv': False, 'series': schedule, },
+  {'key': 'Hindi-speaking', 'only-tv': True,  'series': ['Hindi', 'Rest'], },
+  {'key': 'Bi-polar'      , 'only-tv': True,  'series': ['Bi-polar', 'Rest'], },
+  {'key': 'Rural'         , 'only-tv': True,  'series': ['Rural', 'Semi Urban', 'Urban'], },
+  {'key': 'SC'            , 'only-tv': True,  'series': ['Below 10%', '10-19.9%', '20-29.9%', '30% and above'], },
+  {'key': 'ST'            , 'only-tv': True,  'series': ['Below 10%', '10-29.9%', '30-49.9%', '50% and above'], },
+  {'key': 'Muslim'        , 'only-tv': True,  'series': ['No information', 'Less than 10%', '10-19.9%', '20-39.9%', '40% and above'], },
 )
 
 subset = elections.reset_index()
@@ -50,9 +50,9 @@ year_index = years.index(year)
 prev_year = years[year_index - 1] if not groupby.startswith('2014') and year_index > 0 else None
 next_year = years[year_index + 1] if not groupby.startswith('2014') and year_index < len(years) - 1 else None
 
-for key, series in filters:
-    if key in args:
-        subset = subset[subset[key].isin(args[key])]
+for filter in filters:
+    if filter['key'] in args:
+        subset = subset[subset[filter['key']].isin(args[key])]
 
 subset = subset[subset['YEAR'] == year]
 pivot = subset[['STATE', 'PC', groupby, 'WINNER', metric]].set_index(['STATE', 'PC'])
@@ -159,9 +159,9 @@ names = {
     {% if len(pivot) == 0 %}
       {% code %}
       applied_filters = list(chosen_states) + [year]
-      for key, series in filters:
-          if key in args:
-              applied_filters.append(args[key][0])
+      for filter in filters:
+          if filter['key'] in args:
+              applied_filters.append(args[filter['key']][0])
       {% end %}
       <g transform="rotate(-30)translate(100,450)" fill="#777">
         <text text-anchor="middle" font-size="80">No constituencies</text>
@@ -200,12 +200,12 @@ names = {
   </g>
 </svg>
 <div class="const-filters">
-  {% for key, series in filters %}
-    <div class="btn-group">
-      {% set keyargs = args.get(key, []) %}
-      <a class="btn btn-sm {{ 'btn-success active' if len(keyargs) else 'btn-primary' }}" href="?YEAR=2009&{{ quote(key) }}=">{{ key.replace('-', ' ') }}</a>
-      {% for item in series %}
-        <a class="btn btn-sm {{ 'btn-success active' if item in keyargs else 'btn-default' }}" href="?YEAR=2009&{{ quote(key) }}={{ quote(item) }}">{{ item }}</a>
+  {% for filter in filters %}
+    <div class="btn-group{{ ' only-tv' if filter['only-tv'] else '' }}">
+      {% set keyargs = args.get(filter['key'], []) %}
+      <a class="btn btn-sm {{ 'btn-success active' if len(keyargs) else 'btn-primary' }}" href="?YEAR=2009&{{ quote(filter['key']) }}=">{{ filter['key'].replace('-', ' ') }}</a>
+      {% for item in filter['series'] %}
+        <a class="btn btn-sm {{ 'btn-success active' if item in keyargs else 'btn-default' }}" href="?YEAR=2009&{{ quote(filter['key']) }}={{ quote(item) }}">{{ item }}</a>
       {% end %}
     </div>
   {% end %}

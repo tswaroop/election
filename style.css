@@ -5,6 +5,9 @@ body.tv {
 }
 .tv .back { color: #000; }
 
+.only-tv { display: none; }
+.tv .only-tv { display: inline-block; }
+
 /* Large screen-related TV settings */
 @media (min-width: 1920px) {
   .tv .container { width: 1900px; }
