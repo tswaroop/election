@@ -52,7 +52,7 @@ next_year = years[year_index + 1] if not groupby.startswith('2014') and year_ind
 
 for filter in filters:
     if filter['key'] in args:
-        subset = subset[subset[filter['key']].isin(args[key])]
+        subset = subset[subset[filter['key']].isin(args[filter['key']])]
 
 subset = subset[subset['YEAR'] == year]
 pivot = subset[['STATE', 'PC', groupby, 'WINNER', metric]].set_index(['STATE', 'PC'])
