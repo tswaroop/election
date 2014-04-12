@@ -385,3 +385,10 @@ footer {
   white-space: nowrap;
   margin: 0 1em .5em 0;
 }
+
+/* Mobile TV settings */
+@media (max-width: 560px) {
+  .state-table td, .state-table th {
+    font-size: 50%;
+  }
+}
