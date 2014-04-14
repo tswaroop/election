@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['js/G.min.js', 'style.css', 'parliament.csv', 'pc.csv', 'parliament-topics.csv', 'colors.csv', '.head.html', '.tail.html'], max_age=10*60) }}{% code %}
+{{ GRAMEX(cache=['js/G.min.js', 'style.css', 'parliament.csv', 'pc.csv', 'parliament-topics.csv', 'colors.csv', '.head.html', '.tail.html', 'img/loading.gif'], max_age=10*60) }}{% code %}
 title = 'Parliament Elections'
 description = 'A visual guide to the history of Indian Parliament elections, from 1951 until today, by Gramener.'
 
@@ -6,6 +6,7 @@ import json
 from urllib import quote
 from common import pc_setup, slug, metric_names, NONE_COLOR
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
+
 topics = pd.read_csv('parliament-topics.csv')
 years = sorted(data['YEAR'].unique())
 tv = args.get('tv')
@@ -113,7 +114,9 @@ colors = _color.distinct(10)
 
 <div class="container">
 
-  <div id="summary"></div>
+  <div id="summary">
+    <img class="loading" src="{{ static_url('img/loading.gif') }}">
+  </div>
 
   <div id="factoid">
     {% for i, row in topics.iterrows() %}
@@ -128,7 +131,9 @@ colors = _color.distinct(10)
     {% end %}
   </div>
 
-  <div id="result"></div>
+  <div id="result">
+    <img class="loading" src="{{ static_url('img/loading.gif') }}">
+  </div>
 
   <div class="result-controls clearfix">
     <div class="pull-right">
@@ -280,7 +285,7 @@ function redraw() {
     $('.search-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('.metric-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('.state-page-filter')[q.pathname.match(/result/) ? 'show' : 'hide']()
-    $('#result').empty().load('pc-' + hash, function() {
+    $('#result').append('<img class="loading" src="{{ static_url('img/loading.gif') }}">').load('pc-' + hash, function() {
       if (q.pathname.match(/cartogram|scatter|state|result/)) {
         $(window).dispatch('resize')
         $('input[type="search"]').val('').trigger('refresh')
@@ -292,7 +297,7 @@ function redraw() {
   } else {
     $('#result, .result-controls, .year-filter, .state-filter, .search-filter, .metric-filter').hide()
     $('.years-filter, .state-page-filter').show()
-    $('#summary').empty().load('pc-index' + hash, function() {
+    $('#summary').append('<img class="loading" src="{{ static_url('img/loading.gif') }}">').load('pc-index' + hash, function() {
       $('#summary, #factoid').show()
       $(window).dispatch('resize')
       $('.tooltip').remove()

@@ -385,3 +385,23 @@ footer {
   white-space: nowrap;
   margin: 0 1em .5em 0;
 }
+
+/* Prevent initial flicker */
+#factoid, .result-controls, #result {
+  display: none;
+}
+.loading {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  margin-left: -32px;
+  width: 64px;
+}
+
+/* Mobile TV settings */
+@media (max-width: 560px) {
+  .state-table td, .state-table th {
+    font-size: 50%;
+  }
+}
+

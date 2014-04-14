@@ -12,13 +12,18 @@ if 'party' in args:
     pattern = None
     matches = pivot == pd.Series(args['party'] * 15, index=pivot.columns)
     count = matches.sum(axis=1)
+elif 'not' in args:
+    title = '{:s} Antiholds <small>Constituences that never vote for {:s}</small>'.format(args['not'][0], args['not'][0])
+    pattern = None
+    matches = pivot != pd.Series(args['not'] * 15, index=pivot.columns)
+    count = matches.sum(axis=1)
 elif 'winning' in args:
     title = 'Winning streaks <small>Constituencies that mostly vote for the national winner</small>'
     pattern = pd.Series(['CONG', 'CONG', 'CONG', 'CONG', 'CONG', 'JNP', 'CONG', 'CONG', 'CONG', 'CONG', 'BJP', 'BJP', 'BJP', 'CONG', 'CONG'], index=pivot.columns)
     matches = pivot == pattern
     count = matches.sum(axis=1)
 elif 'anti-incumbent' in args:
-    title = 'Anti-incumbents <small>Parties that invariably vote against the ruling party</small>'
+    title = 'Anti-incumbents <small>Constituencies that invariably vote against the ruling party</small>'
     pattern = None
     matches = pivot.fillna('') != pivot.fillna('').T.shift(1).T
     count = matches.sum(axis=1) - 1
@@ -61,7 +66,7 @@ result = pivot.reindex(score.order(ascending=False).index)
             {% set fill = colors.get(row[year], NONE_COLOR) %}
             <td
               style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}"
-              href="result?STATE={{ quote(state) }}&PC={{ quote(pc) }}&YEAR={{ quote(year) }}"
+              href="result?{{ '&'.join(key + '=' for key in args) }}&STATE={{ quote(state) }}&PC={{ quote(pc) }}&YEAR={{ quote(year) }}"
             >{{ escape(row[year]) }}</td>
           {% else %}
             <td></td>
