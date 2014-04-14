@@ -84,6 +84,10 @@
 
 }
 
+text{
+	pointer-events:none;
+}
+
 
 	</style>
 </head>
@@ -141,7 +145,7 @@
 
 	<div class="row">
 		<div class="col-sm-8">
-			<div class="btn-group" id="termButtons">
+			<div class="btn-group" id="termButtons" data-toggle="buttons">
 			</div>
 		</div>
 		<div class="col-sm-4">
@@ -155,18 +159,18 @@
 	</div>
 
 	<div class="row">
-		<div class="col-sm-4" style="top:20px">
+		<div class="col-sm-6" style="padding-top:20px;padding-bottom:20px">
 			<!-- <p><span style="font-weight:bold">State: </span><span id="statename"></span></p> -->
 			<!-- <p><span style="font-weight:bold">X Parameter: </span><span id="xparamname"></span></p> -->
 			<p><span style="font-weight:bold">Metric: </span><span id="yparamname"></span></p>
 		</div>
-		<div class="col-sm-3">
-			<div style="margin-top:20px"><h5 id="party_name"></h5></div>
-			<div id="party_color" style="width:75px;height:25px"></div>
-			<p><span id="pm_name"></span></p>
+		<div class="col-sm-1">
+			<!-- <div style="margin-top:20px"><h5 id="party_name"></h5></div> -->
+			<!-- <div id="party_color" style="width:75px;height:25px"></div> -->
+			<!-- <p><span id="pm_name"></span></p> -->
 		</div>
 		<div class="col-sm-1">
-			<img id="party_symbol" src="" style="margin-top:20px">
+			<!-- <img id="party_symbol" src="" style="margin-top:20px"> -->
 		</div>
 		<div class="col-sm-4">
 			<p id="nextStories"></p>
@@ -186,6 +190,14 @@
 
 	</div>
 
+	<div class="row">
+
+		<div class="col-md-12 col-sm-12">
+			<div id="legend"></div>
+		</div>
+
+	</div>
+
 	<footer>Data sourced from <a href="http://data.worldbank.org/products/wdi" target="_blank">World Bank</a>.All currency values in ($USD).</footer>
 
 </div>
@@ -194,7 +206,7 @@
 <script src="{{ static_url('/js/jquery2.min.js') }}"></script>
 <script src="{{ static_url('/js/underscore-min.js') }}"></script>
 <script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
-<script src="{{ static_url('js/G.min.js') }}"></script>
+<script src="{{ static_url('js/G.js') }}"></script>
 <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
 
 <script>
@@ -570,19 +582,19 @@ function fillTerms(data,columny,columnx,colcolor,x,y,term){
 
 	$("#termButtons").children().remove();
 
-	d3.select("#termButtons").selectAll("button")
+	var termbox = d3.select("#termButtons").selectAll("label")//.selectAll("button")
 	.data(_.uniq(_.pluck(data,"Term")).concat(["All"]) )
-	.enter().append("button")
-	.attr("class","btn btn-default")
-	.attr("type","button")
-	.append("a")
-	.attr("class","gselect")
-	.attr("href",function(d){
-		if(d=="All")
-			return "?term=All";
-		else
-			return "?term=term"+d ;
-	})
+	.enter().append("label")//.append("button")
+	.attr("class","btn btn-primary termlabel")
+	// .attr("type","button")
+	// .append("a")
+	// .attr("class","gselect")
+	// .attr("href",function(d){
+	// 	if(d=="All")
+	// 		return "?term=All";
+	// 	else
+	// 		return "?term=term"+d ;
+	// })
 	.text(function(d){ return "Term"+d } )
 	.on("click",function(d){
 		// $("circle").remove();
@@ -591,25 +603,44 @@ function fillTerms(data,columny,columnx,colcolor,x,y,term){
 		// 		});
 		// console.log(party_symbol_dict[d]);
 		// console.log(pm_name_dict[d]);
-		var term_num;
-		if(d == "All"){
-			term_num = _.uniq(_.pluck(data,"Term")).slice(-1)[0];
-			$("#party_symbol").attr("src","");
-			$("#pm_name").text("");
-			$("#party_name").text("");
-			$("#party_color").css("background-color","transparent" );			
-		} else {
-			term_num = d;
-			party_n = data.filter(function(k){ return k["Term"] == d;})[0]["Party in power"];//[0][colcolor];
-			$("#party_symbol").attr("src","img/"+party_symbol_dict[term_num]);
-			$("#pm_name").text("PM Name: " + pm_name_dict[term_num]);
-			$("#party_name").text(party_n);
-			$("#party_color").css("background-color",color(party_n) );
-		}
 
-		term_click = true;
-		drawChart(data,columny,columnx,colcolor,x,y,d);
+		setTimeout(function(){
+			
+			if(d == "All"){
+				d3.selectAll(".termlabel").classed("active",false);
+			}
+
+			var term_num,
+				termnums = [];
+
+			$("label.active").each(function(d){ 
+				termnums.push( $(this).text().replace("Term","") );
+			});
+
+			term_num = termnums.join(",");
+
+			/*if(d == "All"){
+				term_num = _.uniq(_.pluck(data,"Term")).slice(-1)[0];
+				// $("#party_symbol").attr("src","");
+				// $("#pm_name").text("");
+				// $("#party_name").text("");
+				// $("#party_color").css("background-color","transparent" );			
+			} else {
+				term_num = d;
+				// party_n = data.filter(function(k){ return k["Term"] == d;})[0]["Party in power"];//[0][colcolor];
+				// $("#party_symbol").attr("src","img/"+party_symbol_dict[term_num]);
+				// $("#pm_name").text("PM Name: " + pm_name_dict[term_num]);
+				// $("#party_name").text(party_n);
+				// $("#party_color").css("background-color",color(party_n) );
+			}*/
+
+			term_click = true;
+			drawChart(data,columny,columnx,colcolor,x,y,term_num);
+			},1);
 	});
+
+		termbox.append("input")
+	.attr("type","checkbox");
 
 }
 
@@ -669,14 +700,14 @@ function drawAxes(data,columny,columnx,colcolor,term){
 	.transition().duration(1000)
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")
-    .call(xAxis)
-	    .selectAll("text")
-	    .style("text-anchor", "end")
-	    .attr("dx", "-.8em")
-	    .attr("dy", ".15em")
-	    .attr("transform", function(d) {
-	        return "rotate(-90)";
-	        });
+    .call(xAxis);
+	    // .selectAll("text")
+	    // .style("text-anchor", "end")
+	    // .attr("dx", "-.8em")
+	    // .attr("dy", ".15em");
+	    // .attr("transform", function(d) {
+	    //     return "rotate(-90)";
+	    //     });
 
 	svg.append("g")
 		.attr("transform", "translate("+width+ ")")
@@ -746,6 +777,7 @@ function drawCircle(data,columny,columnx,colcolor,x,y,term){
 	.attr("r","7px")
 	.style("cursor","pointer")
 	.attr("data-term",function(d){ return d["Term"]})
+	.attr("class",function(d){ return d[colcolor]; })
 	.attr("title",function(d){ return columnx+" :"+d[columnx]+", "+columny+" :"+d[columny] })
 	.attr("fill",function(d){ return color(d[colcolor]) });
 
@@ -762,8 +794,45 @@ function drawChart(data,columny,columnx,colcolor,x,y,term){
 			//   		dict["values"] = test[d];
 			//   		return dict;
 			//   	});
+	term = term == "" ? "All" : term;
+
+	var terms = term.toString().split(",");
 
   	var keys = d3.keys(test);
+
+  	var parties = _.uniq(_.pluck(data,colcolor));
+
+  	d3.select("#legend svg").remove();
+
+  	var party = d3.select("#legend").append("svg")
+  		.attr("width",width/2)
+  		.attr("height","50px")
+  		.attr("viewBox","0 0 " + width/2 + " 50")
+  		.attr("preserveAspectRatio","none")
+  		.selectAll("g.party")
+  		.data(parties)
+  		.enter().append("g")
+  		.attr("class","party")
+  		.style("cursor","pointer");
+
+  	party.append("rect")
+  		.attr("width",(width/2)/parties.length)
+  		.attr("height","50px")
+  		.attr("y","0px")
+  		.attr("x",function(d,i){ return i*((width/2)/parties.length); })
+  		.attr("fill",function(d){ return color(d)})
+  		 .attr("data-highlight",function(d){ return "."+d})
+  		.attr("data-target","#chart svg circle, #chart svg .line")
+  		.attr("data-toggle","1");
+
+  	party.append("text")
+  		.attr("x",function(d,i){ return i*((width/2)/parties.length) + 10; })
+  		.attr("y","30px")
+  		.attr("fill",function(d){ return d3.rgb(color(d)).brighter(0.97); })
+  		.text(String);
+
+  	$('#legend svg').highlight();
+
 
   	var svgline = svg.selectAll(".line")
 		  		.data(d3.keys(test),function(d){ return d});
@@ -772,7 +841,7 @@ function drawChart(data,columny,columnx,colcolor,x,y,term){
 	svgline.exit().transition().remove();
 
 	svgline.enter().append("path")
-  		.attr("class", function(d){ return "hidepath line term"+d.split(",")[1]})
+  		.attr("class", function(d){ return d.split(",")[0]+" hidepath line term"+d.split(",")[1]})
   		.attr("stroke",function(d){ return color( d.split(",")[0] )})
   		.attr("fill","none")
   		// .attr("stroke-width","10px")
@@ -780,7 +849,9 @@ function drawChart(data,columny,columnx,colcolor,x,y,term){
   			if(term == "All"){
   				return false;
   			} else {
-  				return d.split(",")[1] != term;
+  				console.log(term);  				
+  				// return d.split(",")[1] != term;
+  				return terms.indexOf( d.split(",")[1] ) == -1;
   			}
   		})
 		.datum(function(d,i){
@@ -802,7 +873,8 @@ function drawChart(data,columny,columnx,colcolor,x,y,term){
 		$("circle").hide();
 		$("circle").each(function(d){
 			var t = $(this).attr("data-term");
-			if(t != term && term != "All"){
+			// if(t != term && term != "All"){
+			if(terms.indexOf(t) == -1 && term != "All"){
 				$(this).hide();
 			} else {
 				$(this).show(2050);
