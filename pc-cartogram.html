@@ -27,13 +27,13 @@ elections[constituencies_columns] = constituencies[constituencies_columns]
 
 # Various filters, explicitly ordered
 filters = (
-  {'key': '2014-Schedule' , 'series': schedule, },
-  {'key': 'Hindi-speaking', 'series': ['Hindi', 'Rest'], },
-  {'key': 'Bi-polar'      , 'series': ['Bi-polar', 'Rest'], },
-  #{'key': 'Rural'         , 'series': ['Rural', 'Semi Urban', 'Urban'], },
-  {'key': 'SC'            , 'series': ['Below 10%', '10-19.9%', '20-29.9%', '30% and above'], },
-  {'key': 'ST'            , 'series': ['Below 10%', '10-29.9%', '30-49.9%', '50% and above'], },
-  {'key': 'Muslim'        , 'series': ['No information', 'Less than 10%', '10-19.9%', '20-39.9%', '40% and above'], },
+  {'key': '2014-Schedule' , 'only-tv': False, 'series': schedule, },
+  {'key': 'Hindi-speaking', 'only-tv': True,  'series': ['Hindi', 'Rest'], },
+  {'key': 'Bi-polar'      , 'only-tv': True,  'series': ['Bi-polar', 'Rest'], },
+  #{'key': 'Rural'         , 'only-tv': True,  'series': ['Rural', 'Semi Urban', 'Urban'], },
+  {'key': 'SC'            , 'only-tv': True,  'series': ['Below 10%', '10-19.9%', '20-29.9%', '30% and above'], },
+  {'key': 'ST'            , 'only-tv': True,  'series': ['Below 10%', '10-29.9%', '30-49.9%', '50% and above'], },
+  {'key': 'Muslim'        , 'only-tv': True,  'series': ['No information', 'Less than 10%', '10-19.9%', '20-39.9%', '40% and above'], },
 )
 
 subset = elections.reset_index()
@@ -201,7 +201,7 @@ names = {
 </svg>
 <div class="const-filters">
   {% for filter in filters %}
-    <div class="btn-group">
+    <div class="btn-group{{ ' only-tv' if filter['only-tv'] else '' }}">
       {% set keyargs = args.get(filter['key'], []) %}
       <a class="btn btn-sm {{ 'btn-success active' if len(keyargs) else 'btn-primary' }}" href="?YEAR=2009&{{ quote(filter['key']) }}=">{{ filter['key'].replace('-', ' ') }}</a>
       {% for item in filter['series'] %}
