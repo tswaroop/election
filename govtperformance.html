@@ -206,7 +206,7 @@ text{
 <script src="{{ static_url('/js/jquery2.min.js') }}"></script>
 <script src="{{ static_url('/js/underscore-min.js') }}"></script>
 <script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
-<script src="{{ static_url('js/G.js') }}"></script>
+<script src="{{ static_url('js/G.min.js') }}"></script>
 <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
 
 <script>
@@ -401,7 +401,11 @@ function getData(){
 	var dict = {};
 	hash.forEach(function(d){
 		var temp = d.split("=");
-		dict[temp[0]] = decodeURIComponent(temp[1]);
+		try{
+			dict[temp[0]] = decodeURIComponent(temp[1]);
+		} catch(error){
+			dict[temp[0]] = temp[1];
+		}
 	});
 	// console.log(dict);
 
@@ -595,7 +599,7 @@ function fillTerms(data,columny,columnx,colcolor,x,y,term){
 	// 	else
 	// 		return "?term=term"+d ;
 	// })
-	.text(function(d){ return "Term"+d } )
+	.text(function(d){ return "Term "+d } )
 	.on("click",function(d){
 		// $("circle").remove();
 		// var temp = data.filter(function(k){
@@ -605,7 +609,7 @@ function fillTerms(data,columny,columnx,colcolor,x,y,term){
 		// console.log(pm_name_dict[d]);
 
 		setTimeout(function(){
-			
+
 			if(d == "All"){
 				d3.selectAll(".termlabel").classed("active",false);
 			}
@@ -614,7 +618,7 @@ function fillTerms(data,columny,columnx,colcolor,x,y,term){
 				termnums = [];
 
 			$("label.active").each(function(d){ 
-				termnums.push( $(this).text().replace("Term","") );
+				termnums.push( $(this).text().replace("Term","").trim() );
 			});
 
 			term_num = termnums.join(",");
@@ -849,7 +853,7 @@ function drawChart(data,columny,columnx,colcolor,x,y,term){
   			if(term == "All"){
   				return false;
   			} else {
-  				console.log(term);  				
+  				// console.log(term);  				
   				// return d.split(",")[1] != term;
   				return terms.indexOf( d.split(",")[1] ) == -1;
   			}
