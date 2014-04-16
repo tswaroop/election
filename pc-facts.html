@@ -1,20 +1,7 @@
-{{ GRAMEX(cache=['js/G.min.js', 'style.css', 'facts.csv', 'parliament-topics.csv', 'colors.csv', '.head.html', '.tail.html', 'img/loading.gif'], max_age=10*60) }}{% code %}
-title = 'Parliament Elections'
-description = 'A visual guide to the history of Indian Parliament elections, from 1951 until today, by Gramener.'
-
-import json
-from urllib import quote
-from common import pc_setup, slug, metric_names, NONE_COLOR
-data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
-
+{{ GRAMEX(cache=['parliament-topics.csv'], max_age=10*60) }}{% code %}
 topics = pd.read_csv('parliament-topics.csv')
-years = sorted(data['YEAR'].unique())
-tv = args.get('tv')
 colors = _color.distinct(10)
-{% end %}<!DOCTYPE html><html lang="en">
-<head>
-  {{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv) }}
-</head><body{% if tv %} class="tv"{% end %}>
+{% end %}
 
   <div id="factoid">
     {% for i, row in topics.iterrows() %}
@@ -28,4 +15,3 @@ colors = _color.distinct(10)
       </div>
     {% end %}
   </div>
-</body></html>
