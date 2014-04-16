@@ -1,0 +1,680 @@
+
+<div class="pc-summary">
+
+  
+  
+  
+    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Highest margins <small></small></h2>
+    
+<table class="table table-condensed analysis">
+  <thead>
+    <th>Year</th>
+    <th>State</th>
+    <th>Constituency</th>
+    <th>Winner</th><th>Party</th><th>1</th><th>2</th><th class="sorted">Margin</th><th>Margin %</th>
+  </thead>
+  <tbody>
+    
+      <tr href="result?YEAR=2004&STATE=WEST%20BENGAL&PC=ARAMBAGH&margin=">
+        <th>2004</td>
+        <th>West Bengal</td>
+        <th>Arambagh</td>
+        
+          
+            <td>Anil Basu</td>
+          
+        
+          
+            
+            <td style="background-color:#FA2E2E;color:#fff">CPM</td>
+          
+        
+          
+            <td>744,464</td>
+          
+        
+          
+            <td>151,962</td>
+          
+        
+          
+            <td>592,502</td>
+          
+        
+          
+            <td>61.4%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1989&STATE=BIHAR&PC=HAJIPUR&margin=">
+        <th>1989</td>
+        <th>Bihar</td>
+        <th>Hajipur</td>
+        
+          
+            <td>Ram Vilas Paswan</td>
+          
+        
+          
+            
+            <td style="background-color:#8064a2;color:#fff">JD</td>
+          
+        
+          
+            <td>615,129</td>
+          
+        
+          
+            <td>110,681</td>
+          
+        
+          
+            <td>504,448</td>
+          
+        
+          
+            <td>69.0%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2004&STATE=ASSAM&PC=KOKRAJHAR&margin=">
+        <th>2004</td>
+        <th>Assam</td>
+        <th>Kokrajhar</td>
+        
+          
+            <td>Sansuma Khunggur Bwiswmuthiary</td>
+          
+        
+          
+            
+            <td style="background-color:#95b3d7;color:#000">IND</td>
+          
+        
+          
+            <td>689,620</td>
+          
+        
+          
+            <td>205,491</td>
+          
+        
+          
+            <td>484,129</td>
+          
+        
+          
+            <td>50.1%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=NAGALAND&PC=NAGALAND&margin=">
+        <th>2009</td>
+        <th>Nagaland</td>
+        <th>Nagaland</td>
+        
+          
+            <td>C.M. Chang</td>
+          
+        
+          
+            
+            <td style="background-color:#832EFA;color:#fff">NPF</td>
+          
+        
+          
+            <td>832,224</td>
+          
+        
+          
+            <td>349,203</td>
+          
+        
+          
+            <td>483,021</td>
+          
+        
+          
+            <td>40.6%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1989&STATE=PUNJAB&PC=TARN%20TARAN&margin=">
+        <th>1989</td>
+        <th>Punjab</td>
+        <th>Tarn Taran</td>
+        
+          
+            <td>Simaranjit Singh Mann</td>
+          
+        
+          
+            
+            <td style="background-color:#a0a0a0;color:#000">SAD(M)</td>
+          
+        
+          
+            <td>527,707</td>
+          
+        
+          
+            <td>47,290</td>
+          
+        
+          
+            <td>480,417</td>
+          
+        
+          
+            <td>81.2%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2004&STATE=WEST%20BENGAL&PC=BURDWAN&margin=">
+        <th>2004</td>
+        <th>West Bengal</td>
+        <th>Burdwan</td>
+        
+          
+            <td>Nikhilananda Sar</td>
+          
+        
+          
+            
+            <td style="background-color:#FA2E2E;color:#fff">CPM</td>
+          
+        
+          
+            <td>673,091</td>
+          
+        
+          
+            <td>201,740</td>
+          
+        
+          
+            <td>471,351</td>
+          
+        
+          
+            <td>47.3%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2004&STATE=NAGALAND&PC=NAGALAND&margin=">
+        <th>2004</td>
+        <th>Nagaland</td>
+        <th>Nagaland</td>
+        
+          
+            <td>W. Wangyuh</td>
+          
+        
+          
+            
+            <td style="background-color:#832EFA;color:#fff">NPF</td>
+          
+        
+          
+            <td>698,128</td>
+          
+        
+          
+            <td>246,109</td>
+          
+        
+          
+            <td>452,019</td>
+          
+        
+          
+            <td>47.3%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=HARYANA&PC=ROHTAK&margin=">
+        <th>2009</td>
+        <th>Haryana</td>
+        <th>Rohtak</td>
+        
+          
+            <td>Deepender Singh</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+          
+            <td>585,016</td>
+          
+        
+          
+            <td>139,280</td>
+          
+        
+          
+            <td>445,736</td>
+          
+        
+          
+            <td>53.3%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1989&STATE=BIHAR&PC=BHAGALPUR&margin=">
+        <th>1989</td>
+        <th>Bihar</td>
+        <th>Bhagalpur</td>
+        
+          
+            <td>Chun Chun Prasad Yadav</td>
+          
+        
+          
+            
+            <td style="background-color:#8064a2;color:#fff">JD</td>
+          
+        
+          
+            <td>547,723</td>
+          
+        
+          
+            <td>112,325</td>
+          
+        
+          
+            <td>435,398</td>
+          
+        
+          
+            <td>64.8%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1991&STATE=TRIPURA&PC=TRIPURA%20WEST&margin=">
+        <th>1991</td>
+        <th>Tripura</td>
+        <th>Tripura West</td>
+        
+          
+            <td>Santosh Mohan Deo</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+          
+            <td>464,743</td>
+          
+        
+          
+            <td>35,759</td>
+          
+        
+          
+            <td>428,984</td>
+          
+        
+          
+            <td>77.0%</td>
+          
+        
+      </tr>
+    
+  </tbody>
+</table>
+
+
+    <h2>Highest % margins <small></small></h2>
+    
+<table class="table table-condensed analysis">
+  <thead>
+    <th>Year</th>
+    <th>State</th>
+    <th>Constituency</th>
+    <th>Winner</th><th>Party</th><th>1</th><th>2</th><th>Margin</th><th class="sorted">Margin %</th>
+  </thead>
+  <tbody>
+    
+      <tr href="result?YEAR=1989&STATE=JAMMU%20%26%20KASHMIR&PC=ANANTNAG&margin=">
+        <th>1989</td>
+        <th>Jammu &amp; Kashmir</td>
+        <th>Anantnag</td>
+        
+          
+            <td>P.L.Handoo</td>
+          
+        
+          
+            
+            <td style="background-color:#FA2E2E;color:#fff">NC</td>
+          
+        
+          
+            <td>36,055</td>
+          
+        
+          
+            <td>186</td>
+          
+        
+          
+            <td>35,869</td>
+          
+        
+          
+            <td>97.2%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1989&STATE=JAMMU%20%26%20KASHMIR&PC=BARAMULLA&margin=">
+        <th>1989</td>
+        <th>Jammu &amp; Kashmir</td>
+        <th>Baramulla</td>
+        
+          
+            <td>Saif Ud Din Soze</td>
+          
+        
+          
+            
+            <td style="background-color:#FA2E2E;color:#fff">NC</td>
+          
+        
+          
+            <td>35,139</td>
+          
+        
+          
+            <td>719</td>
+          
+        
+          
+            <td>34,420</td>
+          
+        
+          
+            <td>91.9%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1991&STATE=SIKKIM&PC=SIKKIM&margin=">
+        <th>1991</td>
+        <th>Sikkim</td>
+        <th>Sikkim</td>
+        
+          
+            <td>Dil Kumari Bhandari (W)</td>
+          
+        
+          
+            
+            <td style="background-color:#a0a0a0;color:#000">SSP</td>
+          
+        
+          
+            <td>103,970</td>
+          
+        
+          
+            <td>3,759</td>
+          
+        
+          
+            <td>100,211</td>
+          
+        
+          
+            <td>86.9%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1971&STATE=ANDHRA%20PRADESH&PC=KAKINADA&margin=">
+        <th>1971</td>
+        <th>Andhra Pradesh</td>
+        <th>Kakinada</td>
+        
+          
+            <td>M. S. Sanjeevi Rao</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+          
+            <td>313,060</td>
+          
+        
+          
+            <td>20,134</td>
+          
+        
+          
+            <td>292,926</td>
+          
+        
+          
+            <td>81.8%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1971&STATE=HIMACHAL%20PRADESH&PC=SIMLA&margin=">
+        <th>1971</td>
+        <th>Himachal Pradesh</td>
+        <th>Simla</td>
+        
+          
+            <td>Partap Singh</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+          
+            <td>136,789</td>
+          
+        
+          
+            <td>9,238</td>
+          
+        
+          
+            <td>127,551</td>
+          
+        
+          
+            <td>81.5%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1989&STATE=PUNJAB&PC=TARN%20TARAN&margin=">
+        <th>1989</td>
+        <th>Punjab</td>
+        <th>Tarn Taran</td>
+        
+          
+            <td>Simaranjit Singh Mann</td>
+          
+        
+          
+            
+            <td style="background-color:#a0a0a0;color:#000">SAD(M)</td>
+          
+        
+          
+            <td>527,707</td>
+          
+        
+          
+            <td>47,290</td>
+          
+        
+          
+            <td>480,417</td>
+          
+        
+          
+            <td>81.2%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1977&STATE=BIHAR&PC=HAJIPUR&margin=">
+        <th>1977</td>
+        <th>Bihar</td>
+        <th>Hajipur</td>
+        
+          
+            <td>Ram Vilas Paswan</td>
+          
+        
+          
+            
+            <td style="background-color:#000000;color:#fff">JNP</td>
+          
+        
+          
+            <td>469,007</td>
+          
+        
+          
+            <td>44,462</td>
+          
+        
+          
+            <td>424,545</td>
+          
+        
+          
+            <td>80.8%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1977&STATE=PUNJAB&PC=FEROZEPUR&margin=">
+        <th>1977</td>
+        <th>Punjab</td>
+        <th>Ferozepur</td>
+        
+          
+            <td>Mohinder Singh Sayanwala</td>
+          
+        
+          
+            
+            <td style="background-color:#FAE92E;color:#000">SAD</td>
+          
+        
+          
+            <td>179,894</td>
+          
+        
+          
+            <td>15,955</td>
+          
+        
+          
+            <td>163,939</td>
+          
+        
+          
+            <td>80.0%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1971&STATE=MAHARASHTRA&PC=KARAD&margin=">
+        <th>1971</td>
+        <th>Maharashtra</td>
+        <th>Karad</td>
+        
+          
+            <td>Dajisaheb Ramrao Chavan</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+          
+            <td>263,356</td>
+          
+        
+          
+            <td>19,893</td>
+          
+        
+          
+            <td>243,463</td>
+          
+        
+          
+            <td>79.7%</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1971&STATE=ANDHRA%20PRADESH&PC=KURNOOL&margin=">
+        <th>1971</td>
+        <th>Andhra Pradesh</td>
+        <th>Kurnool</td>
+        
+          
+            <td>Kodanda Rami Reddy</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+          
+            <td>270,697</td>
+          
+        
+          
+            <td>29,344</td>
+          
+        
+          
+            <td>241,353</td>
+          
+        
+          
+            <td>77.7%</td>
+          
+        
+      </tr>
+    
+  </tbody>
+</table>
+
+
+  
+
+
+</div>

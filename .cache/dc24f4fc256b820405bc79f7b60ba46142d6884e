@@ -1,0 +1,744 @@
+
+<div class="pc-result">
+<h2>
+  <div class="pull-right">
+    <i class="glyphicon glyphicon-map-marker text-danger" href="cartogram?PC=" title="Cartogram"></i>
+  </div>
+  <i class="back glyphicon glyphicon-circle-arrow-left"></i>
+  Dewas,
+  <a href="state?PC=&YEAR=">Madhya Pradesh</a>
+  2009
+  <small>10 / 10 candidates</small>
+</h2>
+
+  
+    <h3 class="winner-story">
+      <span class="winner-name">SAJJAN SINGH VERMA</span> of
+      
+      <span class="winner-party" style="background-color:#2EA7FF;color:#000">CONG</span> won by
+      2.0% (15,457 votes)
+      
+        
+        against
+        THAVARCHAND GEHLOT of
+        
+        <span class="winner-party" style="background-color:#FA942E;color:#000">BJP</span>.
+      
+    </h3>
+
+    <table class="table table-condensed analysis">
+      <thead>
+        <th>#</th><th>PARTY</th><th>NAME</th><th>VOTES</th><th>SEX</th><th>AGE</th><th>CATEGORY</th>
+      </thead>
+      <tbody>
+        
+          <tr>
+            
+              
+                <td>1</td>
+              
+            
+              
+                
+                <td style="background-color:#2EA7FF;color:#000">CONG</td>
+              
+            
+              
+                <td>Sajjan Singh Verma</td>
+              
+            
+              
+                <td>376,421</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>57</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>2</td>
+              
+            
+              
+                
+                <td style="background-color:#FA942E;color:#000">BJP</td>
+              
+            
+              
+                <td>Thavarchand Gehlot</td>
+              
+            
+              
+                <td>360,964</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>61</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>3</td>
+              
+            
+              
+                
+                <td style="background-color:#2E3EEB;color:#fff">BSP</td>
+              
+            
+              
+                <td>Bhagirath Parihar</td>
+              
+            
+              
+                <td>10,743</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>56</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>4</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Mohan Sih Malviya</td>
+              
+            
+              
+                <td>7,890</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>28</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>5</td>
+              
+            
+              
+                
+                <td style="background-color:#832EFA;color:#fff">LJP</td>
+              
+            
+              
+                <td>Dr. Gangaram Jogchand</td>
+              
+            
+              
+                <td>6,348</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>34</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>6</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Thavarsingh</td>
+              
+            
+              
+                <td>5,989</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>48</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>7</td>
+              
+            
+              
+                
+                <td style="background-color:#a0a0a0;color:#000">PRSP</td>
+              
+            
+              
+                <td>Joravar Singh Dudi</td>
+              
+            
+              
+                <td>4,541</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>66</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>8</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Jayram Solanki</td>
+              
+            
+              
+                <td>3,650</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>33</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>9</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Pro. B.S. Malviya</td>
+              
+            
+              
+                <td>3,196</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>66</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>10</td>
+              
+            
+              
+                
+                <td style="background-color:#a0a0a0;color:#000">RWS</td>
+              
+            
+              
+                <td>Balram Sukhram Kalyane</td>
+              
+            
+              
+                <td>3,186</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>57</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+      </tbody>
+    </table>
+  
+
+  
+  <svg class="const-stack" width="100%" data-height="0.425531914894" viewBox="0 0 940 400">
+    <rect width="30" height="25" class="party-unhighlight" fill="#000" title="Show all parties"/>
+    <text x="15" y="12.5" text-anchor="middle" dy=".35em" fill="#fff">x</text>
+    
+      
+      <rect class="party-legend"
+        data-party="CONG"
+        data-highlight="[data-party=CONG]"
+        data-toggle="highlight"
+        x="30.0"
+        width="101.111111111"
+        height="25"
+        fill="#2EA7FF"></rect>
+      <text class="party-legend-text"
+        x="80.5555555556"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="CONG">CONG</text>
+    
+      
+      <rect class="party-legend"
+        data-party="BJP"
+        data-highlight="[data-party=BJP]"
+        data-toggle="highlight"
+        x="131.111111111"
+        width="101.111111111"
+        height="25"
+        fill="#FA942E"></rect>
+      <text class="party-legend-text"
+        x="181.666666667"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="BJP">BJP</text>
+    
+      
+      <rect class="party-legend"
+        data-party="JS"
+        data-highlight="[data-party=JS]"
+        data-toggle="highlight"
+        x="232.222222222"
+        width="101.111111111"
+        height="25"
+        fill="#a0a0a0"></rect>
+      <text class="party-legend-text"
+        x="282.777777778"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="JS">JS</text>
+    
+      
+      <rect class="party-legend"
+        data-party="RRP"
+        data-highlight="[data-party=RRP]"
+        data-toggle="highlight"
+        x="333.333333333"
+        width="101.111111111"
+        height="25"
+        fill="#a0a0a0"></rect>
+      <text class="party-legend-text"
+        x="383.888888889"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="RRP">RRP</text>
+    
+      
+      <rect class="party-legend"
+        data-party="IND"
+        data-highlight="[data-party=IND]"
+        data-toggle="highlight"
+        x="434.444444444"
+        width="101.111111111"
+        height="25"
+        fill="#95b3d7"></rect>
+      <text class="party-legend-text"
+        x="485.0"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="IND">IND</text>
+    
+      
+      <rect class="party-legend"
+        data-party="BSP"
+        data-highlight="[data-party=BSP]"
+        data-toggle="highlight"
+        x="535.555555556"
+        width="101.111111111"
+        height="25"
+        fill="#2E3EEB"></rect>
+      <text class="party-legend-text"
+        x="586.111111111"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#fff"
+        data-party="BSP">BSP</text>
+    
+      
+      <rect class="party-legend"
+        data-party="LJP"
+        data-highlight="[data-party=LJP]"
+        data-toggle="highlight"
+        x="636.666666667"
+        width="101.111111111"
+        height="25"
+        fill="#832EFA"></rect>
+      <text class="party-legend-text"
+        x="687.222222222"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#fff"
+        data-party="LJP">LJP</text>
+    
+      
+      <rect class="party-legend"
+        data-party="PRSP"
+        data-highlight="[data-party=PRSP]"
+        data-toggle="highlight"
+        x="737.777777778"
+        width="101.111111111"
+        height="25"
+        fill="#a0a0a0"></rect>
+      <text class="party-legend-text"
+        x="788.333333333"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="PRSP">PRSP</text>
+    
+      
+      <rect class="party-legend"
+        data-party="RWS"
+        data-highlight="[data-party=RWS]"
+        data-toggle="highlight"
+        x="838.888888889"
+        width="101.111111111"
+        height="25"
+        fill="#a0a0a0"></rect>
+      <text class="party-legend-text"
+        x="889.444444444"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="RWS">RWS</text>
+    
+    
+    <g class="pc-stack">
+      
+        
+        <text x="235.0" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=1962"
+          class="year-legend">1962</text>
+        
+          
+          <rect x="5.0" width="460.0" y="241.919103454" height="158.080896546"
+            data-party="JS"
+            title="HUKUMCHAND<br>JS: 106,706 votes in 1962"
+            href="?YEAR=1962"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+            <text x="235.0" y="320.959551727"
+              data-party="JS"
+              fill="#000" text-anchor="middle">46%</text>
+            <text x="235.0" y="320.959551727"
+              data-party="JS"
+              fill="#000" dy="1em" text-anchor="middle">JS</text>
+          
+        
+          
+          <rect x="5.0" width="460.0" y="94.429179575" height="147.489923879"
+            data-party="CONG"
+            title="KANHAIYALAL<br>CONG: 99,557 votes in 1962"
+            href="?YEAR=1962"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="235.0" y="168.174141514"
+              data-party="CONG"
+              fill="#000" text-anchor="middle">43%</text>
+            <text x="235.0" y="168.174141514"
+              data-party="CONG"
+              fill="#000" dy="1em" text-anchor="middle">CONG</text>
+          
+        
+          
+          <rect x="5.0" width="460.0" y="60.0" height="34.429179575"
+            data-party="RRP"
+            title="RAMLAL<br>RRP: 23,240 votes in 1962"
+            href="?YEAR=1962"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+            <text x="235.0" y="77.2145897875"
+              data-party="RRP"
+              fill="#000" dy=".35em" text-anchor="middle">RRP</text>
+          
+        
+      
+        
+        <text x="705.0" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=2009"
+          class="year-legend active">2009</text>
+        
+          
+          <rect x="475.0" width="460.0" y="236.532682443" height="163.467317557"
+            data-party="CONG"
+            title="SAJJAN SINGH VERMA<br>CONG: 376,421 votes in 2009"
+            href="?YEAR=2009"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="705.0" y="318.266341222"
+              data-party="CONG"
+              fill="#000" text-anchor="middle">48%</text>
+            <text x="705.0" y="318.266341222"
+              data-party="CONG"
+              fill="#000" dy="1em" text-anchor="middle">CONG</text>
+          
+        
+          
+          <rect x="475.0" width="460.0" y="79.7778339771" height="156.754848466"
+            data-party="BJP"
+            title="THAVARCHAND GEHLOT<br>BJP: 360,964 votes in 2009"
+            href="?YEAR=2009"
+            fill="#FA942E" stroke="#fff"/>
+          
+            <text x="705.0" y="158.15525821"
+              data-party="BJP"
+              fill="#000" text-anchor="middle">46%</text>
+            <text x="705.0" y="158.15525821"
+              data-party="BJP"
+              fill="#000" dy="1em" text-anchor="middle">BJP</text>
+          
+        
+          
+          <rect x="475.0" width="460.0" y="75.1125007664" height="4.66533321072"
+            data-party="BSP"
+            title="BHAGIRATH PARIHAR<br>BSP: 10,743 votes in 2009"
+            href="?YEAR=2009"
+            fill="#2E3EEB" stroke="#fff"/>
+          
+        
+          
+          <rect x="475.0" width="460.0" y="71.6861320581" height="3.42636870823"
+            data-party="IND"
+            title="MOHAN SIH MALVIYA<br>IND: 7,890 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="475.0" width="460.0" y="68.9294034701" height="2.75672858807"
+            data-party="LJP"
+            title="DR. GANGARAM JOGCHAND<br>LJP: 6,348 votes in 2009"
+            href="?YEAR=2009"
+            fill="#832EFA" stroke="#fff"/>
+          
+        
+          
+          <rect x="475.0" width="460.0" y="66.3285768295" height="2.60082664051"
+            data-party="IND"
+            title="THAVARSINGH<br>IND: 5,989 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="475.0" width="460.0" y="64.3565691864" height="1.9720076431"
+            data-party="PRSP"
+            title="JORAVAR SINGH DUDI<br>PRSP: 4,541 votes in 2009"
+            href="?YEAR=2009"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+        
+          
+          <rect x="475.0" width="460.0" y="62.771493675" height="1.58507551141"
+            data-party="IND"
+            title="JAYRAM SOLANKI<br>IND: 3,650 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="475.0" width="460.0" y="61.3835755012" height="1.38791817383"
+            data-party="IND"
+            title="PRO. B.S. MALVIYA<br>IND: 3,196 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="475.0" width="460.0" y="60.0" height="1.3835755012"
+            data-party="RWS"
+            title="BALRAM SUKHRAM KALYANE<br>RWS: 3,186 votes in 2009"
+            href="?YEAR=2009"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+        
+      
+    </g>
+  </svg>
+
+
+
+
+  
+  <h2>11 affidavits filed for 2014 elections
+    <a class="small direct-link" target="_blank" href="http://affidavitarchive.nic.in/DynamicAffidavitDisplay/CANDIDATEAFFIDAVIT.aspx?YEARID=May-2014&AC_No=21&st_code=S12&constType=PC">on ECI website</a></h2>
+  <table class="dataframe table table-condensed">
+  <thead>
+    <tr style="text-align: right;">
+      <th>PARTY</th>
+      <th>NAME</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>         Bahujan Samaj Party</td>
+      <td>  GOKUL PRASAD DONAGRE</td>
+    </tr>
+    <tr>
+      <td>      Bharatiya Janata Party</td>
+      <td>        MANOHAR UNTWAL</td>
+    </tr>
+    <tr>
+      <td>    Indian National Congress</td>
+      <td>    SAJJAN SINGH VERMA</td>
+    </tr>
+    <tr>
+      <td> Prajatantrik Samadhan Party</td>
+      <td>   KAMAL SINGH CHOUHAN</td>
+    </tr>
+    <tr>
+      <td>             Aam Aadmi Party</td>
+      <td>         SUJEET SANGTE</td>
+    </tr>
+    <tr>
+      <td>       Samata Samadhan Party</td>
+      <td> SOBHAL SINGH SISODIYA</td>
+    </tr>
+    <tr>
+      <td>         Bahujan Mukti Party</td>
+      <td>  SOUDAN SINGH DALMIYA</td>
+    </tr>
+    <tr>
+      <td>      Bahujan Sangharshh Dal</td>
+      <td>  HEMRAJ SINGH BAMNIYA</td>
+    </tr>
+    <tr>
+      <td>                 Independent</td>
+      <td>       MANOHAR AHIRIYA</td>
+    </tr>
+    <tr>
+      <td>                 Independent</td>
+      <td>    RADHESHYAM MALVIYA</td>
+    </tr>
+    <tr>
+      <td>                 Independent</td>
+      <td>           SAJAN SINGH</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+</div>

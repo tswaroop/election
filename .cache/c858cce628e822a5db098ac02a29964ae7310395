@@ -1,0 +1,1382 @@
+
+
+
+
+<div id="state-legend-container">
+  <svg id="state-legend" width="100%" data-height="0.0531914893617" viewBox ="0 0 940 50">
+    
+    
+      <g>
+        <rect class="state-legend"
+          href="?STATE="
+          x="0.0"
+          width="28.4848484848"
+          height="25"
+          title="All states"
+          fill="#e66"/>
+        <text x="14.2424242424" y="12" text-anchor="middle" dy=".35em" font-size="12">X</text>
+        <text class="value" x="14.2424242424" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="A&N ISLANDS">
+        <rect class="state-legend"
+          href="?STATE=A%26N%20ISLANDS"
+          x="28.4848484848"
+          width="28.4848484848"
+          height="25"
+          title="A&amp;N ISLANDS"
+          fill="#f8f8f8"/>
+        <text x="42.7272727273" y="12" text-anchor="middle" dy=".35em" font-size="12">AN</text>
+        <text class="value" x="42.7272727273" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="ANDHRA PRADESH">
+        <rect class="state-legend"
+          href="?STATE=ANDHRA%20PRADESH"
+          x="56.9696969697"
+          width="28.4848484848"
+          height="25"
+          title="ANDHRA PRADESH"
+          fill="#f8f8f8"/>
+        <text x="71.2121212121" y="12" text-anchor="middle" dy=".35em" font-size="12">AP</text>
+        <text class="value" x="71.2121212121" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="ARUNACHAL PRADESH">
+        <rect class="state-legend"
+          href="?STATE=ARUNACHAL%20PRADESH"
+          x="85.4545454545"
+          width="28.4848484848"
+          height="25"
+          title="ARUNACHAL PRADESH"
+          fill="#f8f8f8"/>
+        <text x="99.696969697" y="12" text-anchor="middle" dy=".35em" font-size="12">AR</text>
+        <text class="value" x="99.696969697" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="ASSAM">
+        <rect class="state-legend"
+          href="?STATE=ASSAM"
+          x="113.939393939"
+          width="28.4848484848"
+          height="25"
+          title="ASSAM"
+          fill="#f8f8f8"/>
+        <text x="128.181818182" y="12" text-anchor="middle" dy=".35em" font-size="12">AS</text>
+        <text class="value" x="128.181818182" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="BIHAR">
+        <rect class="state-legend"
+          href="?STATE=BIHAR"
+          x="142.424242424"
+          width="28.4848484848"
+          height="25"
+          title="BIHAR"
+          fill="#f8f8f8"/>
+        <text x="156.666666667" y="12" text-anchor="middle" dy=".35em" font-size="12">BR</text>
+        <text class="value" x="156.666666667" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="CHANDIGARH">
+        <rect class="state-legend"
+          href="?STATE=CHANDIGARH"
+          x="170.909090909"
+          width="28.4848484848"
+          height="25"
+          title="CHANDIGARH"
+          fill="#f8f8f8"/>
+        <text x="185.151515152" y="12" text-anchor="middle" dy=".35em" font-size="12">CH</text>
+        <text class="value" x="185.151515152" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="D&N HAVELI">
+        <rect class="state-legend"
+          href="?STATE=D%26N%20HAVELI"
+          x="199.393939394"
+          width="28.4848484848"
+          height="25"
+          title="D&amp;N HAVELI"
+          fill="#f8f8f8"/>
+        <text x="213.636363636" y="12" text-anchor="middle" dy=".35em" font-size="12">DN</text>
+        <text class="value" x="213.636363636" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="DAMAN & DIU">
+        <rect class="state-legend"
+          href="?STATE=DAMAN%20%26%20DIU"
+          x="227.878787879"
+          width="28.4848484848"
+          height="25"
+          title="DAMAN &amp; DIU"
+          fill="#f8f8f8"/>
+        <text x="242.121212121" y="12" text-anchor="middle" dy=".35em" font-size="12">DD</text>
+        <text class="value" x="242.121212121" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="GOA">
+        <rect class="state-legend"
+          href="?STATE=GOA"
+          x="256.363636364"
+          width="28.4848484848"
+          height="25"
+          title="GOA"
+          fill="#f8f8f8"/>
+        <text x="270.606060606" y="12" text-anchor="middle" dy=".35em" font-size="12">GA</text>
+        <text class="value" x="270.606060606" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="GUJARAT">
+        <rect class="state-legend"
+          href="?STATE=GUJARAT"
+          x="284.848484848"
+          width="28.4848484848"
+          height="25"
+          title="GUJARAT"
+          fill="#f8f8f8"/>
+        <text x="299.090909091" y="12" text-anchor="middle" dy=".35em" font-size="12">GJ</text>
+        <text class="value" x="299.090909091" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="HARYANA">
+        <rect class="state-legend"
+          href="?STATE=HARYANA"
+          x="313.333333333"
+          width="28.4848484848"
+          height="25"
+          title="HARYANA"
+          fill="#f8f8f8"/>
+        <text x="327.575757576" y="12" text-anchor="middle" dy=".35em" font-size="12">HR</text>
+        <text class="value" x="327.575757576" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="HIMACHAL PRADESH">
+        <rect class="state-legend"
+          href="?STATE=HIMACHAL%20PRADESH"
+          x="341.818181818"
+          width="28.4848484848"
+          height="25"
+          title="HIMACHAL PRADESH"
+          fill="#f8f8f8"/>
+        <text x="356.060606061" y="12" text-anchor="middle" dy=".35em" font-size="12">HP</text>
+        <text class="value" x="356.060606061" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="JAMMU & KASHMIR">
+        <rect class="state-legend"
+          href="?STATE=JAMMU%20%26%20KASHMIR"
+          x="370.303030303"
+          width="28.4848484848"
+          height="25"
+          title="JAMMU &amp; KASHMIR"
+          fill="#f8f8f8"/>
+        <text x="384.545454545" y="12" text-anchor="middle" dy=".35em" font-size="12">JK</text>
+        <text class="value" x="384.545454545" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="KARNATAKA">
+        <rect class="state-legend"
+          href="?STATE=KARNATAKA"
+          x="398.787878788"
+          width="28.4848484848"
+          height="25"
+          title="KARNATAKA"
+          fill="#f8f8f8"/>
+        <text x="413.03030303" y="12" text-anchor="middle" dy=".35em" font-size="12">KA</text>
+        <text class="value" x="413.03030303" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="KERALA">
+        <rect class="state-legend"
+          href="?STATE=KERALA"
+          x="427.272727273"
+          width="28.4848484848"
+          height="25"
+          title="KERALA"
+          fill="#f8f8f8"/>
+        <text x="441.515151515" y="12" text-anchor="middle" dy=".35em" font-size="12">KL</text>
+        <text class="value" x="441.515151515" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="LAKSHADWEEP">
+        <rect class="state-legend"
+          href="?STATE=LAKSHADWEEP"
+          x="455.757575758"
+          width="28.4848484848"
+          height="25"
+          title="LAKSHADWEEP"
+          fill="#f8f8f8"/>
+        <text x="470.0" y="12" text-anchor="middle" dy=".35em" font-size="12">LD</text>
+        <text class="value" x="470.0" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="MADHYA PRADESH">
+        <rect class="state-legend"
+          href="?STATE=MADHYA%20PRADESH"
+          x="484.242424242"
+          width="28.4848484848"
+          height="25"
+          title="MADHYA PRADESH"
+          fill="#f8f8f8"/>
+        <text x="498.484848485" y="12" text-anchor="middle" dy=".35em" font-size="12">MP</text>
+        <text class="value" x="498.484848485" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="MAHARASHTRA">
+        <rect class="state-legend"
+          href="?STATE=MAHARASHTRA"
+          x="512.727272727"
+          width="28.4848484848"
+          height="25"
+          title="MAHARASHTRA"
+          fill="#f8f8f8"/>
+        <text x="526.96969697" y="12" text-anchor="middle" dy=".35em" font-size="12">MH</text>
+        <text class="value" x="526.96969697" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="MANIPUR">
+        <rect class="state-legend"
+          href="?STATE=MANIPUR"
+          x="541.212121212"
+          width="28.4848484848"
+          height="25"
+          title="MANIPUR"
+          fill="#f8f8f8"/>
+        <text x="555.454545455" y="12" text-anchor="middle" dy=".35em" font-size="12">MN</text>
+        <text class="value" x="555.454545455" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="MEGHALAYA">
+        <rect class="state-legend"
+          href="?STATE=MEGHALAYA"
+          x="569.696969697"
+          width="28.4848484848"
+          height="25"
+          title="MEGHALAYA"
+          fill="#f8f8f8"/>
+        <text x="583.939393939" y="12" text-anchor="middle" dy=".35em" font-size="12">ML</text>
+        <text class="value" x="583.939393939" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="MIZORAM">
+        <rect class="state-legend"
+          href="?STATE=MIZORAM"
+          x="598.181818182"
+          width="28.4848484848"
+          height="25"
+          title="MIZORAM"
+          fill="#f8f8f8"/>
+        <text x="612.424242424" y="12" text-anchor="middle" dy=".35em" font-size="12">MZ</text>
+        <text class="value" x="612.424242424" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="NAGALAND">
+        <rect class="state-legend"
+          href="?STATE=NAGALAND"
+          x="626.666666667"
+          width="28.4848484848"
+          height="25"
+          title="NAGALAND"
+          fill="#f8f8f8"/>
+        <text x="640.909090909" y="12" text-anchor="middle" dy=".35em" font-size="12">NL</text>
+        <text class="value" x="640.909090909" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="NCT OF DELHI">
+        <rect class="state-legend"
+          href="?STATE=NCT%20OF%20DELHI"
+          x="655.151515152"
+          width="28.4848484848"
+          height="25"
+          title="NCT OF DELHI"
+          fill="#f8f8f8"/>
+        <text x="669.393939394" y="12" text-anchor="middle" dy=".35em" font-size="12">DL</text>
+        <text class="value" x="669.393939394" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="ORISSA">
+        <rect class="state-legend"
+          href="?STATE=ORISSA"
+          x="683.636363636"
+          width="28.4848484848"
+          height="25"
+          title="ORISSA"
+          fill="#f8f8f8"/>
+        <text x="697.878787879" y="12" text-anchor="middle" dy=".35em" font-size="12">OD</text>
+        <text class="value" x="697.878787879" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="PUDUCHERRY">
+        <rect class="state-legend"
+          href="?STATE=PUDUCHERRY"
+          x="712.121212121"
+          width="28.4848484848"
+          height="25"
+          title="PUDUCHERRY"
+          fill="#f8f8f8"/>
+        <text x="726.363636364" y="12" text-anchor="middle" dy=".35em" font-size="12">PY</text>
+        <text class="value" x="726.363636364" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="PUNJAB">
+        <rect class="state-legend"
+          href="?STATE=PUNJAB"
+          x="740.606060606"
+          width="28.4848484848"
+          height="25"
+          title="PUNJAB"
+          fill="#f8f8f8"/>
+        <text x="754.848484848" y="12" text-anchor="middle" dy=".35em" font-size="12">PB</text>
+        <text class="value" x="754.848484848" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="RAJASTHAN">
+        <rect class="state-legend"
+          href="?STATE=RAJASTHAN"
+          x="769.090909091"
+          width="28.4848484848"
+          height="25"
+          title="RAJASTHAN"
+          fill="#f8f8f8"/>
+        <text x="783.333333333" y="12" text-anchor="middle" dy=".35em" font-size="12">RJ</text>
+        <text class="value" x="783.333333333" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="SIKKIM">
+        <rect class="state-legend"
+          href="?STATE=SIKKIM"
+          x="797.575757576"
+          width="28.4848484848"
+          height="25"
+          title="SIKKIM"
+          fill="#f8f8f8"/>
+        <text x="811.818181818" y="12" text-anchor="middle" dy=".35em" font-size="12">SK</text>
+        <text class="value" x="811.818181818" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="TAMIL NADU">
+        <rect class="state-legend"
+          href="?STATE=TAMIL%20NADU"
+          x="826.060606061"
+          width="28.4848484848"
+          height="25"
+          title="TAMIL NADU"
+          fill="#f8f8f8"/>
+        <text x="840.303030303" y="12" text-anchor="middle" dy=".35em" font-size="12">TN</text>
+        <text class="value" x="840.303030303" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="TRIPURA">
+        <rect class="state-legend"
+          href="?STATE=TRIPURA"
+          x="854.545454545"
+          width="28.4848484848"
+          height="25"
+          title="TRIPURA"
+          fill="#f8f8f8"/>
+        <text x="868.787878788" y="12" text-anchor="middle" dy=".35em" font-size="12">TR</text>
+        <text class="value" x="868.787878788" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="UTTAR PRADESH">
+        <rect class="state-legend"
+          href="?STATE=UTTAR%20PRADESH"
+          x="883.03030303"
+          width="28.4848484848"
+          height="25"
+          title="UTTAR PRADESH"
+          fill="#f8f8f8"/>
+        <text x="897.272727273" y="12" text-anchor="middle" dy=".35em" font-size="12">UP</text>
+        <text class="value" x="897.272727273" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="WEST BENGAL">
+        <rect class="state-legend"
+          href="?STATE=WEST%20BENGAL"
+          x="911.515151515"
+          width="28.4848484848"
+          height="25"
+          title="WEST BENGAL"
+          fill="#f8f8f8"/>
+        <text x="925.757575758" y="12" text-anchor="middle" dy=".35em" font-size="12">WB</text>
+        <text class="value" x="925.757575758" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+  </svg>
+</div>
+
+
+
+<svg class="cartogram" width="100%" data-height="0.744680851064" viewBox ="0 0 940 700">
+  <g id="carto-contents">
+    <image x="-170" y="-5" width="940" height="690" xlink:href="img/india-states.png?v=658e8"></image>
+    
+    <g transform="translate(640, 46)">
+      <text x="-80" class="carto-title" y="-20" dy="-.2em" dx="-1.7em" text-anchor="middle" href="?BY=&YEAR=1996" title="Previous election">&#x25c4;</text>
+                        <text x="-80" class="carto-title" y="-20" dy="-.2em" dx="+0.0em" text-anchor="middle">1998</text>
+      <text x="-80" class="carto-title" y="-20" dy="-.2em" dx="+1.7em" text-anchor="middle" href="?BY=&YEAR=1999" title="Next election">&#x25ba;</text>
+      
+      <text class="carto-title" y="-20" dy="-.2em">
+        India
+        <tspan class="small" fill="#888">543</tspan>
+      </text>
+      <text font-size="16" y="-5">Party</text>
+      <text font-size="16" x="70" y="-5">No. of Constituencies</text>
+      <rect class="party-unhighlight" x="273" y="-44" width="22" height="20" fill="#e66" stroke="rgba(0,0,0,.4)" title="Clear selections"/>
+      <text x="284" y="-34" text-anchor="middle" dy=".37em">X</text>
+      
+        
+        <rect x="-5" y="0" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=BJP]"
+          data-party="BJP"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="5" height="23" fill="#FA942E"/>
+        <text x="5" y="16.5" dy=".35em" font-size="16" fill="#000">BJP</text>
+        <text x="100" y="16.5" dy=".35em" text-anchor="end" font-size="16">182</text>
+        <rect class="no-pointer" x="110" y="5.5" height="23" width="185.0" fill="#FA942E"/>
+      
+        
+        <rect x="-5" y="33" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=CONG]"
+          data-party="CONG"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="38" height="23" fill="#2EA7FF"/>
+        <text x="5" y="49.5" dy=".35em" font-size="16" fill="#000">CONG</text>
+        <text x="100" y="49.5" dy=".35em" text-anchor="end" font-size="16">141</text>
+        <rect class="no-pointer" x="110" y="38.5" height="23" width="143.324175824" fill="#2EA7FF"/>
+      
+        
+        <rect x="-5" y="66" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=CPM]"
+          data-party="CPM"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="71" height="23" fill="#FA2E2E"/>
+        <text x="5" y="82.5" dy=".35em" font-size="16" fill="#fff">CPM</text>
+        <text x="100" y="82.5" dy=".35em" text-anchor="end" font-size="16">32</text>
+        <rect class="no-pointer" x="110" y="71.5" height="23" width="32.5274725275" fill="#FA2E2E"/>
+      
+        
+        <rect x="-5" y="99" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=SP]"
+          data-party="SP"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="104" height="23" fill="#2E803C"/>
+        <text x="5" y="115.5" dy=".35em" font-size="16" fill="#fff">SP</text>
+        <text x="100" y="115.5" dy=".35em" text-anchor="end" font-size="16">20</text>
+        <rect class="no-pointer" x="110" y="104.5" height="23" width="20.3296703297" fill="#2E803C"/>
+      
+        
+        <rect x="-5" y="132" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=ADMK]"
+          data-party="ADMK"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="137" height="23" fill="#B02E2E"/>
+        <text x="5" y="148.5" dy=".35em" font-size="16" fill="#fff">ADMK</text>
+        <text x="100" y="148.5" dy=".35em" text-anchor="end" font-size="16">18</text>
+        <rect class="no-pointer" x="110" y="137.5" height="23" width="18.2967032967" fill="#B02E2E"/>
+      
+        
+        <rect x="-5" y="165" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=RJD]"
+          data-party="RJD"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="170" height="23" fill="#A02E2E"/>
+        <text x="5" y="181.5" dy=".35em" font-size="16" fill="#fff">RJD</text>
+        <text x="100" y="181.5" dy=".35em" text-anchor="end" font-size="16">17</text>
+        <rect class="no-pointer" x="110" y="170.5" height="23" width="17.2802197802" fill="#A02E2E"/>
+      
+        
+        <rect x="-5" y="198" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=SAP]"
+          data-party="SAP"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="203" height="23" fill="rgba(128,128,128,.5)"/>
+        <text x="5" y="214.5" dy=".35em" font-size="16" fill="#000">SAP</text>
+        <text x="100" y="214.5" dy=".35em" text-anchor="end" font-size="16">12</text>
+        <rect class="no-pointer" x="110" y="203.5" height="23" width="12.1978021978" fill="rgba(128,128,128,.5)"/>
+      
+        
+        <rect x="-5" y="231" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=TDP]"
+          data-party="TDP"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="236" height="23" fill="#FAE92E"/>
+        <text x="5" y="247.5" dy=".35em" font-size="16" fill="#000">TDP</text>
+        <text x="100" y="247.5" dy=".35em" text-anchor="end" font-size="16">12</text>
+        <rect class="no-pointer" x="110" y="236.5" height="23" width="12.1978021978" fill="#FAE92E"/>
+      
+        
+        <rect x="-5" y="264" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=CPI]"
+          data-party="CPI"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="269" height="23" fill="#FA2E2E"/>
+        <text x="5" y="280.5" dy=".35em" font-size="16" fill="#fff">CPI</text>
+        <text x="100" y="280.5" dy=".35em" text-anchor="end" font-size="16">9</text>
+        <rect class="no-pointer" x="110" y="269.5" height="23" width="9.14835164835" fill="#FA2E2E"/>
+      
+        
+        <rect x="-5" y="297" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=BJD]"
+          data-party="BJD"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="302" height="23" fill="#3FC63C"/>
+        <text x="5" y="313.5" dy=".35em" font-size="16" fill="#000">BJD</text>
+        <text x="100" y="313.5" dy=".35em" text-anchor="end" font-size="16">9</text>
+        <rect class="no-pointer" x="110" y="302.5" height="23" width="9.14835164835" fill="#3FC63C"/>
+      
+        
+        <rect x="-5" y="330" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=SAD]"
+          data-party="SAD"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="335" height="23" fill="#FAE92E"/>
+        <text x="5" y="346.5" dy=".35em" font-size="16" fill="#000">SAD</text>
+        <text x="100" y="346.5" dy=".35em" text-anchor="end" font-size="16">8</text>
+        <rect class="no-pointer" x="110" y="335.5" height="23" width="8.13186813187" fill="#FAE92E"/>
+      
+        
+        <rect x="-5" y="363" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=WBTC]"
+          data-party="WBTC"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="368" height="23" fill="rgba(128,128,128,.5)"/>
+        <text x="5" y="379.5" dy=".35em" font-size="16" fill="#000">WBTC</text>
+        <text x="100" y="379.5" dy=".35em" text-anchor="end" font-size="16">7</text>
+        <rect class="no-pointer" x="110" y="368.5" height="23" width="7.11538461538" fill="rgba(128,128,128,.5)"/>
+      
+        
+        <rect x="-5" y="396" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=SS]"
+          data-party="SS"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="401" height="23" fill="#AD632E"/>
+        <text x="5" y="412.5" dy=".35em" font-size="16" fill="#fff">SS</text>
+        <text x="100" y="412.5" dy=".35em" text-anchor="end" font-size="16">6</text>
+        <rect class="no-pointer" x="110" y="401.5" height="23" width="6.0989010989" fill="#AD632E"/>
+      
+        
+        <rect x="-5" y="429" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=DMK]"
+          data-party="DMK"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="434" height="23" fill="#FAE92E"/>
+        <text x="5" y="445.5" dy=".35em" font-size="16" fill="#000">DMK</text>
+        <text x="100" y="445.5" dy=".35em" text-anchor="end" font-size="16">6</text>
+        <rect class="no-pointer" x="110" y="434.5" height="23" width="6.0989010989" fill="#FAE92E"/>
+      
+        
+        <rect x="-5" y="462" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=JD]"
+          data-party="JD"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="467" height="23" fill="#8064a2"/>
+        <text x="5" y="478.5" dy=".35em" font-size="16" fill="#fff">JD</text>
+        <text x="100" y="478.5" dy=".35em" text-anchor="end" font-size="16">6</text>
+        <rect class="no-pointer" x="110" y="467.5" height="23" width="6.0989010989" fill="#8064a2"/>
+      
+        
+        <rect x="-5" y="495" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=IND]"
+          data-party="IND"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="500" height="23" fill="#95b3d7"/>
+        <text x="5" y="511.5" dy=".35em" font-size="16" fill="#000">IND</text>
+        <text x="100" y="511.5" dy=".35em" text-anchor="end" font-size="16">6</text>
+        <rect class="no-pointer" x="110" y="500.5" height="23" width="6.0989010989" fill="#95b3d7"/>
+      
+        
+        <rect x="-5" y="528" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=BSP]"
+          data-party="BSP"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="533" height="23" fill="#2E3EEB"/>
+        <text x="5" y="544.5" dy=".35em" font-size="16" fill="#fff">BSP</text>
+        <text x="100" y="544.5" dy=".35em" text-anchor="end" font-size="16">5</text>
+        <rect class="no-pointer" x="110" y="533.5" height="23" width="5.08241758242" fill="#2E3EEB"/>
+      
+        
+        <rect x="-5" y="561" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=RSP]"
+          data-party="RSP"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="566" height="23" fill="#FA2E2E"/>
+        <text x="5" y="577.5" dy=".35em" font-size="16" fill="#fff">RSP</text>
+        <text x="100" y="577.5" dy=".35em" text-anchor="end" font-size="16">5</text>
+        <rect class="no-pointer" x="110" y="566.5" height="23" width="5.08241758242" fill="#FA2E2E"/>
+      
+        
+        <rect x="-5" y="594" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=RPI]"
+          data-party="RPI"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="599" height="23" fill="#A02E2E"/>
+        <text x="5" y="610.5" dy=".35em" font-size="16" fill="#fff">RPI</text>
+        <text x="100" y="610.5" dy=".35em" text-anchor="end" font-size="16">4</text>
+        <rect class="no-pointer" x="110" y="599.5" height="23" width="4.06593406593" fill="#A02E2E"/>
+      
+        
+        <rect x="-5" y="627" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=HLD-R-]"
+          data-party="HLD-R-"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="632" height="23" fill="rgba(128,128,128,.5)"/>
+        <text x="5" y="643.5" dy=".35em" font-size="16" fill="#000">HLD(R)</text>
+        <text x="100" y="643.5" dy=".35em" text-anchor="end" font-size="16">4</text>
+        <rect class="no-pointer" x="110" y="632.5" height="23" width="4.06593406593" fill="rgba(128,128,128,.5)"/>
+      
+    </g>
+  </g>
+</svg>
+<div class="const-filters">
+  
+    <div class="btn-group">
+      
+      <a class="btn btn-sm btn-primary" href="?YEAR=2009&2014-Schedule=">2014 Schedule</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=07-Apr">07-Apr</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=09-Apr">09-Apr</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=10-Apr">10-Apr</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=11-Apr">11-Apr</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=12-Apr">12-Apr</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=17-Apr">17-Apr</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=24-Apr">24-Apr</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=30-Apr">30-Apr</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=07-May">07-May</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=12-May">12-May</a>
+      
+    </div>
+  
+    <div class="btn-group only-tv">
+      
+      <a class="btn btn-sm btn-primary" href="?YEAR=2009&Hindi-speaking=">Hindi speaking</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Hindi-speaking=Hindi">Hindi</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Hindi-speaking=Rest">Rest</a>
+      
+    </div>
+  
+    <div class="btn-group only-tv">
+      
+      <a class="btn btn-sm btn-primary" href="?YEAR=2009&Bi-polar=">Bi polar</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Bi-polar=Bi-polar">Bi-polar</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Bi-polar=Rest">Rest</a>
+      
+    </div>
+  
+    <div class="btn-group only-tv">
+      
+      <a class="btn btn-sm btn-primary" href="?YEAR=2009&SC=">SC</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&SC=Below%2010%25">Below 10%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&SC=10-19.9%25">10-19.9%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&SC=20-29.9%25">20-29.9%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&SC=30%25%20and%20above">30% and above</a>
+      
+    </div>
+  
+    <div class="btn-group only-tv">
+      
+      <a class="btn btn-sm btn-primary" href="?YEAR=2009&ST=">ST</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&ST=Below%2010%25">Below 10%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&ST=10-29.9%25">10-29.9%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&ST=30-49.9%25">30-49.9%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&ST=50%25%20and%20above">50% and above</a>
+      
+    </div>
+  
+    <div class="btn-group only-tv">
+      
+      <a class="btn btn-sm btn-primary" href="?YEAR=2009&Muslim=">Muslim</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Muslim=No%20information">No information</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Muslim=Less%20than%2010%25">Less than 10%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Muslim=10-19.9%25">10-19.9%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Muslim=20-39.9%25">20-39.9%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Muslim=40%25%20and%20above">40% and above</a>
+      
+    </div>
+  
+</div>
+
+
+<script id="data" type="text/csv">STATE,PC,PARTY,WINNER,CONSTANT,Lat,Long
+A&N ISLANDS,A&N ISLANDS,CONG,MANORANJAN BHAKTA,1,11.740086699999999,92.6586401
+ANDHRA PRADESH,ADILABAD,TDP,DR.S.VENUGOPALA CHARY,1,19.6667,78.5333
+ANDHRA PRADESH,AMALAPURAM,TDP,GANTI MOHANA CHANDRA BALAYOGI,1,16.57556,82.01207
+ANDHRA PRADESH,ANAKAPALLI,CONG,GURUNADHA RAO GUDIVADA,1,17.686001,83.008781
+ANDHRA PRADESH,ANANTAPUR,CONG,ANANTHA VENKATARAMI REDDY,1,14.670709400000002,77.5907443
+ANDHRA PRADESH,BAPATLA,CONG,JANARDHANA REDDY NEDURUMALLI,1,15.906498999999998,80.471664
+ANDHRA PRADESH,BHADRACHALAM,CPI,RAMAIAH SODE,1,17.668791199999998,80.89359250000001
+ANDHRA PRADESH,BOBBILI,TDP,KONDAPALLI PYDITHALLI NAIDU,1,18.5735047,83.35836540000001
+ANDHRA PRADESH,CHITTOOR,TDP,NUTHANAKALVA RAMAKRISHNA REDDY,1,13.217096300000001,79.1006738
+ANDHRA PRADESH,CUDDAPAH,CONG,Y.S.RAJASEKHAR REDDY,1,14.4673541,78.8241339
+ANDHRA PRADESH,ELURU,CONG,MAGANTI VENKATESWARA RAO (BABU),1,16.7106604,81.0952431
+ANDHRA PRADESH,GUNTUR,CONG,RAYAPATI SAMBASIVA RAO,1,16.3066525,80.4365402
+ANDHRA PRADESH,HANAMKONDA,TDP,CHADA SURESH REDDY,1,18.0056228,79.5572463
+ANDHRA PRADESH,HINDUPUR,CONG,S.GANGADHAR,1,13.8289,77.4933
+ANDHRA PRADESH,HYDERABAD,AIMIM,SULTAN SALAHUDDIN OWAISI,1,17.385044,78.486671
+ANDHRA PRADESH,KAKINADA,BJP,KRISHNAMRAJU U.V.,1,16.945180999999998,82.238647
+ANDHRA PRADESH,KARIMNAGAR,BJP,CHENNAMANENI VIDYASAGAR RAO,1,18.4385553,79.1288412
+ANDHRA PRADESH,KHAMMAM,CONG,NADENDLA BHASKAR RAO,1,17.247252800000002,80.1514447
+ANDHRA PRADESH,KURNOOL,CONG,KOTLA VIJAYA BHASKARA REDDY,1,15.828125699999998,78.0372792
+ANDHRA PRADESH,MACHILIPATNAM,CONG,KAVURU SAMBASIVA RAO,1,16.184379999999997,81.13493299999999
+ANDHRA PRADESH,MAHABUBNAGAR,JD,S.JAIPAL REDDY,1,16.7416379,77.985961
+ANDHRA PRADESH,MEDAK,CONG,M.BAGA REDDY,1,18.055139999999998,78.276031
+ANDHRA PRADESH,MIRYALGUDA,CONG,BADDAM NARSIMHA REDDY,1,16.868719,79.573486
+ANDHRA PRADESH,NAGARKURNOOL,CONG,DR.MALLU RAVI,1,16.4850856,78.3074027
+ANDHRA PRADESH,NALGONDA,CPI,SURAVARAM SUDHAKAR REDDY,1,17.052389,79.2671809
+ANDHRA PRADESH,NANDYAL,TDP,BHUMA NAGI REDDY,1,15.476252300000002,78.480154
+ANDHRA PRADESH,NARASAPUR,CONG,KANUMURU BAPI RAJU,1,16.4329833,81.6966198
+ANDHRA PRADESH,NARASARAOPET,CONG,KONIJETI ROSAIAH,1,16.236389000000003,80.05471
+ANDHRA PRADESH,NELLORE,CONG,PANABAKA LAKSHMI,1,14.4425987,79.986456
+ANDHRA PRADESH,NIZAMABAD,TDP,GANGAREDDY GADDAM,1,18.672504699999998,78.0940867
+ANDHRA PRADESH,ONGOLE,CONG,MAGUNTA SREENIVASULU REDDY,1,15.505723199999998,80.049922
+ANDHRA PRADESH,PARVATHIPURAM,TDP,VIJAYA RAMARAJU SETRUCHARLA,1,18.780371,83.432899
+ANDHRA PRADESH,PEDDAPALLI,TDP,C. SUGUNA KUMARI,1,18.608448199999998,79.378709
+ANDHRA PRADESH,RAJAHMUNDRY,BJP,GIRAJALA VENKATA SWAMY NAIDU,1,17.0005383,81.8040345
+ANDHRA PRADESH,RAJAMPET,CONG,ANNAIAHGARI SAI PRATAP,1,14.196678,79.1566324
+ANDHRA PRADESH,SECUNDERABAD,BJP,BANDARU DATTATREYA,1,17.4399295,78.49827409999999
+ANDHRA PRADESH,SIDDIPET,TDP,MALYALA RAJAIAH,1,18.1019043,78.85207700000001
+ANDHRA PRADESH,SRIKAKULAM,TDP,KINJARAPU YERRANNAIDU,1,18.2969747,83.8967813
+ANDHRA PRADESH,TENALI,CONG,P.SHIV SHANKER,1,16.236719,80.647476
+ANDHRA PRADESH,TIRUPATI,CONG,CHINTHA MOHAN,1,13.6287557,79.4191795
+ANDHRA PRADESH,VIJAYAWADA,CONG,UPENDRA PARVATHANENI,1,16.5061743,80.6480153
+ANDHRA PRADESH,VISAKHAPATNAM,CONG,SUBBARAMI REDDY.T,1,17.6868159,83.2184815
+ANDHRA PRADESH,WARANGAL,TDP,AZMEERA CHANDULAL,1,18.000055,79.588167
+ARUNACHAL PRADESH,ARUNACHAL EAST,AC,WANGCHA RAJKUMAR,1,28.2179994,94.72775279999999
+ARUNACHAL PRADESH,ARUNACHAL WEST,AC,OMAK APANG,1,28.2179994,94.72775279999999
+ASSAM,AUTONOMOUS DISTS,ASDC,DR. JAYANTA RONGPI,1,25.8400095,93.4365535
+ASSAM,BARPETA,UMFA,A.F.GOLAM OSMANI,1,26.3167,91.0
+ASSAM,DHUBRI,CONG,ABDUL HAMID,1,26.019648,89.987751
+ASSAM,DIBRUGARH,CONG,PABAN SINGH GHATOWAR,1,27.472832699999998,94.9119621
+ASSAM,GAUHATI,CONG,BHUBANESWAR KALITA,1,26.147129,91.7355511
+ASSAM,JORHAT,CONG,BIJOY KRISHNA HANDIQUE,1,26.75602,94.20945
+ASSAM,KALIABOR,CONG,TARUN GOGOI,1,26.538462199999998,92.926335
+ASSAM,KARIMGANJ,CONG,NEPAL CHANDRA DAS,1,24.86434,92.357277
+ASSAM,KOKRAJHAR,IND,SANSUMA KHUNGGUR BWISWMUTHIARY,1,26.401436199999996,90.266699
+ASSAM,LAKHIMPUR,CONG,RANEE NARAH,1,27.2316353,94.08999109999999
+ASSAM,MANGALDOI,CONG,MADHAB RAJBANGSHI,1,26.4333,92.0333
+ASSAM,NOWGONG,CONG,NRIPEN GOSWAMI,1,26.35037,92.69225290000001
+ASSAM,SILCHAR,BJP,KABINDRA PURKAYASTHA,1,24.8187153,92.79138499999999
+ASSAM,TEZPUR,CONG,MONI KUMAR SUBBA,1,26.6528495,92.7925592
+BIHAR,ARARIA,BJP,RAMJE DAS RISHIDEO,1,26.134633899999997,87.464399
+BIHAR,ARRAH,SAP,H.P.SINGH,1,25.558797,84.667097
+BIHAR,AURANGABAD,SAP,SUSHIL KUMAR SINGH,1,24.74839,84.37666290000001
+BIHAR,BAGAHA,SAP,MAHENDRA BAITHA,1,24.525509,85.0662054
+BIHAR,BALIA,RJD,RAJBANSHI MAHTO,1,26.134031600000004,84.2950234
+BIHAR,BANKA,SAP,DIGVIJAY SINGH,1,24.8833,86.9167
+BIHAR,BARH,SAP,NITISH KUMAR,1,25.469347,85.710959
+BIHAR,BEGUSARAI,CONG,RAJO SINGH,1,25.41301,86.124077
+BIHAR,BETTIAH,BJP,DR.MADAN PRASAD JAISWAL,1,26.799919,84.503899
+BIHAR,BHAGALPUR,BJP,PRABHAS CHANDRA TIWARI,1,25.240029999999997,86.984512
+BIHAR,BIKRAMGANJ,SAP,BASHIST NARAYAN SINGH,1,25.212744,84.251983
+BIHAR,BUXAR,BJP,LALMUNI CHAUBEY,1,25.5647103,83.97774820000001
+BIHAR,CHAPRA,RJD,HEERA LAL RAI,1,25.783548100000004,84.75314350000001
+BIHAR,CHATRA,BJP,DHIRENDRA AGRAWAL,1,24.730977499999998,84.3423734
+BIHAR,DARBHANGA,RJD,MD.ALI ASHARAF FATMI,1,26.149179,85.890587
+BIHAR,DHANBAD,BJP,RITA VERMA,1,25.1867038,87.7492683
+BIHAR,DUMKA,BJP,BABU LAL MARANDI,1,24.4052887,87.30161319999999
+BIHAR,GAYA,BJP,KRISHNA KUMAR CHAUDHARY,1,24.7800113,84.98182340000001
+BIHAR,GIRIDIH,BJP,RABINDRA KUMAR PANDEY,1,24.2841482,86.09373120000001
+BIHAR,GODDA,BJP,JAGDAMBI PRASAD YADAV,1,24.7850676,87.30161319999999
+BIHAR,GOPALGANJ,SAP,ABDUL GHAFOOR,1,26.467838899999997,84.44323100000001
+BIHAR,HAJIPUR,JD,RAM VILAS PASWAN,1,25.6833,85.2167
+BIHAR,HAZARIBAGH,BJP,YASHWANT SINHA,1,23.978730600000002,85.354965
+BIHAR,JAHANABAD,RJD,SURENDRA PRASAD YADAV,1,25.216666699999998,84.9833333
+BIHAR,JAMSHEDPUR,BJP,ABHA MAHATO,1,25.198009,85.521896
+BIHAR,JHANJHARPUR,RJD,SURENDRA PRASAD YADAV,1,26.2667,86.2833
+BIHAR,KATIHAR,CONG,TARIQ ANAWAR,1,25.53754,87.56609300000001
+BIHAR,KHAGARIA,SAP,SHAKUNI CHOUDHURY,1,25.5111515,86.476908
+BIHAR,KHUNTI,BJP,KARIYA MUNDA,1,25.9294265,87.3959564
+BIHAR,KISHANGANJ,RJD,TASLIM UDDIN,1,26.106235,87.956631
+BIHAR,KODARMA,BJP,RITLAL PRASAD VERMA,1,24.468076,85.591629
+BIHAR,LOHARDAGA,CONG,INDRA NATH BHAGAT,1,25.0960742,85.3131194
+BIHAR,MADHEPURA,RJD,LALU PRASAD,1,25.9169444,86.77861109999999
+BIHAR,MADHUBANI,CONG,DR.SHAKEEL AHMAD,1,26.346854399999998,86.0715474
+BIHAR,MAHARAJGANJ,SAP,PRABHUNATH SINGH,1,26.110359,84.500893
+BIHAR,MONGHYR,RJD,"BIJOY KUMAR ""BIJOY""",1,25.37262,86.490321
+BIHAR,MOTIHARI,RJD,RAMA DEVI,1,26.65,84.9167
+BIHAR,MUZAFFARPUR,RJD,CAPTAIN JAI NA. PD. NISHAD,1,26.120887600000003,85.36472009999999
+BIHAR,NALANDA,SAP,GEORGE FERNANDES,1,25.203805,85.509734
+BIHAR,NAWADA,RJD,MALTI DEVI,1,24.8833,85.5333
+BIHAR,PALAMU,BJP,BRAJ MOHAN RAM,1,24.128610600000002,84.1857115
+BIHAR,PATNA,BJP,C.P.THAKUR,1,25.61046,85.141667
+BIHAR,PURNEA,BJP,JAY KRISHNA MANDAL,1,25.78,87.47
+BIHAR,RAJMAHAL,BJP,SOM MARANDI,1,25.051918,87.829542
+BIHAR,RANCHI,BJP,RAMTAHAL CHOUDHARY,1,25.2088337,85.5164677
+BIHAR,ROSERA,RJD,PITAMBAR PASWAN,1,25.75498,86.024292
+BIHAR,SAHARSA,RJD,ANUPLAL YADAV,1,25.8833,86.6
+BIHAR,SAMASTIPUR,RJD,AJIT KUMAR MEHTA,1,25.862967899999997,85.7810263
+BIHAR,SASARAM,BJP,MUNI LALL,1,24.949036,84.0314295
+BIHAR,SHEOHAR,AIRJP,ANAND MOHAN,1,26.516666999999998,85.3
+BIHAR,SINGHBHUM,CONG,VIJAY SINGH SOY,1,25.198009,85.521896
+BIHAR,SITAMARHI,RJD,SITA RAM YADAV,1,26.59807,85.495323
+BIHAR,SIWAN,RJD,M.SAHABUDDIN,1,26.223874199999997,84.3611146
+BIHAR,VAISHALI,RJD,RAGHUVANSH PRASAD SINGH,1,26.0038178,85.08178249999999
+CHANDIGARH,CHANDIGARH,BJP,SATYA PAL JAIN,1,30.7399738,76.7567368
+D&N HAVELI,DADRA & NAGAR HAVELI,BJP,DELKAR MOHANBHAI SANJIBHAI,1,20.180867199999998,73.0169135
+DAMAN & DIU,DAMAN & DIU,BJP,DEVJIBHAI J. TANDEL,1,20.421865,72.8736877
+GOA,MARMAGOA,CONG,SARDINHA FRANCISCO CAETANO,1,15.4,73.8
+GOA,PANAJI,CONG,RAVI SITARAM NAIK,1,15.493,73.818
+GUJARAT,AHMEDABAD,BJP,HARIN PATHAK,1,23.0395677,72.5660045
+GUJARAT,AMRELI,BJP,DILEEP SANGHANI,1,21.602871,71.21817
+GUJARAT,ANAND,CONG,CHAVDA ISHVARBHAI KHODABHAI,1,22.560869,72.954773
+GUJARAT,BANASKANTHA,BJP,CHAUDHARI HARIBHAI PARATHIBHAI,1,24.3070289,72.3514618
+GUJARAT,BARODA,BJP,THAKKAR JAYABEN BHARATKUMAR,1,22.3073095,73.18109759999999
+GUJARAT,BHAVNAGAR,BJP,RANA RAJENDRASINH GHANSHYAMSINH (RAJUBHAI RANA),1,21.7644725,72.1519304
+GUJARAT,BROACH,BJP,CHANDUBHAI SHANABHAI DESHMUKH,1,21.7051358,72.9958748
+GUJARAT,BULSAR,BJP,CHAUDHARI MANIBHAI RAMJIBHAI,1,20.610069,72.92585799999999
+GUJARAT,CHHOTA UDAIPUR,CONG,NARANBHAI JEMALABHAI RATHAWA,1,22.30868,74.013184
+GUJARAT,DHANDHUKA,BJP,VARMA RATILAL KALIDAS,1,22.381099,71.98294
+GUJARAT,DOHAD,CONG,DAMOR SOMJIBHAI PUNJABHAI,1,22.8323,74.25346390000001
+GUJARAT,GANDHINAGAR,BJP,ADVANI LALKRISHNA,1,23.224819600000004,72.6463769
+GUJARAT,GODHRA,CONG,PATEL SHANTILAL PARSHOTAMDAS,1,22.765149899999997,73.6093829
+GUJARAT,JAMNAGAR,BJP,KORADIA CHANDRESHBHAI VALJIBHAI (CHANDRESH PATEL),1,22.470701899999998,70.05773
+GUJARAT,JUNAGADH,BJP,CHIKHALIYA BHAVANABEN DEVRAJBHAI,1,21.522184,70.4578768
+GUJARAT,KAIRA,CONG,DINSHA PATEL,1,19.7897227,72.7599575
+GUJARAT,KAPADVANJ,BJP,CHAUHAN JAYSINHJI MANSHINGJI,1,23.021549,73.06948100000001
+GUJARAT,KUTCH,BJP,GADHVI PUSHPADAN SHAMBHUDAN,1,23.7337326,69.8597406
+GUJARAT,MANDVI,CONG,GAMIT CHHITUBHAI DEVJIBHAI,1,22.833170000000003,69.346367
+GUJARAT,MEHSANA,BJP,DR. A.K.PATEL,1,23.5879607,72.36932519999999
+GUJARAT,PATAN,BJP,KANODIYA MAHESHKUMAR MITHABHAI,1,23.850808999999998,72.114838
+GUJARAT,PORBANDAR,BJP,JAVIYA GORDHANBHAI JADAVBHAI,1,21.6417069,69.62926540000001
+GUJARAT,RAJKOT,BJP,DR.KATHIRIYA VALLABHBHAI RAMJIBHAI,1,22.303894500000002,70.8021599
+GUJARAT,SABARKANTHA,CONG,NISHABEN AMARSINHBHAI CHAUDHARI,1,23.6843587,73.1821623
+GUJARAT,SURAT,BJP,KASHIRAM RANA,1,21.195,72.81944399999999
+GUJARAT,SURENDRANAGAR,BJP,DAVE BHAVNABEN KARDAMKUMAR,1,22.728803600000003,71.62580229999999
+HARYANA,AMBALA,BSP,AMAN KUMAR NAGRA,1,30.3781788,76.7766974
+HARYANA,BHIWANI,HVP,SURENDER SINGH S/O BANSI LAL,1,28.7990445,76.13351120000002
+HARYANA,FARIDABAD,BJP,RAMCHANDER BAINDA,1,28.4089123,77.31778940000001
+HARYANA,HISSAR,HLD(R),SURENDER SINGH BARWALA,1,29.1491875,75.7216527
+HARYANA,KARNAL,CONG,BHAJAN LAL,1,29.6856929,76.9904825
+HARYANA,KURUKSHETRA,HLD(R),KAILASHO DEVI,1,29.969512100000003,76.878282
+HARYANA,MAHENDRAGARH,CONG,INDERJIT SINGH,1,28.262109000000002,76.155627
+HARYANA,ROHTAK,CONG,BHUPINDER SINGH,1,28.892360999999998,76.59124
+HARYANA,SIRSA,HLD(R),DR.SUSHIL KUMAR INDORA,1,29.533593100000004,75.0177029
+HARYANA,SONEPAT,HLD(R),KISHAN SINGH,1,28.9285745,77.0914935
+HIMACHAL PRADESH,HAMIRPUR,BJP,SURESH CHANDEL,1,31.6861745,76.5213092
+HIMACHAL PRADESH,KANGRA,BJP,SHANTA KUMAR,1,32.1,76.27
+HIMACHAL PRADESH,MANDI,BJP,MAHESHWAR SINGH,1,31.708165500000003,76.93136750000001
+HIMACHAL PRADESH,SIMLA,CONG,KARISHAN DATT SULTANPURI,1,31.104605199999998,77.17342420000001
+JAMMU & KASHMIR,ANANTNAG,CONG,MUFTI MOHMAD SAYEED,1,33.7311255,75.14870069999999
+JAMMU & KASHMIR,BARAMULLA,NC,PROFESSOR SAIFUDDIN SOZ,1,34.211475,74.343896
+JAMMU & KASHMIR,JAMMU,BJP,VAID VISHNO DUTT,1,32.7266016,74.85702590000001
+JAMMU & KASHMIR,LADAKH,NC,SYED HUSSAIN,1,34.0,78.0
+JAMMU & KASHMIR,SRINAGAR,NC,OMAR ABDULLAH,1,34.0836581,74.7973681
+JAMMU & KASHMIR,UDHAMPUR,BJP,PROF. CHAMAN LAL GUPTA,1,32.918929999999996,75.131271
+KARNATAKA,BAGALKOT,LS,AJAYKUMAR SAMBASADASHIV SARNAIK,1,16.185011,75.69624300000001
+KARNATAKA,BANGALORE NORTH,CONG,C.K.JAFFER SHARIEF,1,12.9715987,77.5945627
+KARNATAKA,BANGALORE SOUTH,BJP,ANANTH KUMAR,1,12.9715987,77.5945627
+KARNATAKA,BELGAUM,BJP,BABAGOUDA RUDRAGOUDA PATIL,1,15.8667,74.5
+KARNATAKA,BELLARY,CONG,K.C.KONDAIAH,1,15.1393932,76.9214428
+KARNATAKA,BIDAR,BJP,RAMCHANDRA VEERAPPA,1,17.92,77.519722
+KARNATAKA,BIJAPUR,CONG,PATIL MALLANAGOUDA BASANAGOUDA,1,16.82402,75.71534
+KARNATAKA,CHAMARAJANAGAR,JD,SIDDARAJU. A.,1,11.9261471,76.9437312
+KARNATAKA,CHIKBALLAPUR,CONG,R.L.JALAPPA,1,13.5228647,77.8367282
+KARNATAKA,CHIKKODI,LS,JIGAJINAGI RAMESH CHANDAPPA,1,16.4291905,74.5878546
+KARNATAKA,CHIKMAGALUR,BJP,SREEKANTAPPA D.C.,1,13.312320000000001,75.770889
+KARNATAKA,CHITRADURGA,CONG,C.P.MUDALA GIRIYAPPA,1,14.22209,76.40035999999999
+KARNATAKA,DAVANGERE,CONG,SHAMANUR SHIVA SHANKARAPPA,1,14.466343799999999,75.9238397
+KARNATAKA,DHARWAD NORTH,BJP,VIJAY SANKESHWAR,1,15.45101,75.008453
+KARNATAKA,DHARWAD SOUTH,LS,B.M.MENASINAKAI,1,15.45101,75.008453
+KARNATAKA,GULBARGA,BJP,BASWARAJ PATIL SEDAM,1,17.329731,76.8342957
+KARNATAKA,HASSAN,JD,H.D.DEVEGOWDA,1,13.006814199999999,76.09955190000001
+KARNATAKA,KANAKAPURA,BJP,M.SRINIVAS,1,12.55,77.4167
+KARNATAKA,KANARA,BJP,ANANT KUMAR,1,12.8437814,75.2479061
+KARNATAKA,KOLAR,CONG,K.H.MUNIYAPPA,1,13.135744599999999,78.13256109999999
+KARNATAKA,KOPPAL,CONG,H.G.RAMULU,1,15.3507081,76.1554311
+KARNATAKA,MANDYA,JD,AMBAREESH,1,12.5242,76.8958
+KARNATAKA,MANGALORE,BJP,V.DHANANJAYA KUMAR,1,12.914141699999998,74.8559568
+KARNATAKA,MYSORE,BJP,C.H.VIJAYASHANKAR,1,12.2958104,76.6393805
+KARNATAKA,RAICHUR,CONG,A.VENKATESH NAIK,1,16.20702,77.354362
+KARNATAKA,SHIMOGA,BJP,AYANOOR MANJUNATH,1,13.9299299,75.568101
+KARNATAKA,TUMKUR,BJP,S.MALLIKARJUNAIAH,1,13.34,77.1
+KARNATAKA,UDUPI,BJP,I.M.JAYARAMA SHETTY,1,13.332320000000001,74.746048
+KERALA,ADOOR,CPI,CHENGARA SURENDRAN,1,9.1512395,76.7307663
+KERALA,ALAPPUZHA,CONG,V.M. SUDHEERAN,1,9.498066699999999,76.3388484
+KERALA,BADAGARA,CPM,A.K. PREMAJAM,1,11.599103999999999,75.581131
+KERALA,CALICUT,CONG,ADV. P. SANKARAN,1,11.2587531,75.78041
+KERALA,CHIRAYINKIL,CPM,VARKALA RADHAKRISHNAN,1,8.655869599999999,76.78317440000001
+KERALA,ERNAKULAM,CONG,ADV. GEORGE EDEN,1,9.98,76.28
+KERALA,IDUKKI,CONG,P.C.CHACKO,1,9.8138076,76.9297354
+KERALA,KANNUR,CONG,MULLAPPALLY RAMACHANDRAN,1,11.8744775,75.3703662
+KERALA,KASARAGOD,CPM,T. GOVINDAN,1,12.492469999999999,74.990623
+KERALA,KOLLAM,RSP,N.K. PREMACHANDRAN,1,8.8932118,76.6141396
+KERALA,KOTTAYAM,CPM,SURESH KURUP,1,9.5915668,76.5221531
+KERALA,MANJERI,IUML,E. AHAMED,1,11.1202984,76.1199677
+KERALA,MAVELIKARA,CONG,PROF. P.J. KURIEN,1,9.2505757,76.5400806
+KERALA,MUKUNDAPURAM,CONG,A.C. JOSE,1,10.2102221,76.2623945
+KERALA,MUVATTUPUZHA,KECM,ADV. P.C. THOMAS,1,9.979847999999999,76.57380699999999
+KERALA,OTTAPALAM,CPM,S. AJAYAKUMAR,1,10.770380000000001,76.37706800000001
+KERALA,PALAKKAD,CPM,N.N. KRISHNADAS,1,10.786730300000002,76.6547932
+KERALA,PONNANI,IUML,G.M. BANATWALLA,1,10.7677,75.927002
+KERALA,THIRUVANANTHAPURAM,CONG,K. KARUNAKARAN,1,8.487494900000002,76.948623
+KERALA,THRISSUR,CPI,V.V. RAGHAVAN,1,10.527641599999999,76.2144349
+LAKSHADWEEP,LAKSHADWEEP,CONG,P.M. SAYEED,1,10.0760114,73.6303446
+MADHYA PRADESH,BALAGHAT,BJP,GAURISHANKAR CHATURBHUJ BISEN,1,21.812876,80.1838293
+MADHYA PRADESH,BASTAR,BJP,BALIRAM KASHYAP,1,18.053261300000003,77.7776361
+MADHYA PRADESH,BETUL,BJP,VIJAY KUMAR KHANDELWAL (MUNNI BHAIYA),1,21.903865,77.903453
+MADHYA PRADESH,BHIND,BJP,DR. RAM LAKHAN SINGH,1,26.5642,78.7883
+MADHYA PRADESH,BHOPAL,BJP,SUSHIL CHANDRA VERMA,1,23.2599333,77.412615
+MADHYA PRADESH,BILASPUR,BJP,PUNNULAL MOHLE,1,22.803209399999997,81.54044429999999
+MADHYA PRADESH,CHHINDWARA,CONG,KAMALNATH,1,22.057437,78.93817290000001
+MADHYA PRADESH,DAMOH,BJP,DR. RAMKRISHNA KUSMARIA,1,23.838098600000002,79.44217309999999
+MADHYA PRADESH,DHAR,CONG,GAJENDRA SINGH RAJUKHEDI,1,22.6012922,75.3024655
+MADHYA PRADESH,DURG,BJP,TARACHAND SAHU,1,23.6576435,79.5533194
+MADHYA PRADESH,GUNA,BJP,RAJMATA VIJAYA RAJE SCINDIA,1,24.64488,77.310158
+MADHYA PRADESH,GWALIOR,CONG,MADHAVRAO SCINDIA,1,26.218287100000005,78.18283079999999
+MADHYA PRADESH,HOSHANGABAD,BJP,SARTAJ SINGH,1,22.744107999999997,77.736967
+MADHYA PRADESH,INDORE,BJP,SUMITRA MAHAJAN,1,22.7195687,75.8577258
+MADHYA PRADESH,JABALPUR,BJP,DADA BABURAO PARANJPE,1,23.1667,79.95
+MADHYA PRADESH,JANJGIR,CONG,CHARANDAS MAHANT,1,18.053261300000003,77.7776361
+MADHYA PRADESH,JHABUA,CONG,KANTILAL BHURIYA,1,22.769666,74.5920921
+MADHYA PRADESH,KANKER,BJP,SOHAN POTAI,1,24.2541896,78.2561578
+MADHYA PRADESH,KHAJURAHO,BJP,UMA BHARTI,1,24.8318452,79.91985490000002
+MADHYA PRADESH,KHANDWA,BJP,NANDKUMAR SINGH CHOUHAN (NANDU BHAIYA),1,21.825733399999997,76.352571
+MADHYA PRADESH,KHARGONE,BJP,RAMESHWAR PATIDAR,1,21.823366,75.610364
+MADHYA PRADESH,MAHASAMUND,BJP,CHANDRASHEKHAR SAHU (CHAMPU),1,22.9734229,78.65689420000001
+MADHYA PRADESH,MANDLA,BJP,FAGGAN SINGH KULASTE,1,22.597921799999998,80.3713855
+MADHYA PRADESH,MANDSAUR,BJP,DR. LAXMINARAYAN PANDEY,1,24.071568,75.06693
+MADHYA PRADESH,MORENA,BJP,ASHOK CHHABIRAM,1,26.501257,77.993365
+MADHYA PRADESH,RAIGARH,CONG,AJIT JOGI,1,24.545809,80.4270885
+MADHYA PRADESH,RAIPUR,BJP,RAMESH BAIS,1,22.7510688,77.7809672
+MADHYA PRADESH,RAJGARH,CONG,LAXMAN SINGH,1,24.007881899999997,76.7278803
+MADHYA PRADESH,RAJNANDGAON,CONG,MOTILAL VORA,1,20.9456135,80.89865019999999
+MADHYA PRADESH,REWA,BJP,CHANDRAMANI TRIPATHI,1,24.5313889,81.30111109999999
+MADHYA PRADESH,SAGAR,BJP,VIRENDRA KUMAR,1,23.832294,78.744917
+MADHYA PRADESH,SARANGARH,CONG,PARAS RAM BHARADWAJ,1,22.6449345,80.9705292
+MADHYA PRADESH,SARGUJA,BJP,LARANG SAI,1,23.3437983,83.1960423
+MADHYA PRADESH,SATNA,BJP,RAMANAND SINGH,1,24.5833,80.8333
+MADHYA PRADESH,SEONI,CONG,VIMLA VARMA,1,22.088283999999998,79.551864
+MADHYA PRADESH,SHAHDOL,BJP,GYAN SINGH,1,23.3021885,81.3568021
+MADHYA PRADESH,SHAJAPUR,BJP,GEHLOT THAVARCHAND,1,23.426589,76.275573
+MADHYA PRADESH,SIDHI,BJP,JAGANNATH SINGH,1,24.396434,81.879841
+MADHYA PRADESH,UJJAIN,BJP,DR. SATYANARAYAN JATIYA,1,23.179301300000002,75.7849097
+MADHYA PRADESH,VIDISHA,BJP,SHIVRAJSINGH,1,23.524019,77.8060069
+MAHARASHTRA,AHMEDNAGAR,SS,E.V. ALIAS BALASAHEB VIKHE PATIL,1,19.0952075,74.7495916
+MAHARASHTRA,AKOLA,RPI,AMBEDKAR PRAKASH YASHAWANT,1,20.703879999999998,76.997093
+MAHARASHTRA,AMRAVATI,RPI,RAMKRUSHNA SURYABHAN GAWAI,1,20.930679,77.758713
+MAHARASHTRA,AURANGABAD,CONG,RAMKRISHNA BABA PATIL,1,19.8761653,75.34331390000001
+MAHARASHTRA,BARAMATI,CONG,PAWAR SHARADCHANDRA GOVINDRAO,1,18.15,74.5833
+MAHARASHTRA,BEED,BJP,JAISINGRAO GAIKWAD PATIL,1,18.9890893,75.7600785
+MAHARASHTRA,BHANDARA,CONG,PATEL PRAFUL MANOHARBHAI,1,21.170519,79.664692
+MAHARASHTRA,BULDHANA,CONG,WASNIK MUKUL BALKRUSHNA,1,20.532949,76.184303
+MAHARASHTRA,CHANDRAPUR,CONG,PUGLIA NARESHKUMAR CHUNNALAL,1,19.95,79.3
+MAHARASHTRA,CHIMUR,RPI,PROF. JOGENDRA KAWADE,1,20.49806,79.378186
+MAHARASHTRA,DAHANU,CONG,NAM SHANKAR SAKHARAM,1,19.957793,72.7456739
+MAHARASHTRA,DHULE,CONG,D.S.AHIRE,1,20.9042201,74.7748979
+MAHARASHTRA,ERANDOL,BJP,ANNASAHEB M.K.PATIL,1,20.9167,75.3333
+MAHARASHTRA,HINGOLI,CONG,SURYAKANTA PATIL,1,19.7167,77.15
+MAHARASHTRA,ICHALKARANJI,CONG,AWADE KALLAPPA BABURAO,1,16.7,74.4667
+MAHARASHTRA,JALGAON,CONG,DR.ULHAS VASUDEO PATIL,1,21.013320999999998,75.56397199999999
+MAHARASHTRA,JALNA,BJP,PAWAR UTTAMSINH RAJDHARSINH,1,19.838949,75.88717700000001
+MAHARASHTRA,KARAD,CONG,CHAVAN PRITHVIRAJ DAJISAHEB,1,17.2865,74.181428
+MAHARASHTRA,KHED,CONG,MOHOL ASHOK NAMDEORAO,1,17.7195516,73.39681359999999
+MAHARASHTRA,KOLABA,PWPI,RAMSHETH THAKUR,1,19.0759837,72.87765590000001
+MAHARASHTRA,KOLHAPUR,CONG,MANDLIK SADASHIV RAO DADOBA,1,16.691307600000002,74.2448662
+MAHARASHTRA,KOPARGAON,CONG,TANPURE PRASAD BABURAO,1,19.8833,74.4833
+MAHARASHTRA,LATUR,CONG,PATIL SHIVRAJ VISHWANATH,1,18.397679999999998,76.58097099999999
+MAHARASHTRA,MALEGAON,CONG,KAHANDOLE ZAMARU MANGALU,1,20.5499359,74.528751
+MAHARASHTRA,MUMBAI NORTH,BJP,RAM NAIK,1,19.0759837,72.87765590000001
+MAHARASHTRA,MUMBAI NORTH CENTRAL,RPI,RAMDAS ATHAWALE,1,19.078429500000002,72.8363493
+MAHARASHTRA,MUMBAI NORTH EAST,CONG,GURUDAS KAMAT,1,19.0759837,72.87765590000001
+MAHARASHTRA,MUMBAI NORTH WEST,SS,MADHUKAR SIRPOTDAR,1,19.0759837,72.87765590000001
+MAHARASHTRA,MUMBAI SOUTH,CONG,DEORA MURLI,1,19.0759837,72.87765590000001
+MAHARASHTRA,MUMBAI SOUTH CENTRAL,SS,MOHAN VISHNU RAWALE,1,19.075241100000003,72.8360359
+MAHARASHTRA,NAGPUR,CONG,VILAS MUTTEMWAR,1,21.1458004,79.0881546
+MAHARASHTRA,NANDED,CONG,PATIL BHASKARRAO BAPURAO,1,19.153060999999997,77.305847
+MAHARASHTRA,NANDURBAR,CONG,GAVIT MANIKRAO HODLYA,1,21.375550699999998,74.24276440000001
+MAHARASHTRA,NASHIK,CONG,PATIL MADHAV BALWANT,1,19.9974533,73.78980229999999
+MAHARASHTRA,OSMANABAD,CONG,ARVIND TULSHIRAM KAMBLE,1,18.1860659,76.04194090000001
+MAHARASHTRA,PANDHARPUR,CONG,THORAT SANDIPAN BHAGWAN,1,17.675128,75.32677199999999
+MAHARASHTRA,PARBHANI,CONG,WARPUDKAR SURESHRAO AMBADASRAO,1,19.2667,76.7833
+MAHARASHTRA,PUNE,CONG,TUPE VITTHAL BABURAO,1,18.5204303,73.85674370000001
+MAHARASHTRA,RAJAPUR,SS,SURESH PRABHU,1,16.65604,73.517776
+MAHARASHTRA,RAMTEK,CONG,RANI CHITRALEKHA T. BHOSALE,1,21.392861800000002,79.3268397
+MAHARASHTRA,RATNAGIRI,SS,ANANT GANGARAM GEETE,1,16.990215,73.3120233
+MAHARASHTRA,SANGLI,CONG,PATIL MADAN VISHWANATH,1,16.85438,74.564171
+MAHARASHTRA,SATARA,CONG,ABHAYSINH SHAHUMAHARAJ BHOSALE,1,17.691401000000003,74.000938
+MAHARASHTRA,SHOLAPUR,CONG,SHINDE SUSHILKUMAR SAMBHAJIRAO,1,17.6599188,75.9063906
+MAHARASHTRA,THANE,SS,PARANJPE PRAKASH VISHWANATH,1,19.2183307,72.9780897
+MAHARASHTRA,WARDHA,CONG,DATTA MEGHE,1,20.745319,78.6021946
+MAHARASHTRA,WASHIM,CONG,NAIK SUDHAKARRAO RAJUSING,1,20.09907,77.136703
+MAHARASHTRA,YAVATMAL,CONG,UTTAMRAO DEORAO PATIL,1,20.3887937,78.1204073
+MANIPUR,INNER MANIPUR,MSCP,THOUNAOJAM CHAOBA SINGH,1,24.8053359,93.9407467
+MANIPUR,OUTER MANIPUR,CPI,KIM GANGTE,1,25.4240949,94.25865329999999
+MEGHALAYA,SHILLONG,CONG,PATY RIPPLE KYNDIAH,1,25.578772600000004,91.8932535
+MEGHALAYA,TURA,CONG,PURNO AGITOK SANGMA,1,25.5140712,90.2032141
+MIZORAM,MIZORAM,IND,DR. H. LALLUNGMUANA,1,23.164543,92.9375739
+NAGALAND,NAGALAND,CONG,K. ASUNGBA SANGTAM,1,26.1584354,94.5624426
+NCT OF DELHI,CHANDNI CHOWK,BJP,VIJAY GOEL,1,28.635308000000002,77.22496
+NCT OF DELHI,DELHI SADAR,BJP,MADAN LAL KHURANA,1,28.635308000000002,77.22496
+NCT OF DELHI,EAST DELHI,BJP,LAL BIHARI TIWARI,1,28.7040592,77.1024902
+NCT OF DELHI,KAROL BAGH,CONG,MEIRA KUMAR,1,28.635308000000002,77.22496
+NCT OF DELHI,NEW DELHI,BJP,JAGMOHAN,1,28.7040592,77.1024902
+NCT OF DELHI,OUTER DELHI,BJP,KRISHAN LAL SHARMA,1,28.635308000000002,77.22496
+NCT OF DELHI,SOUTH DELHI,BJP,SUSHMA SWARAJ,1,28.7040592,77.1024902
+ORISSA,ASKA,BJD,NAVEEN PATNAIK,1,19.611589000000002,84.664495
+ORISSA,BALASORE,BJP,MAHAMEGHABHAN AIRA KHARABELA SWAIN,1,21.4949767,86.942658
+ORISSA,BERHAMPORE,CONG,SMT. JAYANTI PATNAIK,1,19.314961800000003,84.7940911
+ORISSA,BHADRAK,BJD,ARJUN CHARAN SETHI,1,21.0582737,86.4958396
+ORISSA,BHUBANESWAR,BJD,PRASAMNA KUMAR PATASANI,1,20.2960587,85.8245398
+ORISSA,BOLANGIR,BJP,SANGEETA KUMARI SINGHDEO,1,20.7167,83.4833
+ORISSA,CUTTACK,BJD,BHARTRUHARI MAHATAB,1,20.462521,85.88298950000001
+ORISSA,DEOGARH,BJP,DEBENDRA PRADHAN,1,21.5333,84.7333
+ORISSA,DHENKANAL,BJD,TATHAGATA SATAPATHY,1,20.65616,85.604263
+ORISSA,JAGATSINGHPUR,CONG,RANJIB BISWAL,1,20.2548998,86.17062209999999
+ORISSA,JAJPUR,CONG,RAMA CHANDRA MALLICK,1,20.85,86.3333
+ORISSA,KALAHANDI,BJP,BIKRAM KESHARI DEO,1,20.103298499999998,83.1649001
+ORISSA,KENDRAPARA,BJD,PRABHAT KUMAR SAMANTARAY,1,20.5,86.4167
+ORISSA,KEONJHAR,BJP,UPENDRANATH NAYAK,1,21.515119600000002,85.684578
+ORISSA,KORAPUT,CONG,GIRIDHAR GAMANG,1,18.813487,82.7123327
+ORISSA,MAYURBHANJ,BJP,SALKHAN MURMU,1,21.925365,86.7359551
+ORISSA,NOWRANGPUR,CONG,KHAGAPATI PRADHANI,1,19.6892919,82.3017728
+ORISSA,PHULBANI,BJD,PADMANAVA BEHERA,1,20.476971,84.2318729
+ORISSA,PURI,BJD,BRAJA KISHORE TRIPATHY,1,19.8133822,85.83146550000001
+ORISSA,SAMBALPUR,BJD,PRASANNA ACHARYA,1,21.466221899999997,83.975164
+ORISSA,SUNDARGARH,BJP,JUAL ORAM,1,22.1167,84.0333
+PUDUCHERRY,PUDUCHERRY,DMK,S. ARUMUGHAM,1,11.9138598,79.81447220000001
+PUNJAB,AMRITSAR,BJP,DAYA SINGH SODHI,1,31.6339793,74.8722642
+PUNJAB,BHATINDA,SAD,CHATIN SINGH SAMAON,1,30.210994,74.9454745
+PUNJAB,FARIDKOT,SAD,SUKHBIR SINGH BADAL,1,30.6667,74.75
+PUNJAB,FEROZEPUR,SAD,ZORA SINGH,1,30.9181,74.61614200000001
+PUNJAB,GURDASPUR,BJP,VINOD KHANNA,1,32.033852,75.407127
+PUNJAB,HOSHIARPUR,BJP,KAMAL CHAUDHURY,1,31.527981,75.91374990000001
+PUNJAB,JALANDHAR,JD,INDER KUMAR GUJRAL,1,31.3260152,75.5761829
+PUNJAB,LUDHIANA,SAD,AMRIK SINGH ALIWAL,1,30.900965000000003,75.8572758
+PUNJAB,PATIALA,SAD,PREM SINGH CHANDUMAJRA,1,30.32062,76.395126
+PUNJAB,PHILLAUR,IND,SATNAM SINGH KAINTH,1,31.021897999999997,75.787389
+PUNJAB,ROPAR,SAD,SATWINDER KAUR,1,30.965916800000002,76.5230234
+PUNJAB,SANGRUR,SAD,SURJIT SINGH BARNALA,1,30.2457963,75.84207159999998
+PUNJAB,TARN TARAN,SAD,PREM SINGH LALPURA,1,31.45,74.9253
+RAJASTHAN,AJMER,CONG,PRABHA THAKUR,1,26.45,74.64
+RAJASTHAN,ALWAR,CONG,GHASI RAM YADAV,1,27.560932399999995,76.6250168
+RAJASTHAN,BANSWARA,CONG,MAHENDRAJEET SINGH,1,23.540541,74.44225290000001
+RAJASTHAN,BARMER,CONG,COL.SONARAM CHOWDHARY,1,25.75,71.3833
+RAJASTHAN,BAYANA,BJP,GANGARAM KOLI,1,26.906289,77.28985
+RAJASTHAN,BHARATPUR,CONG,K. NATWAR SINGH,1,27.215598999999997,77.49015
+RAJASTHAN,BHILWARA,CONG,RAMPAL UPADHAYAYA,1,25.346251000000002,74.636383
+RAJASTHAN,BIKANER,CONG,BALRAM JAKHAR,1,28.019890000000004,73.317551
+RAJASTHAN,CHITTORGARH,CONG,UDAI LAL ANJANA,1,24.8887435,74.62692159999999
+RAJASTHAN,CHURU,CONG,NARENDRA BUDANIA,1,28.2911462,74.9622676
+RAJASTHAN,DAUSA,CONG,RAJESH PILOT,1,26.88859,76.33590699999999
+RAJASTHAN,GANGANAGAR,CONG,ENG. SHANKAR PANNU,1,29.9167,73.8833
+RAJASTHAN,JAIPUR,BJP,GIRDHARI LAL BHARGAVA,1,26.9124165,75.78728790000001
+RAJASTHAN,JALORE,IND,BUTA SINGH,1,25.343989999999998,72.615753
+RAJASTHAN,JHALAWAR,BJP,VASUNDHARA RAJE,1,24.587999,76.157578
+RAJASTHAN,JHUN JHUNU,AIIC(S),SISRAM OLA,1,28.124203,75.398318
+RAJASTHAN,JODHPUR,CONG,ASHOK GAHLOT,1,26.2389469,73.0243094
+RAJASTHAN,KOTA,CONG,RAM NARAIN MEENA,1,25.2138156,75.8647527
+RAJASTHAN,NAGAUR,CONG,RAMRAGHUNATH,1,27.1991222,73.74092399999999
+RAJASTHAN,PALI,CONG,MITHA LAL JAIN,1,25.7710893,73.3234478
+RAJASTHAN,SALUMBER,CONG,BHERU LAL (MEENA),1,24.134854999999998,74.044622
+RAJASTHAN,SAWAI MADHOPUR,CONG,USHA,1,26.020309,76.34429899999999
+RAJASTHAN,SIKAR,BJP,SUBHASH MAHARIYA,1,27.6094,75.139911
+RAJASTHAN,TONK,CONG,DOWARKA PARSHAD BAIRWA,1,26.1667,75.7833
+RAJASTHAN,UDAIPUR,BJP,SHANTI LAL CHAPLOT,1,24.5712699,73.6915439
+SIKKIM,SIKKIM,SDF,BHIM PD. DAHAL,1,27.5329718,88.5122178
+TAMIL NADU,ARAKKONAM,ADMK,GOPAL C,1,13.082699,79.670813
+TAMIL NADU,CHENGALPATTU,ADMK,KANCHI PANNEERSELVAM,1,12.683995199999998,79.9833483
+TAMIL NADU,CHIDAMBARAM,PMK,ELUMALAI ALIAS EZHILMALAI R.,1,11.3981936,79.6953594
+TAMIL NADU,COIMBATORE,BJP,RADHAKRISHNAN C.P.,1,11.016844500000001,76.9558321
+TAMIL NADU,CUDDALORE,ADMK,DHAMOTHARAN M.C.,1,11.749574,79.76382199999999
+TAMIL NADU,DHARMAPURI,PMK,PARY MOHAN K.,1,12.1264799,78.156159
+TAMIL NADU,DINDIGUL,ADMK,SREENIVAASAN C.,1,10.3673123,77.98029059999999
+TAMIL NADU,GOBICHETTIPALAYAM,ADMK,CHINNASAMY V.K.,1,11.4536111,77.4383333
+TAMIL NADU,KARUR,ADMK,THAMBI DURAI.M,1,10.957338,78.080937
+TAMIL NADU,KRISHNAGIRI,ADMK,MUNUSAMY K.P.,1,12.518611300000002,78.2137365
+TAMIL NADU,MADRAS CENTRAL,DMK,MURASOLI MARAN,1,12.9997467,80.2471172
+TAMIL NADU,MADRAS NORTH,DMK,KUPPUSAMI C,1,13.052413900000001,80.25082459999999
+TAMIL NADU,MADRAS SOUTH,DMK,BAALU T.R.,1,13.052413900000001,80.25082459999999
+TAMIL NADU,MADURAI,JP,SUBRAMANIAN SWAMY,1,9.9252007,78.11977540000001
+TAMIL NADU,MAYILADUTHURAI,TMC(M),"KRISHNAMOORTHY, K.",1,11.1018399,79.65222179999999
+TAMIL NADU,NAGAPATTINAM,CPI,"SELVARASU, M.",1,10.7688016,79.8394266
+TAMIL NADU,NAGERCOIL,TMC(M),"DENNIS, N.",1,8.17,77.43
+TAMIL NADU,NILGIRIS,BJP,MATHAN M. ALIAS MASTER MATHAN M.,1,11.4450257,76.68747009999998
+TAMIL NADU,PALANI,MDMK,GANESHAMURTHI A.,1,10.448918800000001,77.5209392
+TAMIL NADU,PERAMBALUR,ADMK,"RAJARETHINAM, P",1,11.2333,78.8833
+TAMIL NADU,PERIYAKULAM,ADMK,MUTHIAH .R,1,10.118825099999999,77.5485282
+TAMIL NADU,POLLACHI,ADMK,THIYAGARAJAN M.,1,10.6572737,77.0106693
+TAMIL NADU,PUDUKKOTTAI,ADMK,"PARAMASIVAM, RAJA",1,10.379663,78.8208454
+TAMIL NADU,RAMANATHAPURAM,ADMK,"SATHIAMOORTHY, V.",1,10.9900136,76.9902276
+TAMIL NADU,RASIPURAM,ADMK,SAROJA V.DR.,1,11.45862,78.186447
+TAMIL NADU,SALEM,IND,RAMAMURTHY K.,1,11.664325,78.1460142
+TAMIL NADU,SIVAGANGA,TMC(M),"CHIDAMBARAM, P.",1,9.845557000000001,78.483743
+TAMIL NADU,SIVAKASI,MDMK,VAIKO,1,9.4485569,77.798141
+TAMIL NADU,SRIPERUMBUDUR,ADMK,"VENUGOPAL, K.",1,12.967461,79.941824
+TAMIL NADU,TENKASI,ADMK,"MURUGESAN,S.",1,8.959021400000001,77.31293829999998
+TAMIL NADU,THANJAVUR,DMK,"PALANIMANICKAM, S.S.",1,10.786999400000001,79.1378274
+TAMIL NADU,TINDIVANAM,MDMK,RAMACHANDRAN N. GINGEE,1,12.23073,79.655629
+TAMIL NADU,TIRUCHENDUR,ADMK,RAMARAAJAN,1,8.495585,78.119187
+TAMIL NADU,TIRUCHENGODE,ADMK,PALANISWAMY K.,1,11.378476,77.8944945
+TAMIL NADU,TIRUCHIRAPPALLI,BJP,RANGARAJAN KUMARAMANGALAM,1,10.790483300000002,78.7046725
+TAMIL NADU,TIRUNELVELI,ADMK,"JANARTHANAN, R.",1,8.732999999999999,77.7
+TAMIL NADU,TIRUPPATTUR,DMK,VENUGOPAL. D,1,10.10801,78.60507199999999
+TAMIL NADU,VANDAVASI,PMK,DURAI M.,1,12.50286,79.605766
+TAMIL NADU,VELLORE,PMK,SHANMUGAM N.T.,1,12.916516699999999,79.13249859999999
+TRIPURA,TRIPURA EAST,CPM,BAJU BAN RIYAN,1,23.940848199999998,91.9881527
+TRIPURA,TRIPURA WEST,CPM,SAMAR CHOUDHURY,1,23.851747600000003,91.443469
+UTTAR PRADESH,AGRA,BJP,BHAGWAN SHANKAR RAWAT,1,27.1766701,78.0080745
+UTTAR PRADESH,AKBARPUR,BSP,MAYAWATI,1,26.0203301,79.689499
+UTTAR PRADESH,ALIGARH,BJP,SHEELA GAUTAM,1,27.89381,78.068138
+UTTAR PRADESH,ALLAHABAD,BJP,DR. MURLI MANOHAR JOSHI,1,25.435801100000003,81.846311
+UTTAR PRADESH,ALMORA,BJP,BACHI SINGH RAWAT,1,29.6464141,79.4703885
+UTTAR PRADESH,AMETHI,BJP,SANJAY SINGH,1,26.1540538,81.814238
+UTTAR PRADESH,AMROHA,BJP,CHETAN CHAUHAN,1,28.904429999999998,78.467529
+UTTAR PRADESH,AONLA,BJP,RAJVEER SINGH,1,28.276608000000003,79.168361
+UTTAR PRADESH,AZAMGARH,BSP,AKBAR AHMAD DAMPY,1,26.0737044,83.1859458
+UTTAR PRADESH,BAGHPAT,BJP,SOMPAL,1,28.936473,77.217822
+UTTAR PRADESH,BAHRAICH,BSP,ARIF MOHAMMAD KHAN,1,27.572602000000003,81.59387199999999
+UTTAR PRADESH,BALLIA,SJP(R),CHANDRA SHEKHAR,1,25.758438100000003,84.1487319
+UTTAR PRADESH,BALRAMPUR,SP,RIZWAN ZAHEER KHAN ALIAS RIZOO BHAIYA,1,27.428421000000004,82.183138
+UTTAR PRADESH,BANDA,BJP,RAMESH CHANDRA DWIVEDI,1,25.4833,80.3333
+UTTAR PRADESH,BANSGAON,BJP,RAJ NARAIN PASHI,1,26.549190000000003,83.34685390000001
+UTTAR PRADESH,BARA BANKI,BJP,BAIJNATH RAWAT,1,26.927165999999996,81.191449
+UTTAR PRADESH,BAREILLY,BJP,SANTOSH KUMAR GANGWAR,1,28.367035499999997,79.43043809999999
+UTTAR PRADESH,BASTI,BJP,SHRI RAM CHAUHAN,1,26.8176796,82.7633133
+UTTAR PRADESH,BIJNOR,SP,OMWATI DEVI,1,29.372442200000002,78.1358472
+UTTAR PRADESH,BILHAUR,BJP,SHYAM BIHARI MISHRA,1,26.84398,80.063757
+UTTAR PRADESH,BUDAUN,SP,SALEEM IQBAL SHERVANI,1,28.0337088,79.1205419
+UTTAR PRADESH,BULANDSHAHR,BJP,CHHATTARPAL,1,28.406963,77.8498292
+UTTAR PRADESH,CHAIL,SP,SHAILENDRA KUMAR,1,25.4257302,81.6322776
+UTTAR PRADESH,CHANDAULI,BJP,ANAND RATNA MAURYA,1,25.262083999999998,83.261212
+UTTAR PRADESH,DEORIA,SP,MOHAN SINGH,1,26.5047,83.7872
+UTTAR PRADESH,DOMARIAGANJ,BJP,RAM PAL SINGH,1,27.205429,82.655434
+UTTAR PRADESH,ETAH,BJP,MAHADEEPAK SINGH,1,27.557438,78.653801
+UTTAR PRADESH,ETAWAH,BJP,SUKHDA MISHRA,1,26.7902124,79.01978390000001
+UTTAR PRADESH,FAIZABAD,SP,MITRASEN YADAV,1,26.779346999999998,82.14215899999999
+UTTAR PRADESH,FARRUKHABAD,BJP,SWAMI SACHCHIANAND HARI SAKSHI,1,27.4,79.5666667
+UTTAR PRADESH,FATEHPUR,BJP,ASHOK KUMAR PATEL,1,25.925683,80.814423
+UTTAR PRADESH,FIROZABAD,BJP,PRABHU DAYAL KATHERIA,1,27.1591006,78.39575740000001
+UTTAR PRADESH,GARHWAL,BJP,MAJ. GEN.(RTD) BHUWAN CHANDRA KHANDURI (A.V.S.M.),1,26.116047299999998,83.23186340000001
+UTTAR PRADESH,GHATAMPUR,BJP,KAMAL RANI,1,26.150419,80.1653369
+UTTAR PRADESH,GHAZIPUR,SP,OM PRAKASH,1,25.5840419,83.5770202
+UTTAR PRADESH,GHOSI,SAP,KALPNATH RAI,1,26.122937,83.54623000000001
+UTTAR PRADESH,GONDA,SP,KIRTI VADHAN SINGH ALIAS KIRTI VARDHAN SINGH ALIAS RAJA BHAIYA,1,27.1339913,81.9618968
+UTTAR PRADESH,GORAKHPUR,BJP,ADITYANATH,1,26.760554499999998,83.37316750000001
+UTTAR PRADESH,HAMIRPUR,BJP,GANGA CHARAN S/O RAM SWAROOP,1,25.953449,80.146431
+UTTAR PRADESH,HAPUR,BJP,RAMESH CHAND TOMAR,1,28.7305798,77.7758825
+UTTAR PRADESH,HARDOI,SP,USHA VARMA,1,27.394646999999996,80.129931
+UTTAR PRADESH,HARDWAR,BJP,HARPAL SINGH SATHI,1,27.191596500000003,82.88694179999999
+UTTAR PRADESH,HATHRAS,BJP,KISHAN LAL DILER,1,27.6,78.05
+UTTAR PRADESH,JALAUN,BJP,BHANU PRATAP SINGH,1,26.142269,79.333946
+UTTAR PRADESH,JALESAR,SP,PROFESSOR. S.P. SINGH BAGHEL,1,27.472832,78.30166190000001
+UTTAR PRADESH,JAUNPUR,SP,PARAS NATH YADAV,1,25.7490034,82.6987002
+UTTAR PRADESH,JHANSI,BJP,RAJENDRA AGNIHOTRI,1,25.444121,78.567604
+UTTAR PRADESH,KAIRANA,BJP,VIRENDRA VERMA,1,29.395849,77.204323
+UTTAR PRADESH,KAISERGANJ,SP,BENI PRASAD VERMA,1,27.251478100000003,81.54730140000001
+UTTAR PRADESH,KANNAUJ,SP,PRADEEP KUMAR YADAV,1,27.055190000000003,79.91808
+UTTAR PRADESH,KANPUR,BJP,JAGAT VEER SINGH DRON,1,26.449923,80.3318736
+UTTAR PRADESH,KHALILABAD,BJP,INDRAJEET MISHRA,1,26.775,83.0736
+UTTAR PRADESH,KHERI,SP,RAVI PRAKASH VERMA,1,28.16514,80.6326916
+UTTAR PRADESH,KHURJA,BJP,ASHOK KUMAR PRADHAN,1,28.252884,77.851428
+UTTAR PRADESH,LALGANJ,SP,DAROGA PRASAD SAROJ,1,25.016466,82.36043199999999
+UTTAR PRADESH,LUCKNOW,BJP,ATAL BEHARI VAJPAYEE,1,26.8465108,80.94668320000001
+UTTAR PRADESH,MACHHLISHAHR,BJP,CHINMAYANAND,1,25.6873691,82.4129729
+UTTAR PRADESH,MAHARAJGANJ,BJP,PANKAJ CHOUDHARI,1,27.1446035,83.5621737
+UTTAR PRADESH,MAINPURI,SP,BALRAM SINGH YADAV,1,27.2333,79.0167
+UTTAR PRADESH,MATHURA,BJP,TEJVEER,1,27.492413399999997,77.673673
+UTTAR PRADESH,MEERUT,BJP,AMAR PAL SINGH,1,28.984461800000002,77.7064137
+UTTAR PRADESH,MIRZAPUR,BJP,VIRENDRA SINGH,1,25.1336987,82.56443440000001
+UTTAR PRADESH,MISRIKH,BSP,RAM SHANKER,1,27.4292761,80.5299541
+UTTAR PRADESH,MOHANLALGANJ,SP,REENA CHAUDHARY,1,26.686994,80.984259
+UTTAR PRADESH,MORADABAD,SP,DR. SHAFIQUR RAHMAN BARQ,1,28.8315925,78.77827640000001
+UTTAR PRADESH,MUZAFFARNAGAR,BJP,SOHANVEER SINGH,1,29.4726817,77.70850909999999
+UTTAR PRADESH,NAINITAL,BJP,ILA PANT,1,29.380303899999998,79.4635658
+UTTAR PRADESH,PADRAUNA,BJP,RAM NAGINA MISHRA,1,26.90229,83.979218
+UTTAR PRADESH,PHULPUR,SP,JANG BAHADUR SINGH PATEL,1,25.550059899999997,82.090767
+UTTAR PRADESH,PILIBHIT,IND,MANEKA GANDHI,1,28.632178000000003,79.802987
+UTTAR PRADESH,PRATAPGARH,BJP,RAM VILAS VEDANTI,1,25.8973038,81.94529809999999
+UTTAR PRADESH,RAE BARELI,BJP,ASHOK SINGH,1,26.2333183,81.23331230000001
+UTTAR PRADESH,RAMPUR,BJP,MUKHTAR ABBAS NAQVI,1,28.802957,79.0254439
+UTTAR PRADESH,ROBERTSGANJ,BJP,RAM SHAKAL,1,24.682759899999997,83.065613
+UTTAR PRADESH,SAHARANPUR,BJP,NAKLI SINGH,1,29.9667,77.55
+UTTAR PRADESH,SAIDPUR,BJP,VIJAY,1,25.5408003,83.2254204
+UTTAR PRADESH,SALEMPUR,SAP,HARI KEWAL PRASAD,1,26.3,83.91666670000001
+UTTAR PRADESH,SAMBHAL,SP,MULAYAM SINGH YADAV,1,28.584186,78.56477
+UTTAR PRADESH,SHAHABAD,BJP,RAGHVENDRA SINGH,1,27.65,79.95
+UTTAR PRADESH,SHAHJAHANPUR,BJP,SATYAPAL SINGH YADAV,1,27.8833,79.9167
+UTTAR PRADESH,SITAPUR,BJP,JANARDAN PRASAD MISRA,1,27.5839037,80.66635600000001
+UTTAR PRADESH,SULTANPUR,BJP,DEBENDRA BAHADUR RAI,1,26.264775699999998,82.0727061
+UTTAR PRADESH,TEHRI GARHWAL,BJP,MANABENDRA SHAH,1,30.3848782,78.42271059999999
+UTTAR PRADESH,UNNAO,BJP,DEVI BUX,1,26.548051,80.484606
+UTTAR PRADESH,VARANASI,BJP,SHANKAR PRASAD JAISWAL,1,25.317645199999998,82.97391440000001
+WEST BENGAL,ALIPURDUARS,RSP,JOACHIM BAXLA,1,26.5,89.5166667
+WEST BENGAL,ARAMBAGH,CPM,ANIL BASU,1,22.8833,87.7833
+WEST BENGAL,ASANSOL,CPM,BIKASH CHOWDHURY,1,23.68721,86.973343
+WEST BENGAL,BAHARAMPUR,RSP,PROMOTHES MUKHERJEE,1,24.0979577,88.2691594
+WEST BENGAL,BALURGHAT,RSP,RANEN BARMAN,1,25.22418,88.773933
+WEST BENGAL,BANKURA,CPM,ACHARIA BASUDEB,1,23.237163199999998,87.06522170000001
+WEST BENGAL,BARASAT,WBTC,DR RANJIT KUMAR PANJA,1,22.72,88.48
+WEST BENGAL,BARRACKPORE,CPM,TARIT BARAN TOPDAR,1,22.767427800000004,88.3883455
+WEST BENGAL,BASIRHAT,CPI,AJAY CHAKRABORTY,1,22.657401699999998,88.8671766
+WEST BENGAL,BIRBHUM,CPM,DOME RAM CHANDRA,1,24.3575023,87.8426967
+WEST BENGAL,BOLPUR,CPM,SOMNATH CHATTERJEE,1,23.662451,87.70411700000001
+WEST BENGAL,BURDWAN,CPM,SAR NIKHILANANDA,1,23.232421399999996,87.8614793
+WEST BENGAL,CALCUTTA NORTH EAST,WBTC,AJIT KUMAR PANJA,1,22.572646,88.363895
+WEST BENGAL,CALCUTTA NORTH WEST,WBTC,SUDIP BANDYOPADHYAY,1,22.572646,88.363895
+WEST BENGAL,CALCUTTA SOUTH,WBTC,MAMATA BANERJEE,1,22.572646,88.363895
+WEST BENGAL,CONTAI,CPM,SUDHIR GIRI,1,21.7878557,87.7418842
+WEST BENGAL,COOCH BEHAR,FBL,AMAR ROYPRADHAN,1,26.32419,89.45103
+WEST BENGAL,DARJEELING,CPM,ANANDA PATHAK,1,27.0360066,88.2626751
+WEST BENGAL,DIAMOND HARBOUR,CPM,SAMIK LAHIRI,1,22.190864,88.18962990000001
+WEST BENGAL,DUM DUM,BJP,TAPAN SIKDAR,1,22.6450736,88.43796529999999
+WEST BENGAL,DURGAPUR,CPM,KHAN SUNIL,1,23.5204443,87.31192270000001
+WEST BENGAL,HOOGHLY,CPM,RUPCHAND PAL,1,22.8956,88.4025
+WEST BENGAL,HOWRAH,WBTC,DR BIKRAM SARKAR,1,22.5957689,88.2636394
+WEST BENGAL,JADAVPUR,WBTC,KRISHNA BOSE,1,22.495,88.3719444
+WEST BENGAL,JALPAIGURI,CPM,MINATI SEN,1,26.52202,88.71746800000001
+WEST BENGAL,JANGIPUR,CPM,ABUL HASNAT KHAN,1,24.470738,88.0949609
+WEST BENGAL,JHARGRAM,CPM,MURMU RUPCHAND,1,22.450008,86.99589
+WEST BENGAL,JOYNAGAR,RSP,SANAT KUMAR MANDAL,1,22.6833699,87.9959401
+WEST BENGAL,KATWA,CPM,ZAHEDI MAHBOOB,1,23.640739,88.135887
+WEST BENGAL,KRISHNANAGAR,CPM,AJOY MUKHOPADHYAY,1,23.4008744,88.5013962
+WEST BENGAL,MALDA,CONG,ABUL BARKAT ATAUL GHANI KHAN CHOUDHURY,1,25.0108408,88.1410967
+WEST BENGAL,MATHURAPUR,CPM,RADHIKA RANJAN PRAMANIK,1,22.1470624,88.3919026
+WEST BENGAL,MIDNAPORE,CPI,INDRAJIT GUPTA,1,22.42087,87.326088
+WEST BENGAL,MURSHIDABAD,CPM,MOINUL HASSAN,1,24.167555,88.27081899999999
+WEST BENGAL,NABADWIP,CPM,ASIM BALA,1,23.4167,88.3667
+WEST BENGAL,PANSKURA,CPI,GEETA MUKHERJEE,1,22.396047,87.740414
+WEST BENGAL,PURULIA,FBL,BIR SINGH MAHAT0,1,23.332077899999998,86.365208
+WEST BENGAL,RAIGANJ,CPM,SUBRATA MUKHERJEE,1,25.6185295,88.1255837
+WEST BENGAL,SERAMPORE,WBTC,AKBOR ALI KHANDOKER,1,22.739999899999997,88.35
+WEST BENGAL,TAMLUK,CPM,LAKSHMAN CHANDRA SETH,1,22.29092,87.924149
+WEST BENGAL,ULUBERIA,CPM,HANNAN MOLLAH,1,22.4744363,88.1000377
+WEST BENGAL,VISHNUPUR,CPM,SANDHYA BAURI,1,23.0833,87.3167
+</script>
+<script>
+var colors = {"CPI": "#FA2E2E", "NC": "#FA2E2E", "CPM": "#FA2E2E", "BPF": "#F92EFA", "SWA": "#0C6965", "YSRC": "#832EFA", "DMK": "#FAE92E", "AIFB": "#FA2E2E", "AUDF": "#2E803C", "JDU": "#A5E02E", "Other": "#A0A0A0", "AAP": "#FA2E2E", "CONG": "#2EA7FF", "JD": "#8064a2", "SWP": "#FA2E2E", "DMDK": "#60669E", "SP": "#2E803C", "TRS": "#F92EFA", "HJCBL": "#E0B42E", "AGP": "#832EFA", "BOPF": "#F92EFA", "JD(U)": "#A5E02E", "MNS": "#832EFA", "BSP": "#2E3EEB", "SDF": "#E0B42E", "SAD": "#FAE92E", "JKN": "#FA2E2E", "JDS": "#832EFA", "JMM": "#832EFA", "RPI": "#A02E2E", "UDF": "#2EA7FF", "UKD": "#F92EFA", "PMK": "#2E803C", "SS": "#AD632E", "SHS": "#AD632E", "KECM": "#FAE92E", "MPP": "#3FC62E", "ADMK": "#B02E2E", "VCK": "#832EFA", "MDMK": "#FA942E", "JD(S)": "#832EFA", "BJD": "#3FC63C", "JVM": "#F92EFA", "AIMIM": "#A5E02E", "INLD": "#2EFAA5", "LJP": "#832EFA", "PDP": "#A5E02E", "TMC": "#A5E02E", "JNP": "#000000", "AUML": "#2E803C", "KCM": "#FFC02E", "RLD": "#AD632E", "NPF": "#832EFA", "KEC": "#FAE92E", "AITC": "#A5E02E", "NCP": "#2E3EEB", "BVA": "#FAE92E", "RJD": "#A02E2E", "BJS": "#F05A00", "HJC": "#E0B42E", "BJP": "#FA942E", "IND": "#95b3d7", "TDP": "#FAE92E", "RSP": "#FA2E2E", "IUML": "#2E803C", "INC": "#2EA7FF"},
+    groupby = 'PARTY',
+    R = 6
+
+var data = d3.csv.parse($('#data').text(), function(row) {
+  for (var key in row) {
+    // Convert values to integers
+    if (key != 'STATE' && key != 'PC' && key != groupby)
+      row[key] = +row[key]
+    // Get the scaled x,y coords
+    row.x = 700 * .95 * (row['Long'] - 68.5) / (97 - 68.5) + Math.random() + 120 - 150,
+    row.y = 700 * (36.7 - row['Lat']) / (36.7 - 8) + Math.random(),
+    
+      row.r = R * Math.pow(row['CONSTANT'] / 1.0, .5)
+    
+  }
+  return row
+})
+
+var update = d3.select('#carto-contents').selectAll('circle')
+    .data(data)
+  .enter()
+    .append('circle')
+    .attr('r', function(d) { return d.r })
+    .attr('title', function(d) { return d.STATE + ': ' + d.PC + '<br>' + d[groupby] })
+    .attr('fill', function(d, i) { return colors[d[groupby]] || 'rgba(128,128,128,.5)' })
+    .attr('data-party', function(d) { return d[groupby].replace(/[^A-Za-z0-9_]/g, '-') })
+    .attr('href', function(d) { return 'result?BY=&YEAR=1998&STATE=' + encodeURIComponent(d.STATE) + '&PC=' + encodeURIComponent(d.PC) })
+    .attr('stroke', 'rgba(0,0,0,.3)')
+    .classed('direct', true)
+    .call(G.unpack()
+      .width(700)
+      .height(700))
+
+var $lo = d3.select('input.lo'),
+    $hi = d3.select('input.hi')
+
+d3.selectAll('input[type="range"]').on('change', function() {
+  var lo = DB.lo = +$lo.property('value'),
+      hi = DB.hi = +$hi.property('value')
+  update
+    .classed('hide', function(d) { return (d.r < lo) || (d.r > hi) })
+})
+
+if (DB.lo && $lo.node()) $lo.property('value', DB.lo).on('change')()
+if (DB.hi && $hi.node()) $hi.property('value', DB.hi).on('change')()
+
+var statemap = $('[data-grp]').map(function() {
+  var $this = d3.select(this)
+  return {
+    rect: $this.select('rect'),
+    text: $this.select('text.value'),
+    state: $this.attr('data-grp')
+  }
+}).get()
+
+window.on_highlight = function(e) {
+  var count = {},
+      i=0,
+      cell, match
+  e.highlighted.each(function() {
+    var row = this.__data__
+    if (row) count[row.STATE] = (count[row.STATE] || 0) + 1
+  })
+  for (; cell=statemap[i]; i++) {
+    match = cell.state in count
+    cell.text.text(match ? count[cell.state] : '')
+    cell.rect.classed('match', match)
+  }
+}
+</script>

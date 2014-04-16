@@ -1,0 +1,598 @@
+
+<div class="pc-summary">
+
+    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Most WOMEN <small></small></h2>
+    
+    
+<table class="table table-condensed analysis">
+  <thead>
+    <th>Year</th>
+    <th>State</th>
+    <th>Constituency</th>
+    <th class="sorted">Women</th><th>Candidates</th><th>Women %</th><th>Winner</th><th>Party</th>
+  </thead>
+  <tbody>
+    
+      <tr href="result?YEAR=1996&STATE=ANDHRA%20PRADESH&PC=NALGONDA&women=">
+        <th>1996</td>
+        <th>Andhra Pradesh</td>
+        <th>Nalgonda</td>
+        
+          
+            <td>60</td>
+          
+        
+          
+            <td>480</td>
+          
+        
+          
+            <td>12.5%</td>
+          
+        
+          
+            <td>Bommagani Dharma Bixam</td>
+          
+        
+          
+            
+            <td style="background-color:#FA2E2E;color:#fff">CPI</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1996&STATE=KARNATAKA&PC=BELGAUM&women=">
+        <th>1996</td>
+        <th>Karnataka</td>
+        <th>Belgaum</td>
+        
+          
+            <td>52</td>
+          
+        
+          
+            <td>456</td>
+          
+        
+          
+            <td>11.4%</td>
+          
+        
+          
+            <td>Koujalagi Shivanand Hemappa</td>
+          
+        
+          
+            
+            <td style="background-color:#8064a2;color:#fff">JD</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1996&STATE=WEST%20BENGAL&PC=CALCUTTA%20SOUTH&women=">
+        <th>1996</td>
+        <th>West Bengal</td>
+        <th>Calcutta South</td>
+        
+          
+            <td>8</td>
+          
+        
+          
+            <td>13</td>
+          
+        
+          
+            <td>61.5%</td>
+          
+        
+          
+            <td>Mamata Banerjee</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1996&STATE=KARNATAKA&PC=BIDAR&women=">
+        <th>1996</td>
+        <th>Karnataka</td>
+        <th>Bidar</td>
+        
+          
+            <td>7</td>
+          
+        
+          
+            <td>37</td>
+          
+        
+          
+            <td>18.9%</td>
+          
+        
+          
+            <td>Ramachandra Veerappa</td>
+          
+        
+          
+            
+            <td style="background-color:#FA942E;color:#000">BJP</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=MAHARASHTRA&PC=BARAMATI&women=">
+        <th>2009</td>
+        <th>Maharashtra</td>
+        <th>Baramati</td>
+        
+          
+            <td>7</td>
+          
+        
+          
+            <td>17</td>
+          
+        
+          
+            <td>41.2%</td>
+          
+        
+          
+            <td>Supriya Sule</td>
+          
+        
+          
+            
+            <td style="background-color:#2E3EEB;color:#fff">NCP</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1996&STATE=MADHYA%20PRADESH&PC=KHAJURAHO&women=">
+        <th>1996</td>
+        <th>Madhya Pradesh</td>
+        <th>Khajuraho</td>
+        
+          
+            <td>7</td>
+          
+        
+          
+            <td>45</td>
+          
+        
+          
+            <td>15.6%</td>
+          
+        
+          
+            <td>Uma Bharti</td>
+          
+        
+          
+            
+            <td style="background-color:#FA942E;color:#000">BJP</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1991&STATE=UTTAR%20PRADESH&PC=KANPUR&women=">
+        <th>1991</td>
+        <th>Uttar Pradesh</td>
+        <th>Kanpur</td>
+        
+          
+            <td>6</td>
+          
+        
+          
+            <td>39</td>
+          
+        
+          
+            <td>15.4%</td>
+          
+        
+          
+            <td>Jagatveer Singh Bron</td>
+          
+        
+          
+            
+            <td style="background-color:#FA942E;color:#000">BJP</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=UTTAR%20PRADESH&PC=BULANDSHAHR&women=">
+        <th>2009</td>
+        <th>Uttar Pradesh</td>
+        <th>Bulandshahr</td>
+        
+          
+            <td>6</td>
+          
+        
+          
+            <td>16</td>
+          
+        
+          
+            <td>37.5%</td>
+          
+        
+          
+            <td>Kamlesh</td>
+          
+        
+          
+            
+            <td style="background-color:#2E803C;color:#fff">SP</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=UTTAR%20PRADESH&PC=GAUTAM%20BUDDH%20NAGAR&women=">
+        <th>2009</td>
+        <th>Uttar Pradesh</td>
+        <th>Gautam Buddh Nagar</td>
+        
+          
+            <td>6</td>
+          
+        
+          
+            <td>26</td>
+          
+        
+          
+            <td>23.1%</td>
+          
+        
+          
+            <td>Surendra Singh Nagar</td>
+          
+        
+          
+            
+            <td style="background-color:#2E3EEB;color:#fff">BSP</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1996&STATE=MADHYA%20PRADESH&PC=SAGAR&women=">
+        <th>1996</td>
+        <th>Madhya Pradesh</td>
+        <th>Sagar</td>
+        
+          
+            <td>6</td>
+          
+        
+          
+            <td>34</td>
+          
+        
+          
+            <td>17.6%</td>
+          
+        
+          
+            <td>Virendra Kumar</td>
+          
+        
+          
+            
+            <td style="background-color:#FA942E;color:#000">BJP</td>
+          
+        
+      </tr>
+    
+  </tbody>
+</table>
+
+
+    <h2>Highest % of WOMEN <small></small></h2>
+    
+    
+<table class="table table-condensed analysis">
+  <thead>
+    <th>Year</th>
+    <th>State</th>
+    <th>Constituency</th>
+    <th>Women</th><th>Candidates</th><th class="sorted">Women %</th><th>Winner</th><th>Party</th>
+  </thead>
+  <tbody>
+    
+      <tr href="result?YEAR=1967&STATE=MADRAS&PC=KARUR&women=">
+        <th>1967</td>
+        <th>Madras</td>
+        <th>Karur</td>
+        
+          
+            <td>2</td>
+          
+        
+          
+            <td>2</td>
+          
+        
+          
+            <td>100.0%</td>
+          
+        
+          
+            <td>M. Gounder</td>
+          
+        
+          
+            
+            <td style="background-color:#0C6965;color:#fff">SWA</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1977&STATE=WEST%20BENGAL&PC=PANSKURA&women=">
+        <th>1977</td>
+        <th>West Bengal</td>
+        <th>Panskura</td>
+        
+          
+            <td>2</td>
+          
+        
+          
+            <td>2</td>
+          
+        
+          
+            <td>100.0%</td>
+          
+        
+          
+            <td>Abha Maiti</td>
+          
+        
+          
+            
+            <td style="background-color:#000000;color:#fff">JNP</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1998&STATE=KERALA&PC=ALAPPUZHA&women=">
+        <th>1998</td>
+        <th>Kerala</td>
+        <th>Alappuzha</td>
+        
+          
+            <td>3</td>
+          
+        
+          
+            <td>4</td>
+          
+        
+          
+            <td>75.0%</td>
+          
+        
+          
+            <td>V.M. Sudheeran</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=MEGHALAYA&PC=TURA&women=">
+        <th>2009</td>
+        <th>Meghalaya</td>
+        <th>Tura</td>
+        
+          
+            <td>3</td>
+          
+        
+          
+            <td>4</td>
+          
+        
+          
+            <td>75.0%</td>
+          
+        
+          
+            <td>Agatha K. Sangma</td>
+          
+        
+          
+            
+            <td style="background-color:#2E3EEB;color:#fff">NCP</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1998&STATE=WEST%20BENGAL&PC=PANSKURA&women=">
+        <th>1998</td>
+        <th>West Bengal</td>
+        <th>Panskura</td>
+        
+          
+            <td>2</td>
+          
+        
+          
+            <td>3</td>
+          
+        
+          
+            <td>66.7%</td>
+          
+        
+          
+            <td>Geeta Mukherjee</td>
+          
+        
+          
+            
+            <td style="background-color:#FA2E2E;color:#fff">CPI</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1962&STATE=ANDHRA%20PRADESH&PC=ELURU&women=">
+        <th>1962</td>
+        <th>Andhra Pradesh</td>
+        <th>Eluru</td>
+        
+          
+            <td>2</td>
+          
+        
+          
+            <td>3</td>
+          
+        
+          
+            <td>66.7%</td>
+          
+        
+          
+            <td>Viramachaneni Vimaladevi</td>
+          
+        
+          
+            
+            <td style="background-color:#FA2E2E;color:#fff">CPI</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1999&STATE=KARNATAKA&PC=BELLARY&women=">
+        <th>1999</td>
+        <th>Karnataka</td>
+        <th>Bellary</td>
+        
+          
+            <td>2</td>
+          
+        
+          
+            <td>3</td>
+          
+        
+          
+            <td>66.7%</td>
+          
+        
+          
+            <td>Sonia Gandhi</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1996&STATE=WEST%20BENGAL&PC=CALCUTTA%20SOUTH&women=">
+        <th>1996</td>
+        <th>West Bengal</td>
+        <th>Calcutta South</td>
+        
+          
+            <td>8</td>
+          
+        
+          
+            <td>13</td>
+          
+        
+          
+            <td>61.5%</td>
+          
+        
+          
+            <td>Mamata Banerjee</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2004&STATE=RAJASTHAN&PC=UDAIPUR&women=">
+        <th>2004</td>
+        <th>Rajasthan</td>
+        <th>Udaipur</td>
+        
+          
+            <td>3</td>
+          
+        
+          
+            <td>5</td>
+          
+        
+          
+            <td>60.0%</td>
+          
+        
+          
+            <td>Kiran Maheshwari</td>
+          
+        
+          
+            
+            <td style="background-color:#FA942E;color:#000">BJP</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1999&STATE=PUNJAB&PC=GURDASPUR&women=">
+        <th>1999</td>
+        <th>Punjab</td>
+        <th>Gurdaspur</td>
+        
+          
+            <td>3</td>
+          
+        
+          
+            <td>5</td>
+          
+        
+          
+            <td>60.0%</td>
+          
+        
+          
+            <td>Vinod Khanna</td>
+          
+        
+          
+            
+            <td style="background-color:#FA942E;color:#000">BJP</td>
+          
+        
+      </tr>
+    
+  </tbody>
+</table>
+
+
+
+
+</div>

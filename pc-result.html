@@ -27,6 +27,18 @@ colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 N = int(args.get('n', [20])[0])
 {% end %}
 <div class="pc-result">
+{% set key = (args['STATE'][0], args['PC'][0]) %}
+{% if key in affidavit_groups %}
+  {% code %}
+  candidates = affidavits.ix[affidavit_groups[key]]
+  {% end %}
+  <h2>{{ len(candidates) }} candidates filed for 2014 elections
+    <a class="small direct-link" target="_blank" href="http://affidavitarchive.nic.in/DynamicAffidavitDisplay/CANDIDATEAFFIDAVIT.aspx?YEARID=May-2014&AC_No={{ candidates['PC_CODE'].iget(0) }}&st_code={{ candidates['ST_CODE'].iget(0) }}&constType=PC">on ECI website</a></h2>
+  {{ candidates[['PARTY', 'NAME']].head(N).to_html(index=False, classes='table table-condensed').replace('border="1" ', '') }}
+{% else %}
+  <h2>No affidavits available on ECI website for 2014</h2>
+{% end %}
+
 <h2>
   <div class="pull-right">
     <i class="glyphicon glyphicon-map-marker text-danger" href="cartogram?PC=" title="Cartogram"></i>
@@ -160,18 +172,6 @@ N = int(args.get('n', [20])[0])
       {% end %}
     </g>
   </svg>
-{% end %}
-
-{% set key = (args['STATE'][0], args['PC'][0]) %}
-{% if key in affidavit_groups %}
-  {% code %}
-  candidates = affidavits.ix[affidavit_groups[key]]
-  {% end %}
-  <h2>{{ len(candidates) }} affidavits filed for 2014 elections
-    <a class="small direct-link" target="_blank" href="http://affidavitarchive.nic.in/DynamicAffidavitDisplay/CANDIDATEAFFIDAVIT.aspx?YEARID=May-2014&AC_No={{ candidates['PC_CODE'].iget(0) }}&st_code={{ candidates['ST_CODE'].iget(0) }}&constType=PC">on ECI website</a></h2>
-  {{ candidates[['PARTY', 'NAME']].head(N).to_html(index=False, classes='table table-condensed').replace('border="1" ', '') }}
-{% else %}
-  <h2>No affidavits available on ECI website for 2014</h2>
 {% end %}
 
 

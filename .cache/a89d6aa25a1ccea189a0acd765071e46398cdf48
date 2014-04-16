@@ -1,0 +1,1768 @@
+
+<div class="pc-result">
+<h2>
+  <div class="pull-right">
+    <i class="glyphicon glyphicon-map-marker text-danger" href="cartogram?PC=" title="Cartogram"></i>
+  </div>
+  <i class="back glyphicon glyphicon-circle-arrow-left"></i>
+  Kalahandi,
+  <a href="state?PC=&YEAR=">Orissa</a>
+  2009
+  <small>8 / 8 candidates</small>
+</h2>
+
+  
+    <h3 class="winner-story">
+      <span class="winner-name">BHAKTA CHARAN DAS</span> of
+      
+      <span class="winner-party" style="background-color:#2EA7FF;color:#000">CONG</span> won by
+      15.7% (154,037 votes)
+      
+        
+        against
+        SUBASH CHANDRA NAYAK of
+        
+        <span class="winner-party" style="background-color:#3FC63C;color:#000">BJD</span>.
+      
+    </h3>
+
+    <table class="table table-condensed analysis">
+      <thead>
+        <th>#</th><th>PARTY</th><th>NAME</th><th>VOTES</th><th>SEX</th><th>AGE</th><th>CATEGORY</th>
+      </thead>
+      <tbody>
+        
+          <tr>
+            
+              
+                <td>1</td>
+              
+            
+              
+                
+                <td style="background-color:#2EA7FF;color:#000">CONG</td>
+              
+            
+              
+                <td>Bhakta Charan Das</td>
+              
+            
+              
+                <td>401,736</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>52</td>
+              
+            
+              
+                <td>GEN</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>2</td>
+              
+            
+              
+                
+                <td style="background-color:#3FC63C;color:#000">BJD</td>
+              
+            
+              
+                <td>Subash Chandra Nayak</td>
+              
+            
+              
+                <td>247,699</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>62</td>
+              
+            
+              
+                <td>GEN</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>3</td>
+              
+            
+              
+                
+                <td style="background-color:#FA942E;color:#000">BJP</td>
+              
+            
+              
+                <td>Bikram Keshari Deo</td>
+              
+            
+              
+                <td>221,851</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>57</td>
+              
+            
+              
+                <td>GEN</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>4</td>
+              
+            
+              
+                
+                <td style="background-color:#2E3EEB;color:#fff">BSP</td>
+              
+            
+              
+                <td>Nakula Majhi</td>
+              
+            
+              
+                <td>40,167</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>66</td>
+              
+            
+              
+                <td>GEN</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>5</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Maheswar Bhoi</td>
+              
+            
+              
+                <td>26,880</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>36</td>
+              
+            
+              
+                <td>GEN</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>6</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Dambarudhara Sunani</td>
+              
+            
+              
+                <td>14,720</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>34</td>
+              
+            
+              
+                <td>GEN</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>7</td>
+              
+            
+              
+                
+                <td style="background-color:#2E803C;color:#fff">SP</td>
+              
+            
+              
+                <td>Parameswar Kand</td>
+              
+            
+              
+                <td>14,102</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>47</td>
+              
+            
+              
+                <td>GEN</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>8</td>
+              
+            
+              
+                
+                <td style="background-color:#a0a0a0;color:#000">CPI(ML)(L)</td>
+              
+            
+              
+                <td>Balaram Hota</td>
+              
+            
+              
+                <td>11,238</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>33</td>
+              
+            
+              
+                <td>GEN</td>
+              
+            
+          </tr>
+        
+      </tbody>
+    </table>
+  
+
+  
+  <svg class="const-stack" width="100%" data-height="0.425531914894" viewBox="0 0 940 400">
+    <rect width="30" height="25" class="party-unhighlight" fill="#000" title="Show all parties"/>
+    <text x="15" y="12.5" text-anchor="middle" dy=".35em" fill="#fff">x</text>
+    
+      
+      <rect class="party-legend"
+        data-party="CONG"
+        data-highlight="[data-party=CONG]"
+        data-toggle="highlight"
+        x="30.0"
+        width="60.6666666667"
+        height="25"
+        fill="#2EA7FF"></rect>
+      <text class="party-legend-text"
+        x="60.3333333333"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="CONG">CONG</text>
+    
+      
+      <rect class="party-legend"
+        data-party="BJP"
+        data-highlight="[data-party=BJP]"
+        data-toggle="highlight"
+        x="90.6666666667"
+        width="60.6666666667"
+        height="25"
+        fill="#FA942E"></rect>
+      <text class="party-legend-text"
+        x="121.0"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="BJP">BJP</text>
+    
+      
+      <rect class="party-legend"
+        data-party="JD"
+        data-highlight="[data-party=JD]"
+        data-toggle="highlight"
+        x="151.333333333"
+        width="60.6666666667"
+        height="25"
+        fill="#8064a2"></rect>
+      <text class="party-legend-text"
+        x="181.666666667"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#fff"
+        data-party="JD">JD</text>
+    
+      
+      <rect class="party-legend"
+        data-party="GP"
+        data-highlight="[data-party=GP]"
+        data-toggle="highlight"
+        x="212.0"
+        width="60.6666666667"
+        height="25"
+        fill="#a0a0a0"></rect>
+      <text class="party-legend-text"
+        x="242.333333333"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="GP">GP</text>
+    
+      
+      <rect class="party-legend"
+        data-party="IND"
+        data-highlight="[data-party=IND]"
+        data-toggle="highlight"
+        x="272.666666667"
+        width="60.6666666667"
+        height="25"
+        fill="#95b3d7"></rect>
+      <text class="party-legend-text"
+        x="303.0"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="IND">IND</text>
+    
+      
+      <rect class="party-legend"
+        data-party="JNP"
+        data-highlight="[data-party=JNP]"
+        data-toggle="highlight"
+        x="333.333333333"
+        width="60.6666666667"
+        height="25"
+        fill="#000000"></rect>
+      <text class="party-legend-text"
+        x="363.666666667"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#fff"
+        data-party="JNP">JNP</text>
+    
+      
+      <rect class="party-legend"
+        data-party="BJD"
+        data-highlight="[data-party=BJD]"
+        data-toggle="highlight"
+        x="394.0"
+        width="60.6666666667"
+        height="25"
+        fill="#3FC63C"></rect>
+      <text class="party-legend-text"
+        x="424.333333333"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="BJD">BJD</text>
+    
+      
+      <rect class="party-legend"
+        data-party="SAP"
+        data-highlight="[data-party=SAP]"
+        data-toggle="highlight"
+        x="454.666666667"
+        width="60.6666666667"
+        height="25"
+        fill="#a0a0a0"></rect>
+      <text class="party-legend-text"
+        x="485.0"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="SAP">SAP</text>
+    
+      
+      <rect class="party-legend"
+        data-party="SWA"
+        data-highlight="[data-party=SWA]"
+        data-toggle="highlight"
+        x="515.333333333"
+        width="60.6666666667"
+        height="25"
+        fill="#0C6965"></rect>
+      <text class="party-legend-text"
+        x="545.666666667"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#fff"
+        data-party="SWA">SWA</text>
+    
+      
+      <rect class="party-legend"
+        data-party="JP"
+        data-highlight="[data-party=JP]"
+        data-toggle="highlight"
+        x="576.0"
+        width="60.6666666667"
+        height="25"
+        fill="#a0a0a0"></rect>
+      <text class="party-legend-text"
+        x="606.333333333"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="JP">JP</text>
+    
+      
+      <rect class="party-legend"
+        data-party="SP"
+        data-highlight="[data-party=SP]"
+        data-toggle="highlight"
+        x="636.666666667"
+        width="60.6666666667"
+        height="25"
+        fill="#2E803C"></rect>
+      <text class="party-legend-text"
+        x="667.0"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#fff"
+        data-party="SP">SP</text>
+    
+      
+      <rect class="party-legend"
+        data-party="BSP"
+        data-highlight="[data-party=BSP]"
+        data-toggle="highlight"
+        x="697.333333333"
+        width="60.6666666667"
+        height="25"
+        fill="#2E3EEB"></rect>
+      <text class="party-legend-text"
+        x="727.666666667"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#fff"
+        data-party="BSP">BSP</text>
+    
+      
+      <rect class="party-legend"
+        data-party="RPI"
+        data-highlight="[data-party=RPI]"
+        data-toggle="highlight"
+        x="758.0"
+        width="60.6666666667"
+        height="25"
+        fill="#A02E2E"></rect>
+      <text class="party-legend-text"
+        x="788.333333333"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#fff"
+        data-party="RPI">RPI</text>
+    
+      
+      <rect class="party-legend"
+        data-party="JNP-S-"
+        data-highlight="[data-party=JNP-S-]"
+        data-toggle="highlight"
+        x="818.666666667"
+        width="60.6666666667"
+        height="25"
+        fill="#a0a0a0"></rect>
+      <text class="party-legend-text"
+        x="849.0"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="JNP-S-">JNP(S)</text>
+    
+      
+      <rect class="party-legend"
+        data-party="JNP-JP-"
+        data-highlight="[data-party=JNP-JP-]"
+        data-toggle="highlight"
+        x="879.333333333"
+        width="60.6666666667"
+        height="25"
+        fill="#a0a0a0"></rect>
+      <text class="party-legend-text"
+        x="909.666666667"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="JNP-JP-">JNP (JP)</text>
+    
+    
+    <g class="pc-stack">
+      
+        
+        <text x="33.5714285714" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=1957"
+          class="year-legend">1957</text>
+        
+          
+          <rect x="5.0" width="57.1428571429" y="273.98549005" height="126.01450995"
+            data-party="GP"
+            title="PRATAP KESHARI DEO<br>GP: 174,920 votes in 1957"
+            href="?YEAR=1957"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+            <text x="33.5714285714" y="336.992745025"
+              data-party="GP"
+              fill="#000" text-anchor="middle">37%</text>
+            <text x="33.5714285714" y="336.992745025"
+              data-party="GP"
+              fill="#000" dy="1em" text-anchor="middle">GP</text>
+          
+        
+          
+          <rect x="5.0" width="57.1428571429" y="164.712640269" height="109.272849781"
+            data-party="GP"
+            title="BIJAYA CHANDRA PADHAN<br>GP: 151,681 votes in 1957"
+            href="?YEAR=1957"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+            <text x="33.5714285714" y="219.349065159"
+              data-party="GP"
+              fill="#000" text-anchor="middle">32%</text>
+            <text x="33.5714285714" y="219.349065159"
+              data-party="GP"
+              fill="#000" dy="1em" text-anchor="middle">GP</text>
+          
+        
+          
+          <rect x="5.0" width="57.1428571429" y="114.043885819" height="50.6687544496"
+            data-party="CONG"
+            title="GHANASYAMDAS THIDANI<br>CONG: 70,333 votes in 1957"
+            href="?YEAR=1957"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="33.5714285714" y="139.378263044"
+              data-party="CONG"
+              fill="#000" dy=".35em" text-anchor="middle">CONG</text>
+          
+        
+          
+          <rect x="5.0" width="57.1428571429" y="71.8442977252" height="42.1995880937"
+            data-party="CONG"
+            title="JOGESWAR MAJHI<br>CONG: 58,577 votes in 1957"
+            href="?YEAR=1957"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="33.5714285714" y="92.944091772"
+              data-party="CONG"
+              fill="#000" dy=".35em" text-anchor="middle">CONG</text>
+          
+        
+          
+          <rect x="5.0" width="57.1428571429" y="60.0" height="11.8442977252"
+            data-party="IND"
+            title="SATYANARAYAN JENA<br>IND: 16,441 votes in 1957"
+            href="?YEAR=1957"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+      
+        
+        <text x="100.714285714" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=1962"
+          class="year-legend">1962</text>
+        
+          
+          <rect x="72.1428571429" width="57.1428571429" y="153.814849366" height="246.185150634"
+            data-party="GP"
+            title="PRATAP KESSARI DEO<br>GP: 65,974 votes in 1962"
+            href="?YEAR=1962"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+            <text x="100.714285714" y="276.907424683"
+              data-party="GP"
+              fill="#000" text-anchor="middle">72%</text>
+            <text x="100.714285714" y="276.907424683"
+              data-party="GP"
+              fill="#000" dy="1em" text-anchor="middle">GP</text>
+          
+        
+          
+          <rect x="72.1428571429" width="57.1428571429" y="60.0" height="93.8148493662"
+            data-party="CONG"
+            title="SURESH CHANDRA BEHERA<br>CONG: 25,141 votes in 1962"
+            href="?YEAR=1962"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="100.714285714" y="106.907424683"
+              data-party="CONG"
+              fill="#000" text-anchor="middle">28%</text>
+            <text x="100.714285714" y="106.907424683"
+              data-party="CONG"
+              fill="#000" dy="1em" text-anchor="middle">CONG</text>
+          
+        
+      
+        
+        <text x="167.857142857" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=1967"
+          class="year-legend">1967</text>
+        
+          
+          <rect x="139.285714286" width="57.1428571429" y="166.861569816" height="233.138430184"
+            data-party="SWA"
+            title="P. K. DEO<br>SWA: 108,336 votes in 1967"
+            href="?YEAR=1967"
+            fill="#0C6965" stroke="#fff"/>
+          
+            <text x="167.857142857" y="283.430784908"
+              data-party="SWA"
+              fill="#fff" text-anchor="middle">69%</text>
+            <text x="167.857142857" y="283.430784908"
+              data-party="SWA"
+              fill="#fff" dy="1em" text-anchor="middle">SWA</text>
+          
+        
+          
+          <rect x="139.285714286" width="57.1428571429" y="60.0" height="106.861569816"
+            data-party="CONG"
+            title="A. PATTAJOSHI<br>CONG: 49,657 votes in 1967"
+            href="?YEAR=1967"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="167.857142857" y="113.430784908"
+              data-party="CONG"
+              fill="#000" text-anchor="middle">31%</text>
+            <text x="167.857142857" y="113.430784908"
+              data-party="CONG"
+              fill="#000" dy="1em" text-anchor="middle">CONG</text>
+          
+        
+      
+        
+        <text x="235.0" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=1971"
+          class="year-legend">1971</text>
+        
+          
+          <rect x="206.428571429" width="57.1428571429" y="206.610403207" height="193.389596793"
+            data-party="SWA"
+            title="PRATAP KESHARI DEO<br>SWA: 89,098 votes in 1971"
+            href="?YEAR=1971"
+            fill="#0C6965" stroke="#fff"/>
+          
+            <text x="235.0" y="303.305201604"
+              data-party="SWA"
+              fill="#fff" text-anchor="middle">57%</text>
+            <text x="235.0" y="303.305201604"
+              data-party="SWA"
+              fill="#fff" dy="1em" text-anchor="middle">SWA</text>
+          
+        
+          
+          <rect x="206.428571429" width="57.1428571429" y="156.202088813" height="50.4083143944"
+            data-party="CONG"
+            title="ARJUN PATTJOSHI<br>CONG: 23,224 votes in 1971"
+            href="?YEAR=1971"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="235.0" y="181.40624601"
+              data-party="CONG"
+              fill="#000" text-anchor="middle">15%</text>
+            <text x="235.0" y="181.40624601"
+              data-party="CONG"
+              fill="#000" dy="1em" text-anchor="middle">CONG</text>
+          
+        
+          
+          <rect x="206.428571429" width="57.1428571429" y="122.515512883" height="33.6865759301"
+            data-party="UTC"
+            title="GANGADHAR HOTA<br>UTC: 15,520 votes in 1971"
+            href="?YEAR=1971"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+            <text x="235.0" y="139.358800848"
+              data-party="UTC"
+              fill="#000" dy=".35em" text-anchor="middle">UTC</text>
+          
+        
+          
+          <rect x="206.428571429" width="57.1428571429" y="91.4248870049" height="31.0906258778"
+            data-party="PSP"
+            title="TRIPURA MAJHI<br>PSP: 14,324 votes in 1971"
+            href="?YEAR=1971"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+            <text x="235.0" y="106.970199944"
+              data-party="PSP"
+              fill="#000" dy=".35em" text-anchor="middle">PSP</text>
+          
+        
+          
+          <rect x="206.428571429" width="57.1428571429" y="73.724240954" height="17.7006460509"
+            data-party="IND"
+            title="MANU MAJHI<br>IND: 8,155 votes in 1971"
+            href="?YEAR=1971"
+            fill="#95b3d7" stroke="#fff"/>
+          
+            <text x="235.0" y="82.5745639795"
+              data-party="IND"
+              fill="#000" dy=".35em" text-anchor="middle">IND</text>
+          
+        
+          
+          <rect x="206.428571429" width="57.1428571429" y="60.0" height="13.724240954"
+            data-party="IND"
+            title="PREMLAL PRADHAN<br>IND: 6,323 votes in 1971"
+            href="?YEAR=1971"
+            fill="#95b3d7" stroke="#fff"/>
+          
+            <text x="235.0" y="66.862120477"
+              data-party="IND"
+              fill="#000" dy=".35em" text-anchor="middle">IND</text>
+          
+        
+      
+        
+        <text x="302.142857143" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=1977"
+          class="year-legend">1977</text>
+        
+          
+          <rect x="273.571428571" width="57.1428571429" y="180.351919987" height="219.648080013"
+            data-party="IND"
+            title="PRATAP KESHARI DEO<br>IND: 117,816 votes in 1977"
+            href="?YEAR=1977"
+            fill="#95b3d7" stroke="#fff"/>
+          
+            <text x="302.142857143" y="290.175959994"
+              data-party="IND"
+              fill="#000" text-anchor="middle">65%</text>
+            <text x="302.142857143" y="290.175959994"
+              data-party="IND"
+              fill="#000" dy="1em" text-anchor="middle">IND</text>
+          
+        
+          
+          <rect x="273.571428571" width="57.1428571429" y="60.0" height="120.351919987"
+            data-party="JNP"
+            title="GANGADHAR HOTA<br>JNP: 64,555 votes in 1977"
+            href="?YEAR=1977"
+            fill="#000000" stroke="#fff"/>
+          
+            <text x="302.142857143" y="120.175959994"
+              data-party="JNP"
+              fill="#fff" text-anchor="middle">35%</text>
+            <text x="302.142857143" y="120.175959994"
+              data-party="JNP"
+              fill="#fff" dy="1em" text-anchor="middle">JNP</text>
+          
+        
+      
+        
+        <text x="369.285714286" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=1980"
+          class="year-legend">1980</text>
+        
+          
+          <rect x="340.714285714" width="57.1428571429" y="226.066416931" height="173.933583069"
+            data-party="CONG"
+            title="RASABEHARI BEHARA<br>CONG: 127,413 votes in 1980"
+            href="?YEAR=1980"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="369.285714286" y="313.033208465"
+              data-party="CONG"
+              fill="#000" text-anchor="middle">51%</text>
+            <text x="369.285714286" y="313.033208465"
+              data-party="CONG"
+              fill="#000" dy="1em" text-anchor="middle">CONG</text>
+          
+        
+          
+          <rect x="340.714285714" width="57.1428571429" y="114.419002421" height="111.64741451"
+            data-party="JNP"
+            title="PRATAP KESHARI DEO<br>JNP: 81,786 votes in 1980"
+            href="?YEAR=1980"
+            fill="#000000" stroke="#fff"/>
+          
+            <text x="369.285714286" y="170.242709676"
+              data-party="JNP"
+              fill="#fff" text-anchor="middle">33%</text>
+            <text x="369.285714286" y="170.242709676"
+              data-party="JNP"
+              fill="#fff" dy="1em" text-anchor="middle">JNP</text>
+          
+        
+          
+          <rect x="340.714285714" width="57.1428571429" y="80.1941677407" height="34.2248346804"
+            data-party="JNP-S-"
+            title="KIRAN CHANDRA SINGH DEO<br>JNP(S): 25,071 votes in 1980"
+            href="?YEAR=1980"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+            <text x="369.285714286" y="97.3065850809"
+              data-party="JNP-S-"
+              fill="#000" dy=".35em" text-anchor="middle">JNP(S)</text>
+          
+        
+          
+          <rect x="340.714285714" width="57.1428571429" y="60.0" height="20.1941677407"
+            data-party="IND"
+            title="DINABANDHU AGARWAL<br>IND: 14,793 votes in 1980"
+            href="?YEAR=1980"
+            fill="#95b3d7" stroke="#fff"/>
+          
+            <text x="369.285714286" y="70.0970838703"
+              data-party="IND"
+              fill="#000" dy=".35em" text-anchor="middle">IND</text>
+          
+        
+      
+        
+        <text x="436.428571429" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=1984"
+          class="year-legend">1984</text>
+        
+          
+          <rect x="407.857142857" width="57.1428571429" y="238.149905065" height="161.850094935"
+            data-party="CONG"
+            title="JAGANNATH PATNAIK<br>CONG: 154,941 votes in 1984"
+            href="?YEAR=1984"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="436.428571429" y="319.074952533"
+              data-party="CONG"
+              fill="#000" text-anchor="middle">48%</text>
+            <text x="436.428571429" y="319.074952533"
+              data-party="CONG"
+              fill="#000" dy="1em" text-anchor="middle">CONG</text>
+          
+        
+          
+          <rect x="407.857142857" width="57.1428571429" y="101.447312634" height="136.702592431"
+            data-party="JNP"
+            title="PRATAP KESHARI DEO<br>JNP: 130,867 votes in 1984"
+            href="?YEAR=1984"
+            fill="#000000" stroke="#fff"/>
+          
+            <text x="436.428571429" y="169.79860885"
+              data-party="JNP"
+              fill="#fff" text-anchor="middle">40%</text>
+            <text x="436.428571429" y="169.79860885"
+              data-party="JNP"
+              fill="#fff" dy="1em" text-anchor="middle">JNP</text>
+          
+        
+          
+          <rect x="407.857142857" width="57.1428571429" y="83.4740664729" height="17.9732461611"
+            data-party="IND"
+            title="DINABANDHU AGARAWAL<br>IND: 17,206 votes in 1984"
+            href="?YEAR=1984"
+            fill="#95b3d7" stroke="#fff"/>
+          
+            <text x="436.428571429" y="92.4606895535"
+              data-party="IND"
+              fill="#000" dy=".35em" text-anchor="middle">IND</text>
+          
+        
+          
+          <rect x="407.857142857" width="57.1428571429" y="74.2628561597" height="9.21121031319"
+            data-party="IND"
+            title="JIHATRAM PATEL<br>IND: 8,818 votes in 1984"
+            href="?YEAR=1984"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="407.857142857" width="57.1428571429" y="67.7446034545" height="6.51825270519"
+            data-party="BJP"
+            title="SUNIL KUMAR BEHERA<br>BJP: 6,240 votes in 1984"
+            href="?YEAR=1984"
+            fill="#FA942E" stroke="#fff"/>
+          
+        
+          
+          <rect x="407.857142857" width="57.1428571429" y="62.939481268" height="4.80512218651"
+            data-party="IND"
+            title="SURENDRA KUMAR BISI<br>IND: 4,600 votes in 1984"
+            href="?YEAR=1984"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="407.857142857" width="57.1428571429" y="60.0" height="2.93948126801"
+            data-party="IND"
+            title="GOURI SHANKAR MOHAPATRA<br>IND: 2,814 votes in 1984"
+            href="?YEAR=1984"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+      
+        
+        <text x="503.571428571" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=1989"
+          class="year-legend">1989</text>
+        
+          
+          <rect x="475.0" width="57.1428571429" y="241.678619453" height="158.321380547"
+            data-party="JD"
+            title="BAHKTA CHARAN DAS<br>JD: 211,929 votes in 1989"
+            href="?YEAR=1989"
+            fill="#8064a2" stroke="#fff"/>
+          
+            <text x="503.571428571" y="320.839309727"
+              data-party="JD"
+              fill="#fff" text-anchor="middle">47%</text>
+            <text x="503.571428571" y="320.839309727"
+              data-party="JD"
+              fill="#fff" dy="1em" text-anchor="middle">JD</text>
+          
+        
+          
+          <rect x="475.0" width="57.1428571429" y="122.16793665" height="119.510682803"
+            data-party="CONG"
+            title="JAGANNATH PATTNAIK<br>CONG: 159,977 votes in 1989"
+            href="?YEAR=1989"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="503.571428571" y="181.923278052"
+              data-party="CONG"
+              fill="#000" text-anchor="middle">35%</text>
+            <text x="503.571428571" y="181.923278052"
+              data-party="CONG"
+              fill="#000" dy="1em" text-anchor="middle">CONG</text>
+          
+        
+          
+          <rect x="475.0" width="57.1428571429" y="88.8786792171" height="33.2892574331"
+            data-party="BJP"
+            title="UDIT PRATAP DEO<br>BJP: 44,561 votes in 1989"
+            href="?YEAR=1989"
+            fill="#FA942E" stroke="#fff"/>
+          
+            <text x="503.571428571" y="105.523307934"
+              data-party="BJP"
+              fill="#000" dy=".35em" text-anchor="middle">BJP</text>
+          
+        
+          
+          <rect x="475.0" width="57.1428571429" y="73.2197818616" height="15.6588973554"
+            data-party="JNP-JP-"
+            title="GOVIND CHANDRA SAHU<br>JNP (JP): 20,961 votes in 1989"
+            href="?YEAR=1989"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+            <text x="503.571428571" y="81.0492305394"
+              data-party="JNP-JP-"
+              fill="#000" dy=".35em" text-anchor="middle">JNP (JP)</text>
+          
+        
+          
+          <rect x="475.0" width="57.1428571429" y="69.1401464216" height="4.07963544001"
+            data-party="IND"
+            title="DINA BANDHU AGARWAL<br>IND: 5,461 votes in 1989"
+            href="?YEAR=1989"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="475.0" width="57.1428571429" y="65.2345734349" height="3.9055729867"
+            data-party="IND"
+            title="TRILOCHAN PRADHAN<br>IND: 5,228 votes in 1989"
+            href="?YEAR=1989"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="475.0" width="57.1428571429" y="61.8153294487" height="3.41924398625"
+            data-party="IND"
+            title="TANKADHAR PRADHAN<br>IND: 4,577 votes in 1989"
+            href="?YEAR=1989"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="475.0" width="57.1428571429" y="60.0" height="1.81532944868"
+            data-party="IND"
+            title="NRUPARAJ NIAL<br>IND: 2,430 votes in 1989"
+            href="?YEAR=1989"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+      
+        
+        <text x="570.714285714" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=1991"
+          class="year-legend">1991</text>
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="295.784225425" height="104.215774575"
+            data-party="CONG"
+            title="SUBASH CHANDRA NAYAK<br>CONG: 133,406 votes in 1991"
+            href="?YEAR=1991"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="570.714285714" y="347.892112712"
+              data-party="CONG"
+              fill="#000" text-anchor="middle">31%</text>
+            <text x="570.714285714" y="347.892112712"
+              data-party="CONG"
+              fill="#000" dy="1em" text-anchor="middle">CONG</text>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="214.164445629" height="81.6197797956"
+            data-party="BJP"
+            title="BIKRAM KESHARI DEO<br>BJP: 104,481 votes in 1991"
+            href="?YEAR=1991"
+            fill="#FA942E" stroke="#fff"/>
+          
+            <text x="570.714285714" y="254.974335527"
+              data-party="BJP"
+              fill="#000" text-anchor="middle">24%</text>
+            <text x="570.714285714" y="254.974335527"
+              data-party="BJP"
+              fill="#000" dy="1em" text-anchor="middle">BJP</text>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="144.317237703" height="69.8472079259"
+            data-party="JP"
+            title="BHAKTA CHARAN DAS<br>JP: 89,411 votes in 1991"
+            href="?YEAR=1991"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+            <text x="570.714285714" y="179.240841666"
+              data-party="JP"
+              fill="#000" dy=".35em" text-anchor="middle">JP</text>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="85.5340599956" height="58.7831777075"
+            data-party="JD"
+            title="SURENDRA PATTJOSHI<br>JD: 75,248 votes in 1991"
+            href="?YEAR=1991"
+            fill="#8064a2" stroke="#fff"/>
+          
+            <text x="570.714285714" y="114.925648849"
+              data-party="JD"
+              fill="#fff" dy=".35em" text-anchor="middle">JD</text>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="75.6074461437" height="9.92661385192"
+            data-party="IND"
+            title="YUDHISTHIR PRASAD KASHYAP<br>IND: 12,707 votes in 1991"
+            href="?YEAR=1991"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="69.4680538196" height="6.13939232409"
+            data-party="IND"
+            title="RAJENDRA KACHHIA<br>IND: 7,859 votes in 1991"
+            href="?YEAR=1991"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="67.4486710536" height="2.01938276597"
+            data-party="IND"
+            title="BISWANATH KATA<br>IND: 2,585 votes in 1991"
+            href="?YEAR=1991"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="66.1003326961" height="1.34833835747"
+            data-party="IND"
+            title="JAGADISH PRASAD JAIN<br>IND: 1,726 votes in 1991"
+            href="?YEAR=1991"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="64.987133299" height="1.1131993971"
+            data-party="IND"
+            title="TANKADHAR PADHAN<br>IND: 1,425 votes in 1991"
+            href="?YEAR=1991"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="64.0395467245" height="0.947586574517"
+            data-party="BSP"
+            title="SURESH CHANDRA NAIK<br>BSP: 1,213 votes in 1991"
+            href="?YEAR=1991"
+            fill="#2E3EEB" stroke="#fff"/>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="63.2263252702" height="0.813221454305"
+            data-party="IND"
+            title="SABAR SUNANI<br>IND: 1,041 votes in 1991"
+            href="?YEAR=1991"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="62.5912157194" height="0.635109550768"
+            data-party="IND"
+            title="HARI SANKAR BAG<br>IND: 813 votes in 1991"
+            href="?YEAR=1991"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="62.0201639585" height="0.5710517609"
+            data-party="IND"
+            title="HEMARAJ SHARMA<br>IND: 731 votes in 1991"
+            href="?YEAR=1991"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="61.5686346592" height="0.451529299316"
+            data-party="IND"
+            title="HARE KRUSHNA MEHER<br>IND: 578 votes in 1991"
+            href="?YEAR=1991"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="61.1514778325" height="0.417156826704"
+            data-party="IND"
+            title="KAILASH CHANDRA PANDA<br>IND: 534 votes in 1991"
+            href="?YEAR=1991"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="60.7749430189" height="0.376534813617"
+            data-party="IND"
+            title="DINABANDHU AGRAWAL<br>IND: 482 votes in 1991"
+            href="?YEAR=1991"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="60.4030953606" height="0.37184765826"
+            data-party="IND"
+            title="NRUPARAJ NIHAL<br>IND: 476 votes in 1991"
+            href="?YEAR=1991"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="60.1288967723" height="0.274198588339"
+            data-party="IND"
+            title="ARJUN BARIK<br>IND: 351 votes in 1991"
+            href="?YEAR=1991"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="542.142857143" width="57.1428571429" y="60.0" height="0.128896772296"
+            data-party="IND"
+            title="ANANDA KUMAR PATRA<br>IND: 165 votes in 1991"
+            href="?YEAR=1991"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+      
+        
+        <text x="637.857142857" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=1996"
+          class="year-legend">1996</text>
+        
+          
+          <rect x="609.285714286" width="57.1428571429" y="280.475587236" height="119.524412764"
+            data-party="SAP"
+            title="BHAKTA CHARAN DAS<br>SAP: 200,080 votes in 1996"
+            href="?YEAR=1996"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+            <text x="637.857142857" y="340.237793618"
+              data-party="SAP"
+              fill="#000" text-anchor="middle">35%</text>
+            <text x="637.857142857" y="340.237793618"
+              data-party="SAP"
+              fill="#000" dy="1em" text-anchor="middle">SAP</text>
+          
+        
+          
+          <rect x="609.285714286" width="57.1428571429" y="192.632192976" height="87.8433942606"
+            data-party="CONG"
+            title="SUBASH CHANDRA NAYAK<br>CONG: 147,047 votes in 1996"
+            href="?YEAR=1996"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="637.857142857" y="236.553890106"
+              data-party="CONG"
+              fill="#000" text-anchor="middle">26%</text>
+            <text x="637.857142857" y="236.553890106"
+              data-party="CONG"
+              fill="#000" dy="1em" text-anchor="middle">CONG</text>
+          
+        
+          
+          <rect x="609.285714286" width="57.1428571429" y="140.50514013" height="52.1270528456"
+            data-party="JD"
+            title="UDIT PRATAP DEO<br>JD: 87,259 votes in 1996"
+            href="?YEAR=1996"
+            fill="#8064a2" stroke="#fff"/>
+          
+            <text x="637.857142857" y="166.568666553"
+              data-party="JD"
+              fill="#fff" dy=".35em" text-anchor="middle">JD</text>
+          
+        
+          
+          <rect x="609.285714286" width="57.1428571429" y="102.896289021" height="37.6088511093"
+            data-party="BJP"
+            title="BHAWANI SANKAR BABU<br>BJP: 62,956 votes in 1996"
+            href="?YEAR=1996"
+            fill="#FA942E" stroke="#fff"/>
+          
+            <text x="637.857142857" y="121.700714576"
+              data-party="BJP"
+              fill="#000" dy=".35em" text-anchor="middle">BJP</text>
+          
+        
+          
+          <rect x="609.285714286" width="57.1428571429" y="93.3363671025" height="9.55992191851"
+            data-party="IND"
+            title="PRAHALAD AGRAWAL<br>IND: 16,003 votes in 1996"
+            href="?YEAR=1996"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="609.285714286" width="57.1428571429" y="85.1886588573" height="8.14770824512"
+            data-party="IND"
+            title="BHAIRAB NAYAK<br>IND: 13,639 votes in 1996"
+            href="?YEAR=1996"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="609.285714286" width="57.1428571429" y="79.0344180522" height="6.15424080513"
+            data-party="JP"
+            title="GOBINDA CHANDRA SAHU<br>JP: 10,302 votes in 1996"
+            href="?YEAR=1996"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+        
+          
+          <rect x="609.285714286" width="57.1428571429" y="74.8378017004" height="4.19661635178"
+            data-party="IND"
+            title="JALANDHAR BHOI<br>IND: 7,025 votes in 1996"
+            href="?YEAR=1996"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="609.285714286" width="57.1428571429" y="70.9416690533" height="3.89613264716"
+            data-party="IND"
+            title="DHANSINGH CHHATRIA<br>IND: 6,522 votes in 1996"
+            href="?YEAR=1996"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="609.285714286" width="57.1428571429" y="68.5879795976" height="2.35368945566"
+            data-party="IND"
+            title="BIDESHI KAR<br>IND: 3,940 votes in 1996"
+            href="?YEAR=1996"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="609.285714286" width="57.1428571429" y="66.7719349415" height="1.81604465614"
+            data-party="AIIC-T-"
+            title="SANTOSH KUMAR ACHARYA<br>AIIC(T): 3,040 votes in 1996"
+            href="?YEAR=1996"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+        
+          
+          <rect x="609.285714286" width="57.1428571429" y="65.1040412967" height="1.66789364472"
+            data-party="IND"
+            title="BHAGABAN BARIK<br>IND: 2,792 votes in 1996"
+            href="?YEAR=1996"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="609.285714286" width="57.1428571429" y="63.479159236" height="1.62488206076"
+            data-party="IND"
+            title="SWAYAMBARA MAJHI<br>IND: 2,720 votes in 1996"
+            href="?YEAR=1996"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="609.285714286" width="57.1428571429" y="62.2640819891" height="1.21507724691"
+            data-party="SS"
+            title="RANJIT KUMAR DASH<br>SS: 2,034 votes in 1996"
+            href="?YEAR=1996"
+            fill="#AD632E" stroke="#fff"/>
+          
+        
+          
+          <rect x="609.285714286" width="57.1428571429" y="61.1296514621" height="1.13443052698"
+            data-party="IND"
+            title="ANANDA KUMAR PATRA<br>IND: 1,899 votes in 1996"
+            href="?YEAR=1996"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="609.285714286" width="57.1428571429" y="60.0" height="1.1296514621"
+            data-party="IND"
+            title="HARIHARA MAJHI<br>IND: 1,891 votes in 1996"
+            href="?YEAR=1996"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+      
+        
+        <text x="705.0" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=1998"
+          class="year-legend">1998</text>
+        
+          
+          <rect x="676.428571429" width="57.1428571429" y="207.74060513" height="192.25939487"
+            data-party="BJP"
+            title="BIKRAM KESHARI DEO<br>BJP: 344,703 votes in 1998"
+            href="?YEAR=1998"
+            fill="#FA942E" stroke="#fff"/>
+          
+            <text x="705.0" y="303.870302565"
+              data-party="BJP"
+              fill="#000" text-anchor="middle">57%</text>
+            <text x="705.0" y="303.870302565"
+              data-party="BJP"
+              fill="#000" dy="1em" text-anchor="middle">BJP</text>
+          
+        
+          
+          <rect x="676.428571429" width="57.1428571429" y="82.3636948234" height="125.376910307"
+            data-party="CONG"
+            title="BHAKTA CHARAN DAS<br>CONG: 224,789 votes in 1998"
+            href="?YEAR=1998"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="705.0" y="145.052149977"
+              data-party="CONG"
+              fill="#000" text-anchor="middle">37%</text>
+            <text x="705.0" y="145.052149977"
+              data-party="CONG"
+              fill="#000" dy="1em" text-anchor="middle">CONG</text>
+          
+        
+          
+          <rect x="676.428571429" width="57.1428571429" y="66.1291560857" height="16.2345387376"
+            data-party="JD"
+            title="DURYODHAN MAJHI<br>JD: 29,107 votes in 1998"
+            href="?YEAR=1998"
+            fill="#8064a2" stroke="#fff"/>
+          
+            <text x="705.0" y="74.2464254546"
+              data-party="JD"
+              fill="#fff" dy=".35em" text-anchor="middle">JD</text>
+          
+        
+          
+          <rect x="676.428571429" width="57.1428571429" y="63.8473854472" height="2.28177063853"
+            data-party="IND"
+            title="RAJENDRA PRASAD KACHHIA<br>IND: 4,091 votes in 1998"
+            href="?YEAR=1998"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="676.428571429" width="57.1428571429" y="61.9521381654" height="1.89524728177"
+            data-party="BSP"
+            title="NALINI PRABHA NAIK<br>BSP: 3,398 votes in 1998"
+            href="?YEAR=1998"
+            fill="#2E3EEB" stroke="#fff"/>
+          
+        
+          
+          <rect x="676.428571429" width="57.1428571429" y="60.9554321935" height="0.996705971902"
+            data-party="SS"
+            title="BIRANCHI NARAYAN PANDA<br>SS: 1,787 votes in 1998"
+            href="?YEAR=1998"
+            fill="#AD632E" stroke="#fff"/>
+          
+        
+          
+          <rect x="676.428571429" width="57.1428571429" y="60.0" height="0.955432193547"
+            data-party="AJBP"
+            title="DR. BISWAJIT HOTA<br>AJBP: 1,713 votes in 1998"
+            href="?YEAR=1998"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+        
+      
+        
+        <text x="772.142857143" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=1999"
+          class="year-legend">1999</text>
+        
+          
+          <rect x="743.571428571" width="57.1428571429" y="203.18739027" height="196.81260973"
+            data-party="BJP"
+            title="BIKRAM KESHARI DEO<br>BJP: 371,911 votes in 1999"
+            href="?YEAR=1999"
+            fill="#FA942E" stroke="#fff"/>
+          
+            <text x="772.142857143" y="301.593695135"
+              data-party="BJP"
+              fill="#000" text-anchor="middle">58%</text>
+            <text x="772.142857143" y="301.593695135"
+              data-party="BJP"
+              fill="#000" dy="1em" text-anchor="middle">BJP</text>
+          
+        
+          
+          <rect x="743.571428571" width="57.1428571429" y="68.0357921082" height="135.151598162"
+            data-party="CONG"
+            title="BHAKTA CHARAN DAS<br>CONG: 255,392 votes in 1999"
+            href="?YEAR=1999"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="772.142857143" y="135.611591189"
+              data-party="CONG"
+              fill="#000" text-anchor="middle">40%</text>
+            <text x="772.142857143" y="135.611591189"
+              data-party="CONG"
+              fill="#000" dy="1em" text-anchor="middle">CONG</text>
+          
+        
+          
+          <rect x="743.571428571" width="57.1428571429" y="62.6544308999" height="5.3813612083"
+            data-party="SS"
+            title="BIRANCHI PANDA<br>SS: 10,169 votes in 1999"
+            href="?YEAR=1999"
+            fill="#AD632E" stroke="#fff"/>
+          
+        
+          
+          <rect x="743.571428571" width="57.1428571429" y="60.4154163191" height="2.23901458082"
+            data-party="AJBP"
+            title="DR BISWAJIT HOTA<br>AJBP: 4,231 votes in 1999"
+            href="?YEAR=1999"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+        
+          
+          <rect x="743.571428571" width="57.1428571429" y="60.0" height="0.41541631906"
+            data-party="IND"
+            title="ANANDA KUMAR PATRA<br>IND: 785 votes in 1999"
+            href="?YEAR=1999"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+      
+        
+        <text x="839.285714286" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=2004"
+          class="year-legend">2004</text>
+        
+          
+          <rect x="810.714285714" width="57.1428571429" y="239.010274118" height="160.989725882"
+            data-party="BJP"
+            title="BIKRAM KESHARI DEO<br>BJP: 357,079 votes in 2004"
+            href="?YEAR=2004"
+            fill="#FA942E" stroke="#fff"/>
+          
+            <text x="839.285714286" y="319.505137059"
+              data-party="BJP"
+              fill="#000" text-anchor="middle">47%</text>
+            <text x="839.285714286" y="319.505137059"
+              data-party="BJP"
+              fill="#000" dy="1em" text-anchor="middle">BJP</text>
+          
+        
+          
+          <rect x="810.714285714" width="57.1428571429" y="93.4045148834" height="145.605759235"
+            data-party="CONG"
+            title="BHAKTA CHARAN DAS<br>CONG: 322,957 votes in 2004"
+            href="?YEAR=2004"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="839.285714286" y="166.207394501"
+              data-party="CONG"
+              fill="#000" text-anchor="middle">43%</text>
+            <text x="839.285714286" y="166.207394501"
+              data-party="CONG"
+              fill="#000" dy="1em" text-anchor="middle">CONG</text>
+          
+        
+          
+          <rect x="810.714285714" width="57.1428571429" y="76.1057804511" height="17.2987344324"
+            data-party="SP"
+            title="KUNJA BIHARI BAGARTTI<br>SP: 38,369 votes in 2004"
+            href="?YEAR=2004"
+            fill="#2E803C" stroke="#fff"/>
+          
+            <text x="839.285714286" y="84.7551476672"
+              data-party="SP"
+              fill="#fff" dy=".35em" text-anchor="middle">SP</text>
+          
+        
+          
+          <rect x="810.714285714" width="57.1428571429" y="60.0" height="16.1057804511"
+            data-party="RPI"
+            title="PANCHANAN DHANGADA MAJHI<br>RPI: 35,723 votes in 2004"
+            href="?YEAR=2004"
+            fill="#A02E2E" stroke="#fff"/>
+          
+            <text x="839.285714286" y="68.0528902255"
+              data-party="RPI"
+              fill="#fff" dy=".35em" text-anchor="middle">RPI</text>
+          
+        
+      
+        
+        <text x="906.428571429" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=2009"
+          class="year-legend active">2009</text>
+        
+          
+          <rect x="877.857142857" width="57.1428571429" y="260.393277548" height="139.606722452"
+            data-party="CONG"
+            title="BHAKTA CHARAN DAS<br>CONG: 401,736 votes in 2009"
+            href="?YEAR=2009"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="906.428571429" y="330.196638774"
+              data-party="CONG"
+              fill="#000" text-anchor="middle">41%</text>
+            <text x="906.428571429" y="330.196638774"
+              data-party="CONG"
+              fill="#000" dy="1em" text-anchor="middle">CONG</text>
+          
+        
+          
+          <rect x="877.857142857" width="57.1428571429" y="174.315740198" height="86.0775373495"
+            data-party="BJD"
+            title="SUBASH CHANDRA NAYAK<br>BJD: 247,699 votes in 2009"
+            href="?YEAR=2009"
+            fill="#3FC63C" stroke="#fff"/>
+          
+            <text x="906.428571429" y="217.354508873"
+              data-party="BJD"
+              fill="#000" text-anchor="middle">25%</text>
+            <text x="906.428571429" y="217.354508873"
+              data-party="BJD"
+              fill="#000" dy="1em" text-anchor="middle">BJD</text>
+          
+        
+          
+          <rect x="877.857142857" width="57.1428571429" y="97.2206056258" height="77.0951345727"
+            data-party="BJP"
+            title="BIKRAM KESHARI DEO<br>BJP: 221,851 votes in 2009"
+            href="?YEAR=2009"
+            fill="#FA942E" stroke="#fff"/>
+          
+            <text x="906.428571429" y="135.768172912"
+              data-party="BJP"
+              fill="#000" dy=".35em" text-anchor="middle">BJP</text>
+          
+        
+          
+          <rect x="877.857142857" width="57.1428571429" y="83.2622269374" height="13.9583786883"
+            data-party="BSP"
+            title="NAKULA MAJHI<br>BSP: 40,167 votes in 2009"
+            href="?YEAR=2009"
+            fill="#2E3EEB" stroke="#fff"/>
+          
+            <text x="906.428571429" y="90.2414162816"
+              data-party="BSP"
+              fill="#fff" dy=".35em" text-anchor="middle">BSP</text>
+          
+        
+          
+          <rect x="877.857142857" width="57.1428571429" y="73.9211952661" height="9.34103167132"
+            data-party="IND"
+            title="MAHESWAR BHOI<br>IND: 26,880 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="877.857142857" width="57.1428571429" y="68.8058683985" height="5.11532686763"
+            data-party="IND"
+            title="DAMBARUDHARA SUNANI<br>IND: 14,720 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="877.857142857" width="57.1428571429" y="63.9053018572" height="4.90056654126"
+            data-party="SP"
+            title="PARAMESWAR KAND<br>SP: 14,102 votes in 2009"
+            href="?YEAR=2009"
+            fill="#2E803C" stroke="#fff"/>
+          
+        
+          
+          <rect x="877.857142857" width="57.1428571429" y="60.0" height="3.90530185723"
+            data-party="CPI-ML-L-"
+            title="BALARAM HOTA<br>CPI(ML)(L): 11,238 votes in 2009"
+            href="?YEAR=2009"
+            fill="#a0a0a0" stroke="#fff"/>
+          
+        
+      
+    </g>
+  </svg>
+
+
+
+
+  
+  <h2>15 affidavits filed for 2014 elections
+    <a class="small direct-link" target="_blank" href="http://affidavitarchive.nic.in/DynamicAffidavitDisplay/CANDIDATEAFFIDAVIT.aspx?YEARID=May-2014&AC_No=11&st_code=S18&constType=PC">on ECI website</a></h2>
+  <table class="dataframe table table-condensed">
+  <thead>
+    <tr style="text-align: right;">
+      <th>PARTY</th>
+      <th>NAME</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>                                   Biju Janata Dal</td>
+      <td>         ARKA KESHARI DEO</td>
+    </tr>
+    <tr>
+      <td>                            Bharatiya Janata Party</td>
+      <td>      PRADIPTA KUMAR NAIK</td>
+    </tr>
+    <tr>
+      <td>                          Indian National Congress</td>
+      <td>        BHAKTA CHARAN DAS</td>
+    </tr>
+    <tr>
+      <td>                               Bahujan Samaj Party</td>
+      <td>         SAROJ KUMAR NAIK</td>
+    </tr>
+    <tr>
+      <td>                        Ambedkarite Party of India</td>
+      <td>           CHHABILAL NIAL</td>
+    </tr>
+    <tr>
+      <td>                                 Aama Odisha Party</td>
+      <td>          DAITARY PRADHAN</td>
+    </tr>
+    <tr>
+      <td>                                 Samata Kranti Dal</td>
+      <td>          PARAMESWAR KAND</td>
+    </tr>
+    <tr>
+      <td> Communist Party of India  (Marxist-Leninist)  ...</td>
+      <td>             BALARAM HOTA</td>
+    </tr>
+    <tr>
+      <td>                                  Samruddha Odisha</td>
+      <td>         BIGHNA RAJ PANDA</td>
+    </tr>
+    <tr>
+      <td>                                      Kalinga Sena</td>
+      <td> BAIKUNTHA DHANGADA MAJHI</td>
+    </tr>
+    <tr>
+      <td>                                   Samajwadi Party</td>
+      <td>                SIBA HATI</td>
+    </tr>
+    <tr>
+      <td>                                   Aam Aadmi Party</td>
+      <td>      SATYA NARAYAN MAHAR</td>
+    </tr>
+    <tr>
+      <td>                               Bahujan Mukti Party</td>
+      <td>              SAHADEV JAL</td>
+    </tr>
+    <tr>
+      <td>                                 Odisha Jan Morcha</td>
+      <td>      SUNIL CHANDRA NAYAK</td>
+    </tr>
+    <tr>
+      <td>                                       Independent</td>
+      <td>      RAJENDRA KUMAR MUND</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+</div>

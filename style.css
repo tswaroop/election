@@ -388,7 +388,6 @@ footer {
 
 /* Prevent initial flicker */
 #factoid, .result-controls, #result {
-  display: none;
 }
 .loading {
   position: absolute;

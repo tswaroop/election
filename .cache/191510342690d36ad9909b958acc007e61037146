@@ -1,0 +1,582 @@
+
+<div class="pc-summary">
+
+    
+    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Oldest candidates <small></small></h2>
+    
+<table class="table table-condensed analysis">
+  <thead>
+    <th>Year</th>
+    <th>State</th>
+    <th>Constituency</th>
+    <th>Name</th><th>Party</th><th class="sorted">Age</th><th>Votes</th><th>#</th>
+  </thead>
+  <tbody>
+    
+      <tr href="result?YEAR=2009&STATE=MAHARASHTRA&PC=DHULE&age=">
+        <th>2009</td>
+        <th>Maharashtra</td>
+        <th>Dhule</td>
+        
+          
+            <td>Arif Ahmed Shaikh Jafhar</td>
+          
+        
+          
+            
+            <td style="background-color:#a0a0a0;color:#000">NBNP</td>
+          
+        
+          
+            <td>99</td>
+          
+        
+          
+            <td>955</td>
+          
+        
+          
+            <td>15</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2004&STATE=KARNATAKA&PC=BIDAR&age=">
+        <th>2004</td>
+        <th>Karnataka</td>
+        <th>Bidar</td>
+        
+          
+            <td>Ramchandra Veerappa</td>
+          
+        
+          
+            
+            <td style="background-color:#FA942E;color:#000">BJP</td>
+          
+        
+          
+            <td>94</td>
+          
+        
+          
+            <td>312,838</td>
+          
+        
+          
+            <td>1</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=BIHAR&PC=HAJIPUR&age=">
+        <th>2009</td>
+        <th>Bihar</td>
+        <th>Hajipur</td>
+        
+          
+            <td>Ram Sundar Das</td>
+          
+        
+          
+            
+            <td style="background-color:#A5E02E;color:#000">JDU</td>
+          
+        
+          
+            <td>88</td>
+          
+        
+          
+            <td>246,715</td>
+          
+        
+          
+            <td>1</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=MAHARASHTRA&PC=CHANDRAPUR&age=">
+        <th>2009</td>
+        <th>Maharashtra</td>
+        <th>Chandrapur</td>
+        
+          
+            <td>Kale Damodhar Laxman</td>
+          
+        
+          
+            
+            <td style="background-color:#95b3d7;color:#000">IND</td>
+          
+        
+          
+            <td>85</td>
+          
+        
+          
+            <td>2,108</td>
+          
+        
+          
+            <td>19</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=BIHAR&PC=NAWADA&age=">
+        <th>2009</td>
+        <th>Bihar</td>
+        <th>Nawada</td>
+        
+          
+            <td>Ganesh Shankar Vidyarthi</td>
+          
+        
+          
+            
+            <td style="background-color:#FA2E2E;color:#fff">CPM</td>
+          
+        
+          
+            <td>85</td>
+          
+        
+          
+            <td>14,840</td>
+          
+        
+          
+            <td>9</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2004&STATE=UTTARAKHAND&PC=TEHRI%20GARHWAL&age=">
+        <th>2004</td>
+        <th>Uttarakhand</td>
+        <th>Tehri Garhwal</td>
+        
+          
+            <td>Manabendra Shah</td>
+          
+        
+          
+            
+            <td style="background-color:#FA942E;color:#000">BJP</td>
+          
+        
+          
+            <td>84</td>
+          
+        
+          
+            <td>267,395</td>
+          
+        
+          
+            <td>1</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=UTTAR%20PRADESH&PC=ETAH&age=">
+        <th>2009</td>
+        <th>Uttar Pradesh</td>
+        <th>Etah</td>
+        
+          
+            <td>Dr. Mahadeepak Singh Shakya</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+          
+            <td>84</td>
+          
+        
+          
+            <td>25,048</td>
+          
+        
+          
+            <td>4</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2004&STATE=HARYANA&PC=ROHTAK&age=">
+        <th>2004</td>
+        <th>Haryana</td>
+        <th>Rohtak</td>
+        
+          
+            <td>Hari Singh</td>
+          
+        
+          
+            
+            <td style="background-color:#95b3d7;color:#000">IND</td>
+          
+        
+          
+            <td>83</td>
+          
+        
+          
+            <td>938</td>
+          
+        
+          
+            <td>17</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=BIHAR&PC=JAHANABAD&age=">
+        <th>2009</td>
+        <th>Bihar</td>
+        <th>Jahanabad</td>
+        
+          
+            <td>Ramasray Prasad Singh</td>
+          
+        
+          
+            
+            <td style="background-color:#AD632E;color:#fff">RLD</td>
+          
+        
+          
+            <td>83</td>
+          
+        
+          
+            <td>3,542</td>
+          
+        
+          
+            <td>9</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2004&STATE=KARNATAKA&PC=DAVANGERE&age=">
+        <th>2004</td>
+        <th>Karnataka</td>
+        <th>Davangere</td>
+        
+          
+            <td>Channaiah Odeyar</td>
+          
+        
+          
+            
+            <td style="background-color:#832EFA;color:#fff">JDS</td>
+          
+        
+          
+            <td>83</td>
+          
+        
+          
+            <td>158,515</td>
+          
+        
+          
+            <td>3</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2004&STATE=PUNJAB&PC=AMRITSAR&age=">
+        <th>2004</td>
+        <th>Punjab</td>
+        <th>Amritsar</td>
+        
+          
+            <td>Raghunandan Lal Bhatia</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+          
+            <td>83</td>
+          
+        
+          
+            <td>284,691</td>
+          
+        
+          
+            <td>2</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=WEST%20BENGAL&PC=HOWRAH&age=">
+        <th>2009</td>
+        <th>West Bengal</td>
+        <th>Howrah</td>
+        
+          
+            <td>Ambica Banerjee</td>
+          
+        
+          
+            
+            <td style="background-color:#A5E02E;color:#000">TMC</td>
+          
+        
+          
+            <td>82</td>
+          
+        
+          
+            <td>477,449</td>
+          
+        
+          
+            <td>1</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2004&STATE=ANDHRA%20PRADESH&PC=RAJAHMUNDRY&age=">
+        <th>2004</td>
+        <th>Andhra Pradesh</td>
+        <th>Rajahmundry</td>
+        
+          
+            <td>S.B.P.B.K.Satyanarayana Rao</td>
+          
+        
+          
+            
+            <td style="background-color:#95b3d7;color:#000">IND</td>
+          
+        
+          
+            <td>82</td>
+          
+        
+          
+            <td>99,671</td>
+          
+        
+          
+            <td>3</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=JHARKHAND&PC=SINGHBHUM&age=">
+        <th>2009</td>
+        <th>Jharkhand</td>
+        <th>Singhbhum</td>
+        
+          
+            <td>Bagun Sumbrui</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+          
+            <td>82</td>
+          
+        
+          
+            <td>95,604</td>
+          
+        
+          
+            <td>3</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=KERALA&PC=KANNUR&age=">
+        <th>2009</td>
+        <th>Kerala</td>
+        <th>Kannur</td>
+        
+          
+            <td>Pattathil Raghavan</td>
+          
+        
+          
+            
+            <td style="background-color:#95b3d7;color:#000">IND</td>
+          
+        
+          
+            <td>82</td>
+          
+        
+          
+            <td>1,117</td>
+          
+        
+          
+            <td>9</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=ANDHRA%20PRADESH&PC=RAJAMPET&age=">
+        <th>2009</td>
+        <th>Andhra Pradesh</td>
+        <th>Rajampet</td>
+        
+          
+            <td>Haji Mohammad Azam</td>
+          
+        
+          
+            
+            <td style="background-color:#95b3d7;color:#000">IND</td>
+          
+        
+          
+            <td>82</td>
+          
+        
+          
+            <td>12,762</td>
+          
+        
+          
+            <td>5</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2004&STATE=MAHARASHTRA&PC=PUNE&age=">
+        <th>2004</td>
+        <th>Maharashtra</td>
+        <th>Pune</td>
+        
+          
+            <td>Jagdale Shankarrao Ramchandra</td>
+          
+        
+          
+            
+            <td style="background-color:#95b3d7;color:#000">IND</td>
+          
+        
+          
+            <td>82</td>
+          
+        
+          
+            <td>4,679</td>
+          
+        
+          
+            <td>6</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2004&STATE=JAMMU%20%26%20KASHMIR&PC=BARAMULLA&age=">
+        <th>2004</td>
+        <th>Jammu &amp; Kashmir</td>
+        <th>Baramulla</td>
+        
+          
+            <td>Ghulam Rasool Kar</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+          
+            <td>82</td>
+          
+        
+          
+            <td>62,316</td>
+          
+        
+          
+            <td>3</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=KARNATAKA&PC=BANGALORE%20CENTRAL&age=">
+        <th>2009</td>
+        <th>Karnataka</td>
+        <th>Bangalore Central</td>
+        
+          
+            <td>Dr.D. R.Venkatesh Gowda</td>
+          
+        
+          
+            
+            <td style="background-color:#95b3d7;color:#000">IND</td>
+          
+        
+          
+            <td>82</td>
+          
+        
+          
+            <td>1,518</td>
+          
+        
+          
+            <td>10</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2009&STATE=GUJARAT&PC=GANDHINAGAR&age=">
+        <th>2009</td>
+        <th>Gujarat</td>
+        <th>Gandhinagar</td>
+        
+          
+            <td>L.K.Advani</td>
+          
+        
+          
+            
+            <td style="background-color:#FA942E;color:#000">BJP</td>
+          
+        
+          
+            <td>81</td>
+          
+        
+          
+            <td>434,044</td>
+          
+        
+          
+            <td>1</td>
+          
+        
+      </tr>
+    
+  </tbody>
+</table>
+
+
+
+
+</div>

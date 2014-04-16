@@ -1,0 +1,424 @@
+
+<div class="pc-summary">
+
+  
+  
+    <h2><i class="back glyphicon glyphicon-circle-arrow-left"></i> Fewest voters <small></small></h2>
+    
+<table class="table table-condensed analysis">
+  <thead>
+    <th>Year</th>
+    <th>State</th>
+    <th>Constituency</th>
+    <th class="sorted">Votes</th><th>Winner</th><th>Party</th>
+  </thead>
+  <tbody>
+    
+      <tr href="result?YEAR=1967&STATE=LAKSHADWEEP&PC=LAKSHADWEEP&votes=">
+        <th>1967</td>
+        <th>Lakshadweep</td>
+        <th>Lakshadweep</td>
+        
+          
+            <td>11,807</td>
+          
+        
+          
+            <td>M.S. Padanatha</td>
+          
+        
+          
+            
+            <td style="background-color:#95b3d7;color:#000">IND</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1977&STATE=LAKSHADWEEP&PC=LAKSHADWEEP&votes=">
+        <th>1977</td>
+        <th>Lakshadweep</td>
+        <th>Lakshadweep</td>
+        
+          
+            <td>16,386</td>
+          
+        
+          
+            <td>Muhammed Sayeed Padannatha</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1980&STATE=LAKSHADWEEP&PC=LAKSHADWEEP&votes=">
+        <th>1980</td>
+        <th>Lakshadweep</td>
+        <th>Lakshadweep</td>
+        
+          
+            <td>17,772</td>
+          
+        
+          
+            <td>Muhammad Sayeed Padannatha</td>
+          
+        
+          
+            
+            <td style="background-color:#a0a0a0;color:#000">INC(U)</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1984&STATE=LAKSHADWEEP&PC=LAKSHADWEEP&votes=">
+        <th>1984</td>
+        <th>Lakshadweep</td>
+        <th>Lakshadweep</td>
+        
+          
+            <td>19,023</td>
+          
+        
+          
+            <td>Mohammad Sayeed Padannatha</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1967&STATE=D%26N%20HAVELI&PC=DADRA%20%26%20NAGAR%20HAVELI&votes=">
+        <th>1967</td>
+        <th>D&amp;N Haveli</td>
+        <th>Dadra &amp; Nagar Haveli</td>
+        
+          
+            <td>21,248</td>
+          
+        
+          
+            <td>S. R. Delkar</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1971&STATE=D%26N%20HAVELI&PC=DADRA%20%26%20NAGAR%20HAVELI&votes=">
+        <th>1971</td>
+        <th>D&amp;N Haveli</td>
+        <th>Dadra &amp; Nagar Haveli</td>
+        
+          
+            <td>21,658</td>
+          
+        
+          
+            <td>Ramubhai Ravjibhai Patel</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1977&STATE=D%26N%20HAVELI&PC=DADRA%20%26%20NAGAR%20HAVELI&votes=">
+        <th>1977</td>
+        <th>D&amp;N Haveli</td>
+        <th>Dadra &amp; Nagar Haveli</td>
+        
+          
+            <td>24,131</td>
+          
+        
+          
+            <td>Patel Ramubhai Ravjibhai</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1991&STATE=LAKSHADWEEP&PC=LAKSHADWEEP&votes=">
+        <th>1991</td>
+        <th>Lakshadweep</td>
+        <th>Lakshadweep</td>
+        
+          
+            <td>25,321</td>
+          
+        
+          
+            <td>P.M. Sayeed</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1989&STATE=LAKSHADWEEP&PC=LAKSHADWEEP&votes=">
+        <th>1989</td>
+        <th>Lakshadweep</td>
+        <th>Lakshadweep</td>
+        
+          
+            <td>25,490</td>
+          
+        
+          
+            <td>P. M. Sayeed</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1999&STATE=LAKSHADWEEP&PC=LAKSHADWEEP&votes=">
+        <th>1999</td>
+        <th>Lakshadweep</td>
+        <th>Lakshadweep</td>
+        
+          
+            <td>29,860</td>
+          
+        
+          
+            <td>P.M. Sayeed</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1996&STATE=LAKSHADWEEP&PC=LAKSHADWEEP&votes=">
+        <th>1996</td>
+        <th>Lakshadweep</td>
+        <th>Lakshadweep</td>
+        
+          
+            <td>30,188</td>
+          
+        
+          
+            <td>P M Sayeed</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1998&STATE=LAKSHADWEEP&PC=LAKSHADWEEP&votes=">
+        <th>1998</td>
+        <th>Lakshadweep</td>
+        <th>Lakshadweep</td>
+        
+          
+            <td>31,064</td>
+          
+        
+          
+            <td>P.M. Sayeed</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1980&STATE=D%26N%20HAVELI&PC=DADRA%20%26%20NAGAR%20HAVELI&votes=">
+        <th>1980</td>
+        <th>D&amp;N Haveli</td>
+        <th>Dadra &amp; Nagar Haveli</td>
+        
+          
+            <td>31,146</td>
+          
+        
+          
+            <td>Mahala Ramji Potla</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=2004&STATE=LAKSHADWEEP&PC=LAKSHADWEEP&votes=">
+        <th>2004</td>
+        <th>Lakshadweep</td>
+        <th>Lakshadweep</td>
+        
+          
+            <td>31,820</td>
+          
+        
+          
+            <td>Dr. P. Pookunhikoya</td>
+          
+        
+          
+            
+            <td style="background-color:#A5E02E;color:#000">JDU</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1989&STATE=DAMAN%20%26%20DIU&PC=DAMAN%20%26%20DIU&votes=">
+        <th>1989</td>
+        <th>Daman &amp; Diu</td>
+        <th>Daman &amp; Diu</td>
+        
+          
+            <td>36,538</td>
+          
+        
+          
+            <td>Tandel Devji Jogibhai</td>
+          
+        
+          
+            
+            <td style="background-color:#95b3d7;color:#000">IND</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1967&STATE=A%26N%20ISLANDS&PC=A%26N%20ISLANDS&votes=">
+        <th>1967</td>
+        <th>A&amp;N Islands</td>
+        <th>A&amp;N Islands</td>
+        
+          
+            <td>36,732</td>
+          
+        
+          
+            <td>K. R. Ganesh</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1989&STATE=JAMMU%20%26%20KASHMIR&PC=ANANTNAG&votes=">
+        <th>1989</td>
+        <th>Jammu &amp; Kashmir</td>
+        <th>Anantnag</td>
+        
+          
+            <td>36,907</td>
+          
+        
+          
+            <td>P.L.Handoo</td>
+          
+        
+          
+            
+            <td style="background-color:#FA2E2E;color:#fff">NC</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1989&STATE=JAMMU%20%26%20KASHMIR&PC=BARAMULLA&votes=">
+        <th>1989</td>
+        <th>Jammu &amp; Kashmir</td>
+        <th>Baramulla</td>
+        
+          
+            <td>37,466</td>
+          
+        
+          
+            <td>Saif Ud Din Soze</td>
+          
+        
+          
+            
+            <td style="background-color:#FA2E2E;color:#fff">NC</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1971&STATE=JAMMU%20%26%20KASHMIR&PC=LADAKH&votes=">
+        <th>1971</td>
+        <th>Jammu &amp; Kashmir</td>
+        <th>Ladakh</td>
+        
+          
+            <td>37,509</td>
+          
+        
+          
+            <td>Kushok Bakula</td>
+          
+        
+          
+            
+            <td style="background-color:#2EA7FF;color:#000">CONG</td>
+          
+        
+      </tr>
+    
+      <tr href="result?YEAR=1991&STATE=DAMAN%20%26%20DIU&PC=DAMAN%20%26%20DIU&votes=">
+        <th>1991</td>
+        <th>Daman &amp; Diu</td>
+        <th>Daman &amp; Diu</td>
+        
+          
+            <td>37,937</td>
+          
+        
+          
+            <td>Tandel Dev Ji Jogi Bhai</td>
+          
+        
+          
+            
+            <td style="background-color:#FA942E;color:#000">BJP</td>
+          
+        
+      </tr>
+    
+  </tbody>
+</table>
+
+</pre>
+  
+
+
+</div>

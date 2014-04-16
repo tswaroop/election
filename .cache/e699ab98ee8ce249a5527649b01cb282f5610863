@@ -1,0 +1,2690 @@
+
+<svg class="pc-index" width="100%" data-height="0.531914893617" viewBox="0 0 940 500">
+  <rect width="30" height="25" class="party-unhighlight" fill="#000" title="Show all parties"/>
+  <text x="15" y="12.5" text-anchor="middle" dy=".35em" fill="#fff">x</text>
+  
+    
+    <rect class="party-legend"
+      data-party="CONG"
+      data-highlight="[data-party=CONG]"
+      data-toggle="highlight"
+      x="30.0"
+      width="61.3333333333"
+      height="25"
+      fill="#2EA7FF"></rect>
+    <text class="party-legend-text"
+      x="60.6666666667"
+      y="12.5"
+      text-anchor="middle"
+      dy=".35em"
+      fill="#000"
+      data-party="CONG">CONG</text>
+  
+    
+    <rect class="party-legend"
+      data-party="BJP"
+      data-highlight="[data-party=BJP]"
+      data-toggle="highlight"
+      x="91.3333333333"
+      width="61.3333333333"
+      height="25"
+      fill="#FA942E"></rect>
+    <text class="party-legend-text"
+      x="122.0"
+      y="12.5"
+      text-anchor="middle"
+      dy=".35em"
+      fill="#000"
+      data-party="BJP">BJP</text>
+  
+    
+    <rect class="party-legend"
+      data-party="CPM"
+      data-highlight="[data-party=CPM]"
+      data-toggle="highlight"
+      x="152.666666667"
+      width="61.3333333333"
+      height="25"
+      fill="#FA2E2E"></rect>
+    <text class="party-legend-text"
+      x="183.333333333"
+      y="12.5"
+      text-anchor="middle"
+      dy=".35em"
+      fill="#fff"
+      data-party="CPM">CPM</text>
+  
+    
+    <rect class="party-legend"
+      data-party="JNP"
+      data-highlight="[data-party=JNP]"
+      data-toggle="highlight"
+      x="214.0"
+      width="61.3333333333"
+      height="25"
+      fill="#000000"></rect>
+    <text class="party-legend-text"
+      x="244.666666667"
+      y="12.5"
+      text-anchor="middle"
+      dy=".35em"
+      fill="#fff"
+      data-party="JNP">JNP</text>
+  
+    
+    <rect class="party-legend"
+      data-party="JD"
+      data-highlight="[data-party=JD]"
+      data-toggle="highlight"
+      x="275.333333333"
+      width="61.3333333333"
+      height="25"
+      fill="#8064a2"></rect>
+    <text class="party-legend-text"
+      x="306.0"
+      y="12.5"
+      text-anchor="middle"
+      dy=".35em"
+      fill="#fff"
+      data-party="JD">JD</text>
+  
+    
+    <rect class="party-legend"
+      data-party="IND"
+      data-highlight="[data-party=IND]"
+      data-toggle="highlight"
+      x="336.666666667"
+      width="61.3333333333"
+      height="25"
+      fill="#95b3d7"></rect>
+    <text class="party-legend-text"
+      x="367.333333333"
+      y="12.5"
+      text-anchor="middle"
+      dy=".35em"
+      fill="#000"
+      data-party="IND">IND</text>
+  
+    
+    <rect class="party-legend"
+      data-party="CPI"
+      data-highlight="[data-party=CPI]"
+      data-toggle="highlight"
+      x="398.0"
+      width="61.3333333333"
+      height="25"
+      fill="#FA2E2E"></rect>
+    <text class="party-legend-text"
+      x="428.666666667"
+      y="12.5"
+      text-anchor="middle"
+      dy=".35em"
+      fill="#fff"
+      data-party="CPI">CPI</text>
+  
+    
+    <rect class="party-legend"
+      data-party="DMK"
+      data-highlight="[data-party=DMK]"
+      data-toggle="highlight"
+      x="459.333333333"
+      width="61.3333333333"
+      height="25"
+      fill="#FAE92E"></rect>
+    <text class="party-legend-text"
+      x="490.0"
+      y="12.5"
+      text-anchor="middle"
+      dy=".35em"
+      fill="#000"
+      data-party="DMK">DMK</text>
+  
+    
+    <rect class="party-legend"
+      data-party="SP"
+      data-highlight="[data-party=SP]"
+      data-toggle="highlight"
+      x="520.666666667"
+      width="61.3333333333"
+      height="25"
+      fill="#2E803C"></rect>
+    <text class="party-legend-text"
+      x="551.333333333"
+      y="12.5"
+      text-anchor="middle"
+      dy=".35em"
+      fill="#fff"
+      data-party="SP">SP</text>
+  
+    
+    <rect class="party-legend"
+      data-party="TDP"
+      data-highlight="[data-party=TDP]"
+      data-toggle="highlight"
+      x="582.0"
+      width="61.3333333333"
+      height="25"
+      fill="#FAE92E"></rect>
+    <text class="party-legend-text"
+      x="612.666666667"
+      y="12.5"
+      text-anchor="middle"
+      dy=".35em"
+      fill="#000"
+      data-party="TDP">TDP</text>
+  
+    
+    <rect class="party-legend"
+      data-party="ADMK"
+      data-highlight="[data-party=ADMK]"
+      data-toggle="highlight"
+      x="643.333333333"
+      width="61.3333333333"
+      height="25"
+      fill="#B02E2E"></rect>
+    <text class="party-legend-text"
+      x="674.0"
+      y="12.5"
+      text-anchor="middle"
+      dy=".35em"
+      fill="#fff"
+      data-party="ADMK">ADMK</text>
+  
+    
+    <rect class="party-legend"
+      data-party="BSP"
+      data-highlight="[data-party=BSP]"
+      data-toggle="highlight"
+      x="704.666666667"
+      width="61.3333333333"
+      height="25"
+      fill="#2E3EEB"></rect>
+    <text class="party-legend-text"
+      x="735.333333333"
+      y="12.5"
+      text-anchor="middle"
+      dy=".35em"
+      fill="#fff"
+      data-party="BSP">BSP</text>
+  
+    
+    <rect class="party-legend"
+      data-party="SWA"
+      data-highlight="[data-party=SWA]"
+      data-toggle="highlight"
+      x="766.0"
+      width="61.3333333333"
+      height="25"
+      fill="#0C6965"></rect>
+    <text class="party-legend-text"
+      x="796.666666667"
+      y="12.5"
+      text-anchor="middle"
+      dy=".35em"
+      fill="#fff"
+      data-party="SWA">SWA</text>
+  
+    
+    <rect class="party-legend"
+      data-party="SS"
+      data-highlight="[data-party=SS]"
+      data-toggle="highlight"
+      x="827.333333333"
+      width="61.3333333333"
+      height="25"
+      fill="#AD632E"></rect>
+    <text class="party-legend-text"
+      x="858.0"
+      y="12.5"
+      text-anchor="middle"
+      dy=".35em"
+      fill="#fff"
+      data-party="SS">SS</text>
+  
+    
+    <rect class="party-legend"
+      data-party="BJS"
+      data-highlight="[data-party=BJS]"
+      data-toggle="highlight"
+      x="888.666666667"
+      width="61.3333333333"
+      height="25"
+      fill="#F05A00"></rect>
+    <text class="party-legend-text"
+      x="919.333333333"
+      y="12.5"
+      text-anchor="middle"
+      dy=".35em"
+      fill="#fff"
+      data-party="BJS">BJS</text>
+  
+
+  <g class="pc-stack">
+  
+  
+    <text x="31.3333333333" y="30" dy="1em" text-anchor="middle" class="year-legend">1951</text>
+    
+      
+      <rect x="5.0" width="52.6666666667" y="171.920199501" height="328.079800499"
+        data-party="CONG"
+        title="CONG: 299 constituencies in 1951"
+        href="cartogram?Y=&YEAR=1951"
+        fill="#2EA7FF" stroke="#fff"/>
+      
+        <text x="31.3333333333" y="335.960099751"
+          data-party="CONG"
+          fill="#000" text-anchor="middle">299</text>
+        <text x="31.3333333333" y="335.960099751"
+          data-party="CONG"
+          fill="#000" dy="1em" text-anchor="middle">CONG</text>
+      
+    
+      
+      <rect x="5.0" width="52.6666666667" y="171.920199501" height="0.0"
+        data-party="BJP"
+        title="BJP: 0 constituencies in 1951"
+        href="cartogram?Y=&YEAR=1951"
+        fill="#FA942E" stroke="#fff"/>
+      
+    
+      
+      <rect x="5.0" width="52.6666666667" y="171.920199501" height="0.0"
+        data-party="CPM"
+        title="CPM: 0 constituencies in 1951"
+        href="cartogram?Y=&YEAR=1951"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="5.0" width="52.6666666667" y="171.920199501" height="0.0"
+        data-party="JNP"
+        title="JNP: 0 constituencies in 1951"
+        href="cartogram?Y=&YEAR=1951"
+        fill="#000000" stroke="#fff"/>
+      
+    
+      
+      <rect x="5.0" width="52.6666666667" y="171.920199501" height="0.0"
+        data-party="JD"
+        title="JD: 0 constituencies in 1951"
+        href="cartogram?Y=&YEAR=1951"
+        fill="#8064a2" stroke="#fff"/>
+      
+    
+      
+      <rect x="5.0" width="52.6666666667" y="135.710723192" height="36.2094763092"
+        data-party="IND"
+        title="IND: 33 constituencies in 1951"
+        href="cartogram?Y=&YEAR=1951"
+        fill="#95b3d7" stroke="#fff"/>
+      
+        <text x="31.3333333333" y="153.815461347"
+          data-party="IND"
+          fill="#000" dy=".35em" text-anchor="middle">33</text>
+      
+    
+      
+      <rect x="5.0" width="52.6666666667" y="118.154613466" height="17.5561097257"
+        data-party="CPI"
+        title="CPI: 16 constituencies in 1951"
+        href="cartogram?Y=&YEAR=1951"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="31.3333333333" y="126.932668329"
+          data-party="CPI"
+          fill="#fff" dy=".35em" text-anchor="middle">16</text>
+      
+    
+      
+      <rect x="5.0" width="52.6666666667" y="118.154613466" height="0.0"
+        data-party="DMK"
+        title="DMK: 0 constituencies in 1951"
+        href="cartogram?Y=&YEAR=1951"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="5.0" width="52.6666666667" y="108.279301746" height="9.8753117207"
+        data-party="SP"
+        title="SP: 9 constituencies in 1951"
+        href="cartogram?Y=&YEAR=1951"
+        fill="#2E803C" stroke="#fff"/>
+      
+    
+      
+      <rect x="5.0" width="52.6666666667" y="108.279301746" height="0.0"
+        data-party="TDP"
+        title="TDP: 0 constituencies in 1951"
+        href="cartogram?Y=&YEAR=1951"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="5.0" width="52.6666666667" y="108.279301746" height="0.0"
+        data-party="ADMK"
+        title="ADMK: 0 constituencies in 1951"
+        href="cartogram?Y=&YEAR=1951"
+        fill="#B02E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="5.0" width="52.6666666667" y="108.279301746" height="0.0"
+        data-party="BSP"
+        title="BSP: 0 constituencies in 1951"
+        href="cartogram?Y=&YEAR=1951"
+        fill="#2E3EEB" stroke="#fff"/>
+      
+    
+      
+      <rect x="5.0" width="52.6666666667" y="108.279301746" height="0.0"
+        data-party="SWA"
+        title="SWA: 0 constituencies in 1951"
+        href="cartogram?Y=&YEAR=1951"
+        fill="#0C6965" stroke="#fff"/>
+      
+    
+      
+      <rect x="5.0" width="52.6666666667" y="108.279301746" height="0.0"
+        data-party="SS"
+        title="SS: 0 constituencies in 1951"
+        href="cartogram?Y=&YEAR=1951"
+        fill="#AD632E" stroke="#fff"/>
+      
+    
+      
+      <rect x="5.0" width="52.6666666667" y="104.987531172" height="3.29177057357"
+        data-party="BJS"
+        title="BJS: 3 constituencies in 1951"
+        href="cartogram?Y=&YEAR=1951"
+        fill="#F05A00" stroke="#fff"/>
+      
+    
+      
+      <rect x="5.0" width="52.6666666667" y="60.0" height="44.9875311721"
+        data-party="Rest"
+        title="Rest: 41 constituencies in 1951"
+        href="cartogram?Y=&YEAR=1951"
+        fill="#a0a0a0" stroke="#fff"/>
+      
+        <text x="31.3333333333" y="82.493765586"
+          data-party="Rest"
+          fill="#000" text-anchor="middle">41</text>
+        <text x="31.3333333333" y="82.493765586"
+          data-party="Rest"
+          fill="#000" dy="1em" text-anchor="middle">Rest</text>
+      
+    
+  
+    <text x="94.0" y="30" dy="1em" text-anchor="middle" class="year-legend">1957</text>
+    
+      
+      <rect x="67.6666666667" width="52.6666666667" y="176.24691358" height="323.75308642"
+        data-party="CONG"
+        title="CONG: 298 constituencies in 1957"
+        href="cartogram?Y=&YEAR=1957"
+        fill="#2EA7FF" stroke="#fff"/>
+      
+        <text x="94.0" y="338.12345679"
+          data-party="CONG"
+          fill="#000" text-anchor="middle">298</text>
+        <text x="94.0" y="338.12345679"
+          data-party="CONG"
+          fill="#000" dy="1em" text-anchor="middle">CONG</text>
+      
+    
+      
+      <rect x="67.6666666667" width="52.6666666667" y="176.24691358" height="0.0"
+        data-party="BJP"
+        title="BJP: 0 constituencies in 1957"
+        href="cartogram?Y=&YEAR=1957"
+        fill="#FA942E" stroke="#fff"/>
+      
+    
+      
+      <rect x="67.6666666667" width="52.6666666667" y="176.24691358" height="0.0"
+        data-party="CPM"
+        title="CPM: 0 constituencies in 1957"
+        href="cartogram?Y=&YEAR=1957"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="67.6666666667" width="52.6666666667" y="176.24691358" height="0.0"
+        data-party="JNP"
+        title="JNP: 0 constituencies in 1957"
+        href="cartogram?Y=&YEAR=1957"
+        fill="#000000" stroke="#fff"/>
+      
+    
+      
+      <rect x="67.6666666667" width="52.6666666667" y="176.24691358" height="0.0"
+        data-party="JD"
+        title="JD: 0 constituencies in 1957"
+        href="cartogram?Y=&YEAR=1957"
+        fill="#8064a2" stroke="#fff"/>
+      
+    
+      
+      <rect x="67.6666666667" width="52.6666666667" y="134.962962963" height="41.2839506173"
+        data-party="IND"
+        title="IND: 38 constituencies in 1957"
+        href="cartogram?Y=&YEAR=1957"
+        fill="#95b3d7" stroke="#fff"/>
+      
+        <text x="94.0" y="155.604938272"
+          data-party="IND"
+          fill="#000" text-anchor="middle">38</text>
+        <text x="94.0" y="155.604938272"
+          data-party="IND"
+          fill="#000" dy="1em" text-anchor="middle">IND</text>
+      
+    
+      
+      <rect x="67.6666666667" width="52.6666666667" y="109.975308642" height="24.987654321"
+        data-party="CPI"
+        title="CPI: 23 constituencies in 1957"
+        href="cartogram?Y=&YEAR=1957"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="94.0" y="122.469135802"
+          data-party="CPI"
+          fill="#fff" dy=".35em" text-anchor="middle">23</text>
+      
+    
+      
+      <rect x="67.6666666667" width="52.6666666667" y="109.975308642" height="0.0"
+        data-party="DMK"
+        title="DMK: 0 constituencies in 1957"
+        href="cartogram?Y=&YEAR=1957"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="67.6666666667" width="52.6666666667" y="109.975308642" height="0.0"
+        data-party="SP"
+        title="SP: 0 constituencies in 1957"
+        href="cartogram?Y=&YEAR=1957"
+        fill="#2E803C" stroke="#fff"/>
+      
+    
+      
+      <rect x="67.6666666667" width="52.6666666667" y="109.975308642" height="0.0"
+        data-party="TDP"
+        title="TDP: 0 constituencies in 1957"
+        href="cartogram?Y=&YEAR=1957"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="67.6666666667" width="52.6666666667" y="109.975308642" height="0.0"
+        data-party="ADMK"
+        title="ADMK: 0 constituencies in 1957"
+        href="cartogram?Y=&YEAR=1957"
+        fill="#B02E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="67.6666666667" width="52.6666666667" y="109.975308642" height="0.0"
+        data-party="BSP"
+        title="BSP: 0 constituencies in 1957"
+        href="cartogram?Y=&YEAR=1957"
+        fill="#2E3EEB" stroke="#fff"/>
+      
+    
+      
+      <rect x="67.6666666667" width="52.6666666667" y="109.975308642" height="0.0"
+        data-party="SWA"
+        title="SWA: 0 constituencies in 1957"
+        href="cartogram?Y=&YEAR=1957"
+        fill="#0C6965" stroke="#fff"/>
+      
+    
+      
+      <rect x="67.6666666667" width="52.6666666667" y="109.975308642" height="0.0"
+        data-party="SS"
+        title="SS: 0 constituencies in 1957"
+        href="cartogram?Y=&YEAR=1957"
+        fill="#AD632E" stroke="#fff"/>
+      
+    
+      
+      <rect x="67.6666666667" width="52.6666666667" y="106.716049383" height="3.25925925926"
+        data-party="BJS"
+        title="BJS: 3 constituencies in 1957"
+        href="cartogram?Y=&YEAR=1957"
+        fill="#F05A00" stroke="#fff"/>
+      
+    
+      
+      <rect x="67.6666666667" width="52.6666666667" y="60.0" height="46.7160493827"
+        data-party="Rest"
+        title="Rest: 43 constituencies in 1957"
+        href="cartogram?Y=&YEAR=1957"
+        fill="#a0a0a0" stroke="#fff"/>
+      
+        <text x="94.0" y="83.3580246914"
+          data-party="Rest"
+          fill="#000" text-anchor="middle">43</text>
+        <text x="94.0" y="83.3580246914"
+          data-party="Rest"
+          fill="#000" dy="1em" text-anchor="middle">Rest</text>
+      
+    
+  
+    <text x="156.666666667" y="30" dy="1em" text-anchor="middle" class="year-legend">1962</text>
+    
+      
+      <rect x="130.333333333" width="52.6666666667" y="178.461538462" height="321.538461538"
+        data-party="CONG"
+        title="CONG: 361 constituencies in 1962"
+        href="cartogram?Y=&YEAR=1962"
+        fill="#2EA7FF" stroke="#fff"/>
+      
+        <text x="156.666666667" y="339.230769231"
+          data-party="CONG"
+          fill="#000" text-anchor="middle">361</text>
+        <text x="156.666666667" y="339.230769231"
+          data-party="CONG"
+          fill="#000" dy="1em" text-anchor="middle">CONG</text>
+      
+    
+      
+      <rect x="130.333333333" width="52.6666666667" y="178.461538462" height="0.0"
+        data-party="BJP"
+        title="BJP: 0 constituencies in 1962"
+        href="cartogram?Y=&YEAR=1962"
+        fill="#FA942E" stroke="#fff"/>
+      
+    
+      
+      <rect x="130.333333333" width="52.6666666667" y="178.461538462" height="0.0"
+        data-party="CPM"
+        title="CPM: 0 constituencies in 1962"
+        href="cartogram?Y=&YEAR=1962"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="130.333333333" width="52.6666666667" y="178.461538462" height="0.0"
+        data-party="JNP"
+        title="JNP: 0 constituencies in 1962"
+        href="cartogram?Y=&YEAR=1962"
+        fill="#000000" stroke="#fff"/>
+      
+    
+      
+      <rect x="130.333333333" width="52.6666666667" y="178.461538462" height="0.0"
+        data-party="JD"
+        title="JD: 0 constituencies in 1962"
+        href="cartogram?Y=&YEAR=1962"
+        fill="#8064a2" stroke="#fff"/>
+      
+    
+      
+      <rect x="130.333333333" width="52.6666666667" y="160.647773279" height="17.8137651822"
+        data-party="IND"
+        title="IND: 20 constituencies in 1962"
+        href="cartogram?Y=&YEAR=1962"
+        fill="#95b3d7" stroke="#fff"/>
+      
+        <text x="156.666666667" y="169.55465587"
+          data-party="IND"
+          fill="#000" dy=".35em" text-anchor="middle">20</text>
+      
+    
+      
+      <rect x="130.333333333" width="52.6666666667" y="134.817813765" height="25.8299595142"
+        data-party="CPI"
+        title="CPI: 29 constituencies in 1962"
+        href="cartogram?Y=&YEAR=1962"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="156.666666667" y="147.732793522"
+          data-party="CPI"
+          fill="#fff" dy=".35em" text-anchor="middle">29</text>
+      
+    
+      
+      <rect x="130.333333333" width="52.6666666667" y="128.582995951" height="6.23481781377"
+        data-party="DMK"
+        title="DMK: 7 constituencies in 1962"
+        href="cartogram?Y=&YEAR=1962"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="130.333333333" width="52.6666666667" y="128.582995951" height="0.0"
+        data-party="SP"
+        title="SP: 0 constituencies in 1962"
+        href="cartogram?Y=&YEAR=1962"
+        fill="#2E803C" stroke="#fff"/>
+      
+    
+      
+      <rect x="130.333333333" width="52.6666666667" y="128.582995951" height="0.0"
+        data-party="TDP"
+        title="TDP: 0 constituencies in 1962"
+        href="cartogram?Y=&YEAR=1962"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="130.333333333" width="52.6666666667" y="128.582995951" height="0.0"
+        data-party="ADMK"
+        title="ADMK: 0 constituencies in 1962"
+        href="cartogram?Y=&YEAR=1962"
+        fill="#B02E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="130.333333333" width="52.6666666667" y="128.582995951" height="0.0"
+        data-party="BSP"
+        title="BSP: 0 constituencies in 1962"
+        href="cartogram?Y=&YEAR=1962"
+        fill="#2E3EEB" stroke="#fff"/>
+      
+    
+      
+      <rect x="130.333333333" width="52.6666666667" y="112.550607287" height="16.032388664"
+        data-party="SWA"
+        title="SWA: 18 constituencies in 1962"
+        href="cartogram?Y=&YEAR=1962"
+        fill="#0C6965" stroke="#fff"/>
+      
+        <text x="156.666666667" y="120.566801619"
+          data-party="SWA"
+          fill="#fff" dy=".35em" text-anchor="middle">18</text>
+      
+    
+      
+      <rect x="130.333333333" width="52.6666666667" y="112.550607287" height="0.0"
+        data-party="SS"
+        title="SS: 0 constituencies in 1962"
+        href="cartogram?Y=&YEAR=1962"
+        fill="#AD632E" stroke="#fff"/>
+      
+    
+      
+      <rect x="130.333333333" width="52.6666666667" y="112.550607287" height="0.0"
+        data-party="BJS"
+        title="BJS: 0 constituencies in 1962"
+        href="cartogram?Y=&YEAR=1962"
+        fill="#F05A00" stroke="#fff"/>
+      
+    
+      
+      <rect x="130.333333333" width="52.6666666667" y="60.0" height="52.5506072874"
+        data-party="Rest"
+        title="Rest: 59 constituencies in 1962"
+        href="cartogram?Y=&YEAR=1962"
+        fill="#a0a0a0" stroke="#fff"/>
+      
+        <text x="156.666666667" y="86.2753036437"
+          data-party="Rest"
+          fill="#000" text-anchor="middle">59</text>
+        <text x="156.666666667" y="86.2753036437"
+          data-party="Rest"
+          fill="#000" dy="1em" text-anchor="middle">Rest</text>
+      
+    
+  
+    <text x="219.333333333" y="30" dy="1em" text-anchor="middle" class="year-legend">1967</text>
+    
+      
+      <rect x="193.0" width="52.6666666667" y="260.538461538" height="239.461538462"
+        data-party="CONG"
+        title="CONG: 283 constituencies in 1967"
+        href="cartogram?Y=&YEAR=1967"
+        fill="#2EA7FF" stroke="#fff"/>
+      
+        <text x="219.333333333" y="380.269230769"
+          data-party="CONG"
+          fill="#000" text-anchor="middle">283</text>
+        <text x="219.333333333" y="380.269230769"
+          data-party="CONG"
+          fill="#000" dy="1em" text-anchor="middle">CONG</text>
+      
+    
+      
+      <rect x="193.0" width="52.6666666667" y="260.538461538" height="0.0"
+        data-party="BJP"
+        title="BJP: 0 constituencies in 1967"
+        href="cartogram?Y=&YEAR=1967"
+        fill="#FA942E" stroke="#fff"/>
+      
+    
+      
+      <rect x="193.0" width="52.6666666667" y="244.461538462" height="16.0769230769"
+        data-party="CPM"
+        title="CPM: 19 constituencies in 1967"
+        href="cartogram?Y=&YEAR=1967"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="219.333333333" y="252.5"
+          data-party="CPM"
+          fill="#fff" dy=".35em" text-anchor="middle">19</text>
+      
+    
+      
+      <rect x="193.0" width="52.6666666667" y="244.461538462" height="0.0"
+        data-party="JNP"
+        title="JNP: 0 constituencies in 1967"
+        href="cartogram?Y=&YEAR=1967"
+        fill="#000000" stroke="#fff"/>
+      
+    
+      
+      <rect x="193.0" width="52.6666666667" y="244.461538462" height="0.0"
+        data-party="JD"
+        title="JD: 0 constituencies in 1967"
+        href="cartogram?Y=&YEAR=1967"
+        fill="#8064a2" stroke="#fff"/>
+      
+    
+      
+      <rect x="193.0" width="52.6666666667" y="214.846153846" height="29.6153846154"
+        data-party="IND"
+        title="IND: 35 constituencies in 1967"
+        href="cartogram?Y=&YEAR=1967"
+        fill="#95b3d7" stroke="#fff"/>
+      
+        <text x="219.333333333" y="229.653846154"
+          data-party="IND"
+          fill="#000" dy=".35em" text-anchor="middle">35</text>
+      
+    
+      
+      <rect x="193.0" width="52.6666666667" y="195.384615385" height="19.4615384615"
+        data-party="CPI"
+        title="CPI: 23 constituencies in 1967"
+        href="cartogram?Y=&YEAR=1967"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="219.333333333" y="205.115384615"
+          data-party="CPI"
+          fill="#fff" dy=".35em" text-anchor="middle">23</text>
+      
+    
+      
+      <rect x="193.0" width="52.6666666667" y="174.230769231" height="21.1538461538"
+        data-party="DMK"
+        title="DMK: 25 constituencies in 1967"
+        href="cartogram?Y=&YEAR=1967"
+        fill="#FAE92E" stroke="#fff"/>
+      
+        <text x="219.333333333" y="184.807692308"
+          data-party="DMK"
+          fill="#000" dy=".35em" text-anchor="middle">25</text>
+      
+    
+      
+      <rect x="193.0" width="52.6666666667" y="174.230769231" height="0.0"
+        data-party="SP"
+        title="SP: 0 constituencies in 1967"
+        href="cartogram?Y=&YEAR=1967"
+        fill="#2E803C" stroke="#fff"/>
+      
+    
+      
+      <rect x="193.0" width="52.6666666667" y="174.230769231" height="0.0"
+        data-party="TDP"
+        title="TDP: 0 constituencies in 1967"
+        href="cartogram?Y=&YEAR=1967"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="193.0" width="52.6666666667" y="174.230769231" height="0.0"
+        data-party="ADMK"
+        title="ADMK: 0 constituencies in 1967"
+        href="cartogram?Y=&YEAR=1967"
+        fill="#B02E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="193.0" width="52.6666666667" y="174.230769231" height="0.0"
+        data-party="BSP"
+        title="BSP: 0 constituencies in 1967"
+        href="cartogram?Y=&YEAR=1967"
+        fill="#2E3EEB" stroke="#fff"/>
+      
+    
+      
+      <rect x="193.0" width="52.6666666667" y="137.0" height="37.2307692308"
+        data-party="SWA"
+        title="SWA: 44 constituencies in 1967"
+        href="cartogram?Y=&YEAR=1967"
+        fill="#0C6965" stroke="#fff"/>
+      
+        <text x="219.333333333" y="155.615384615"
+          data-party="SWA"
+          fill="#fff" dy=".35em" text-anchor="middle">44</text>
+      
+    
+      
+      <rect x="193.0" width="52.6666666667" y="137.0" height="0.0"
+        data-party="SS"
+        title="SS: 0 constituencies in 1967"
+        href="cartogram?Y=&YEAR=1967"
+        fill="#AD632E" stroke="#fff"/>
+      
+    
+      
+      <rect x="193.0" width="52.6666666667" y="107.384615385" height="29.6153846154"
+        data-party="BJS"
+        title="BJS: 35 constituencies in 1967"
+        href="cartogram?Y=&YEAR=1967"
+        fill="#F05A00" stroke="#fff"/>
+      
+        <text x="219.333333333" y="122.192307692"
+          data-party="BJS"
+          fill="#fff" dy=".35em" text-anchor="middle">35</text>
+      
+    
+      
+      <rect x="193.0" width="52.6666666667" y="60.0" height="47.3846153846"
+        data-party="Rest"
+        title="Rest: 56 constituencies in 1967"
+        href="cartogram?Y=&YEAR=1967"
+        fill="#a0a0a0" stroke="#fff"/>
+      
+        <text x="219.333333333" y="83.6923076923"
+          data-party="Rest"
+          fill="#000" text-anchor="middle">56</text>
+        <text x="219.333333333" y="83.6923076923"
+          data-party="Rest"
+          fill="#000" dy="1em" text-anchor="middle">Rest</text>
+      
+    
+  
+    <text x="282.0" y="30" dy="1em" text-anchor="middle" class="year-legend">1971</text>
+    
+      
+      <rect x="255.666666667" width="52.6666666667" y="201.003861004" height="298.996138996"
+        data-party="CONG"
+        title="CONG: 352 constituencies in 1971"
+        href="cartogram?Y=&YEAR=1971"
+        fill="#2EA7FF" stroke="#fff"/>
+      
+        <text x="282.0" y="350.501930502"
+          data-party="CONG"
+          fill="#000" text-anchor="middle">352</text>
+        <text x="282.0" y="350.501930502"
+          data-party="CONG"
+          fill="#000" dy="1em" text-anchor="middle">CONG</text>
+      
+    
+      
+      <rect x="255.666666667" width="52.6666666667" y="201.003861004" height="0.0"
+        data-party="BJP"
+        title="BJP: 0 constituencies in 1971"
+        href="cartogram?Y=&YEAR=1971"
+        fill="#FA942E" stroke="#fff"/>
+      
+    
+      
+      <rect x="255.666666667" width="52.6666666667" y="179.768339768" height="21.2355212355"
+        data-party="CPM"
+        title="CPM: 25 constituencies in 1971"
+        href="cartogram?Y=&YEAR=1971"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="282.0" y="190.386100386"
+          data-party="CPM"
+          fill="#fff" dy=".35em" text-anchor="middle">25</text>
+      
+    
+      
+      <rect x="255.666666667" width="52.6666666667" y="179.768339768" height="0.0"
+        data-party="JNP"
+        title="JNP: 0 constituencies in 1971"
+        href="cartogram?Y=&YEAR=1971"
+        fill="#000000" stroke="#fff"/>
+      
+    
+      
+      <rect x="255.666666667" width="52.6666666667" y="179.768339768" height="0.0"
+        data-party="JD"
+        title="JD: 0 constituencies in 1971"
+        href="cartogram?Y=&YEAR=1971"
+        fill="#8064a2" stroke="#fff"/>
+      
+    
+      
+      <rect x="255.666666667" width="52.6666666667" y="167.876447876" height="11.8918918919"
+        data-party="IND"
+        title="IND: 14 constituencies in 1971"
+        href="cartogram?Y=&YEAR=1971"
+        fill="#95b3d7" stroke="#fff"/>
+      
+    
+      
+      <rect x="255.666666667" width="52.6666666667" y="148.33976834" height="19.5366795367"
+        data-party="CPI"
+        title="CPI: 23 constituencies in 1971"
+        href="cartogram?Y=&YEAR=1971"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="282.0" y="158.108108108"
+          data-party="CPI"
+          fill="#fff" dy=".35em" text-anchor="middle">23</text>
+      
+    
+      
+      <rect x="255.666666667" width="52.6666666667" y="128.803088803" height="19.5366795367"
+        data-party="DMK"
+        title="DMK: 23 constituencies in 1971"
+        href="cartogram?Y=&YEAR=1971"
+        fill="#FAE92E" stroke="#fff"/>
+      
+        <text x="282.0" y="138.571428571"
+          data-party="DMK"
+          fill="#000" dy=".35em" text-anchor="middle">23</text>
+      
+    
+      
+      <rect x="255.666666667" width="52.6666666667" y="128.803088803" height="0.0"
+        data-party="SP"
+        title="SP: 0 constituencies in 1971"
+        href="cartogram?Y=&YEAR=1971"
+        fill="#2E803C" stroke="#fff"/>
+      
+    
+      
+      <rect x="255.666666667" width="52.6666666667" y="128.803088803" height="0.0"
+        data-party="TDP"
+        title="TDP: 0 constituencies in 1971"
+        href="cartogram?Y=&YEAR=1971"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="255.666666667" width="52.6666666667" y="128.803088803" height="0.0"
+        data-party="ADMK"
+        title="ADMK: 0 constituencies in 1971"
+        href="cartogram?Y=&YEAR=1971"
+        fill="#B02E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="255.666666667" width="52.6666666667" y="128.803088803" height="0.0"
+        data-party="BSP"
+        title="BSP: 0 constituencies in 1971"
+        href="cartogram?Y=&YEAR=1971"
+        fill="#2E3EEB" stroke="#fff"/>
+      
+    
+      
+      <rect x="255.666666667" width="52.6666666667" y="122.007722008" height="6.79536679537"
+        data-party="SWA"
+        title="SWA: 8 constituencies in 1971"
+        href="cartogram?Y=&YEAR=1971"
+        fill="#0C6965" stroke="#fff"/>
+      
+    
+      
+      <rect x="255.666666667" width="52.6666666667" y="122.007722008" height="0.0"
+        data-party="SS"
+        title="SS: 0 constituencies in 1971"
+        href="cartogram?Y=&YEAR=1971"
+        fill="#AD632E" stroke="#fff"/>
+      
+    
+      
+      <rect x="255.666666667" width="52.6666666667" y="103.32046332" height="18.6872586873"
+        data-party="BJS"
+        title="BJS: 22 constituencies in 1971"
+        href="cartogram?Y=&YEAR=1971"
+        fill="#F05A00" stroke="#fff"/>
+      
+        <text x="282.0" y="112.664092664"
+          data-party="BJS"
+          fill="#fff" dy=".35em" text-anchor="middle">22</text>
+      
+    
+      
+      <rect x="255.666666667" width="52.6666666667" y="60.0" height="43.3204633205"
+        data-party="Rest"
+        title="Rest: 51 constituencies in 1971"
+        href="cartogram?Y=&YEAR=1971"
+        fill="#a0a0a0" stroke="#fff"/>
+      
+        <text x="282.0" y="81.6602316602"
+          data-party="Rest"
+          fill="#000" text-anchor="middle">51</text>
+        <text x="282.0" y="81.6602316602"
+          data-party="Rest"
+          fill="#000" dy="1em" text-anchor="middle">Rest</text>
+      
+    
+  
+    <text x="344.666666667" y="30" dy="1em" text-anchor="middle" class="year-legend">1977</text>
+    
+      
+      <rect x="318.333333333" width="52.6666666667" y="374.981549815" height="125.018450185"
+        data-party="CONG"
+        title="CONG: 154 constituencies in 1977"
+        href="cartogram?Y=&YEAR=1977"
+        fill="#2EA7FF" stroke="#fff"/>
+      
+        <text x="344.666666667" y="437.490774908"
+          data-party="CONG"
+          fill="#000" text-anchor="middle">154</text>
+        <text x="344.666666667" y="437.490774908"
+          data-party="CONG"
+          fill="#000" dy="1em" text-anchor="middle">CONG</text>
+      
+    
+      
+      <rect x="318.333333333" width="52.6666666667" y="374.981549815" height="0.0"
+        data-party="BJP"
+        title="BJP: 0 constituencies in 1977"
+        href="cartogram?Y=&YEAR=1977"
+        fill="#FA942E" stroke="#fff"/>
+      
+    
+      
+      <rect x="318.333333333" width="52.6666666667" y="357.121771218" height="17.8597785978"
+        data-party="CPM"
+        title="CPM: 22 constituencies in 1977"
+        href="cartogram?Y=&YEAR=1977"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="344.666666667" y="366.051660517"
+          data-party="CPM"
+          fill="#fff" dy=".35em" text-anchor="middle">22</text>
+      
+    
+      
+      <rect x="318.333333333" width="52.6666666667" y="117.638376384" height="239.483394834"
+        data-party="JNP"
+        title="JNP: 295 constituencies in 1977"
+        href="cartogram?Y=&YEAR=1977"
+        fill="#000000" stroke="#fff"/>
+      
+        <text x="344.666666667" y="237.380073801"
+          data-party="JNP"
+          fill="#fff" text-anchor="middle">295</text>
+        <text x="344.666666667" y="237.380073801"
+          data-party="JNP"
+          fill="#fff" dy="1em" text-anchor="middle">JNP</text>
+      
+    
+      
+      <rect x="318.333333333" width="52.6666666667" y="117.638376384" height="0.0"
+        data-party="JD"
+        title="JD: 0 constituencies in 1977"
+        href="cartogram?Y=&YEAR=1977"
+        fill="#8064a2" stroke="#fff"/>
+      
+    
+      
+      <rect x="318.333333333" width="52.6666666667" y="110.332103321" height="7.30627306273"
+        data-party="IND"
+        title="IND: 9 constituencies in 1977"
+        href="cartogram?Y=&YEAR=1977"
+        fill="#95b3d7" stroke="#fff"/>
+      
+    
+      
+      <rect x="318.333333333" width="52.6666666667" y="104.649446494" height="5.68265682657"
+        data-party="CPI"
+        title="CPI: 7 constituencies in 1977"
+        href="cartogram?Y=&YEAR=1977"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="318.333333333" width="52.6666666667" y="103.025830258" height="1.62361623616"
+        data-party="DMK"
+        title="DMK: 2 constituencies in 1977"
+        href="cartogram?Y=&YEAR=1977"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="318.333333333" width="52.6666666667" y="103.025830258" height="0.0"
+        data-party="SP"
+        title="SP: 0 constituencies in 1977"
+        href="cartogram?Y=&YEAR=1977"
+        fill="#2E803C" stroke="#fff"/>
+      
+    
+      
+      <rect x="318.333333333" width="52.6666666667" y="103.025830258" height="0.0"
+        data-party="TDP"
+        title="TDP: 0 constituencies in 1977"
+        href="cartogram?Y=&YEAR=1977"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="318.333333333" width="52.6666666667" y="88.4132841328" height="14.6125461255"
+        data-party="ADMK"
+        title="ADMK: 18 constituencies in 1977"
+        href="cartogram?Y=&YEAR=1977"
+        fill="#B02E2E" stroke="#fff"/>
+      
+        <text x="344.666666667" y="95.7195571956"
+          data-party="ADMK"
+          fill="#fff" dy=".35em" text-anchor="middle">18</text>
+      
+    
+      
+      <rect x="318.333333333" width="52.6666666667" y="88.4132841328" height="0.0"
+        data-party="BSP"
+        title="BSP: 0 constituencies in 1977"
+        href="cartogram?Y=&YEAR=1977"
+        fill="#2E3EEB" stroke="#fff"/>
+      
+    
+      
+      <rect x="318.333333333" width="52.6666666667" y="88.4132841328" height="0.0"
+        data-party="SWA"
+        title="SWA: 0 constituencies in 1977"
+        href="cartogram?Y=&YEAR=1977"
+        fill="#0C6965" stroke="#fff"/>
+      
+    
+      
+      <rect x="318.333333333" width="52.6666666667" y="88.4132841328" height="0.0"
+        data-party="SS"
+        title="SS: 0 constituencies in 1977"
+        href="cartogram?Y=&YEAR=1977"
+        fill="#AD632E" stroke="#fff"/>
+      
+    
+      
+      <rect x="318.333333333" width="52.6666666667" y="88.4132841328" height="0.0"
+        data-party="BJS"
+        title="BJS: 0 constituencies in 1977"
+        href="cartogram?Y=&YEAR=1977"
+        fill="#F05A00" stroke="#fff"/>
+      
+    
+      
+      <rect x="318.333333333" width="52.6666666667" y="60.0" height="28.4132841328"
+        data-party="Rest"
+        title="Rest: 35 constituencies in 1977"
+        href="cartogram?Y=&YEAR=1977"
+        fill="#a0a0a0" stroke="#fff"/>
+      
+        <text x="344.666666667" y="74.2066420664"
+          data-party="Rest"
+          fill="#000" dy=".35em" text-anchor="middle">35</text>
+      
+    
+  
+    <text x="407.333333333" y="30" dy="1em" text-anchor="middle" class="year-legend">1980</text>
+    
+      
+      <rect x="381.0" width="52.6666666667" y="206.389413989" height="293.610586011"
+        data-party="CONG"
+        title="CONG: 353 constituencies in 1980"
+        href="cartogram?Y=&YEAR=1980"
+        fill="#2EA7FF" stroke="#fff"/>
+      
+        <text x="407.333333333" y="353.194706994"
+          data-party="CONG"
+          fill="#000" text-anchor="middle">353</text>
+        <text x="407.333333333" y="353.194706994"
+          data-party="CONG"
+          fill="#000" dy="1em" text-anchor="middle">CONG</text>
+      
+    
+      
+      <rect x="381.0" width="52.6666666667" y="206.389413989" height="0.0"
+        data-party="BJP"
+        title="BJP: 0 constituencies in 1980"
+        href="cartogram?Y=&YEAR=1980"
+        fill="#FA942E" stroke="#fff"/>
+      
+    
+      
+      <rect x="381.0" width="52.6666666667" y="175.61436673" height="30.775047259"
+        data-party="CPM"
+        title="CPM: 37 constituencies in 1980"
+        href="cartogram?Y=&YEAR=1980"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="407.333333333" y="191.001890359"
+          data-party="CPM"
+          fill="#fff" dy=".35em" text-anchor="middle">37</text>
+      
+    
+      
+      <rect x="381.0" width="52.6666666667" y="149.829867675" height="25.7844990548"
+        data-party="JNP"
+        title="JNP: 31 constituencies in 1980"
+        href="cartogram?Y=&YEAR=1980"
+        fill="#000000" stroke="#fff"/>
+      
+        <text x="407.333333333" y="162.722117202"
+          data-party="JNP"
+          fill="#fff" dy=".35em" text-anchor="middle">31</text>
+      
+    
+      
+      <rect x="381.0" width="52.6666666667" y="149.829867675" height="0.0"
+        data-party="JD"
+        title="JD: 0 constituencies in 1980"
+        href="cartogram?Y=&YEAR=1980"
+        fill="#8064a2" stroke="#fff"/>
+      
+    
+      
+      <rect x="381.0" width="52.6666666667" y="142.344045369" height="7.48582230624"
+        data-party="IND"
+        title="IND: 9 constituencies in 1980"
+        href="cartogram?Y=&YEAR=1980"
+        fill="#95b3d7" stroke="#fff"/>
+      
+    
+      
+      <rect x="381.0" width="52.6666666667" y="134.026465028" height="8.31758034026"
+        data-party="CPI"
+        title="CPI: 10 constituencies in 1980"
+        href="cartogram?Y=&YEAR=1980"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="381.0" width="52.6666666667" y="120.718336484" height="13.3081285444"
+        data-party="DMK"
+        title="DMK: 16 constituencies in 1980"
+        href="cartogram?Y=&YEAR=1980"
+        fill="#FAE92E" stroke="#fff"/>
+      
+        <text x="407.333333333" y="127.372400756"
+          data-party="DMK"
+          fill="#000" dy=".35em" text-anchor="middle">16</text>
+      
+    
+      
+      <rect x="381.0" width="52.6666666667" y="120.718336484" height="0.0"
+        data-party="SP"
+        title="SP: 0 constituencies in 1980"
+        href="cartogram?Y=&YEAR=1980"
+        fill="#2E803C" stroke="#fff"/>
+      
+    
+      
+      <rect x="381.0" width="52.6666666667" y="120.718336484" height="0.0"
+        data-party="TDP"
+        title="TDP: 0 constituencies in 1980"
+        href="cartogram?Y=&YEAR=1980"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="381.0" width="52.6666666667" y="119.054820416" height="1.66351606805"
+        data-party="ADMK"
+        title="ADMK: 2 constituencies in 1980"
+        href="cartogram?Y=&YEAR=1980"
+        fill="#B02E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="381.0" width="52.6666666667" y="119.054820416" height="0.0"
+        data-party="BSP"
+        title="BSP: 0 constituencies in 1980"
+        href="cartogram?Y=&YEAR=1980"
+        fill="#2E3EEB" stroke="#fff"/>
+      
+    
+      
+      <rect x="381.0" width="52.6666666667" y="119.054820416" height="0.0"
+        data-party="SWA"
+        title="SWA: 0 constituencies in 1980"
+        href="cartogram?Y=&YEAR=1980"
+        fill="#0C6965" stroke="#fff"/>
+      
+    
+      
+      <rect x="381.0" width="52.6666666667" y="119.054820416" height="0.0"
+        data-party="SS"
+        title="SS: 0 constituencies in 1980"
+        href="cartogram?Y=&YEAR=1980"
+        fill="#AD632E" stroke="#fff"/>
+      
+    
+      
+      <rect x="381.0" width="52.6666666667" y="119.054820416" height="0.0"
+        data-party="BJS"
+        title="BJS: 0 constituencies in 1980"
+        href="cartogram?Y=&YEAR=1980"
+        fill="#F05A00" stroke="#fff"/>
+      
+    
+      
+      <rect x="381.0" width="52.6666666667" y="60.0" height="59.0548204159"
+        data-party="Rest"
+        title="Rest: 71 constituencies in 1980"
+        href="cartogram?Y=&YEAR=1980"
+        fill="#a0a0a0" stroke="#fff"/>
+      
+        <text x="407.333333333" y="89.5274102079"
+          data-party="Rest"
+          fill="#000" text-anchor="middle">71</text>
+        <text x="407.333333333" y="89.5274102079"
+          data-party="Rest"
+          fill="#000" dy="1em" text-anchor="middle">Rest</text>
+      
+    
+  
+    <text x="470.0" y="30" dy="1em" text-anchor="middle" class="year-legend">1984</text>
+    
+      
+      <rect x="443.666666667" width="52.6666666667" y="163.290203327" height="336.709796673"
+        data-party="CONG"
+        title="CONG: 414 constituencies in 1984"
+        href="cartogram?Y=&YEAR=1984"
+        fill="#2EA7FF" stroke="#fff"/>
+      
+        <text x="470.0" y="331.645101664"
+          data-party="CONG"
+          fill="#000" text-anchor="middle">414</text>
+        <text x="470.0" y="331.645101664"
+          data-party="CONG"
+          fill="#000" dy="1em" text-anchor="middle">CONG</text>
+      
+    
+      
+      <rect x="443.666666667" width="52.6666666667" y="161.663585952" height="1.62661737523"
+        data-party="BJP"
+        title="BJP: 2 constituencies in 1984"
+        href="cartogram?Y=&YEAR=1984"
+        fill="#FA942E" stroke="#fff"/>
+      
+    
+      
+      <rect x="443.666666667" width="52.6666666667" y="143.770794824" height="17.8927911275"
+        data-party="CPM"
+        title="CPM: 22 constituencies in 1984"
+        href="cartogram?Y=&YEAR=1984"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="470.0" y="152.717190388"
+          data-party="CPM"
+          fill="#fff" dy=".35em" text-anchor="middle">22</text>
+      
+    
+      
+      <rect x="443.666666667" width="52.6666666667" y="135.637707948" height="8.13308687616"
+        data-party="JNP"
+        title="JNP: 10 constituencies in 1984"
+        href="cartogram?Y=&YEAR=1984"
+        fill="#000000" stroke="#fff"/>
+      
+    
+      
+      <rect x="443.666666667" width="52.6666666667" y="135.637707948" height="0.0"
+        data-party="JD"
+        title="JD: 0 constituencies in 1984"
+        href="cartogram?Y=&YEAR=1984"
+        fill="#8064a2" stroke="#fff"/>
+      
+    
+      
+      <rect x="443.666666667" width="52.6666666667" y="125.064695009" height="10.573012939"
+        data-party="IND"
+        title="IND: 13 constituencies in 1984"
+        href="cartogram?Y=&YEAR=1984"
+        fill="#95b3d7" stroke="#fff"/>
+      
+    
+      
+      <rect x="443.666666667" width="52.6666666667" y="120.184842884" height="4.87985212569"
+        data-party="CPI"
+        title="CPI: 6 constituencies in 1984"
+        href="cartogram?Y=&YEAR=1984"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="443.666666667" width="52.6666666667" y="118.558225508" height="1.62661737523"
+        data-party="DMK"
+        title="DMK: 2 constituencies in 1984"
+        href="cartogram?Y=&YEAR=1984"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="443.666666667" width="52.6666666667" y="118.558225508" height="0.0"
+        data-party="SP"
+        title="SP: 0 constituencies in 1984"
+        href="cartogram?Y=&YEAR=1984"
+        fill="#2E803C" stroke="#fff"/>
+      
+    
+      
+      <rect x="443.666666667" width="52.6666666667" y="94.1589648799" height="24.3992606285"
+        data-party="TDP"
+        title="TDP: 30 constituencies in 1984"
+        href="cartogram?Y=&YEAR=1984"
+        fill="#FAE92E" stroke="#fff"/>
+      
+        <text x="470.0" y="106.358595194"
+          data-party="TDP"
+          fill="#000" dy=".35em" text-anchor="middle">30</text>
+      
+    
+      
+      <rect x="443.666666667" width="52.6666666667" y="84.3992606285" height="9.75970425139"
+        data-party="ADMK"
+        title="ADMK: 12 constituencies in 1984"
+        href="cartogram?Y=&YEAR=1984"
+        fill="#B02E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="443.666666667" width="52.6666666667" y="84.3992606285" height="0.0"
+        data-party="BSP"
+        title="BSP: 0 constituencies in 1984"
+        href="cartogram?Y=&YEAR=1984"
+        fill="#2E3EEB" stroke="#fff"/>
+      
+    
+      
+      <rect x="443.666666667" width="52.6666666667" y="84.3992606285" height="0.0"
+        data-party="SWA"
+        title="SWA: 0 constituencies in 1984"
+        href="cartogram?Y=&YEAR=1984"
+        fill="#0C6965" stroke="#fff"/>
+      
+    
+      
+      <rect x="443.666666667" width="52.6666666667" y="84.3992606285" height="0.0"
+        data-party="SS"
+        title="SS: 0 constituencies in 1984"
+        href="cartogram?Y=&YEAR=1984"
+        fill="#AD632E" stroke="#fff"/>
+      
+    
+      
+      <rect x="443.666666667" width="52.6666666667" y="84.3992606285" height="0.0"
+        data-party="BJS"
+        title="BJS: 0 constituencies in 1984"
+        href="cartogram?Y=&YEAR=1984"
+        fill="#F05A00" stroke="#fff"/>
+      
+    
+      
+      <rect x="443.666666667" width="52.6666666667" y="60.0" height="24.3992606285"
+        data-party="Rest"
+        title="Rest: 30 constituencies in 1984"
+        href="cartogram?Y=&YEAR=1984"
+        fill="#a0a0a0" stroke="#fff"/>
+      
+        <text x="470.0" y="72.1996303142"
+          data-party="Rest"
+          fill="#000" dy=".35em" text-anchor="middle">30</text>
+      
+    
+  
+    <text x="532.666666667" y="30" dy="1em" text-anchor="middle" class="year-legend">1989</text>
+    
+      
+      <rect x="506.333333333" width="52.6666666667" y="336.143667297" height="163.856332703"
+        data-party="CONG"
+        title="CONG: 197 constituencies in 1989"
+        href="cartogram?Y=&YEAR=1989"
+        fill="#2EA7FF" stroke="#fff"/>
+      
+        <text x="532.666666667" y="418.071833648"
+          data-party="CONG"
+          fill="#000" text-anchor="middle">197</text>
+        <text x="532.666666667" y="418.071833648"
+          data-party="CONG"
+          fill="#000" dy="1em" text-anchor="middle">CONG</text>
+      
+    
+      
+      <rect x="506.333333333" width="52.6666666667" y="265.444234405" height="70.6994328922"
+        data-party="BJP"
+        title="BJP: 85 constituencies in 1989"
+        href="cartogram?Y=&YEAR=1989"
+        fill="#FA942E" stroke="#fff"/>
+      
+        <text x="532.666666667" y="300.793950851"
+          data-party="BJP"
+          fill="#000" text-anchor="middle">85</text>
+        <text x="532.666666667" y="300.793950851"
+          data-party="BJP"
+          fill="#000" dy="1em" text-anchor="middle">BJP</text>
+      
+    
+      
+      <rect x="506.333333333" width="52.6666666667" y="237.996219282" height="27.4480151229"
+        data-party="CPM"
+        title="CPM: 33 constituencies in 1989"
+        href="cartogram?Y=&YEAR=1989"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="532.666666667" y="251.720226843"
+          data-party="CPM"
+          fill="#fff" dy=".35em" text-anchor="middle">33</text>
+      
+    
+      
+      <rect x="506.333333333" width="52.6666666667" y="237.996219282" height="0.0"
+        data-party="JNP"
+        title="JNP: 0 constituencies in 1989"
+        href="cartogram?Y=&YEAR=1989"
+        fill="#000000" stroke="#fff"/>
+      
+    
+      
+      <rect x="506.333333333" width="52.6666666667" y="119.054820416" height="118.941398866"
+        data-party="JD"
+        title="JD: 143 constituencies in 1989"
+        href="cartogram?Y=&YEAR=1989"
+        fill="#8064a2" stroke="#fff"/>
+      
+        <text x="532.666666667" y="178.525519849"
+          data-party="JD"
+          fill="#fff" text-anchor="middle">143</text>
+        <text x="532.666666667" y="178.525519849"
+          data-party="JD"
+          fill="#fff" dy="1em" text-anchor="middle">JD</text>
+      
+    
+      
+      <rect x="506.333333333" width="52.6666666667" y="109.073724008" height="9.98109640832"
+        data-party="IND"
+        title="IND: 12 constituencies in 1989"
+        href="cartogram?Y=&YEAR=1989"
+        fill="#95b3d7" stroke="#fff"/>
+      
+    
+      
+      <rect x="506.333333333" width="52.6666666667" y="99.0926275992" height="9.98109640832"
+        data-party="CPI"
+        title="CPI: 12 constituencies in 1989"
+        href="cartogram?Y=&YEAR=1989"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="506.333333333" width="52.6666666667" y="99.0926275992" height="0.0"
+        data-party="DMK"
+        title="DMK: 0 constituencies in 1989"
+        href="cartogram?Y=&YEAR=1989"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="506.333333333" width="52.6666666667" y="99.0926275992" height="0.0"
+        data-party="SP"
+        title="SP: 0 constituencies in 1989"
+        href="cartogram?Y=&YEAR=1989"
+        fill="#2E803C" stroke="#fff"/>
+      
+    
+      
+      <rect x="506.333333333" width="52.6666666667" y="97.4291115312" height="1.66351606805"
+        data-party="TDP"
+        title="TDP: 2 constituencies in 1989"
+        href="cartogram?Y=&YEAR=1989"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="506.333333333" width="52.6666666667" y="88.2797731569" height="9.14933837429"
+        data-party="ADMK"
+        title="ADMK: 11 constituencies in 1989"
+        href="cartogram?Y=&YEAR=1989"
+        fill="#B02E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="506.333333333" width="52.6666666667" y="85.7844990548" height="2.49527410208"
+        data-party="BSP"
+        title="BSP: 3 constituencies in 1989"
+        href="cartogram?Y=&YEAR=1989"
+        fill="#2E3EEB" stroke="#fff"/>
+      
+    
+      
+      <rect x="506.333333333" width="52.6666666667" y="85.7844990548" height="0.0"
+        data-party="SWA"
+        title="SWA: 0 constituencies in 1989"
+        href="cartogram?Y=&YEAR=1989"
+        fill="#0C6965" stroke="#fff"/>
+      
+    
+      
+      <rect x="506.333333333" width="52.6666666667" y="84.9527410208" height="0.831758034026"
+        data-party="SS"
+        title="SS: 1 constituencies in 1989"
+        href="cartogram?Y=&YEAR=1989"
+        fill="#AD632E" stroke="#fff"/>
+      
+    
+      
+      <rect x="506.333333333" width="52.6666666667" y="84.9527410208" height="0.0"
+        data-party="BJS"
+        title="BJS: 0 constituencies in 1989"
+        href="cartogram?Y=&YEAR=1989"
+        fill="#F05A00" stroke="#fff"/>
+      
+    
+      
+      <rect x="506.333333333" width="52.6666666667" y="60.0" height="24.9527410208"
+        data-party="Rest"
+        title="Rest: 30 constituencies in 1989"
+        href="cartogram?Y=&YEAR=1989"
+        fill="#a0a0a0" stroke="#fff"/>
+      
+        <text x="532.666666667" y="72.4763705104"
+          data-party="Rest"
+          fill="#000" dy=".35em" text-anchor="middle">30</text>
+      
+    
+  
+    <text x="595.333333333" y="30" dy="1em" text-anchor="middle" class="year-legend">1991</text>
+    
+      
+      <rect x="569.0" width="52.6666666667" y="298.951310861" height="201.048689139"
+        data-party="CONG"
+        title="CONG: 244 constituencies in 1991"
+        href="cartogram?Y=&YEAR=1991"
+        fill="#2EA7FF" stroke="#fff"/>
+      
+        <text x="595.333333333" y="399.475655431"
+          data-party="CONG"
+          fill="#000" text-anchor="middle">244</text>
+        <text x="595.333333333" y="399.475655431"
+          data-party="CONG"
+          fill="#000" dy="1em" text-anchor="middle">CONG</text>
+      
+    
+      
+      <rect x="569.0" width="52.6666666667" y="200.074906367" height="98.8764044944"
+        data-party="BJP"
+        title="BJP: 120 constituencies in 1991"
+        href="cartogram?Y=&YEAR=1991"
+        fill="#FA942E" stroke="#fff"/>
+      
+        <text x="595.333333333" y="249.513108614"
+          data-party="BJP"
+          fill="#000" text-anchor="middle">120</text>
+        <text x="595.333333333" y="249.513108614"
+          data-party="BJP"
+          fill="#000" dy="1em" text-anchor="middle">BJP</text>
+      
+    
+      
+      <rect x="569.0" width="52.6666666667" y="171.235955056" height="28.8389513109"
+        data-party="CPM"
+        title="CPM: 35 constituencies in 1991"
+        href="cartogram?Y=&YEAR=1991"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="595.333333333" y="185.655430712"
+          data-party="CPM"
+          fill="#fff" dy=".35em" text-anchor="middle">35</text>
+      
+    
+      
+      <rect x="569.0" width="52.6666666667" y="171.235955056" height="0.0"
+        data-party="JNP"
+        title="JNP: 0 constituencies in 1991"
+        href="cartogram?Y=&YEAR=1991"
+        fill="#000000" stroke="#fff"/>
+      
+    
+      
+      <rect x="569.0" width="52.6666666667" y="122.621722846" height="48.6142322097"
+        data-party="JD"
+        title="JD: 59 constituencies in 1991"
+        href="cartogram?Y=&YEAR=1991"
+        fill="#8064a2" stroke="#fff"/>
+      
+        <text x="595.333333333" y="146.928838951"
+          data-party="JD"
+          fill="#fff" text-anchor="middle">59</text>
+        <text x="595.333333333" y="146.928838951"
+          data-party="JD"
+          fill="#fff" dy="1em" text-anchor="middle">JD</text>
+      
+    
+      
+      <rect x="569.0" width="52.6666666667" y="121.797752809" height="0.823970037453"
+        data-party="IND"
+        title="IND: 1 constituencies in 1991"
+        href="cartogram?Y=&YEAR=1991"
+        fill="#95b3d7" stroke="#fff"/>
+      
+    
+      
+      <rect x="569.0" width="52.6666666667" y="110.262172285" height="11.5355805243"
+        data-party="CPI"
+        title="CPI: 14 constituencies in 1991"
+        href="cartogram?Y=&YEAR=1991"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="569.0" width="52.6666666667" y="110.262172285" height="0.0"
+        data-party="DMK"
+        title="DMK: 0 constituencies in 1991"
+        href="cartogram?Y=&YEAR=1991"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="569.0" width="52.6666666667" y="110.262172285" height="0.0"
+        data-party="SP"
+        title="SP: 0 constituencies in 1991"
+        href="cartogram?Y=&YEAR=1991"
+        fill="#2E803C" stroke="#fff"/>
+      
+    
+      
+      <rect x="569.0" width="52.6666666667" y="99.5505617978" height="10.7116104869"
+        data-party="TDP"
+        title="TDP: 13 constituencies in 1991"
+        href="cartogram?Y=&YEAR=1991"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="569.0" width="52.6666666667" y="90.4868913858" height="9.06367041199"
+        data-party="ADMK"
+        title="ADMK: 11 constituencies in 1991"
+        href="cartogram?Y=&YEAR=1991"
+        fill="#B02E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="569.0" width="52.6666666667" y="88.0149812734" height="2.47191011236"
+        data-party="BSP"
+        title="BSP: 3 constituencies in 1991"
+        href="cartogram?Y=&YEAR=1991"
+        fill="#2E3EEB" stroke="#fff"/>
+      
+    
+      
+      <rect x="569.0" width="52.6666666667" y="88.0149812734" height="0.0"
+        data-party="SWA"
+        title="SWA: 0 constituencies in 1991"
+        href="cartogram?Y=&YEAR=1991"
+        fill="#0C6965" stroke="#fff"/>
+      
+    
+      
+      <rect x="569.0" width="52.6666666667" y="84.7191011236" height="3.29588014981"
+        data-party="SS"
+        title="SS: 4 constituencies in 1991"
+        href="cartogram?Y=&YEAR=1991"
+        fill="#AD632E" stroke="#fff"/>
+      
+    
+      
+      <rect x="569.0" width="52.6666666667" y="84.7191011236" height="0.0"
+        data-party="BJS"
+        title="BJS: 0 constituencies in 1991"
+        href="cartogram?Y=&YEAR=1991"
+        fill="#F05A00" stroke="#fff"/>
+      
+    
+      
+      <rect x="569.0" width="52.6666666667" y="60.0" height="24.7191011236"
+        data-party="Rest"
+        title="Rest: 30 constituencies in 1991"
+        href="cartogram?Y=&YEAR=1991"
+        fill="#a0a0a0" stroke="#fff"/>
+      
+        <text x="595.333333333" y="72.3595505618"
+          data-party="Rest"
+          fill="#000" dy=".35em" text-anchor="middle">30</text>
+      
+    
+  
+    <text x="658.0" y="30" dy="1em" text-anchor="middle" class="year-legend">1996</text>
+    
+      
+      <rect x="631.666666667" width="52.6666666667" y="386.556169429" height="113.443830571"
+        data-party="CONG"
+        title="CONG: 140 constituencies in 1996"
+        href="cartogram?Y=&YEAR=1996"
+        fill="#2EA7FF" stroke="#fff"/>
+      
+        <text x="658.0" y="443.278084715"
+          data-party="CONG"
+          fill="#000" text-anchor="middle">140</text>
+        <text x="658.0" y="443.278084715"
+          data-party="CONG"
+          fill="#000" dy="1em" text-anchor="middle">CONG</text>
+      
+    
+      
+      <rect x="631.666666667" width="52.6666666667" y="256.095764273" height="130.460405157"
+        data-party="BJP"
+        title="BJP: 161 constituencies in 1996"
+        href="cartogram?Y=&YEAR=1996"
+        fill="#FA942E" stroke="#fff"/>
+      
+        <text x="658.0" y="321.325966851"
+          data-party="BJP"
+          fill="#000" text-anchor="middle">161</text>
+        <text x="658.0" y="321.325966851"
+          data-party="BJP"
+          fill="#000" dy="1em" text-anchor="middle">BJP</text>
+      
+    
+      
+      <rect x="631.666666667" width="52.6666666667" y="230.165745856" height="25.9300184162"
+        data-party="CPM"
+        title="CPM: 32 constituencies in 1996"
+        href="cartogram?Y=&YEAR=1996"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="658.0" y="243.130755064"
+          data-party="CPM"
+          fill="#fff" dy=".35em" text-anchor="middle">32</text>
+      
+    
+      
+      <rect x="631.666666667" width="52.6666666667" y="230.165745856" height="0.0"
+        data-party="JNP"
+        title="JNP: 0 constituencies in 1996"
+        href="cartogram?Y=&YEAR=1996"
+        fill="#000000" stroke="#fff"/>
+      
+    
+      
+      <rect x="631.666666667" width="52.6666666667" y="192.891344383" height="37.2744014733"
+        data-party="JD"
+        title="JD: 46 constituencies in 1996"
+        href="cartogram?Y=&YEAR=1996"
+        fill="#8064a2" stroke="#fff"/>
+      
+        <text x="658.0" y="211.52854512"
+          data-party="JD"
+          fill="#fff" dy=".35em" text-anchor="middle">46</text>
+      
+    
+      
+      <rect x="631.666666667" width="52.6666666667" y="185.598526703" height="7.29281767956"
+        data-party="IND"
+        title="IND: 9 constituencies in 1996"
+        href="cartogram?Y=&YEAR=1996"
+        fill="#95b3d7" stroke="#fff"/>
+      
+    
+      
+      <rect x="631.666666667" width="52.6666666667" y="175.874769797" height="9.72375690608"
+        data-party="CPI"
+        title="CPI: 12 constituencies in 1996"
+        href="cartogram?Y=&YEAR=1996"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="631.666666667" width="52.6666666667" y="162.099447514" height="13.7753222836"
+        data-party="DMK"
+        title="DMK: 17 constituencies in 1996"
+        href="cartogram?Y=&YEAR=1996"
+        fill="#FAE92E" stroke="#fff"/>
+      
+        <text x="658.0" y="168.987108656"
+          data-party="DMK"
+          fill="#000" dy=".35em" text-anchor="middle">17</text>
+      
+    
+      
+      <rect x="631.666666667" width="52.6666666667" y="148.32412523" height="13.7753222836"
+        data-party="SP"
+        title="SP: 17 constituencies in 1996"
+        href="cartogram?Y=&YEAR=1996"
+        fill="#2E803C" stroke="#fff"/>
+      
+        <text x="658.0" y="155.211786372"
+          data-party="SP"
+          fill="#fff" dy=".35em" text-anchor="middle">17</text>
+      
+    
+      
+      <rect x="631.666666667" width="52.6666666667" y="135.359116022" height="12.9650092081"
+        data-party="TDP"
+        title="TDP: 16 constituencies in 1996"
+        href="cartogram?Y=&YEAR=1996"
+        fill="#FAE92E" stroke="#fff"/>
+      
+        <text x="658.0" y="141.841620626"
+          data-party="TDP"
+          fill="#000" dy=".35em" text-anchor="middle">16</text>
+      
+    
+      
+      <rect x="631.666666667" width="52.6666666667" y="135.359116022" height="0.0"
+        data-party="ADMK"
+        title="ADMK: 0 constituencies in 1996"
+        href="cartogram?Y=&YEAR=1996"
+        fill="#B02E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="631.666666667" width="52.6666666667" y="126.445672192" height="8.91344383057"
+        data-party="BSP"
+        title="BSP: 11 constituencies in 1996"
+        href="cartogram?Y=&YEAR=1996"
+        fill="#2E3EEB" stroke="#fff"/>
+      
+    
+      
+      <rect x="631.666666667" width="52.6666666667" y="126.445672192" height="0.0"
+        data-party="SWA"
+        title="SWA: 0 constituencies in 1996"
+        href="cartogram?Y=&YEAR=1996"
+        fill="#0C6965" stroke="#fff"/>
+      
+    
+      
+      <rect x="631.666666667" width="52.6666666667" y="114.290976059" height="12.1546961326"
+        data-party="SS"
+        title="SS: 15 constituencies in 1996"
+        href="cartogram?Y=&YEAR=1996"
+        fill="#AD632E" stroke="#fff"/>
+      
+        <text x="658.0" y="120.368324125"
+          data-party="SS"
+          fill="#fff" dy=".35em" text-anchor="middle">15</text>
+      
+    
+      
+      <rect x="631.666666667" width="52.6666666667" y="114.290976059" height="0.0"
+        data-party="BJS"
+        title="BJS: 0 constituencies in 1996"
+        href="cartogram?Y=&YEAR=1996"
+        fill="#F05A00" stroke="#fff"/>
+      
+    
+      
+      <rect x="631.666666667" width="52.6666666667" y="60.0" height="54.2909760589"
+        data-party="Rest"
+        title="Rest: 67 constituencies in 1996"
+        href="cartogram?Y=&YEAR=1996"
+        fill="#a0a0a0" stroke="#fff"/>
+      
+        <text x="658.0" y="87.1454880295"
+          data-party="Rest"
+          fill="#000" text-anchor="middle">67</text>
+        <text x="658.0" y="87.1454880295"
+          data-party="Rest"
+          fill="#000" dy="1em" text-anchor="middle">Rest</text>
+      
+    
+  
+    <text x="720.666666667" y="30" dy="1em" text-anchor="middle" class="year-legend">1998</text>
+    
+      
+      <rect x="694.333333333" width="52.6666666667" y="385.745856354" height="114.254143646"
+        data-party="CONG"
+        title="CONG: 141 constituencies in 1998"
+        href="cartogram?Y=&YEAR=1998"
+        fill="#2EA7FF" stroke="#fff"/>
+      
+        <text x="720.666666667" y="442.872928177"
+          data-party="CONG"
+          fill="#000" text-anchor="middle">141</text>
+        <text x="720.666666667" y="442.872928177"
+          data-party="CONG"
+          fill="#000" dy="1em" text-anchor="middle">CONG</text>
+      
+    
+      
+      <rect x="694.333333333" width="52.6666666667" y="238.268876611" height="147.476979742"
+        data-party="BJP"
+        title="BJP: 182 constituencies in 1998"
+        href="cartogram?Y=&YEAR=1998"
+        fill="#FA942E" stroke="#fff"/>
+      
+        <text x="720.666666667" y="312.007366483"
+          data-party="BJP"
+          fill="#000" text-anchor="middle">182</text>
+        <text x="720.666666667" y="312.007366483"
+          data-party="BJP"
+          fill="#000" dy="1em" text-anchor="middle">BJP</text>
+      
+    
+      
+      <rect x="694.333333333" width="52.6666666667" y="212.338858195" height="25.9300184162"
+        data-party="CPM"
+        title="CPM: 32 constituencies in 1998"
+        href="cartogram?Y=&YEAR=1998"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="720.666666667" y="225.303867403"
+          data-party="CPM"
+          fill="#fff" dy=".35em" text-anchor="middle">32</text>
+      
+    
+      
+      <rect x="694.333333333" width="52.6666666667" y="212.338858195" height="0.0"
+        data-party="JNP"
+        title="JNP: 0 constituencies in 1998"
+        href="cartogram?Y=&YEAR=1998"
+        fill="#000000" stroke="#fff"/>
+      
+    
+      
+      <rect x="694.333333333" width="52.6666666667" y="207.476979742" height="4.86187845304"
+        data-party="JD"
+        title="JD: 6 constituencies in 1998"
+        href="cartogram?Y=&YEAR=1998"
+        fill="#8064a2" stroke="#fff"/>
+      
+    
+      
+      <rect x="694.333333333" width="52.6666666667" y="202.615101289" height="4.86187845304"
+        data-party="IND"
+        title="IND: 6 constituencies in 1998"
+        href="cartogram?Y=&YEAR=1998"
+        fill="#95b3d7" stroke="#fff"/>
+      
+    
+      
+      <rect x="694.333333333" width="52.6666666667" y="195.32228361" height="7.29281767956"
+        data-party="CPI"
+        title="CPI: 9 constituencies in 1998"
+        href="cartogram?Y=&YEAR=1998"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="694.333333333" width="52.6666666667" y="190.460405157" height="4.86187845304"
+        data-party="DMK"
+        title="DMK: 6 constituencies in 1998"
+        href="cartogram?Y=&YEAR=1998"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="694.333333333" width="52.6666666667" y="174.254143646" height="16.2062615101"
+        data-party="SP"
+        title="SP: 20 constituencies in 1998"
+        href="cartogram?Y=&YEAR=1998"
+        fill="#2E803C" stroke="#fff"/>
+      
+        <text x="720.666666667" y="182.357274401"
+          data-party="SP"
+          fill="#fff" dy=".35em" text-anchor="middle">20</text>
+      
+    
+      
+      <rect x="694.333333333" width="52.6666666667" y="164.53038674" height="9.72375690608"
+        data-party="TDP"
+        title="TDP: 12 constituencies in 1998"
+        href="cartogram?Y=&YEAR=1998"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="694.333333333" width="52.6666666667" y="149.944751381" height="14.5856353591"
+        data-party="ADMK"
+        title="ADMK: 18 constituencies in 1998"
+        href="cartogram?Y=&YEAR=1998"
+        fill="#B02E2E" stroke="#fff"/>
+      
+        <text x="720.666666667" y="157.237569061"
+          data-party="ADMK"
+          fill="#fff" dy=".35em" text-anchor="middle">18</text>
+      
+    
+      
+      <rect x="694.333333333" width="52.6666666667" y="145.893186004" height="4.05156537753"
+        data-party="BSP"
+        title="BSP: 5 constituencies in 1998"
+        href="cartogram?Y=&YEAR=1998"
+        fill="#2E3EEB" stroke="#fff"/>
+      
+    
+      
+      <rect x="694.333333333" width="52.6666666667" y="145.893186004" height="0.0"
+        data-party="SWA"
+        title="SWA: 0 constituencies in 1998"
+        href="cartogram?Y=&YEAR=1998"
+        fill="#0C6965" stroke="#fff"/>
+      
+    
+      
+      <rect x="694.333333333" width="52.6666666667" y="141.031307551" height="4.86187845304"
+        data-party="SS"
+        title="SS: 6 constituencies in 1998"
+        href="cartogram?Y=&YEAR=1998"
+        fill="#AD632E" stroke="#fff"/>
+      
+    
+      
+      <rect x="694.333333333" width="52.6666666667" y="141.031307551" height="0.0"
+        data-party="BJS"
+        title="BJS: 0 constituencies in 1998"
+        href="cartogram?Y=&YEAR=1998"
+        fill="#F05A00" stroke="#fff"/>
+      
+    
+      
+      <rect x="694.333333333" width="52.6666666667" y="60.0" height="81.0313075506"
+        data-party="Rest"
+        title="Rest: 100 constituencies in 1998"
+        href="cartogram?Y=&YEAR=1998"
+        fill="#a0a0a0" stroke="#fff"/>
+      
+        <text x="720.666666667" y="100.515653775"
+          data-party="Rest"
+          fill="#000" text-anchor="middle">100</text>
+        <text x="720.666666667" y="100.515653775"
+          data-party="Rest"
+          fill="#000" dy="1em" text-anchor="middle">Rest</text>
+      
+    
+  
+    <text x="783.333333333" y="30" dy="1em" text-anchor="middle" class="year-legend">1999</text>
+    
+      
+      <rect x="757.0" width="52.6666666667" y="407.624309392" height="92.3756906077"
+        data-party="CONG"
+        title="CONG: 114 constituencies in 1999"
+        href="cartogram?Y=&YEAR=1999"
+        fill="#2EA7FF" stroke="#fff"/>
+      
+        <text x="783.333333333" y="453.812154696"
+          data-party="CONG"
+          fill="#000" text-anchor="middle">114</text>
+        <text x="783.333333333" y="453.812154696"
+          data-party="CONG"
+          fill="#000" dy="1em" text-anchor="middle">CONG</text>
+      
+    
+      
+      <rect x="757.0" width="52.6666666667" y="260.14732965" height="147.476979742"
+        data-party="BJP"
+        title="BJP: 182 constituencies in 1999"
+        href="cartogram?Y=&YEAR=1999"
+        fill="#FA942E" stroke="#fff"/>
+      
+        <text x="783.333333333" y="333.885819521"
+          data-party="BJP"
+          fill="#000" text-anchor="middle">182</text>
+        <text x="783.333333333" y="333.885819521"
+          data-party="BJP"
+          fill="#000" dy="1em" text-anchor="middle">BJP</text>
+      
+    
+      
+      <rect x="757.0" width="52.6666666667" y="233.406998158" height="26.7403314917"
+        data-party="CPM"
+        title="CPM: 33 constituencies in 1999"
+        href="cartogram?Y=&YEAR=1999"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="783.333333333" y="246.777163904"
+          data-party="CPM"
+          fill="#fff" dy=".35em" text-anchor="middle">33</text>
+      
+    
+      
+      <rect x="757.0" width="52.6666666667" y="233.406998158" height="0.0"
+        data-party="JNP"
+        title="JNP: 0 constituencies in 1999"
+        href="cartogram?Y=&YEAR=1999"
+        fill="#000000" stroke="#fff"/>
+      
+    
+      
+      <rect x="757.0" width="52.6666666667" y="233.406998158" height="0.0"
+        data-party="JD"
+        title="JD: 0 constituencies in 1999"
+        href="cartogram?Y=&YEAR=1999"
+        fill="#8064a2" stroke="#fff"/>
+      
+    
+      
+      <rect x="757.0" width="52.6666666667" y="228.545119705" height="4.86187845304"
+        data-party="IND"
+        title="IND: 6 constituencies in 1999"
+        href="cartogram?Y=&YEAR=1999"
+        fill="#95b3d7" stroke="#fff"/>
+      
+    
+      
+      <rect x="757.0" width="52.6666666667" y="225.303867403" height="3.24125230203"
+        data-party="CPI"
+        title="CPI: 4 constituencies in 1999"
+        href="cartogram?Y=&YEAR=1999"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="757.0" width="52.6666666667" y="215.580110497" height="9.72375690608"
+        data-party="DMK"
+        title="DMK: 12 constituencies in 1999"
+        href="cartogram?Y=&YEAR=1999"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="757.0" width="52.6666666667" y="194.511970534" height="21.0681399632"
+        data-party="SP"
+        title="SP: 26 constituencies in 1999"
+        href="cartogram?Y=&YEAR=1999"
+        fill="#2E803C" stroke="#fff"/>
+      
+        <text x="783.333333333" y="205.046040516"
+          data-party="SP"
+          fill="#fff" dy=".35em" text-anchor="middle">26</text>
+      
+    
+      
+      <rect x="757.0" width="52.6666666667" y="171.012891344" height="23.4990791897"
+        data-party="TDP"
+        title="TDP: 29 constituencies in 1999"
+        href="cartogram?Y=&YEAR=1999"
+        fill="#FAE92E" stroke="#fff"/>
+      
+        <text x="783.333333333" y="182.762430939"
+          data-party="TDP"
+          fill="#000" dy=".35em" text-anchor="middle">29</text>
+      
+    
+      
+      <rect x="757.0" width="52.6666666667" y="162.909760589" height="8.10313075506"
+        data-party="ADMK"
+        title="ADMK: 10 constituencies in 1999"
+        href="cartogram?Y=&YEAR=1999"
+        fill="#B02E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="757.0" width="52.6666666667" y="151.565377532" height="11.3443830571"
+        data-party="BSP"
+        title="BSP: 14 constituencies in 1999"
+        href="cartogram?Y=&YEAR=1999"
+        fill="#2E3EEB" stroke="#fff"/>
+      
+    
+      
+      <rect x="757.0" width="52.6666666667" y="151.565377532" height="0.0"
+        data-party="SWA"
+        title="SWA: 0 constituencies in 1999"
+        href="cartogram?Y=&YEAR=1999"
+        fill="#0C6965" stroke="#fff"/>
+      
+    
+      
+      <rect x="757.0" width="52.6666666667" y="139.4106814" height="12.1546961326"
+        data-party="SS"
+        title="SS: 15 constituencies in 1999"
+        href="cartogram?Y=&YEAR=1999"
+        fill="#AD632E" stroke="#fff"/>
+      
+        <text x="783.333333333" y="145.488029466"
+          data-party="SS"
+          fill="#fff" dy=".35em" text-anchor="middle">15</text>
+      
+    
+      
+      <rect x="757.0" width="52.6666666667" y="139.4106814" height="0.0"
+        data-party="BJS"
+        title="BJS: 0 constituencies in 1999"
+        href="cartogram?Y=&YEAR=1999"
+        fill="#F05A00" stroke="#fff"/>
+      
+    
+      
+      <rect x="757.0" width="52.6666666667" y="60.0" height="79.4106813996"
+        data-party="Rest"
+        title="Rest: 98 constituencies in 1999"
+        href="cartogram?Y=&YEAR=1999"
+        fill="#a0a0a0" stroke="#fff"/>
+      
+        <text x="783.333333333" y="99.7053406998"
+          data-party="Rest"
+          fill="#000" text-anchor="middle">98</text>
+        <text x="783.333333333" y="99.7053406998"
+          data-party="Rest"
+          fill="#000" dy="1em" text-anchor="middle">Rest</text>
+      
+    
+  
+    <text x="846.0" y="30" dy="1em" text-anchor="middle" class="year-legend">2004</text>
+    
+      
+      <rect x="819.666666667" width="52.6666666667" y="382.504604052" height="117.495395948"
+        data-party="CONG"
+        title="CONG: 145 constituencies in 2004"
+        href="cartogram?Y=&YEAR=2004"
+        fill="#2EA7FF" stroke="#fff"/>
+      
+        <text x="846.0" y="441.252302026"
+          data-party="CONG"
+          fill="#000" text-anchor="middle">145</text>
+        <text x="846.0" y="441.252302026"
+          data-party="CONG"
+          fill="#000" dy="1em" text-anchor="middle">CONG</text>
+      
+    
+      
+      <rect x="819.666666667" width="52.6666666667" y="270.681399632" height="111.82320442"
+        data-party="BJP"
+        title="BJP: 138 constituencies in 2004"
+        href="cartogram?Y=&YEAR=2004"
+        fill="#FA942E" stroke="#fff"/>
+      
+        <text x="846.0" y="326.593001842"
+          data-party="BJP"
+          fill="#000" text-anchor="middle">138</text>
+        <text x="846.0" y="326.593001842"
+          data-party="BJP"
+          fill="#000" dy="1em" text-anchor="middle">BJP</text>
+      
+    
+      
+      <rect x="819.666666667" width="52.6666666667" y="235.837937385" height="34.8434622468"
+        data-party="CPM"
+        title="CPM: 43 constituencies in 2004"
+        href="cartogram?Y=&YEAR=2004"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="846.0" y="253.259668508"
+          data-party="CPM"
+          fill="#fff" dy=".35em" text-anchor="middle">43</text>
+      
+    
+      
+      <rect x="819.666666667" width="52.6666666667" y="235.837937385" height="0.0"
+        data-party="JNP"
+        title="JNP: 0 constituencies in 2004"
+        href="cartogram?Y=&YEAR=2004"
+        fill="#000000" stroke="#fff"/>
+      
+    
+      
+      <rect x="819.666666667" width="52.6666666667" y="235.837937385" height="0.0"
+        data-party="JD"
+        title="JD: 0 constituencies in 2004"
+        href="cartogram?Y=&YEAR=2004"
+        fill="#8064a2" stroke="#fff"/>
+      
+    
+      
+      <rect x="819.666666667" width="52.6666666667" y="231.786372007" height="4.05156537753"
+        data-party="IND"
+        title="IND: 5 constituencies in 2004"
+        href="cartogram?Y=&YEAR=2004"
+        fill="#95b3d7" stroke="#fff"/>
+      
+    
+      
+      <rect x="819.666666667" width="52.6666666667" y="223.683241252" height="8.10313075506"
+        data-party="CPI"
+        title="CPI: 10 constituencies in 2004"
+        href="cartogram?Y=&YEAR=2004"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="819.666666667" width="52.6666666667" y="210.718232044" height="12.9650092081"
+        data-party="DMK"
+        title="DMK: 16 constituencies in 2004"
+        href="cartogram?Y=&YEAR=2004"
+        fill="#FAE92E" stroke="#fff"/>
+      
+        <text x="846.0" y="217.200736648"
+          data-party="DMK"
+          fill="#000" dy=".35em" text-anchor="middle">16</text>
+      
+    
+      
+      <rect x="819.666666667" width="52.6666666667" y="181.546961326" height="29.1712707182"
+        data-party="SP"
+        title="SP: 36 constituencies in 2004"
+        href="cartogram?Y=&YEAR=2004"
+        fill="#2E803C" stroke="#fff"/>
+      
+        <text x="846.0" y="196.132596685"
+          data-party="SP"
+          fill="#fff" dy=".35em" text-anchor="middle">36</text>
+      
+    
+      
+      <rect x="819.666666667" width="52.6666666667" y="177.495395948" height="4.05156537753"
+        data-party="TDP"
+        title="TDP: 5 constituencies in 2004"
+        href="cartogram?Y=&YEAR=2004"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="819.666666667" width="52.6666666667" y="177.495395948" height="0.0"
+        data-party="ADMK"
+        title="ADMK: 0 constituencies in 2004"
+        href="cartogram?Y=&YEAR=2004"
+        fill="#B02E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="819.666666667" width="52.6666666667" y="162.099447514" height="15.3959484346"
+        data-party="BSP"
+        title="BSP: 19 constituencies in 2004"
+        href="cartogram?Y=&YEAR=2004"
+        fill="#2E3EEB" stroke="#fff"/>
+      
+        <text x="846.0" y="169.797421731"
+          data-party="BSP"
+          fill="#fff" dy=".35em" text-anchor="middle">19</text>
+      
+    
+      
+      <rect x="819.666666667" width="52.6666666667" y="162.099447514" height="0.0"
+        data-party="SWA"
+        title="SWA: 0 constituencies in 2004"
+        href="cartogram?Y=&YEAR=2004"
+        fill="#0C6965" stroke="#fff"/>
+      
+    
+      
+      <rect x="819.666666667" width="52.6666666667" y="152.375690608" height="9.72375690608"
+        data-party="SS"
+        title="SS: 12 constituencies in 2004"
+        href="cartogram?Y=&YEAR=2004"
+        fill="#AD632E" stroke="#fff"/>
+      
+    
+      
+      <rect x="819.666666667" width="52.6666666667" y="152.375690608" height="0.0"
+        data-party="BJS"
+        title="BJS: 0 constituencies in 2004"
+        href="cartogram?Y=&YEAR=2004"
+        fill="#F05A00" stroke="#fff"/>
+      
+    
+      
+      <rect x="819.666666667" width="52.6666666667" y="60.0" height="92.3756906077"
+        data-party="Rest"
+        title="Rest: 114 constituencies in 2004"
+        href="cartogram?Y=&YEAR=2004"
+        fill="#a0a0a0" stroke="#fff"/>
+      
+        <text x="846.0" y="106.187845304"
+          data-party="Rest"
+          fill="#000" text-anchor="middle">114</text>
+        <text x="846.0" y="106.187845304"
+          data-party="Rest"
+          fill="#000" dy="1em" text-anchor="middle">Rest</text>
+      
+    
+  
+    <text x="908.666666667" y="30" dy="1em" text-anchor="middle" class="year-legend">2009</text>
+    
+      
+      <rect x="882.333333333" width="52.6666666667" y="333.075506446" height="166.924493554"
+        data-party="CONG"
+        title="CONG: 206 constituencies in 2009"
+        href="cartogram?Y=&YEAR=2009"
+        fill="#2EA7FF" stroke="#fff"/>
+      
+        <text x="908.666666667" y="416.537753223"
+          data-party="CONG"
+          fill="#000" text-anchor="middle">206</text>
+        <text x="908.666666667" y="416.537753223"
+          data-party="CONG"
+          fill="#000" dy="1em" text-anchor="middle">CONG</text>
+      
+    
+      
+      <rect x="882.333333333" width="52.6666666667" y="239.079189687" height="93.9963167587"
+        data-party="BJP"
+        title="BJP: 116 constituencies in 2009"
+        href="cartogram?Y=&YEAR=2009"
+        fill="#FA942E" stroke="#fff"/>
+      
+        <text x="908.666666667" y="286.077348066"
+          data-party="BJP"
+          fill="#000" text-anchor="middle">116</text>
+        <text x="908.666666667" y="286.077348066"
+          data-party="BJP"
+          fill="#000" dy="1em" text-anchor="middle">BJP</text>
+      
+    
+      
+      <rect x="882.333333333" width="52.6666666667" y="226.114180479" height="12.9650092081"
+        data-party="CPM"
+        title="CPM: 16 constituencies in 2009"
+        href="cartogram?Y=&YEAR=2009"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+        <text x="908.666666667" y="232.596685083"
+          data-party="CPM"
+          fill="#fff" dy=".35em" text-anchor="middle">16</text>
+      
+    
+      
+      <rect x="882.333333333" width="52.6666666667" y="226.114180479" height="0.0"
+        data-party="JNP"
+        title="JNP: 0 constituencies in 2009"
+        href="cartogram?Y=&YEAR=2009"
+        fill="#000000" stroke="#fff"/>
+      
+    
+      
+      <rect x="882.333333333" width="52.6666666667" y="226.114180479" height="0.0"
+        data-party="JD"
+        title="JD: 0 constituencies in 2009"
+        href="cartogram?Y=&YEAR=2009"
+        fill="#8064a2" stroke="#fff"/>
+      
+    
+      
+      <rect x="882.333333333" width="52.6666666667" y="218.821362799" height="7.29281767956"
+        data-party="IND"
+        title="IND: 9 constituencies in 2009"
+        href="cartogram?Y=&YEAR=2009"
+        fill="#95b3d7" stroke="#fff"/>
+      
+    
+      
+      <rect x="882.333333333" width="52.6666666667" y="215.580110497" height="3.24125230203"
+        data-party="CPI"
+        title="CPI: 4 constituencies in 2009"
+        href="cartogram?Y=&YEAR=2009"
+        fill="#FA2E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="882.333333333" width="52.6666666667" y="200.994475138" height="14.5856353591"
+        data-party="DMK"
+        title="DMK: 18 constituencies in 2009"
+        href="cartogram?Y=&YEAR=2009"
+        fill="#FAE92E" stroke="#fff"/>
+      
+        <text x="908.666666667" y="208.287292818"
+          data-party="DMK"
+          fill="#000" dy=".35em" text-anchor="middle">18</text>
+      
+    
+      
+      <rect x="882.333333333" width="52.6666666667" y="182.357274401" height="18.6372007366"
+        data-party="SP"
+        title="SP: 23 constituencies in 2009"
+        href="cartogram?Y=&YEAR=2009"
+        fill="#2E803C" stroke="#fff"/>
+      
+        <text x="908.666666667" y="191.67587477"
+          data-party="SP"
+          fill="#fff" dy=".35em" text-anchor="middle">23</text>
+      
+    
+      
+      <rect x="882.333333333" width="52.6666666667" y="177.495395948" height="4.86187845304"
+        data-party="TDP"
+        title="TDP: 6 constituencies in 2009"
+        href="cartogram?Y=&YEAR=2009"
+        fill="#FAE92E" stroke="#fff"/>
+      
+    
+      
+      <rect x="882.333333333" width="52.6666666667" y="170.202578269" height="7.29281767956"
+        data-party="ADMK"
+        title="ADMK: 9 constituencies in 2009"
+        href="cartogram?Y=&YEAR=2009"
+        fill="#B02E2E" stroke="#fff"/>
+      
+    
+      
+      <rect x="882.333333333" width="52.6666666667" y="153.186003683" height="17.0165745856"
+        data-party="BSP"
+        title="BSP: 21 constituencies in 2009"
+        href="cartogram?Y=&YEAR=2009"
+        fill="#2E3EEB" stroke="#fff"/>
+      
+        <text x="908.666666667" y="161.694290976"
+          data-party="BSP"
+          fill="#fff" dy=".35em" text-anchor="middle">21</text>
+      
+    
+      
+      <rect x="882.333333333" width="52.6666666667" y="153.186003683" height="0.0"
+        data-party="SWA"
+        title="SWA: 0 constituencies in 2009"
+        href="cartogram?Y=&YEAR=2009"
+        fill="#0C6965" stroke="#fff"/>
+      
+    
+      
+      <rect x="882.333333333" width="52.6666666667" y="144.272559853" height="8.91344383057"
+        data-party="SS"
+        title="SS: 11 constituencies in 2009"
+        href="cartogram?Y=&YEAR=2009"
+        fill="#AD632E" stroke="#fff"/>
+      
+    
+      
+      <rect x="882.333333333" width="52.6666666667" y="144.272559853" height="0.0"
+        data-party="BJS"
+        title="BJS: 0 constituencies in 2009"
+        href="cartogram?Y=&YEAR=2009"
+        fill="#F05A00" stroke="#fff"/>
+      
+    
+      
+      <rect x="882.333333333" width="52.6666666667" y="60.0" height="84.2725598527"
+        data-party="Rest"
+        title="Rest: 104 constituencies in 2009"
+        href="cartogram?Y=&YEAR=2009"
+        fill="#a0a0a0" stroke="#fff"/>
+      
+        <text x="908.666666667" y="102.136279926"
+          data-party="Rest"
+          fill="#000" text-anchor="middle">104</text>
+        <text x="908.666666667" y="102.136279926"
+          data-party="Rest"
+          fill="#000" dy="1em" text-anchor="middle">Rest</text>
+      
+    
+  
+  </g>
+</svg>

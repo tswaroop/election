@@ -1,0 +1,681 @@
+
+
+
+
+<div id="state-legend-container">
+  <svg id="state-legend" width="100%" data-height="0.0531914893617" viewBox ="0 0 940 50">
+    
+    
+      <g>
+        <rect class="state-legend"
+          href="?STATE="
+          x="0.0"
+          width="26.1111111111"
+          height="25"
+          title="All states"
+          fill="#e66"/>
+        <text x="13.0555555556" y="12" text-anchor="middle" dy=".35em" font-size="12">X</text>
+        <text class="value" x="13.0555555556" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="A&N ISLANDS">
+        <rect class="state-legend"
+          href="?STATE=A%26N%20ISLANDS"
+          x="26.1111111111"
+          width="26.1111111111"
+          height="25"
+          title="A&amp;N ISLANDS"
+          fill="#f8f8f8"/>
+        <text x="39.1666666667" y="12" text-anchor="middle" dy=".35em" font-size="12">AN</text>
+        <text class="value" x="39.1666666667" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="ANDHRA PRADESH">
+        <rect class="state-legend"
+          href="?STATE=ANDHRA%20PRADESH"
+          x="52.2222222222"
+          width="26.1111111111"
+          height="25"
+          title="ANDHRA PRADESH"
+          fill="#f8f8f8"/>
+        <text x="65.2777777778" y="12" text-anchor="middle" dy=".35em" font-size="12">AP</text>
+        <text class="value" x="65.2777777778" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="ARUNACHAL PRADESH">
+        <rect class="state-legend"
+          href="?STATE=ARUNACHAL%20PRADESH"
+          x="78.3333333333"
+          width="26.1111111111"
+          height="25"
+          title="ARUNACHAL PRADESH"
+          fill="#f8f8f8"/>
+        <text x="91.3888888889" y="12" text-anchor="middle" dy=".35em" font-size="12">AR</text>
+        <text class="value" x="91.3888888889" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="ASSAM">
+        <rect class="state-legend"
+          href="?STATE=ASSAM"
+          x="104.444444444"
+          width="26.1111111111"
+          height="25"
+          title="ASSAM"
+          fill="#f8f8f8"/>
+        <text x="117.5" y="12" text-anchor="middle" dy=".35em" font-size="12">AS</text>
+        <text class="value" x="117.5" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="BIHAR">
+        <rect class="state-legend"
+          href="?STATE=BIHAR"
+          x="130.555555556"
+          width="26.1111111111"
+          height="25"
+          title="BIHAR"
+          fill="#f8f8f8"/>
+        <text x="143.611111111" y="12" text-anchor="middle" dy=".35em" font-size="12">BR</text>
+        <text class="value" x="143.611111111" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="CHANDIGARH">
+        <rect class="state-legend"
+          href="?STATE=CHANDIGARH"
+          x="156.666666667"
+          width="26.1111111111"
+          height="25"
+          title="CHANDIGARH"
+          fill="#f8f8f8"/>
+        <text x="169.722222222" y="12" text-anchor="middle" dy=".35em" font-size="12">CH</text>
+        <text class="value" x="169.722222222" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="CHHATTISGARH">
+        <rect class="state-legend"
+          href="?STATE=CHHATTISGARH"
+          x="182.777777778"
+          width="26.1111111111"
+          height="25"
+          title="CHHATTISGARH"
+          fill="#f8f8f8"/>
+        <text x="195.833333333" y="12" text-anchor="middle" dy=".35em" font-size="12">CG</text>
+        <text class="value" x="195.833333333" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="D&N HAVELI">
+        <rect class="state-legend"
+          href="?STATE=D%26N%20HAVELI"
+          x="208.888888889"
+          width="26.1111111111"
+          height="25"
+          title="D&amp;N HAVELI"
+          fill="#f8f8f8"/>
+        <text x="221.944444444" y="12" text-anchor="middle" dy=".35em" font-size="12">DN</text>
+        <text class="value" x="221.944444444" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="DAMAN & DIU">
+        <rect class="state-legend"
+          href="?STATE=DAMAN%20%26%20DIU"
+          x="235.0"
+          width="26.1111111111"
+          height="25"
+          title="DAMAN &amp; DIU"
+          fill="#f8f8f8"/>
+        <text x="248.055555556" y="12" text-anchor="middle" dy=".35em" font-size="12">DD</text>
+        <text class="value" x="248.055555556" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="GOA">
+        <rect class="state-legend"
+          href="?STATE=GOA"
+          x="261.111111111"
+          width="26.1111111111"
+          height="25"
+          title="GOA"
+          fill="#f8f8f8"/>
+        <text x="274.166666667" y="12" text-anchor="middle" dy=".35em" font-size="12">GA</text>
+        <text class="value" x="274.166666667" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="GUJARAT">
+        <rect class="state-legend"
+          href="?STATE=GUJARAT"
+          x="287.222222222"
+          width="26.1111111111"
+          height="25"
+          title="GUJARAT"
+          fill="#f8f8f8"/>
+        <text x="300.277777778" y="12" text-anchor="middle" dy=".35em" font-size="12">GJ</text>
+        <text class="value" x="300.277777778" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="HARYANA">
+        <rect class="state-legend"
+          href="?STATE=HARYANA"
+          x="313.333333333"
+          width="26.1111111111"
+          height="25"
+          title="HARYANA"
+          fill="#f8f8f8"/>
+        <text x="326.388888889" y="12" text-anchor="middle" dy=".35em" font-size="12">HR</text>
+        <text class="value" x="326.388888889" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="HIMACHAL PRADESH">
+        <rect class="state-legend"
+          href="?STATE=HIMACHAL%20PRADESH"
+          x="339.444444444"
+          width="26.1111111111"
+          height="25"
+          title="HIMACHAL PRADESH"
+          fill="#f8f8f8"/>
+        <text x="352.5" y="12" text-anchor="middle" dy=".35em" font-size="12">HP</text>
+        <text class="value" x="352.5" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="JAMMU & KASHMIR">
+        <rect class="state-legend"
+          href="?STATE=JAMMU%20%26%20KASHMIR"
+          x="365.555555556"
+          width="26.1111111111"
+          height="25"
+          title="JAMMU &amp; KASHMIR"
+          fill="#f8f8f8"/>
+        <text x="378.611111111" y="12" text-anchor="middle" dy=".35em" font-size="12">JK</text>
+        <text class="value" x="378.611111111" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="JHARKHAND">
+        <rect class="state-legend"
+          href="?STATE=JHARKHAND"
+          x="391.666666667"
+          width="26.1111111111"
+          height="25"
+          title="JHARKHAND"
+          fill="#f8f8f8"/>
+        <text x="404.722222222" y="12" text-anchor="middle" dy=".35em" font-size="12">JH</text>
+        <text class="value" x="404.722222222" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="KARNATAKA">
+        <rect class="state-legend"
+          href="?STATE=KARNATAKA"
+          x="417.777777778"
+          width="26.1111111111"
+          height="25"
+          title="KARNATAKA"
+          fill="#f8f8f8"/>
+        <text x="430.833333333" y="12" text-anchor="middle" dy=".35em" font-size="12">KA</text>
+        <text class="value" x="430.833333333" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="KERALA">
+        <rect class="state-legend"
+          href="?STATE=KERALA"
+          x="443.888888889"
+          width="26.1111111111"
+          height="25"
+          title="KERALA"
+          fill="#f8f8f8"/>
+        <text x="456.944444444" y="12" text-anchor="middle" dy=".35em" font-size="12">KL</text>
+        <text class="value" x="456.944444444" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="LAKSHADWEEP">
+        <rect class="state-legend"
+          href="?STATE=LAKSHADWEEP"
+          x="470.0"
+          width="26.1111111111"
+          height="25"
+          title="LAKSHADWEEP"
+          fill="#f8f8f8"/>
+        <text x="483.055555556" y="12" text-anchor="middle" dy=".35em" font-size="12">LD</text>
+        <text class="value" x="483.055555556" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="MADHYA PRADESH">
+        <rect class="state-legend"
+          href="?STATE=MADHYA%20PRADESH"
+          x="496.111111111"
+          width="26.1111111111"
+          height="25"
+          title="MADHYA PRADESH"
+          fill="#f8f8f8"/>
+        <text x="509.166666667" y="12" text-anchor="middle" dy=".35em" font-size="12">MP</text>
+        <text class="value" x="509.166666667" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="MAHARASHTRA">
+        <rect class="state-legend"
+          href="?STATE=MAHARASHTRA"
+          x="522.222222222"
+          width="26.1111111111"
+          height="25"
+          title="MAHARASHTRA"
+          fill="#f8f8f8"/>
+        <text x="535.277777778" y="12" text-anchor="middle" dy=".35em" font-size="12">MH</text>
+        <text class="value" x="535.277777778" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="MANIPUR">
+        <rect class="state-legend"
+          href="?STATE=MANIPUR"
+          x="548.333333333"
+          width="26.1111111111"
+          height="25"
+          title="MANIPUR"
+          fill="#f8f8f8"/>
+        <text x="561.388888889" y="12" text-anchor="middle" dy=".35em" font-size="12">MN</text>
+        <text class="value" x="561.388888889" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="MEGHALAYA">
+        <rect class="state-legend"
+          href="?STATE=MEGHALAYA"
+          x="574.444444444"
+          width="26.1111111111"
+          height="25"
+          title="MEGHALAYA"
+          fill="#f8f8f8"/>
+        <text x="587.5" y="12" text-anchor="middle" dy=".35em" font-size="12">ML</text>
+        <text class="value" x="587.5" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="MIZORAM">
+        <rect class="state-legend"
+          href="?STATE=MIZORAM"
+          x="600.555555556"
+          width="26.1111111111"
+          height="25"
+          title="MIZORAM"
+          fill="#f8f8f8"/>
+        <text x="613.611111111" y="12" text-anchor="middle" dy=".35em" font-size="12">MZ</text>
+        <text class="value" x="613.611111111" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="NAGALAND">
+        <rect class="state-legend"
+          href="?STATE=NAGALAND"
+          x="626.666666667"
+          width="26.1111111111"
+          height="25"
+          title="NAGALAND"
+          fill="#f8f8f8"/>
+        <text x="639.722222222" y="12" text-anchor="middle" dy=".35em" font-size="12">NL</text>
+        <text class="value" x="639.722222222" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="NCT OF DELHI">
+        <rect class="state-legend"
+          href="?STATE=NCT%20OF%20DELHI"
+          x="652.777777778"
+          width="26.1111111111"
+          height="25"
+          title="NCT OF DELHI"
+          fill="#f8f8f8"/>
+        <text x="665.833333333" y="12" text-anchor="middle" dy=".35em" font-size="12">DL</text>
+        <text class="value" x="665.833333333" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="ORISSA">
+        <rect class="state-legend"
+          href="?STATE=ORISSA"
+          x="678.888888889"
+          width="26.1111111111"
+          height="25"
+          title="ORISSA"
+          fill="#f8f8f8"/>
+        <text x="691.944444444" y="12" text-anchor="middle" dy=".35em" font-size="12">OD</text>
+        <text class="value" x="691.944444444" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="PUDUCHERRY">
+        <rect class="state-legend"
+          href="?STATE=PUDUCHERRY"
+          x="705.0"
+          width="26.1111111111"
+          height="25"
+          title="PUDUCHERRY"
+          fill="#f8f8f8"/>
+        <text x="718.055555556" y="12" text-anchor="middle" dy=".35em" font-size="12">PY</text>
+        <text class="value" x="718.055555556" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="PUNJAB">
+        <rect class="state-legend"
+          href="?STATE=PUNJAB"
+          x="731.111111111"
+          width="26.1111111111"
+          height="25"
+          title="PUNJAB"
+          fill="#f8f8f8"/>
+        <text x="744.166666667" y="12" text-anchor="middle" dy=".35em" font-size="12">PB</text>
+        <text class="value" x="744.166666667" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="RAJASTHAN">
+        <rect class="state-legend"
+          href="?STATE=RAJASTHAN"
+          x="757.222222222"
+          width="26.1111111111"
+          height="25"
+          title="RAJASTHAN"
+          fill="#f8f8f8"/>
+        <text x="770.277777778" y="12" text-anchor="middle" dy=".35em" font-size="12">RJ</text>
+        <text class="value" x="770.277777778" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="SIKKIM">
+        <rect class="state-legend"
+          href="?STATE=SIKKIM"
+          x="783.333333333"
+          width="26.1111111111"
+          height="25"
+          title="SIKKIM"
+          fill="#f8f8f8"/>
+        <text x="796.388888889" y="12" text-anchor="middle" dy=".35em" font-size="12">SK</text>
+        <text class="value" x="796.388888889" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="TAMIL NADU">
+        <rect class="state-legend"
+          href="?STATE=TAMIL%20NADU"
+          x="809.444444444"
+          width="26.1111111111"
+          height="25"
+          title="TAMIL NADU"
+          fill="#f8f8f8"/>
+        <text x="822.5" y="12" text-anchor="middle" dy=".35em" font-size="12">TN</text>
+        <text class="value" x="822.5" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="TRIPURA">
+        <rect class="state-legend"
+          href="?STATE=TRIPURA"
+          x="835.555555556"
+          width="26.1111111111"
+          height="25"
+          title="TRIPURA"
+          fill="#f8f8f8"/>
+        <text x="848.611111111" y="12" text-anchor="middle" dy=".35em" font-size="12">TR</text>
+        <text class="value" x="848.611111111" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="UTTAR PRADESH">
+        <rect class="state-legend"
+          href="?STATE=UTTAR%20PRADESH"
+          x="861.666666667"
+          width="26.1111111111"
+          height="25"
+          title="UTTAR PRADESH"
+          fill="#f8f8f8"/>
+        <text x="874.722222222" y="12" text-anchor="middle" dy=".35em" font-size="12">UP</text>
+        <text class="value" x="874.722222222" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="UTTARAKHAND">
+        <rect class="state-legend"
+          href="?STATE=UTTARAKHAND"
+          x="887.777777778"
+          width="26.1111111111"
+          height="25"
+          title="UTTARAKHAND"
+          fill="#f8f8f8"/>
+        <text x="900.833333333" y="12" text-anchor="middle" dy=".35em" font-size="12">UK</text>
+        <text class="value" x="900.833333333" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+      <g data-grp="WEST BENGAL">
+        <rect class="state-legend"
+          href="?STATE=WEST%20BENGAL"
+          x="913.888888889"
+          width="26.1111111111"
+          height="25"
+          title="WEST BENGAL"
+          fill="#f8f8f8"/>
+        <text x="926.944444444" y="12" text-anchor="middle" dy=".35em" font-size="12">WB</text>
+        <text class="value" x="926.944444444" y="37" text-anchor="middle" dy=".35em" font-size="14"></text>
+      </g>
+    
+  </svg>
+</div>
+
+
+
+<svg class="cartogram" width="100%" data-height="0.744680851064" viewBox ="0 0 940 700">
+  <g id="carto-contents">
+    <image x="-170" y="-5" width="940" height="690" xlink:href="img/india-states.png?v=658e8"></image>
+    
+    <g transform="translate(640, 46)">
+      
+                        <text x="-80" class="carto-title" y="-20" dy="-.2em" dx="+0.0em" text-anchor="middle">2014</text>
+      
+      
+      <text class="carto-title" y="-20" dy="-.2em">
+        India
+        <tspan class="small" fill="#888">22</tspan>
+      </text>
+      
+      <text font-size="16" x="70" y="-5">No. of Constituencies</text>
+      <rect class="party-unhighlight" x="273" y="-44" width="22" height="20" fill="#e66" stroke="rgba(0,0,0,.4)" title="Clear selections"/>
+      <text x="284" y="-34" text-anchor="middle" dy=".37em">X</text>
+      
+        
+        <rect x="-5" y="0" width="305" height="33"
+          class="party-legend bar-legend"
+          data-highlight="[data-party=24-Apr]"
+          data-party="24-Apr"
+          data-toggle="1"
+        />
+        <rect class="no-pointer" width="65" y="5" height="23" fill="#e0f3f8"/>
+        <text x="5" y="16.5" dy=".35em" font-size="16" fill="#000">24-Apr</text>
+        <text x="100" y="16.5" dy=".35em" text-anchor="end" font-size="16">22</text>
+        <rect class="no-pointer" x="110" y="5.5" height="23" width="185.0" fill="#e0f3f8"/>
+      
+    </g>
+  </g>
+</svg>
+<div class="const-filters">
+  
+    <div class="btn-group">
+      
+      <a class="btn btn-sm btn-success active" href="?YEAR=2009&2014-Schedule=">2014 Schedule</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=07-Apr">07-Apr</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=09-Apr">09-Apr</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=10-Apr">10-Apr</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=11-Apr">11-Apr</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=12-Apr">12-Apr</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=17-Apr">17-Apr</a>
+      
+        <a class="btn btn-sm btn-success active" href="?YEAR=2009&2014-Schedule=24-Apr">24-Apr</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=30-Apr">30-Apr</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=07-May">07-May</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&2014-Schedule=12-May">12-May</a>
+      
+    </div>
+  
+    <div class="btn-group">
+      
+      <a class="btn btn-sm btn-success active" href="?YEAR=2009&Hindi-speaking=">Hindi speaking</a>
+      
+        <a class="btn btn-sm btn-success active" href="?YEAR=2009&Hindi-speaking=Hindi">Hindi</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Hindi-speaking=Rest">Rest</a>
+      
+    </div>
+  
+    <div class="btn-group">
+      
+      <a class="btn btn-sm btn-success active" href="?YEAR=2009&Bi-polar=">Bi polar</a>
+      
+        <a class="btn btn-sm btn-success active" href="?YEAR=2009&Bi-polar=Bi-polar">Bi-polar</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Bi-polar=Rest">Rest</a>
+      
+    </div>
+  
+    <div class="btn-group">
+      
+      <a class="btn btn-sm btn-primary" href="?YEAR=2009&Rural=">Rural</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Rural=Rural">Rural</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Rural=Semi%20Urban">Semi Urban</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Rural=Urban">Urban</a>
+      
+    </div>
+  
+    <div class="btn-group">
+      
+      <a class="btn btn-sm btn-primary" href="?YEAR=2009&SC=">SC</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&SC=Below%2010%25">Below 10%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&SC=10-19.9%25">10-19.9%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&SC=20-29.9%25">20-29.9%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&SC=30%25%20and%20above">30% and above</a>
+      
+    </div>
+  
+    <div class="btn-group">
+      
+      <a class="btn btn-sm btn-primary" href="?YEAR=2009&ST=">ST</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&ST=Below%2010%25">Below 10%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&ST=10-29.9%25">10-29.9%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&ST=30-49.9%25">30-49.9%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&ST=50%25%20and%20above">50% and above</a>
+      
+    </div>
+  
+    <div class="btn-group">
+      
+      <a class="btn btn-sm btn-primary" href="?YEAR=2009&Muslim=">Muslim</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Muslim=No%20information">No information</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Muslim=Less%20than%2010%25">Less than 10%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Muslim=10-19.9%25">10-19.9%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Muslim=20-39.9%25">20-39.9%</a>
+      
+        <a class="btn btn-sm btn-default" href="?YEAR=2009&Muslim=40%25%20and%20above">40% and above</a>
+      
+    </div>
+  
+</div>
+
+
+<script id="data" type="text/csv">STATE,PC,2014-Schedule,WINNER,CONSTANT,Lat,Long
+CHHATTISGARH,BILASPUR,24-Apr,DILIP SINGH JUDEV,1,22.0796251,82.1391412
+CHHATTISGARH,DURG,24-Apr,SAROJ PANDEY,1,21.189367,81.283039
+CHHATTISGARH,JANJGIR,24-Apr,SHRIMATI KAMLA DEVI PATLE,1,22.0105407,82.5726805
+CHHATTISGARH,KORBA,24-Apr,CHARAN DAS MAHANT,1,22.347979000000002,82.7004
+CHHATTISGARH,RAIGARH,24-Apr,VISHNU DEO SAI,1,21.895667,83.39524499999999
+CHHATTISGARH,RAIPUR,24-Apr,RAMESH BAIS,1,21.2513844,81.62964129999999
+CHHATTISGARH,SARGUJA,24-Apr,MURARILAL SINGH,1,23.3437983,83.1960423
+MADHYA PRADESH,BETUL,24-Apr,JYOTI DHURVE,1,21.903865,77.903453
+MADHYA PRADESH,DEWAS,24-Apr,SAJJAN SINGH VERMA,1,22.961226999999997,76.051411
+MADHYA PRADESH,DHAR,24-Apr,GAJENDRA SINGH RAJUKHEDI,1,22.6012922,75.3024655
+MADHYA PRADESH,INDORE,24-Apr,SUMITRA MAHAJAN (TAI),1,22.7195687,75.8577258
+MADHYA PRADESH,KHANDWA,24-Apr,ARUN SUBHASHCHANDRA YADAV,1,21.825733399999997,76.352571
+MADHYA PRADESH,KHARGONE,24-Apr,MAKANSINGH SOLANKI (BABUJI),1,21.823366,75.610364
+MADHYA PRADESH,MANDSAUR,24-Apr,MEENAKSHI NATRAJAN,1,24.071568,75.06693
+MADHYA PRADESH,RATLAM,24-Apr,KANTILAL BHURIA,1,23.334169600000003,75.0376325
+MADHYA PRADESH,UJJAIN,24-Apr,GUDDU PREMCHAND,1,23.179301300000002,75.7849097
+MADHYA PRADESH,VIDISHA,24-Apr,SUSHMA SWARAJ,1,23.524019,77.8060069
+RAJASTHAN,ALWAR,24-Apr,JITENDRA SINGH,1,27.560932399999995,76.6250168
+RAJASTHAN,BHARATPUR,24-Apr,RATAN SINGH,1,27.215598999999997,77.49015
+RAJASTHAN,DAUSA,24-Apr,KIRODI LAL,1,26.88859,76.33590699999999
+RAJASTHAN,KARAULI-DHOLPUR,24-Apr,KHILADI LAL BAIRWA,1,26.691311,77.879723
+RAJASTHAN,TONK,24-Apr,NAMO NARAIN,1,26.1667,75.7833
+</script>
+<script>
+var colors = {"12-May": "#4575b4", "11-Apr": "#fee090", "12-Apr": "#fee090", "07-May": "#74add1", "10-Apr": "#fdae61", "07-Apr": "#d73027", "17-Apr": "#f8f6cc", "24-Apr": "#e0f3f8", "30-Apr": "#abd9e9", "09-Apr": "#f46d43"},
+    groupby = '2014-Schedule',
+    R = 6
+
+var data = d3.csv.parse($('#data').text(), function(row) {
+  for (var key in row) {
+    // Convert values to integers
+    if (key != 'STATE' && key != 'PC' && key != groupby)
+      row[key] = +row[key]
+    // Get the scaled x,y coords
+    row.x = 700 * .95 * (row['Long'] - 68.5) / (97 - 68.5) + Math.random() + 120 - 150,
+    row.y = 700 * (36.7 - row['Lat']) / (36.7 - 8) + Math.random(),
+    
+      row.r = R * Math.pow(row['CONSTANT'] / 1.0, .5)
+    
+  }
+  return row
+})
+
+var update = d3.select('#carto-contents').selectAll('circle')
+    .data(data)
+  .enter()
+    .append('circle')
+    .attr('r', function(d) { return d.r })
+    .attr('title', function(d) { return d.STATE + ': ' + d.PC + '<br>' + d[groupby] })
+    .attr('fill', function(d, i) { return colors[d[groupby]] || 'rgba(128,128,128,.5)' })
+    .attr('data-party', function(d) { return d[groupby].replace(/[^A-Za-z0-9_]/g, '-') })
+    .attr('href', function(d) { return 'result?BY=&YEAR=2009&STATE=' + encodeURIComponent(d.STATE) + '&PC=' + encodeURIComponent(d.PC) })
+    .attr('stroke', 'rgba(0,0,0,.3)')
+    .classed('direct', true)
+    .call(G.unpack()
+      .width(700)
+      .height(700))
+
+var $lo = d3.select('input.lo'),
+    $hi = d3.select('input.hi')
+
+d3.selectAll('input[type="range"]').on('change', function() {
+  var lo = DB.lo = +$lo.property('value'),
+      hi = DB.hi = +$hi.property('value')
+  update
+    .classed('hide', function(d) { return (d.r < lo) || (d.r > hi) })
+})
+
+if (DB.lo && $lo.node()) $lo.property('value', DB.lo).on('change')()
+if (DB.hi && $hi.node()) $hi.property('value', DB.hi).on('change')()
+
+var statemap = $('[data-grp]').map(function() {
+  var $this = d3.select(this)
+  return {
+    rect: $this.select('rect'),
+    text: $this.select('text.value'),
+    state: $this.attr('data-grp')
+  }
+}).get()
+
+window.on_highlight = function(e) {
+  var count = {},
+      i=0,
+      cell, match
+  e.highlighted.each(function() {
+    var row = this.__data__
+    if (row) count[row.STATE] = (count[row.STATE] || 0) + 1
+  })
+  for (; cell=statemap[i]; i++) {
+    match = cell.state in count
+    cell.text.text(match ? count[cell.state] : '')
+    cell.rect.classed('match', match)
+  }
+}
+</script>

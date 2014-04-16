@@ -118,19 +118,6 @@ colors = _color.distinct(10)
     <img class="loading" src="{{ static_url('img/loading.gif') }}">
   </div>
 
-  <div id="factoid">
-    {% for i, row in topics.iterrows() %}
-      <div class="topic" href="{{ row['link'] }}">
-        <div class="thumbnail" style="background-color:{{ colors[i % len(colors)] }}">
-          <div class="caption">
-            <h3>{{ row['title'] }}</h3>
-            <p>{{ markdown(row['content']) }}</p>
-          </div>
-        </div>
-      </div>
-    {% end %}
-  </div>
-
   <div id="result">
     <img class="loading" src="{{ static_url('img/loading.gif') }}">
   </div>
@@ -276,7 +263,7 @@ function redraw() {
       q = G.url.parse(hash),
       query = q.searchKey;
 
-  if (q.pathname.match(/^(summary|year|result|cartogram|table|scatter|state|pattern)$/)) {
+  if (q.pathname.match(/^(summary|year|result|cartogram|table|scatter|state|pattern|facts)$/)) {
     $('#summary, #factoid').slideUp(250)
     $('.year-filter')[q.pathname.match(/scatter|state|pattern/) ? 'hide' : 'show']()
     $('.years-filter')[q.pathname.match(/state/) ? 'show' : 'hide']()

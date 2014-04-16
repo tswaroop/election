@@ -1,0 +1,911 @@
+
+<div class="pc-result">
+<h2>
+  <div class="pull-right">
+    <i class="glyphicon glyphicon-map-marker text-danger" href="cartogram?PC=" title="Cartogram"></i>
+  </div>
+  <i class="back glyphicon glyphicon-circle-arrow-left"></i>
+  Karauli-Dholpur,
+  <a href="state?PC=&YEAR=">Rajasthan</a>
+  2009
+  <small>16 / 16 candidates</small>
+</h2>
+
+  
+    <h3 class="winner-story">
+      <span class="winner-name">KHILADI LAL BAIRWA</span> of
+      
+      <span class="winner-party" style="background-color:#2EA7FF;color:#000">CONG</span> won by
+      6.1% (29,723 votes)
+      
+        
+        against
+        DR MANOJ RAJORIA of
+        
+        <span class="winner-party" style="background-color:#FA942E;color:#000">BJP</span>.
+      
+    </h3>
+
+    <table class="table table-condensed analysis">
+      <thead>
+        <th>#</th><th>PARTY</th><th>NAME</th><th>VOTES</th><th>SEX</th><th>AGE</th><th>CATEGORY</th>
+      </thead>
+      <tbody>
+        
+          <tr>
+            
+              
+                <td>1</td>
+              
+            
+              
+                
+                <td style="background-color:#2EA7FF;color:#000">CONG</td>
+              
+            
+              
+                <td>Khiladi Lal Bairwa</td>
+              
+            
+              
+                <td>215,810</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>45</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>2</td>
+              
+            
+              
+                
+                <td style="background-color:#FA942E;color:#000">BJP</td>
+              
+            
+              
+                <td>Dr Manoj Rajoria</td>
+              
+            
+              
+                <td>186,087</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>39</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>3</td>
+              
+            
+              
+                
+                <td style="background-color:#2E3EEB;color:#fff">BSP</td>
+              
+            
+              
+                <td>Hattiram</td>
+              
+            
+              
+                <td>39,881</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>61</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>4</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Gangaram</td>
+              
+            
+              
+                <td>28,625</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>78</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>5</td>
+              
+            
+              
+                
+                <td style="background-color:#2E803C;color:#fff">SP</td>
+              
+            
+              
+                <td>Ramesh</td>
+              
+            
+              
+                <td>2,993</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>57</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>6</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Shree Lal Bairwa</td>
+              
+            
+              
+                <td>2,946</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>38</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>7</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Lalaram</td>
+              
+            
+              
+                <td>2,008</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>37</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>8</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Vijay</td>
+              
+            
+              
+                <td>1,683</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>36</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>9</td>
+              
+            
+              
+                
+                <td style="background-color:#832EFA;color:#fff">LJP</td>
+              
+            
+              
+                <td>Shreelal Khare</td>
+              
+            
+              
+                <td>1,405</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>54</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>10</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Lakhan Singh</td>
+              
+            
+              
+                <td>1,175</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>58</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>11</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Jagan Lal</td>
+              
+            
+              
+                <td>1,010</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>72</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>12</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Ram Vilas</td>
+              
+            
+              
+                <td>836</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>46</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>13</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Banwari</td>
+              
+            
+              
+                <td>835</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>41</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>14</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Rekha</td>
+              
+            
+              
+                <td>767</td>
+              
+            
+              
+                <td>F</td>
+              
+            
+              
+                <td>32</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>15</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Kanchan Bai(Bairwa)</td>
+              
+            
+              
+                <td>552</td>
+              
+            
+              
+                <td>F</td>
+              
+            
+              
+                <td>50</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+          <tr>
+            
+              
+                <td>16</td>
+              
+            
+              
+                
+                <td style="background-color:#95b3d7;color:#000">IND</td>
+              
+            
+              
+                <td>Om Prakash</td>
+              
+            
+              
+                <td>505</td>
+              
+            
+              
+                <td>M</td>
+              
+            
+              
+                <td>55</td>
+              
+            
+              
+                <td>SC</td>
+              
+            
+          </tr>
+        
+      </tbody>
+    </table>
+  
+
+  
+  <svg class="const-stack" width="100%" data-height="0.425531914894" viewBox="0 0 940 400">
+    <rect width="30" height="25" class="party-unhighlight" fill="#000" title="Show all parties"/>
+    <text x="15" y="12.5" text-anchor="middle" dy=".35em" fill="#fff">x</text>
+    
+      
+      <rect class="party-legend"
+        data-party="CONG"
+        data-highlight="[data-party=CONG]"
+        data-toggle="highlight"
+        x="30.0"
+        width="151.666666667"
+        height="25"
+        fill="#2EA7FF"></rect>
+      <text class="party-legend-text"
+        x="105.833333333"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="CONG">CONG</text>
+    
+      
+      <rect class="party-legend"
+        data-party="BJP"
+        data-highlight="[data-party=BJP]"
+        data-toggle="highlight"
+        x="181.666666667"
+        width="151.666666667"
+        height="25"
+        fill="#FA942E"></rect>
+      <text class="party-legend-text"
+        x="257.5"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="BJP">BJP</text>
+    
+      
+      <rect class="party-legend"
+        data-party="IND"
+        data-highlight="[data-party=IND]"
+        data-toggle="highlight"
+        x="333.333333333"
+        width="151.666666667"
+        height="25"
+        fill="#95b3d7"></rect>
+      <text class="party-legend-text"
+        x="409.166666667"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#000"
+        data-party="IND">IND</text>
+    
+      
+      <rect class="party-legend"
+        data-party="BSP"
+        data-highlight="[data-party=BSP]"
+        data-toggle="highlight"
+        x="485.0"
+        width="151.666666667"
+        height="25"
+        fill="#2E3EEB"></rect>
+      <text class="party-legend-text"
+        x="560.833333333"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#fff"
+        data-party="BSP">BSP</text>
+    
+      
+      <rect class="party-legend"
+        data-party="SP"
+        data-highlight="[data-party=SP]"
+        data-toggle="highlight"
+        x="636.666666667"
+        width="151.666666667"
+        height="25"
+        fill="#2E803C"></rect>
+      <text class="party-legend-text"
+        x="712.5"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#fff"
+        data-party="SP">SP</text>
+    
+      
+      <rect class="party-legend"
+        data-party="LJP"
+        data-highlight="[data-party=LJP]"
+        data-toggle="highlight"
+        x="788.333333333"
+        width="151.666666667"
+        height="25"
+        fill="#832EFA"></rect>
+      <text class="party-legend-text"
+        x="864.166666667"
+        y="12.5"
+        text-anchor="middle"
+        dy=".35em"
+        fill="#fff"
+        data-party="LJP">LJP</text>
+    
+    
+    <g class="pc-stack">
+      
+        
+        <text x="470.0" y="30" dy="1em" text-anchor="middle"
+          href="?YEAR=2009"
+          class="year-legend active">2009</text>
+        
+          
+          <rect x="5.0" width="930.0" y="249.368325539" height="150.631674461"
+            data-party="CONG"
+            title="KHILADI LAL BAIRWA<br>CONG: 215,810 votes in 2009"
+            href="?YEAR=2009"
+            fill="#2EA7FF" stroke="#fff"/>
+          
+            <text x="470.0" y="324.68416277"
+              data-party="CONG"
+              fill="#000" text-anchor="middle">44%</text>
+            <text x="470.0" y="324.68416277"
+              data-party="CONG"
+              fill="#000" dy="1em" text-anchor="middle">CONG</text>
+          
+        
+          
+          <rect x="5.0" width="930.0" y="119.482794723" height="129.885530816"
+            data-party="BJP"
+            title="DR MANOJ RAJORIA<br>BJP: 186,087 votes in 2009"
+            href="?YEAR=2009"
+            fill="#FA942E" stroke="#fff"/>
+          
+            <text x="470.0" y="184.425560131"
+              data-party="BJP"
+              fill="#000" text-anchor="middle">38%</text>
+            <text x="470.0" y="184.425560131"
+              data-party="BJP"
+              fill="#000" dy="1em" text-anchor="middle">BJP</text>
+          
+        
+          
+          <rect x="5.0" width="930.0" y="91.6465414951" height="27.8362532282"
+            data-party="BSP"
+            title="HATTIRAM<br>BSP: 39,881 votes in 2009"
+            href="?YEAR=2009"
+            fill="#2E3EEB" stroke="#fff"/>
+          
+            <text x="470.0" y="105.564668109"
+              data-party="BSP"
+              fill="#fff" dy=".35em" text-anchor="middle">BSP</text>
+          
+        
+          
+          <rect x="5.0" width="930.0" y="71.6667829971" height="19.9797584979"
+            data-party="IND"
+            title="GANGARAM<br>IND: 28,625 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+            <text x="470.0" y="81.6566622461"
+              data-party="IND"
+              fill="#000" dy=".35em" text-anchor="middle">IND</text>
+          
+        
+          
+          <rect x="5.0" width="930.0" y="69.5777203881" height="2.08906260906"
+            data-party="SP"
+            title="RAMESH<br>SP: 2,993 votes in 2009"
+            href="?YEAR=2009"
+            fill="#2E803C" stroke="#fff"/>
+          
+        
+          
+          <rect x="5.0" width="930.0" y="67.521462972" height="2.05625741607"
+            data-party="IND"
+            title="SHREE LAL BAIRWA<br>IND: 2,946 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="5.0" width="930.0" y="66.1199134501" height="1.40154952188"
+            data-party="IND"
+            title="LALARAM<br>IND: 2,008 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="5.0" width="930.0" y="64.9452083479" height="1.17470510225"
+            data-party="IND"
+            title="VIJAY<br>IND: 1,683 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="5.0" width="930.0" y="63.9645424723" height="0.980665875619"
+            data-party="LJP"
+            title="SHREELAL KHARE<br>LJP: 1,405 votes in 2009"
+            href="?YEAR=2009"
+            fill="#832EFA" stroke="#fff"/>
+          
+        
+          
+          <rect x="5.0" width="930.0" y="63.1444126474" height="0.820129824806"
+            data-party="IND"
+            title="LAKHAN SINGH<br>IND: 1,175 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="5.0" width="930.0" y="62.4394499895" height="0.704962657919"
+            data-party="IND"
+            title="JAGAN LAL<br>IND: 1,010 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="5.0" width="930.0" y="61.855936344" height="0.583513645564"
+            data-party="IND"
+            title="RAM VILAS<br>IND: 836 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="5.0" width="930.0" y="61.2731206812" height="0.582815662735"
+            data-party="IND"
+            title="BANWARI<br>IND: 835 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="5.0" width="930.0" y="60.7377678509" height="0.53535283032"
+            data-party="IND"
+            title="REKHA<br>IND: 767 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="5.0" width="930.0" y="60.352481329" height="0.385286521952"
+            data-party="IND"
+            title="KANCHAN BAI(BAIRWA)<br>IND: 552 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+          
+          <rect x="5.0" width="930.0" y="60.0" height="0.352481328959"
+            data-party="IND"
+            title="OM PRAKASH<br>IND: 505 votes in 2009"
+            href="?YEAR=2009"
+            fill="#95b3d7" stroke="#fff"/>
+          
+        
+      
+    </g>
+  </svg>
+
+
+
+
+  
+  <h2>14 affidavits filed for 2014 elections
+    <a class="small direct-link" target="_blank" href="http://affidavitarchive.nic.in/DynamicAffidavitDisplay/CANDIDATEAFFIDAVIT.aspx?YEARID=May-2014&AC_No=10&st_code=S20&constType=PC">on ECI website</a></h2>
+  <table class="dataframe table table-condensed">
+  <thead>
+    <tr style="text-align: right;">
+      <th>PARTY</th>
+      <th>NAME</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>          Bahujan Samaj Party</td>
+      <td>      G.R.BARUA</td>
+    </tr>
+    <tr>
+      <td>       Bharatiya Janata Party</td>
+      <td>  MANOJ RAJORIA</td>
+    </tr>
+    <tr>
+      <td>     Indian National Congress</td>
+      <td>      LAKKHIRAM</td>
+    </tr>
+    <tr>
+      <td> All India Trinamool Congress</td>
+      <td>    KAMAL SINGH</td>
+    </tr>
+    <tr>
+      <td>              Aam Aadmi Party</td>
+      <td>      GHANSHYAM</td>
+    </tr>
+    <tr>
+      <td>      Socialist Party (India)</td>
+      <td> DHANRAJ BAIRWA</td>
+    </tr>
+    <tr>
+      <td>                   Jago Party</td>
+      <td>     PHOOLSINGH</td>
+    </tr>
+    <tr>
+      <td>        Bharatiya Yuva Shakti</td>
+      <td>         RAMESH</td>
+    </tr>
+    <tr>
+      <td>       National Peoples Party</td>
+      <td>      RAM SINGH</td>
+    </tr>
+    <tr>
+      <td>       Jai Maha Bharath Party</td>
+      <td>  SHRELAL KHARE</td>
+    </tr>
+    <tr>
+      <td>                  Independent</td>
+      <td>    ASHOK KUMAR</td>
+    </tr>
+    <tr>
+      <td>                  Independent</td>
+      <td>    KANCHAN BAI</td>
+    </tr>
+    <tr>
+      <td>                  Independent</td>
+      <td>  KISHORE KUMAR</td>
+    </tr>
+    <tr>
+      <td>                  Independent</td>
+      <td>      LAXMIKANT</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+</div>
