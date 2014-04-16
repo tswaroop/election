@@ -1,2 +1,4 @@
 assembly.csv
 .login.sqlite3
+.cache
+*.pyc

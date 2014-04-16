@@ -36,7 +36,7 @@ N = int(args.get('n', [20])[0])
     <a class="small direct-link" target="_blank" href="http://affidavitarchive.nic.in/DynamicAffidavitDisplay/CANDIDATEAFFIDAVIT.aspx?YEARID=May-2014&AC_No={{ candidates['PC_CODE'].iget(0) }}&st_code={{ candidates['ST_CODE'].iget(0) }}&constType=PC">on ECI website</a></h2>
   {{ candidates[['PARTY', 'NAME']].head(N).to_html(index=False, classes='table table-condensed').replace('border="1" ', '') }}
 {% else %}
-  <h2>No affidavits available on ECI website for 2014</h2>
+  <h2>No Candidates available on ECI website for 2014</h2>
 {% end %}
 
 <h2>

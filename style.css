@@ -386,9 +386,6 @@ footer {
   margin: 0 1em .5em 0;
 }
 
-/* Prevent initial flicker */
-#factoid, .result-controls, #result {
-}
 .loading {
   position: absolute;
   top: 50px;

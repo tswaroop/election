@@ -264,11 +264,11 @@ function redraw() {
       query = q.searchKey;
 
   if (q.pathname.match(/^(summary|year|result|cartogram|table|scatter|state|pattern|facts)$/)) {
-    $('#summary, #factoid').slideUp(250)
-    $('.year-filter')[q.pathname.match(/scatter|state|pattern/) ? 'hide' : 'show']()
+    $('#summary').slideUp(250)
+    $('.year-filter')[q.pathname.match(/scatter|state|pattern|facts/) ? 'hide' : 'show']()
     $('.years-filter')[q.pathname.match(/state/) ? 'show' : 'hide']()
-    $('.result-controls')[q.pathname.match(/cartogram|scatter|state/) ? 'hide' : 'show']()
-    $('.state-filter')[q.pathname.match(/result|pattern/) ? 'hide' : 'show']()
+    $('.result-controls')[q.pathname.match(/cartogram|scatter|state|facts/) ? 'hide' : 'show']()
+    $('.state-filter')[q.pathname.match(/result|pattern|facts/) ? 'hide' : 'show']()
     $('.search-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('.metric-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('.state-page-filter')[q.pathname.match(/result/) ? 'show' : 'hide']()
@@ -276,7 +276,7 @@ function redraw() {
       if (q.pathname.match(/cartogram|scatter|state|result/)) {
         $(window).dispatch('resize')
         $('input[type="search"]').val('').trigger('refresh')
-        $('#summary, #factoid').slideUp(250)
+        $('#summary').slideUp(250)
       }
       $('.tooltip').remove()
       highlight_groups()
@@ -285,7 +285,7 @@ function redraw() {
     $('#result, .result-controls, .year-filter, .state-filter, .search-filter, .metric-filter').hide()
     $('.years-filter, .state-page-filter').show()
     $('#summary').append('<img class="loading" src="{{ static_url('img/loading.gif') }}">').load('pc-index' + hash, function() {
-      $('#summary, #factoid').show()
+      $('#summary').show()
       $(window).dispatch('resize')
       $('.tooltip').remove()
       DB.groups = ''
