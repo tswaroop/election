@@ -22,7 +22,7 @@ metric = 'CONSTANT' if groupby.startswith('2014') else args.get('METRIC', ['CONS
 constituencies = DB.csv('pc.csv')
 constituencies['YEAR'] = '2009'
 constituencies = constituencies.set_index(['YEAR', 'STATE', 'PC'])
-constituencies_columns = ['2014-Schedule', '2014-Star-Candidate', 'Hindi-speaking', 'Bi-polar', 'Rural', 'SC', 'ST', 'Muslim']
+constituencies_columns = ['2014-Schedule', '2014-Star-Candidate', 'Hindi-speaking', 'Bi-polar', 'Rural', 'SC', 'ST', 'Muslim','2009-turnout','2014-turnout']
 elections[constituencies_columns] = constituencies[constituencies_columns]
 
 # Various filters, explicitly ordered
@@ -34,6 +34,8 @@ filters = (
   {'key': 'SC'            , 'only-tv': True,  'series': ['Below 10%', '10-19.9%', '20-29.9%', '30% and above'], },
   {'key': 'ST'            , 'only-tv': True,  'series': ['Below 10%', '10-29.9%', '30-49.9%', '50% and above'], },
   {'key': 'Muslim'        , 'only-tv': True,  'series': ['No information', 'Less than 10%', '10-19.9%', '20-39.9%', '40% and above'], },
+  {'key': '2009-turnout'   , 'only-tv': True,  'series': ['Less than 50%', '50-59.9%','60-69.9%', '70-79.9%', '80% and above'], },
+  {'key': '2014-turnout'   , 'only-tv': True,  'series': ['Less than 50%', '50-59.9%','60-69.9%', '70-79.9%', '80% and above'], },
 )
 
 subset = elections.reset_index()
