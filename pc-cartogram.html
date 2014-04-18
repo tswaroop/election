@@ -34,8 +34,8 @@ filters = (
   {'key': 'SC'            , 'only-tv': True,  'series': ['Below 10%', '10-19.9%', '20-29.9%', '30% and above'], },
   {'key': 'ST'            , 'only-tv': True,  'series': ['Below 10%', '10-29.9%', '30-49.9%', '50% and above'], },
   {'key': 'Muslim'        , 'only-tv': True,  'series': ['No information', 'Less than 10%', '10-19.9%', '20-39.9%', '40% and above'], },
-  {'key': '2009-turnout'   , 'only-tv': True,  'series': ['Less than 50%', '50-59.9%','60-69.9%', '70-79.9%', '80% and above'], },
-  {'key': '2014-turnout'   , 'only-tv': True,  'series': ['Less than 50%', '50-59.9%','60-69.9%', '70-79.9%', '80% and above'], },
+  {'key': '2009-turnout'  , 'only-tv': True,  'series': ['Less than 50%', '50-59.9%','60-69.9%', '70-79.9%', '80% and above'], },
+  {'key': '2014-turnout'  , 'only-tv': True,  'series': ['Less than 50%', '50-59.9%','60-69.9%', '70-79.9%', '80% and above'], },
 )
 
 subset = elections.reset_index()
@@ -205,9 +205,13 @@ names = {
   {% for filter in filters %}
     <div class="btn-group{{ ' only-tv' if filter['only-tv'] else '' }}">
       {% set keyargs = args.get(filter['key'], []) %}
-      <a class="btn btn-sm {{ 'btn-success active' if len(keyargs) else 'btn-primary' }}" href="?YEAR=2009&{{ quote(filter['key']) }}=">{{ filter['key'].replace('-', ' ') }}</a>
+      <a class="btn btn-sm {{ 'btn-success active' if len(keyargs) else 'btn-primary' }}"
+         href="?YEAR=2009&{{ quote(filter['key']) }}="
+         {% if len(keyargs) %} title="Clear filter"{% end %}
+      >{{ filter['key'].replace('-', ' ') }}</a>
       {% for item in filter['series'] %}
-        <a class="btn btn-sm {{ 'btn-success active' if item in keyargs else 'btn-default' }}" href="?YEAR=2009&{{ quote(filter['key']) }}={{ quote(item) }}">{{ item }}</a>
+        <a class="btn btn-sm {{ 'btn-success active' if item in keyargs else 'btn-default' }}"
+           href="?YEAR=2009&{{ quote(filter['key']) }}={{ quote(item) if item not in keyargs else '' }}">{{ item }}</a>
       {% end %}
     </div>
   {% end %}
