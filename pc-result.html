@@ -20,6 +20,10 @@ except KeyError:
     year_matched = False
 
 affidavits = DB.csv('affidavits.csv')
+pc = DB.csv('pc.csv')
+pc_selected_data =  pc[pc['PC']== args.get('PC',[''])[0]]
+pc_2009_turnout = pc_selected_data['2009(%turnout)'].values[0]
+pc_2014_turnout = pc_selected_data['2014(%turnout)'].values[0]
 affidavit_groups = affidavits.groupby(['STATE', 'PC']).groups
 
 columns = ['#', 'PARTY', 'NAME', 'VOTES', 'SEX', 'AGE', 'CATEGORY', ]
@@ -28,12 +32,20 @@ N = int(args.get('n', [20])[0])
 {% end %}
 <div class="pc-result">
 {% set key = (args['STATE'][0], args['PC'][0]) %}
+  <span style="font-size:25px"><i class="back glyphicon glyphicon-circle-arrow-left"></i>
+  {{ args['PC'][0].title() }},
+  <a href="state?PC=&YEAR=">{{ args['STATE'][0].title() }}</a></span>
+  <h2 style='background-color : red'>
+  2009 turnout: {{pc_2009_turnout}}, 2014 turnout: {{pc_2014_turnout}}
+  </h2>
 {% if key in affidavit_groups %}
   {% code %}
   candidates = affidavits.ix[affidavit_groups[key]]
   {% end %}
-  <h2>{{ len(candidates) }} candidates filed for 2014 elections
-    <a class="small direct-link" target="_blank" href="http://affidavitarchive.nic.in/DynamicAffidavitDisplay/CANDIDATEAFFIDAVIT.aspx?YEARID=May-2014&AC_No={{ candidates['PC_CODE'].iget(0) }}&st_code={{ candidates['ST_CODE'].iget(0) }}&constType=PC">on ECI website</a></h2>
+  <h2>
+  {{ len(candidates) }} candidates filed for 2014 elections
+    <a class="small direct-link" target="_blank" href="http://affidavitarchive.nic.in/DynamicAffidavitDisplay/CANDIDATEAFFIDAVIT.aspx?YEARID=May-2014&AC_No={{ candidates['PC_CODE'].iget(0) }}&st_code={{ candidates['ST_CODE'].iget(0) }}&constType=PC">on ECI website</a>
+  </h2>
   {{ candidates[['PARTY', 'NAME']].head(N).to_html(index=False, classes='table table-condensed').replace('border="1" ', '') }}
 {% else %}
   <h2>No Candidates available on ECI website for 2014</h2>
