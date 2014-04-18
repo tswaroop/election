@@ -2,7 +2,9 @@
 from urllib import quote
 from common import pc_setup, slug, NONE_COLOR
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
+pc = DB.csv('pc.csv').set_index(['STATE', 'PC'])
 year = args.get('YEAR', ['2009'])[0]
+
 try:
     no_result = False
     data = data[data['PC'] == args['PC'][0]]
@@ -10,6 +12,7 @@ try:
 except KeyError:
     logging.error('KeyError: %s', handler.request.uri)
     no_result = True
+
 try:
     year_matched = True
     data = data[data['YEAR'] == year]
@@ -20,10 +23,6 @@ except KeyError:
     year_matched = False
 
 affidavits = DB.csv('affidavits.csv')
-pc = DB.csv('pc.csv')
-pc_selected_data =  pc[pc['PC']== args.get('PC',[''])[0]]
-pc_2009_turnout = pc_selected_data['2009(%turnout)'].values[0]
-pc_2014_turnout = pc_selected_data['2014(%turnout)'].values[0]
 affidavit_groups = affidavits.groupby(['STATE', 'PC']).groups
 
 columns = ['#', 'PARTY', 'NAME', 'VOTES', 'SEX', 'AGE', 'CATEGORY', ]
@@ -31,25 +30,6 @@ colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 N = int(args.get('n', [20])[0])
 {% end %}
 <div class="pc-result">
-{% set key = (args['STATE'][0], args['PC'][0]) %}
-  <span style="font-size:25px"><i class="back glyphicon glyphicon-circle-arrow-left"></i>
-  {{ args['PC'][0].title() }},
-  <a href="state?PC=&YEAR=">{{ args['STATE'][0].title() }}</a></span>
-  <h2 style='background-color : red'>
-  2009 turnout: {{pc_2009_turnout}}, 2014 turnout: {{pc_2014_turnout}}
-  </h2>
-{% if key in affidavit_groups %}
-  {% code %}
-  candidates = affidavits.ix[affidavit_groups[key]]
-  {% end %}
-  <h2>
-  {{ len(candidates) }} candidates filed for 2014 elections
-    <a class="small direct-link" target="_blank" href="http://affidavitarchive.nic.in/DynamicAffidavitDisplay/CANDIDATEAFFIDAVIT.aspx?YEARID=May-2014&AC_No={{ candidates['PC_CODE'].iget(0) }}&st_code={{ candidates['ST_CODE'].iget(0) }}&constType=PC">on ECI website</a>
-  </h2>
-  {{ candidates[['PARTY', 'NAME']].head(N).to_html(index=False, classes='table table-condensed').replace('border="1" ', '') }}
-{% else %}
-  <h2>No Candidates available on ECI website for 2014</h2>
-{% end %}
 
 <h2>
   <div class="pull-right">
@@ -58,14 +38,37 @@ N = int(args.get('n', [20])[0])
   <i class="back glyphicon glyphicon-circle-arrow-left"></i>
   {{ args['PC'][0].title() }},
   <a href="state?PC=&YEAR=">{{ args['STATE'][0].title() }}</a>
-  {{ year }}
-  <small>{{ min(N, len(data)) }} / {{ len(data) }} candidates</small>
 </h2>
+
+{% set key = (args['STATE'][0], args['PC'][0]) %}
+{% if key in affidavit_groups %}
+  {% code %}
+  candidates = affidavits.ix[affidavit_groups[key]]
+  {% end %}
+  <h2>
+    <div class="row">
+      <div class="col-md-6">
+        {{ len(candidates) }} candidates in 2014 elections
+        <a class="small direct-link" target="_blank" href="http://affidavitarchive.nic.in/DynamicAffidavitDisplay/CANDIDATEAFFIDAVIT.aspx?YEARID=May-2014&AC_No={{ candidates['PC_CODE'].iget(0) }}&st_code={{ candidates['ST_CODE'].iget(0) }}&constType=PC">on ECI website</a>
+      </div>
+      <div class="col-md-6 turnout">
+        Turnout
+        <strong>2009</strong>: {{ pc['2009-pc-turnout'][key] }}%,
+        <strong>2014</strong>: {{ pc['2014-pc-turnout'][key] }}%
+      </div>
+    </div>
+  </h2>
+  {{ candidates[['NAME', 'PARTY']].head(N).to_html(index=False, classes='table table-condensed').replace('border="1" ', '') }}
+{% else %}
+  <h2>No Candidates available on ECI website for 2014</h2>
+{% end %}
+
 {% if no_result %}
   <p>No results. Please try a <a href=".?STATE=&Y=">different option</a>.</p>
 {% else %}
   {% if year_matched %}
     <h3 class="winner-story">
+      In {{ year }},
       <span class="winner-name">{{ result['WINNER'] }}</span> of
       {% set fill = colors.get(result['PARTY'], NONE_COLOR) %}
       <span class="winner-party" style="background-color:{{ fill }};color:{{ _color.contrast(fill) }}">{{ result['PARTY'] }}</span> won by
@@ -110,6 +113,7 @@ N = int(args.get('n', [20])[0])
         {% end %}
       </tbody>
     </table>
+    <p>Showing {{ min(N, len(data)) }} / {{ len(data) }} candidates</p>
   {% end %}
 
   {% code %}
@@ -121,7 +125,7 @@ N = int(args.get('n', [20])[0])
   W, H = 940, 400
   yearheight = 30
   parties = history.groupby('PARTY')['VOTES'].sum().order(ascending=False).head(15).index
-  w, pad, legend, yearheight = float(W - 30) / len(parties), 5, 30, 30
+  w, pad, legend, yearheight = float(W - 30) / (len(parties) or 1), 5, 30, 30
   {% end %}
   <svg class="const-stack" width="100%" data-height="{{ float(H)/W }}" viewBox="0 0 {{ W }} {{ H }}">
     <rect width="30" height="{{ legend - 5 }}" class="party-unhighlight" fill="#000" title="Show all parties"/>
@@ -144,7 +148,7 @@ N = int(args.get('n', [20])[0])
         fill="{{ _color.contrast(background_color) }}"
         data-party="{{ slug(party) }}">{{ party }}</text>
     {% end %}
-    {% set w = float(W) / len(years) %}
+    {% set w = float(W) / (len(years) or 1) %}
     <g class="pc-stack">
       {% for i, year in enumerate(years) %}
         {% code %}
