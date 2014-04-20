@@ -23,6 +23,10 @@
   <meta property="twitter:description" content="{{ static_url('img/startup-tablet-landscape.png') }}">
   <script>
       // Remove no-js class. Set no-touch upfront to ensure -webkit-scrollbar styling
-      var touch_device = 'ontouchend' in document;
-      document.documentElement.setAttribute('class', touch_device ? 'touch' : 'no-touch');
+      var touch_device = 'ontouchend' in document,
+          has_history = window.history && typeof history.back == 'function'
+      document.documentElement.setAttribute('class',
+        (touch_device ? 'touch' : 'no-touch') + ' ' +
+        (has_history ? '' : 'no-history')
+      );
   </script>

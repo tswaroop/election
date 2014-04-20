@@ -4,6 +4,7 @@ body.tv {
   padding-bottom: 540px;
 }
 .tv .back { color: #000; }
+.no-history .back { display: none; }
 
 .only-tv { display: none; }
 .tv .only-tv { display: inline-block; }
