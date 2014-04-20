@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=[], max_age=10*60) }}{% code %}
+{{ GRAMEX(cache=['parliament.csv', 'pc-latlong.csv'], max_age=10*60) }}{% code %}
 title = 'The Most Persistent Party'
 party, years = 'DDP', ('1984', '1989', '1991')
 description = ''
@@ -8,7 +8,7 @@ from common import pc_setup, slug
 from textwrap import dedent
 
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
-latlong = pd.read_csv('pc-latlong.csv').set_index(['STATE', 'PC'])
+latlong = DB.csv('pc-latlong.csv').set_index(['STATE', 'PC'])
 
 W, H = 940, 700
 
@@ -32,9 +32,7 @@ for index, (state, pc) in year_data[['STATE', 'PC']].drop_duplicates().iterrows(
             val[year] = None
     result.append(val)
 
-{% end %}<!DOCTYPE html><html lang="en">
-<head>
-  {{ T('.head.html', title=title, static_url=static_url, description=description) }}
+{% end %}
   <style>
     .storypage body, .story h1 { font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif; }
     .storypage h1 { text-transform: uppercase; }
@@ -60,12 +58,10 @@ for index, (state, pc) in year_data[['STATE', 'PC']].drop_duplicates().iterrows(
     .story-right { left: 600px; width: {{ W - 600 }}px; }
     .drop-cap:first-letter { font-size: 500%; float:left; line-height: .77; font-weight: bold; margin-right: 2px; color: {{ _color.Office[3] }};}
   </style>
-</head><body class="storypage">
+<div class="storypage">
 
-<div class="container">
   <h1>
-    {{ title }}: {{ party }}
-    <a class="pull-right btn btn-default" href=".">Back</a>
+    <i class="back glyphicon glyphicon-circle-arrow-left"></i> {{ title }}: {{ party }}
   </h1>
   <div class="visual">
     <div id="stories">
@@ -136,7 +132,6 @@ for index, (state, pc) in year_data[['STATE', 'PC']].drop_duplicates().iterrows(
       </div>
       <div class="story" style="z-index:2;left:750px;top:180px;width:{{ W - 750 }}px;text-align:right">
         <p>
-          <span class="btn btn-primary download-svg"><i class="glyphicon glyphicon-download-alt"></i> SVG</span>
           <span class="play btn btn-default" data-toggle="button" title="Play / pause"><i class="glyphicon glyphicon-play"></i></span>
         </p>
         <p><span class="controls" data-toggle="buttons"></span></p>
@@ -148,10 +143,6 @@ for index, (state, pc) in year_data[['STATE', 'PC']].drop_duplicates().iterrows(
   </div>
 </div>
 
-<script src="{{ static_url('/js/d3.v3.min.js') }}"></script>
-<script src="{{ static_url('/js/jquery2.min.js') }}"></script>
-<script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
-<script src="{{ static_url('js/G.min.js') }}"></script>
 <script>
 var data = {{ json.dumps(result, separators=(',', ':')) }}
 var years = {{ json.dumps(years, separators=(',', ':')) }}
@@ -231,8 +222,5 @@ $('body')
     container: 'body',
     html: true
   })
-  .on('click', '.download-svg', function() {
-    G.download({file: 'india-pc.svg', svg: $('#pc')})
-  })
 </script>
-</body></html>
+

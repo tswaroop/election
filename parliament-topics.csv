@@ -13,3 +13,4 @@ pattern?party=CONG,Congress bastions,"**Chhindwara, in Madhya Pradesh**, is the 
 pattern?party=BJP,BJP bastions,"Only 8 constituencies have voted for BJP every time since 1989. 5 are in Madhya Pradesh, 2 in Gujarat, and 1 in Rajasthan."
 pattern?winning=1,Bellweathers,"**Faridabad, in Haryana**, is the only constituency that has constistently voted for the national winning party in every election since 1977."
 pattern?anti-incumbent=1,Anti-incumbents,"**Bara Banki, in Uttar Pradesh**, has voted against the incumbent party in every single election since its inception in 1957."
+story.ddp,Persistent party,"The **Doordarshi Party** did not give up after its total defeat in the 1984 elections, and continued to lose every seat for 2 more elections."

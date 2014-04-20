@@ -262,12 +262,12 @@ function redraw() {
       q = G.url.parse(hash),
       query = q.searchKey;
 
-  if (q.pathname.match(/^(summary|year|result|cartogram|table|scatter|state|pattern|facts)$/)) {
+  if (q.pathname.match(/^(summary|year|result|cartogram|table|scatter|state|pattern|facts)$|^story/)) {
     $('#summary').slideUp(250)
-    $('.year-filter')[q.pathname.match(/scatter|state|pattern|facts/) ? 'hide' : 'show']()
+    $('.year-filter')[q.pathname.match(/scatter|state|pattern|facts|story/) ? 'hide' : 'show']()
     $('.years-filter')[q.pathname.match(/state/) ? 'show' : 'hide']()
-    $('.result-controls')[q.pathname.match(/cartogram|scatter|state|facts/) ? 'hide' : 'show']()
-    $('.state-filter')[q.pathname.match(/result|pattern|facts/) ? 'hide' : 'show']()
+    $('.result-controls')[q.pathname.match(/cartogram|scatter|state|facts|story/) ? 'hide' : 'show']()
+    $('.state-filter')[q.pathname.match(/result|pattern|facts|story/) ? 'hide' : 'show']()
     $('.search-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('.metric-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('.state-page-filter')[q.pathname.match(/result/) ? 'show' : 'hide']()
