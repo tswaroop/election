@@ -38,7 +38,7 @@ filters = (
   {'key': '2014-turnout'  , 'only-tv': True,  'series': ['Less than 50%', '50-59.9%','60-69.9%', '70-79.9%', '80% and above'], },
 )
 
-subset = elections.reset_index()
+subset = election_dataset = elections.reset_index()
 
 chosen_states = args.get('STATE', [])
 if len(chosen_states):
@@ -60,10 +60,20 @@ subset = subset[subset['YEAR'] == year]
 pivot = subset[['STATE', 'PC', groupby, 'WINNER', metric]].set_index(['STATE', 'PC'])
 metric_mean = pivot[metric].mean()
 
-available = {
-  key: subset[key].unique()
-  for key in ['STATE'] + [filter['key'] for filter in filters]
-}
+# Check which filters should be disabled
+# available['STATE'] = set(STATEs that can be selected by user)
+filter_keys = ['STATE'] + [filter['key'] for filter in filters]
+filter_index = {}
+for filter_key in filter_keys:
+    if filter_key in args:
+        filter_index[filter_key] = election_dataset[filter_key].isin(args[filter_key])
+available = {}
+for filter_key in filter_keys:
+    dataset = election_dataset
+    for other_key in filter_keys:
+        if other_key != filter_key and other_key in args:
+            dataset = dataset[filter_index[other_key]]
+    available[filter_key] = set(dataset[filter_key].unique())
 
 win_count = pivot[groupby].value_counts()
 max_wins = float(win_count.max())
