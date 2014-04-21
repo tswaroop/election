@@ -60,6 +60,11 @@ subset = subset[subset['YEAR'] == year]
 pivot = subset[['STATE', 'PC', groupby, 'WINNER', metric]].set_index(['STATE', 'PC'])
 metric_mean = pivot[metric].mean()
 
+available = {
+  key: subset[key].unique()
+  for key in ['STATE'] + [filter['key'] for filter in filters]
+}
+
 win_count = pivot[groupby].value_counts()
 max_wins = float(win_count.max())
 
@@ -128,7 +133,12 @@ names = {
   <svg id="state-legend" width="100%" data-height="{{ float(TOPH * 2) / W }}" viewBox ="0 0 {{ W }} {{ TOPH * 2 }}">
     {% set w = W / float(len(states)) %}
     {% for i, state in enumerate(states) %}
-      <g{% if state %} data-grp="{{ state }}"{% end %}>
+      <g
+        {% if state %}
+          data-grp="{{ state }}"
+          {% if state not in available['STATE'] %} class="disabled"{% end %}
+        {% end %}
+      >
         <rect class="state-legend"
           href="?STATE={{ quote(state) }}"
           x="{{ w * i }}"
@@ -201,6 +211,7 @@ names = {
     </g>
   </g>
 </svg>
+
 <div class="const-filters">
   {% for filter in filters %}
     <div class="btn-group{{ ' only-tv' if filter['only-tv'] else '' }}">
@@ -210,7 +221,7 @@ names = {
          {% if len(keyargs) %} title="Clear filter"{% end %}
       >{{ filter['key'].replace('-', ' ') }}</a>
       {% for item in filter['series'] %}
-        <a class="btn btn-sm {{ 'btn-success active' if item in keyargs else 'btn-default' }}"
+        <a class="btn btn-sm {{ 'btn-success active' if item in keyargs else 'btn-default' }}{{ '' if item in available[filter['key']] else ' disabled' }}"
            href="?YEAR=2009&{{ quote(filter['key']) }}={{ quote(item) if item not in keyargs else '' }}">{{ item }}</a>
       {% end %}
     </div>

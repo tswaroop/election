@@ -105,6 +105,9 @@ text { pointer-events: none; }
 .cartogram circle.fade, .state-table .fade, .pc-stack .fade { pointer-events: none; }
 .wealthmap .fade { opacity: .1; }
 
+g.disabled { opacity: .2; }
+g.disabled .state-legend { pointer-events: none; }
+
 rect.state-legend { stroke: rgba(0,0,0,.2); }
 
 .link[href] { color: {{ _color.Office[0] }}; }
