@@ -83,7 +83,7 @@
     }
 
     #legend svg{
-        width:520px;
+        width:1040px;
         height:50px;
     }
 
@@ -163,20 +163,8 @@ text{
 <div class="container">
 
 	<div class="row">
-		<div class="col-md-offset-2 col-md-10 col-sm-12 col-xs-12">
-			<div class="btn-group" id="termButtons" data-toggle="buttons">
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12">
-			<div class="btn-group" id="nextButtons">
-				  <button type="button" class="btn btn-default" id="startNext"><<</button>
-				  <button type="button" class="btn btn-default" id="prevButton"><</button>
-				  <button type="button" class="btn btn-default" id="nextButton">></button>
-				  <button type="button" class="btn btn-default" id="endNext">>></button>
-			</div>	
+
 		</div>		
 	</div>
 
@@ -184,7 +172,7 @@ text{
 		<div class="col-sm-6" style="padding-top:20px;padding-bottom:20px">
 			<!-- <p><span style="font-weight:bold">State: </span><span id="statename"></span></p> -->
 			<!-- <p><span style="font-weight:bold">X Parameter: </span><span id="xparamname"></span></p> -->
-			<p><span style="font-weight:bold">Metric: </span><span id="yparamname"></span></p>
+			<h4><span style="font-weight:bold">Metric: </span><span id="yparamname"></span></h4>
 		</div>
 		<!-- <div class="col-sm-1"> -->
 			<!-- <div style="margin-top:20px"><h5 id="party_name"></h5></div> -->
@@ -194,10 +182,22 @@ text{
 		<!-- <div class="col-sm-1"> -->
 			<!-- <img id="party_symbol" src="" style="margin-top:20px"> -->
 		<!-- </div> -->
-		<div class="col-sm-6">
-			<p id="nextStories"></p>
+		<div class="col-md-offset-4 col-md-2 col-sm-3">
+			<div class="btn-group" id="nextButtons" style="margin-top:20px">
+				  <button type="button" class="btn btn-default" id="startNext"><<</button>
+				  <button type="button" class="btn btn-default" id="prevButton"><</button>
+				  <button type="button" class="btn btn-default" id="nextButton">></button>
+				  <button type="button" class="btn btn-default" id="endNext">>></button>
+			</div>	
 		</div>		
 	</div>
+
+	<div class="row">
+		<div class="col-md-offset-2 col-md-10 col-sm-12 col-xs-12">
+			<div class="btn-group" id="termButtons" data-toggle="buttons">
+			</div>
+		</div>
+	</div>	
 
 	<div class="row">
 
@@ -209,8 +209,8 @@ text{
 
 	<div class="row">
 
-		<div class="col-md-offset-3 col-md-6 col-sm-12">
-			<div id="legend"></div>
+		<div class="col-md-offset-1 col-md-11 col-sm-12">
+			<div id="legend" style="margin-left:-15px"></div>
 		</div>
 
 	</div>
@@ -338,23 +338,25 @@ function make_y_axis(y) {
 	d3.csv("data_india_new.csv",function(d){
 		// d["GDP at constant prices (in billions)"] = + d["GDP at constant prices (in billions)"] || 0;
 		d3.keys(d).forEach(function(k){
-			if(["STATE","Party in power","YEAR","Party filename","PM Name"].indexOf(k) == -1){
+			if(["STATE","Party in power","YEAR","Party filename","PM Name","termYears"].indexOf(k) == -1){
 				if(d[k] != "")
 					d[k] = +d[k];// || 0;
 			}
 		});
 
-		if(prevState != d["STATE"]){
-			termcount = 0;
-			prevParty = "";
-		}
-		if(prevParty != d["Party in power"]){
-			++termcount;
-		}
-		prevParty = prevParty != d["Party in power"] ? d["Party in power"] : prevParty;
-		prevState = prevState != d["STATE"] ? d["STATE"] : prevState;
-		d["Term"] = termcount;
+		// if(prevState != d["STATE"]){
+		// 	termcount = 0;
+		// 	prevParty = "";
+		// }
+		// if(prevParty != d["Party in power"]){
+		// 	++termcount;
+		// }
+		// prevParty = prevParty != d["Party in power"] ? d["Party in power"] : prevParty;
+		// prevState = prevState != d["STATE"] ? d["STATE"] : prevState;
+		// d["Term"] = termcount;
+		// d["Term"] = +d["Term"];
 		d["YEAR"] = d["YEAR"].trim();
+		// d["termYears"] = d["termYears"].trim();
 		return d;
 	},function(error_country,data_country){
 
@@ -459,9 +461,10 @@ function getData(){
 	var columns = [];
 
 	columns_temp.forEach(function(col){
-		var index = ["STATE","Party in power","YEAR","Term","Party filename","PM Name"].indexOf(col);
+		var index = ["STATE","Party in power","YEAR","Term","Party filename","PM Name","termYears"].indexOf(col);
 		if(index == -1){
 			columns.push(col);
+			story_urls.push("?yparam="+col);
 		}
 	});
 
@@ -601,6 +604,9 @@ function getData(){
 
 function fillTerms(data,columny,columnx,colcolor,x,y,term){
 
+	var termyears = _.uniq(_.pluck(data,"termYears")).concat(["All"]);
+	console.log(termyears);
+
 	$("#termButtons").children().remove();
 
 	var termbox = d3.select("#termButtons").selectAll("label")//.selectAll("button")
@@ -616,7 +622,8 @@ function fillTerms(data,columny,columnx,colcolor,x,y,term){
 	// 	else
 	// 		return "?term=term"+d ;
 	// })
-	.text(function(d){ return "Term "+d } )
+	.attr("data-value",function(d,i){ return d})
+	.text(function(d,i){ return termyears[i] })//+"("+termyears[i]+")" } )
 	.on("click",function(d){
 		// $("circle").remove();
 		// var temp = data.filter(function(k){
@@ -635,7 +642,8 @@ function fillTerms(data,columny,columnx,colcolor,x,y,term){
 				termnums = [];
 
 			$("label.active").each(function(d){ 
-				termnums.push( $(this).text().replace("Term","").trim() );
+				// termnums.push( $(this).text().replace("Term","").trim() );
+				termnums.push( $(this).attr("data-value").trim() );
 			});
 
 			term_num = termnums.join(",");
@@ -826,9 +834,9 @@ function drawChart(data,columny,columnx,colcolor,x,y,term){
   	d3.select("#legend svg").remove();
 
   	var party = d3.select("#legend").append("svg")
-  		.attr("width",width/2)
+  		.attr("width",width)
   		.attr("height","50px")
-  		.attr("viewBox","0 0 " + width/2 + " 50")
+  		.attr("viewBox","0 0 " + width + " 50")
   		.attr("preserveAspectRatio","none")
   		.selectAll("g.party")
   		.data(parties)
@@ -837,17 +845,17 @@ function drawChart(data,columny,columnx,colcolor,x,y,term){
   		.style("cursor","pointer");
 
   	party.append("rect")
-  		.attr("width",(width/2)/parties.length)
+  		.attr("width",(width)/parties.length)
   		.attr("height","50px")
   		.attr("y","0px")
-  		.attr("x",function(d,i){ return i*((width/2)/parties.length); })
+  		.attr("x",function(d,i){ return i*((width)/parties.length); })
   		.attr("fill",function(d){ return color(d)})
   		 .attr("data-highlight",function(d){ return "."+d})
   		.attr("data-target","#chart svg circle, #chart svg .line")
   		.attr("data-toggle","1");
 
   	party.append("text")
-  		.attr("x",function(d,i){ return i*((width/2)/parties.length) + 10; })
+  		.attr("x",function(d,i){ return i*((width)/parties.length) + 10; })
   		.attr("y","30px")
   		.attr("font-weight","bold")
   		.attr("fill","#fff")//function(d){ return d3.rgb(color(d)).brighter(0.97); })
