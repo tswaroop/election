@@ -259,7 +259,7 @@ var data = d3.csv.parse($('#data').text(), function(row) {
       row[key] = +row[key]
     // Get the scaled x,y coords
     row.x = {{ H }} * .95 * (row['Long'] - 68.5) / (97 - 68.5) + Math.random() + {{ (W - H)/2 }} - 150,
-    row.y = {{ H }} * (36.7 - row['Lat']) / (36.7 - 8) + Math.random(),
+    row.y = {{ H }} * (36.7 - row['Lat']) / (36.7 - 8.7) + Math.random(),
     {% if pd.isnull(metric_mean) %}
       row.r = R
     {% else %}
