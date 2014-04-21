@@ -1,0 +1,361 @@
+{% code %}
+
+import json
+import csv
+
+manifesto = args.get('manifesto',["bjp"])[0]
+
+print manifesto
+
+with open("Congress_manifesto.txt","r") as f:
+  congress_manifesto = f.readlines()
+
+with open("bjpmanifesto2014.txt","r") as f:
+  bjp_manifesto = f.readlines()
+
+if manifesto == "bjp":
+  wordfile = bjp_manifesto
+else:
+  wordfile = congress_manifesto
+
+with open("english_stop.txt","r") as f:
+  stopwords = f.readlines()
+
+stopwords = map(lambda x: x.replace("\n",""), stopwords)
+
+def cleanWords(x):
+  temp = x.split(" ")
+  for ch in ["\n",".",",","\r",":",";","(",")",'"',"'","%"]:
+    temp = [item.replace(ch,"").lower().strip("-") for item in temp if item.replace(ch,"").lower() not in stopwords+["","&","/"]]
+  return temp
+
+wordfile = map(cleanWords, wordfile)
+
+wordfile = [item for sub in wordfile for item in sub]
+
+wordlist_old = set(wordfile)
+wordlist = []
+for word in wordlist_old:
+  try:
+    word = int(word)
+    continue
+  except:
+    wordlist.append(word)
+
+worddict = {}
+for word in wordlist:
+  worddict[word] = 0
+
+for word in wordfile:
+  try:
+    word = int(word)
+    continue
+  except:
+    worddict[word] += 1
+
+topwords = 100
+temp =  pd.Series(worddict)
+temp.sort(ascending=False)
+temp = pd.DataFrame(temp,columns=["count"]).ix[:topwords,:].to_json()
+
+
+{% end %}
+
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8"> 
+  <title>Word Cloud</title>
+  <link rel="stylesheet" href="{{ static_url('/css/bootstrap.v3.min.css') }}"/>
+</head>
+<body style="background-color:#fff">
+
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">CNN IBN</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <ul class="nav navbar-nav">
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manifesto <b class="caret"></b></a>
+          <ul class="dropdown-menu" id="stateDropdown">
+            <li><a href="?manifesto=bjp">BJP</a></li>
+            <li><a href="?manifesto=congress">CONGRESS</a></li>
+          </ul>
+        </li>
+
+      </ul>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
+<div class="container">
+  <div class="row" id="chart"></div>
+  <div class="row" id="wordchart"></div>
+</div>
+<script src="{{ static_url('/js/d3.v3.min.js') }}"></script>
+<script src="js/d3.layout.cloud.js"></script>
+<script src="{{ static_url('/js/jquery2.min.js') }}"></script>
+<script src="{{ static_url('/js/underscore-min.js') }}"></script>
+<script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
+<script src="{{ static_url('js/G.min.js') }}"></script>
+<script>
+
+var width = 1160,
+    height = 560,
+    padding = 7.5, // separation between same-color nodes
+    clusterPadding = 6, // separation between different-color nodes
+    maxRadius = 12,
+    remove_cluster_animation = false;
+
+var n = 200, // total number of nodes
+    m = 1; // number of distinct clusters
+
+var clusters = [];//new Array(m);
+
+// var temp = JSON.parse(JSON.stringify({{worddict}}) );
+// console.log(temp);
+
+var temp = JSON.parse( JSON.stringify({{temp}}) )["count"];
+
+var radius_scale = d3.scale.linear()
+        .domain(d3.extent(d3.values(temp)))
+        .range([10,65]);
+
+var text_scale = d3.scale.linear()
+        .domain(d3.extent(d3.values(temp)))
+        .range([7,22]);
+
+var wordlist = d3.keys(temp).map(function(d){
+      var t = {};
+      t["text"] = d;
+      t["size"] = temp[d];
+      t["cluster"] = 0;
+      return t;
+    });
+
+var wordlist_new = d3.keys(temp).map(function(d){
+      var t = {};
+      t["text"] = d;
+      t["size"] = temp[d];
+      return t;
+    });
+
+// var wordlist_new = JSON.parse( JSON.stringify( wordlist ));
+// console.log(wordlist);
+
+// wordlist.sort(function(a,b){ return b["size"] - a["size"]; });
+
+// wordlist = wordlist.slice(0,100);
+
+clusters.push(wordlist[0]);
+// console.log(clusters);
+
+var fill = d3.scale.category20();
+
+var mainsvg = d3.select("#chart").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("border","1px solid #636363");
+
+var svg_word = mainsvg.append("g")
+                .style("opacity","0.3");
+
+var svg = mainsvg.append("g");
+
+
+// var svg = d3.select("#chart").append("svg")
+//     .attr("width", size)
+//     .attr("height", size)
+//     .style("border","1px solid #e1e1e1");
+
+
+var colors1 = ["#9e0142","#d53e4f","#f46d43","#fdae61","#fee08b","#ffffbf","#e6f598","#abdda4","#66c2a5","#3288bd","#5e4fa2"];
+var colors2 = ["#fdae6b","#fd8d3c","#f16913","#d94801","#a63603","#7f2704"];
+var colors3 = ["#9ecae1","#6baed6","#4292c6","#2171b5","#08519c","#08306b"];
+
+var manifesto = "{{manifesto}}";
+
+if(manifesto == "bjp"){
+  colors = colors2;
+} else {
+  colors = colors3;
+}
+
+var color = d3.scale.quantize()
+    .range(colors);
+
+var size = 960;
+
+d3.layout.pack()
+  .sort(null)
+  .size([width, height])
+  .children(function(d) { return d.values; })
+  .value(function(d) { return d.size; })
+  .radius(function(d){ return radius_scale(d); })
+  .nodes({values: d3.nest()
+    .key(function(d) { return d.cluster; })
+    .entries( wordlist )});
+
+color.domain(d3.extent(wordlist, function(d) { return d.size; }));
+
+var force = d3.layout.force()
+  .nodes( wordlist )
+  .size([width, height])
+  .gravity(.02)
+  .charge(0)
+  .on("tick", tick)
+  .start();
+
+var drag = force.drag()
+          .on("dragstart", function(d){
+            remove_cluster_animation = true;
+          });
+
+var node = svg.selectAll("g")
+    .data(force.nodes())
+  .enter().append("g")
+   .attr("title", function(d) {
+      return d.text+","+d.size;
+    })
+   .style("cursor","pointer")
+   .call(force.drag);
+
+var circle = node.append("circle")
+  .style("stroke","#737373")
+  .style("stroke-width","3px")
+  .style("fill", function(d) { return color(d.size) || "transparent"; });
+
+var text = node.append("text")
+  .attr("font-size","0px")
+  .text(function(d){ return d.text; });
+        
+circle.transition()
+    .duration(3050)
+    .delay(function(d, i) { return i * 5; })
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(0, d.r);
+      return function(t) { return d.r = i(t); };
+    });
+
+text.transition()
+    .duration(3050)
+    .delay(function(d, i) { return i * 5; })
+    .attr("dx","-2em")
+    .attrTween("font-size", function(d) {
+      var i = d3.interpolate(0, text_scale( d.size ) );
+      return function(t) { return i(t) ; };
+    });
+
+function tick(e) {
+  if(!remove_cluster_animation){
+    node.each(cluster(10 * e.alpha * e.alpha));
+  }
+  node
+      .each(collide(.5))
+      .attr("transform",function(d){
+        d.x = Math.max(d.r+5, Math.min(width - d.r+5, d.x));
+        d.y = Math.max(d.r+5, Math.min(height - d.r+5, d.y));
+        return "translate("+d.x+","+d.y+")";
+      });
+    // .attr("cx", function(d) { return d.x; })
+    //   .attr("cy", function(d) { return d.y; });
+}
+
+// Move d to be adjacent to the cluster node.
+function cluster(alpha) {
+  return function(d) {
+    var cluster = clusters[d.cluster];
+    if (cluster === d) return;
+    var x = d.x - cluster.x,
+        y = d.y - cluster.y,
+        l = Math.sqrt(x * x + y * y),
+        r = d.r + cluster.r;
+    if (l != r) {
+      l = (l - r) / l * alpha;
+      d.x -= x *= l;
+      d.y -= y *= l;
+      cluster.x += x;
+      cluster.y += y;
+    }
+  };
+}
+
+
+// Resolves collisions between d and all other circles.
+function collide(alpha) {
+  var quadtree = d3.geom.quadtree(wordlist);
+  return function(d) {
+    var r = d.r + maxRadius + Math.max(padding, clusterPadding),
+        nx1 = d.x - r,
+        nx2 = d.x + r,
+        ny1 = d.y - r,
+        ny2 = d.y + r;
+    quadtree.visit(function(quad, x1, y1, x2, y2) {
+      if (quad.point && (quad.point !== d)) {
+        var x = d.x - quad.point.x,
+            y = d.y - quad.point.y,
+            l = Math.sqrt(x * x + y * y),
+            r = d.r + quad.point.r + (d.cluster === quad.point.cluster ? padding : clusterPadding);
+        if (l < r) {
+          l = (l - r) / l * alpha;
+          d.x -= x *= l;
+          d.y -= y *= l;
+          quad.point.x += x;
+          quad.point.y += y;
+        }
+
+      }
+      return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+    });
+  };
+}
+
+// d3.select(self.frameElement).style("height", size + "px");
+
+  d3.layout.cloud().size([width, height])
+      .words(wordlist_new)
+      .padding(5)
+      .rotate(function() { return ~~(Math.random() * 2) * 90; })
+      .font("Impact")
+      .fontSize(function(d) { return d.size; })
+      .on("end", draw)
+      .start();
+
+  function draw(words) {
+    console.log(words);
+    // d3.select("#wordchart").append("svg")
+    //     .attr("width", 1300)
+    //     .attr("height", 800)
+    //   .append("g")
+      svg_word
+        .attr("transform", "translate("+(width/2)+","+(height/2)+")")
+      .selectAll("text")
+        .data(words)
+      .enter().append("text")
+        .style("font-size", function(d) { return d.size + "px"; })
+        .style("font-family", "Impact")
+        .style("fill", function(d, i) { return fill(i); })
+        .attr("text-anchor", "middle")
+        .attr("transform", function(d) {
+          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+        .text(function(d) { return d.text; });
+  }
+
+  $("body").tooltip({selector: '[title]', container: 'body', placement:"auto top"});
+</script>
