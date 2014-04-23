@@ -1,21 +1,22 @@
-{{ GRAMEX(cache=['style.css', '.head.html', '.tail.html', 'facts.csv', 'img/parliament.png', 'img/assembly.png'], max_age=10*60) }}{% code %}
+{{ GRAMEX(cache=['style.css', '.head.html', '.tail.html', 'facts.csv', 'img/parliament.png', 'img/assembly.png', 'header.ibn.html'], max_age=10*60) }}{% code %}
 title = 'Elections in India'
 description = 'A visual guide to the history of Indian elections, from 1951 until today, by Gramener.'
 facts = DB.csv('facts.csv')
 tv = args.get('tv')
+appstyle = args.get('style', [''])[0]
+base_url = 'parliament' + ('?style=' + appstyle if 'style' in args else '')
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
-  {{ T('.head.html', title=title, static_url=static_url, description=description) }}
+  {{ T('.head.html', title=title, static_url=static_url, description=description, appstyle=appstyle) }}
   <style>
-  img.main {
-    width: 100%;
-  }
-  .summary-title {
-    text-align: center;
-  }
+  img.main { width: 100%; }
+  .summary-title { text-align: center; }
   </style>
 </head><body>
 
+{% if appstyle %}
+  {{ T('header.' + appstyle + '.html') }}
+{% end %}
 <nav class="navbar navbar-default{% if tv %} navbar-fixed-top{% end %}" role="navigation">
   <div class="container">
 
@@ -37,23 +38,22 @@ tv = args.get('tv')
   </div>
 </nav>
 
-
 <div class="container">
   <div class="row">
     <div class="col-md-6">
-      <h2 class="summary-title"><a href="parliament">Parliament elections</a></h2>
-      <a href="parliament"><img class="main" src="{{ static_url('img/parliament.png') }}"></a>
+      <h2 class="summary-title"><a href="{{ base_url }}">Parliament elections</a></h2>
+      <a href="{{ base_url }}"><img class="main" src="{{ static_url('img/parliament.png') }}"></a>
     </div>
 
     <div class="col-md-6">
-      <h2 class="summary-title"><a href="parliament#cartogram?BY=2014-Schedule">Parliament maps</a></h2>
-      <a href="parliament#cartogram?BY=2014-Schedule"><img class="main" src="{{ static_url('img/parliament-cartogram.png') }}"></a>
+      <h2 class="summary-title"><a href="{{ base_url }}#cartogram?BY=2014-Schedule">Parliament maps</a></h2>
+      <a href="{{ base_url }}#cartogram?BY=2014-Schedule"><img class="main" src="{{ static_url('img/parliament-cartogram.png') }}"></a>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
-      <h2 class="summary-title"><a href="parliament#facts">Election Factoids</a></h2>
-      <a href="parliament#facts"><img class="main" src="{{ static_url('img/factoids.png') }}"></a>
+      <h2 class="summary-title"><a href="{{ base_url }}#facts">Election Factoids</a></h2>
+      <a href="{{ base_url }}#facts"><img class="main" src="{{ static_url('img/factoids.png') }}"></a>
     </div>
   </div>
 
@@ -64,8 +64,8 @@ tv = args.get('tv')
       <a href="assembly"><img class="main" src="{{ static_url('img/assembly.png') }}"></a>
     </div>
     <div class="col-md-6">
-      <h2 class="summary-title"><a href="parliament?TV">Parliament elections for TV</a></h2>
-      <a href="parliament"><img class="main" src="{{ static_url('img/parliament.png') }}"></a>
+      <h2 class="summary-title"><a href="{{ base_url }}?TV">Parliament elections for TV</a></h2>
+      <a href="{{ base_url }}"><img class="main" src="{{ static_url('img/parliament.png') }}"></a>
     </div>
   </div>
   #}
@@ -74,6 +74,6 @@ tv = args.get('tv')
   </footer>
 </div>
 
-{{ T('.tail.html') }}
+{{ T('.tail.html', appstyle=appstyle) }}
 
 </body></html>
