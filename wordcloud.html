@@ -62,9 +62,13 @@ temp = pd.DataFrame(temp,columns=["count"]).ix[:topwords,:].to_json()
 {% end %}
 
 <!DOCTYPE html>
+<html lang="en">
+<html>
 <head>
   <meta charset="utf-8"> 
   <title>Word Cloud</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
   <link rel="stylesheet" href="{{ static_url('/css/bootstrap.v3.min.css') }}"/>
 </head>
 <body style="background-color:#fff">
@@ -359,3 +363,5 @@ function collide(alpha) {
 
   $("body").tooltip({selector: '[title]', container: 'body', placement:"auto top"});
 </script>
+</body>
+</html>
