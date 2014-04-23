@@ -1,0 +1,289 @@
+{% from config import title, data_file, data_setup, reference_file, reference_setup, groups, filters, date, aspect, periods, sizes, colors, outliers, MAX_ENTRIES, MAX_FONT %}
+{{ GRAMEX(cache=[data_file, reference_file], mime='text/csv' if '_csv' in args else 'text/html', download=args.get('_csv', [None])[0], max_age=60 * 5) }}{% code %}
+from cStringIO import StringIO
+from urllib import quote
+
+data = DB.csv(data_file, setup=data_setup, dtype={group:object for group in groups})
+ref = DB.csv(reference_file, setup=reference_setup, dtype=object)
+
+data = data.dropna()
+
+size = args.get('size', sizes.keys())[0]
+size_field, size_agg = sizes[size][:2]
+
+# TODO: Optimize this: takes 10% of the time
+# daily_size = data.set_index(date)[size_field].resample('D', how=size_agg)
+
+# Based on the period, calculate the start date.
+# Use datetime not date. pd.tseries.offsets work only with datetimes.
+# end_date = pd.to_datetime(args.get(date, daily_size.index)[-1])
+# end_time = (end_date + pd.tseries.offsets.DateOffset()).replace(hour=0, minute=0, second=0, microsecond=0)
+period = args.get('period', periods.keys())[0]
+# prev_start_time, prev_end_time, start_time = periods[period](end_time)
+
+prev_data = data#[(data[date] >= prev_start_time) & (data[date] < prev_end_time)]
+data = data#[(data[date] >= start_time) & (data[date] < end_time)]
+
+filters_applied = []
+for group in filters + groups:
+    if group in args:
+        v = args[group][0]
+        filters_applied.append((group, v))
+        if group in ref.index:
+            lookup = ref.ix[group].set_index(ref.columns[0])[ref.columns[1]]
+            v = lookup.get(v, v)
+        data = data[data[group] == v]
+        prev_data = prev_data[prev_data[group] == v]
+
+if '_csv' in args:
+    s = StringIO()
+    s.write('Filters applied: ' + ', '.join(key + '=' + val for key, val in filters_applied) + '\n')
+    data.to_csv(s, index=False)
+    return s.getvalue()
+
+if 'groupby' in args:
+    groupby = args['groupby'][0]
+    groupbys = [group for group in groups if group not in args and group != groupby]
+else:
+    groupbys = [group for group in groups if group not in args]
+    groupby = groupbys.pop(0)
+
+color = args.get('color', colors.keys())[0]
+numerator, denominator = colors[color][:2]
+grouped = data.groupby(groupby)
+prev_grouped = prev_data.groupby(groupby)
+
+def groupby_field(key):
+    g = grouped
+    if key.startswith('Prev '):
+        g = prev_grouped
+        key = key.replace('Prev ', '')
+    field, agg = sizes[key][:2]
+    return g.agg({field: agg})[field]
+
+def totalby_field(key):
+    g = data
+    if key.startswith('Prev '):
+        g = prev_data
+        key = key.replace('Prev ', '')
+    field, agg = sizes[key][:2]
+    return getattr(g[field], agg)()
+
+totals = {
+  size:         totalby_field(size),
+  numerator:    totalby_field(numerator),
+  denominator:  totalby_field(denominator),
+}
+totals[color] = totals[numerator] / float(totals[denominator])
+
+# TODO: Optimise this: it's taking 90% of the time.
+# For e.g. just compute the top items by size, and calc num & den for those.
+summary = pd.DataFrame({
+  size:         groupby_field(size),
+  numerator:    groupby_field(numerator),
+  denominator:  groupby_field(denominator),
+}).sort(size, ascending=False).dropna().head(MAX_ENTRIES)
+summary[color] = summary[numerator] / summary[denominator].astype(float)
+lo_color, hi_color = summary[color].quantile(outliers), summary[color].quantile(1 - outliers)
+color_value_scaled = stats.scale(summary[color], lo_color, hi_color)
+
+W, H, legend_height, aspect = 800, 524, 24, float(aspect)
+gradient = ((0, '#D73027'), (0.5, '#FFFFBF'), (1.0, '#1A9850'))
+rects = treemap.squarified(0, 0, W / aspect, H - legend_height, summary[size])
+
+names = pd.Series(summary.index)
+if groupby in ref.index:
+    lookup = ref.ix[groupby].set_index(ref.columns[1])[ref.columns[0]]
+    names = names.replace(lookup.to_dict())
+{% end %}<!DOCTYPE html><html lang="en">
+<head>
+  <title>{{ title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ static_url('/css/bootstrap.v3.min.css') }}">
+  <style>
+  text { pointer-events: none; }
+  .calendarmap { padding: 6px; font-size: 12px; }
+  .calendarmap rect { cursor: pointer; }
+  .treemap { width: 100%; }
+  .treemap rect { stroke: #fff; cursor: pointer; }
+  .filter { cursor: pointer; }
+  .tooltip-inner { text-align: left; }
+  .kpi { text-align: right; margin: 1em 0;}
+  .kpi .head { font-size: 100%; text-transform: uppercase; font-family: Georgia, sans-serif; color: #666; line-height: 1; margin: 0; padding: 0; height: 2em; vertical-align: bottom; }
+  .kpi .number { font-size: 300%; }
+  .dim { opacity: 0.05; }
+  </style>
+</head><body>
+
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="?">{{ title }}</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ period }} <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            {% for p, fn in periods.iteritems() %}
+              <li{{ ' class="active"' if p == period else '' }}><a class="filter" href="?period={{ quote(p) }}">{{ escape(p) }}</a></li>
+            {% end %}
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Size: {{ size }} <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            {% for s in sizes %}
+              <li{{ ' class="active"' if s == size else '' }}><a class="filter" href="?size={{ quote(s) }}">{{ escape(s) }}</a></li>
+            {% end %}
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Colour: {{ color }} <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            {% for c in colors %}
+              <li{{ ' class="active"' if c == color else '' }}><a class="filter" href="?color={{ quote(c) }}">{{ escape(c) }}</a></li>
+            {% end %}
+          </ul>
+        </li>
+
+        {% for column in filters %}
+          {% set lookup = ref.ix[column].set_index(ref.columns[1])[ref.columns[0]] if column in ref.index else {} %}
+          {% set value = args.get(column, [''])[0] %}
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ escape(column) }}: {{ escape(lookup.get(value, value)) }} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li{{ ' class="active"' if column not in args else '' }}><a class="filter" href="?{{ quote(column) }}=">All</a></li>
+              {% for v in sorted(data[column].unique()) %}
+                <li{{ ' class="active"' if v == value else '' }}><a class="filter" href="?{{ quote(column) }}={{ quote(v) }}">{{ escape(lookup.get(v, v)) }}</a></li>
+              {% end %}
+            </ul>
+          </li>
+        {% end %}
+
+      </ul>
+      <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="search" class="form-control" placeholder="Search {{ groupby }}">
+        </div>
+      </form>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- .container -->
+</nav>
+
+<div class="container">
+  <div class="btn-group">
+    {% for group in groups %}
+      {% if group in args %}
+        <a class="btn btn-sm btn-danger btn-active filter" href="?{{ quote(group) }}=&groupby={{ quote(group) }}" title="Remove {{ group }} filter">{{ escape(args[group][0]) }} &times;</a>
+      {% elif group == groupby %}
+        <a class="btn btn-sm btn-success btn-active" href="" title="Currently grouped by {{ group }}">{{ escape(group) }}</a>
+      {% else %}
+        <a class="btn btn-sm btn-default filter" href="?groupby={{ quote(group) }}" title="Group by {{ group }}">{{ escape(group) }}</a>
+      {% end %}
+    {% end %}
+  </div>
+
+  <div class="row">
+    {% for field in [size, numerator, denominator, color] %}
+      {% set fieldval = field.replace('Prev ', '') %}
+      {% set format = sizes.get(fieldval, colors.get(field, None))[2] %}
+      <div class="col-sm-3 kpi">
+        <h2 class="head">{{ field }}</h2>
+        <span class="number">{{ format.format(totals[field]) }}</span>
+      </div>
+    {% end %}
+  </div>
+
+  <svg class="treemap" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ round(float(H) / W, 3) }}">
+    {% for i, (x, y, w, h) in enumerate(rects) %}{% code %}
+        text = names.iloc[i]
+        fill = _color.gradient(color_value_scaled[i], gradient)
+        font_size = min(MAX_FONT, w * aspect * 1.8 / len(str(text)))
+        title = [escape(text)]
+        title += ['<br>', size,        ': ', sizes[size.replace('Prev ', '')][2].format(summary[size].iloc[i])]
+        title += ['<br>', numerator,   ': ', sizes[numerator.replace('Prev ', '')][2].format(summary[numerator].iloc[i])]
+        title += ['<br>', denominator, ': ', sizes[denominator.replace('Prev ', '')][2].format(summary[denominator].iloc[i])]
+        title += ['<br>', color,       ': ', colors[color][2].format(summary[color].iloc[i])]
+      {% end %}
+      <rect x="{{ '%2f' % (aspect * x) }}" y="{{ '%2f' % y }}" width="{{ '%2f' % (aspect * w) }}" height="{{ '%2f' % h }}" fill="{{ fill }}" title="{{ ''.join(title) }}"
+      {% if len(groupbys) %}
+        href="?{{ quote(groupby) }}={{ quote(text) }}&groupby={{ quote(groupbys[0]) }}"
+      {% end %}/>
+      <text x="{{ aspect*(x + w/2) }}" y="{{ y + h/2 }}" dy="0.35em" text-anchor="middle" font-size="{{ font_size }}" fill="{{ _color.contrast(fill) }}">{{ text }}</text>
+    {% end %}
+    {{ T('legend-gradient.svg',
+        y        = H - legend_height + 4,
+        width    = W,
+        height   = legend_height - 4,
+        text     = [colors[color][2].format(lo_color), color, colors[color][2].format(hi_color)],
+        gradient = gradient
+    ) }}
+  </svg>
+
+  <p>
+    <a class="btn btn-primary filter" href="?_csv={{ period }}.csv">Download CSV</a>
+    <a class="btn btn-info zoom" href="#"><i class="glyphicon glyphicon-search"></i></a>
+  </p>
+</div>
+
+<script src="{{ static_url('/js/jquery.min.js') }}"></script>
+<script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
+<script src="{{ static_url('G.min.js') }}"></script>
+<script>
+$.fn.zoom = function(options) {
+  var x = options.x || 0,
+      y = options.y || 0,
+      width = options.width || 100,
+      height = options.height || 100,
+      zoom = options.zoom || 4;
+  if (options.off) {
+    return this.off('.zoom');
+  }
+  return this
+    .on('mousemove.zoom', function(e) {
+      this.setAttribute('viewBox', [e.offsetX, e.offsetY, width / zoom, height / zoom].join(' '));
+    })
+    .on('mouseleave.zoom', function(e) {
+      this.setAttribute('viewBox', [0, 0, width, height].join(' '))
+    });
+};
+
+$('body')
+  .urlfilter({
+    selector: '.filter,rect[href]'
+  })
+  .tooltip({
+    selector: '[title]',
+    container: 'body',
+    html: 'true'
+  })
+  .aspect();
+
+$('.zoom').on('click', function(e) {
+  e.preventDefault();
+  var $this = $(this).toggleClass('active');
+  $('.treemap').zoom({
+      off: !$this.is('.active'),
+      zoom: 4,
+      width: {{ W }},
+      height: {{ H }},
+    });
+});
+
+G.search.filter({
+  search:     'input[type=search]',
+  selector:   '.treemap rect, .treemap text',
+  text:       function(el) { return $(el).text() || $(el).next().text(); },
+  hideClass:  'dim'
+})
+</script>
+</body></html>

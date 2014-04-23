@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Treemap</title>
+    <style type="text/css">
+.cell {
+  border: solid 1px white;
+  font-family: Georgia;
+  font-size: 15px;
+  font-weight: bolder;
+  color: Black;
+  line-height: 15px;
+  overflow: hidden;
+  position: absolute;
+  text-indent: 2px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+    </style>
+  </head>
+  <body>
+    <div id="chart"></div>
+<script src="{{ static_url('/js/d3.v3.min.js') }}"></script>
+<script src="js/d3.layout.cloud.js"></script>
+<script src="{{ static_url('/js/jquery2.min.js') }}"></script>
+<script src="{{ static_url('/js/underscore-min.js') }}"></script>
+<script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
+<script src="{{ static_url('js/G.min.js') }}"></script>
+<script type="text/javascript">
+
+var w = window.innerWidth - 1,
+    h = window.innerHeight - 1,
+    color = d3.scale.category20c();
+
+var treemap = d3.layout.treemap()
+    .size([w, h])
+    .children(function(d) { return d.values; })
+    .value(function(d) { return d.Amount; })
+    .sticky(true);
+
+var div = d3.select("#chart").append("div")
+    .style("position", "relative")
+    .style("width", w + "px")
+    .style("height", h + "px");
+
+d3.csv("donation4.csv", function(data) {
+
+  var json = d3.nest()
+            .key(function(d){ return d.Party; })
+            .key(function(d){ return d.Type; })
+            .key(function(d){ return d.Name; })
+            .entries(data);
+
+  console.log(json);
+
+
+  div.selectAll("div")
+      .data(treemap.nodes({values:json}))
+    .enter().append("div")
+      .attr("class", "cell")
+      .style("background", function(d) { return d.depth == 1 ? color(d.Party) : null; })
+      .style("left", function(d) { return d.depth == 1 ? d.x + "px" : null; })
+      .style("top", function(d) { return d.depth == 1 ? d.y + "px" : null; })
+      .style("width", function(d) { return d.depth == 1 ? d.dx + "px" : null; })
+      .style("height", function(d) { return d.depth == 1 ? d.dy + "px" : null; })
+      .text(function(d){ return d.Party;})
+      .on('click', onClick);
+});
+
+function onClick(d,i) {
+  var datum = d, dep = d.depth;
+    var filtered = div.selectAll("div.cell")
+  .filter(function(d){
+    if(d.parent)
+    {
+      return d.depth == dep+1 && d.parent == datum;
+    }
+    else 
+    {
+      return d.depth == dep+1;
+    }
+  });
+    filtered
+                //.text(function(d){return d.data.key})
+    .transition()
+        .duration(1000)
+      .style("left", function(d){return d.x + "px";})
+      .style("top", function(d){return d.y + "px";})
+      .style("width", function(d){return d.dx - 1 + "px";})
+      .style("height", function(d){return d.dy - 1 + "px";})
+      .style("background", function(d) { return color(d.Party); })
+      ;
+
+  filtered.append("svg:text")
+      .attr("transform", function(d) { return "rotate(" + Math.PI * 180 + ")"; })
+      .attr("x", function(d) { return d.x; })
+    .attr("y", function(d) { return d.y; })
+//      .attr("dx", "6") // margin
+//      .attr("dy", ".35em") // vertical-align
+      .text(function(d) { return d.Party; });
+}
+
+</script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+{% code %}
+
+data = pd.read_csv("donation4.csv")
+
+data = data.dropna()
+
+year = args.get('year', data["Financial Year"].unique()[::-1] )[0]
+groupby = args.get('groupby', ["Name"] )[0]
+
+data = data[data["Financial Year"]==year]
+
+data = data[data["Party"] == "Communist Party of India (Marxist) (CPI(M))"]
+
+data = data.groupby(groupby).sum()
+
+# data = data[data["Financial Year"]=="2011-12"]
+
+data = data.sort_index(by="Amount",ascending=False)
+
+aspect = 2
+
+W, H, legend_height, aspect = 800, 524, 24, float(aspect)
+gradient = ((0, '#D73027'), (0.5, '#FFFFBF'), (1.0, '#1A9850'))
+rects_party = treemap.squarified(0, 0, W / aspect, H - legend_height, data["Amount"])
+
+names = pd.Series(data.index)
+MAX_FONT = 100
+
+
+{% end %}
+
+  <svg class="treemap" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ round(float(H) / W, 3) }}">
+    {% for i, (x, y, w, h) in enumerate(rects_party) %}{% code %}
+        text = names.iloc[i]
+        fill = _color.gradient(i, gradient)
+        font_size = min(MAX_FONT, w * aspect * 1.8 / len(str(text)))
+        title = [escape(text)]
+      {% end %}
+      <rect x="{{ '%2f' % (aspect * x) }}" y="{{ '%2f' % y }}" width="{{ '%2f' % (aspect * w) }}" height="{{ '%2f' % h }}" fill="{{ fill }}" title='{{ ''.join(title) }}'
+      {% if len(groupbys) %}
+        href="?{{ quote(groupby) }}={{ quote(text) }}&groupby={{ quote(groupbys[0]) }}"
+      {% end %}/>
+      <text x="{{ aspect*(x + w/2) }}" y="{{ y + h/2 }}" dy="0.35em" text-anchor="middle" font-size="{{ font_size }}" fill="{{ _color.contrast(fill) }}">{{ text }}</text>
+    {% end %}
+  </svg>
