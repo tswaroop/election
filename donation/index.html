@@ -8,6 +8,11 @@ ref = DB.csv(reference_file, setup=reference_setup, dtype=object)
 
 data = data.dropna()
 
+party_colors = data[["Party","Color"]].groupby("Party").first()
+lookup = ref.ix["Party"].set_index(ref.columns[1])[ref.columns[0]]
+party_colors.index = pd.Series(party_colors.index).replace(lookup.to_dict()).values
+# print party_colors.ix["Bharatiya Janata Party (BJP)","Color"]
+
 size = args.get('size', sizes.keys())[0]
 size_field, size_agg = sizes[size][:2]
 
@@ -48,10 +53,13 @@ else:
     groupbys = [group for group in groups if group not in args]
     groupby = groupbys.pop(0)
 
+party = args.get("Party",[""])[0]
+
 color = args.get('color', colors.keys())[0]
 numerator, denominator = colors[color][:2]
 grouped = data.groupby(groupby)
 prev_grouped = prev_data.groupby(groupby)
+
 
 def groupby_field(key):
     g = grouped
@@ -83,7 +91,8 @@ summary = pd.DataFrame({
   numerator:    groupby_field(numerator),
   denominator:  groupby_field(denominator),
 }).sort(size, ascending=False).dropna().head(MAX_ENTRIES)
-summary[color] = summary[numerator] / summary[denominator].astype(float)
+total_amount = summary[numerator].sum()
+summary[color] = summary[numerator] / float(total_amount) #summary[numerator] / summary[denominator].astype(float)
 lo_color, hi_color = summary[color].quantile(outliers), summary[color].quantile(1 - outliers)
 color_value_scaled = stats.scale(summary[color], lo_color, hi_color)
 
@@ -95,6 +104,8 @@ names = pd.Series(summary.index)
 if groupby in ref.index:
     lookup = ref.ix[groupby].set_index(ref.columns[1])[ref.columns[0]]
     names = names.replace(lookup.to_dict())
+
+
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
   <title>{{ title }}</title>
@@ -130,31 +141,6 @@ if groupby in ref.index:
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ period }} <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            {% for p, fn in periods.iteritems() %}
-              <li{{ ' class="active"' if p == period else '' }}><a class="filter" href="?period={{ quote(p) }}">{{ escape(p) }}</a></li>
-            {% end %}
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Size: {{ size }} <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            {% for s in sizes %}
-              <li{{ ' class="active"' if s == size else '' }}><a class="filter" href="?size={{ quote(s) }}">{{ escape(s) }}</a></li>
-            {% end %}
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Colour: {{ color }} <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            {% for c in colors %}
-              <li{{ ' class="active"' if c == color else '' }}><a class="filter" href="?color={{ quote(c) }}">{{ escape(c) }}</a></li>
-            {% end %}
-          </ul>
-        </li>
-
         {% for column in filters %}
           {% set lookup = ref.ix[column].set_index(ref.columns[1])[ref.columns[0]] if column in ref.index else {} %}
           {% set value = args.get(column, [''])[0] %}
@@ -193,7 +179,7 @@ if groupby in ref.index:
   </div>
 
   <div class="row">
-    {% for field in [size, numerator, denominator, color] %}
+    {% for field in [size] %}
       {% set fieldval = field.replace('Prev ', '') %}
       {% set format = sizes.get(fieldval, colors.get(field, None))[2] %}
       <div class="col-sm-3 kpi">
@@ -206,7 +192,14 @@ if groupby in ref.index:
   <svg class="treemap" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ round(float(H) / W, 3) }}">
     {% for i, (x, y, w, h) in enumerate(rects) %}{% code %}
         text = names.iloc[i]
-        fill = _color.gradient(color_value_scaled[i], gradient)
+        try:
+          fill = party_colors.ix[text,"Color"]
+        except:
+          try:
+            fill = party_colors.ix[party,"Color"]
+          except:
+            fill = _color.gradient(color_value_scaled[i], gradient)
+
         font_size = min(MAX_FONT, w * aspect * 1.8 / len(str(text)))
         title = [escape(text)]
         title += ['<br>', size,        ': ', sizes[size.replace('Prev ', '')][2].format(summary[size].iloc[i])]
