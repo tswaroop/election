@@ -3,7 +3,14 @@ title = 'Elections in India'
 description = 'A visual guide to the history of Indian elections, from 1951 until today, by Gramener.'
 facts = DB.csv('facts.csv')
 tv = args.get('tv')
-appstyle = args.get('style', [''])[0]
+
+# Set style to the IBN style, which has a header, based on hostname.
+# http://ibnlive.in.com/general-elections-2014/analytics/ will point here
+appstyle = 'ibn' if 'ibnlive' in handler.request.host else ''
+
+# Allow ?style= to override the hostname-based style
+appstyle = args.get('style', [appstyle])[0]
+
 base_url = 'parliament' + ('?style=' + appstyle if 'style' in args else '')
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
