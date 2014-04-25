@@ -38,7 +38,7 @@
 }
 
 #xDropdown, #yDropdown {
-	overflow:scroll;
+	overflow-y:scroll;
 	height:200px;
 }
 
@@ -157,8 +157,8 @@ text{
           </ul>
         </li>
 
-        <li>
-        	<div class="btn-group" id="nextButtons" style="margin-top:10px">
+        <li style="padding-left:1em;padding-top:0.7em">
+        	<div class="btn-group" id="nextButtons">
 			  <button type="button" class="btn btn-default" id="startNext"><<</button>
 			  <button type="button" class="btn btn-default" id="prevButton"><</button>
 			  <button type="button" class="btn btn-default" id="nextButton">></button>
@@ -444,6 +444,7 @@ function getData(){
 	// console.log(dict);
 
 	columny = dict.yparam;
+	$("#metricname").text(columny);
 	columnx = "YEAR";//dict.xparam;
 	state_selected = "India";//dict.state;
 	// if(dict.datasource == "state"){
@@ -524,11 +525,12 @@ function getData(){
 	d3.selectAll("#yDropdown li").remove();
 
 	 d3.select("#yDropdown").append("li")
+	 	.style("padding","1em")
 	 	.append("input")
 	 	.attr("type","search")
 	 	.attr("id","yparamsearch")
 	 	.attr("class","form-control")
-	 	.style("margin-left","20px")
+	 	// .style("margin-left","20px")
 	 	//.style("width","240px")
 	 	.attr("data-target",".yparamname")
 	 	.attr("data-search","@text")
@@ -547,7 +549,7 @@ function getData(){
 		.text(String)
 		.on("click",function(d){
 			// $("#yparam").val(d);
-			$("#metricname").text(d);
+			// $("#metricname").text(d);
 			setTimeout(function(){
 				columny = d;
 				$("#yparamname").text(d);
@@ -626,7 +628,7 @@ function getData(){
 function fillTerms(data,columny,columnx,colcolor,x,y,term){
 
 	var termyears = _.uniq(_.pluck(data,"termYears")).concat(["All"]);
-	console.log(termyears);
+	// console.log(termyears);
 
 	$("#termButtons").children().remove();
 
@@ -707,7 +709,7 @@ function pathTween(d){
 
 function drawAxes(data,columny,columnx,colcolor,term){
 
-	console.log(columnx);
+	// console.log(columnx);
 
 	if(columnx == "YEAR"){
 			x = d3.scale.ordinal();
@@ -877,7 +879,7 @@ function drawChart(data,columny,columnx,colcolor,x,y,term){
   		.attr("data-toggle","1");
 
   	party.append("text")
-  		.attr("x",function(d,i){ return i*((width)/parties.length) + 10; })
+  		.attr("x",function(d,i){ return i*( width/parties.length ) + (width/parties.length)/2-10; })
   		.attr("y","30px")
   		.attr("font-weight","bold")
   		.attr("fill","#fff")//function(d){ return d3.rgb(color(d)).brighter(0.97); })
@@ -990,7 +992,7 @@ $("#startNext").on("click",function(){
 	nextcounter = 0;
 	window.location.hash = story_urls[nextcounter];
 	$("#nextStories").text(stories[nextcounter]);
-	console.log(story_urls[nextcounter])
+	// console.log(story_urls[nextcounter])
 	getData();
 });
 $("#prevButton").on("click",function(){
@@ -1003,7 +1005,7 @@ $("#prevButton").on("click",function(){
 $("#nextButton").on("click",function(){
 	++nextcounter;
 	nextcounter %= story_urls.length;
-	console.log(nextcounter);
+	// console.log(nextcounter);
 	window.location.hash = story_urls[nextcounter];
 	$("#nextStories").text(stories[nextcounter]);
 	getData();
