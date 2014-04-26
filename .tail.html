@@ -2,7 +2,59 @@
 
 {% if style == 'ibn' %}
 <div id="footerbar">
- <div class="copyright">
+<style>
+  *{margin:0px; padding:0px;}
+  #footerbar {
+  bottom: 0px;
+  background:#f9f9f9;
+  }
+  .copyright{font-size:10px; text-align:center; padding:5px 0px; margin-top:8px; background:#000;color:#ccc;position:absolute;width:100%;font-family:arial; }
+  .clr {clear:both;}
+  .share_lbox{ border:0; margin: 0 auto; padding-top: 10px; width: 600px}
+  .share_lbox .sicon{float:left; padding:0 10px; width: 80px; border-right: 1px solid #e1e1e1; }
+         .share_lbox .sicon:last-child{border-right: 0;}
+     .fleft{float:left;}
+     .fright{float:right;} 
+</style>
+
+<div id="footerbar">
+     
+  <!--share box -->
+  <div class="share_lbox" align="center">                 
+                    
+      <div class="sicon" style="width:120px;">
+        <iframe src="//www.facebook.com/plugins/like.php?href=http://ibnlive.in.com/general-elections-2014/analytics/&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=true&amp;height=21&amp;appId=198424420211533" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true"></iframe>
+      </div>
+      <div  class="sicon"><a href="http://ibnlive.in.com/general-elections-2014/analytics/" class="twitter-share-button" data-count="horizontal" data-text="Elections Results India, General Elections Results, Lok Sabha Polls Results India"
+        >Tweet</a>
+        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      </div>
+        <div  class="sicon" style="width:auto">
+        <script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
+        <script type="IN/Share" data-counter="right" data-url="http://ibnlive.in.com/general-elections-2014/analytics/"></script>
+        </div>
+      <div  class="sicon" >
+        <!-- Place this tag where you want the share button to render. -->
+    <div class="g-plus" data-action="share" data-annotation="bubble"></div>
+        <!-- Place this tag after the last share tag. -->
+        <script type="text/javascript">
+          (function() {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/platform.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+          })();
+        </script>
+    </div>
+          
+  <div  class="sicon" style="width: 40px" >    
+    <a href="//www.pinterest.com/pin/create/button/?url=http://ibnlive.in.com/general-elections-2014/analytics/&description=General Elections Analytics" data-pin-do="buttonPin" data-pin-config="beside"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>
+    <!-- Please call pinit.js only once per page -->
+    <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
+  </div>  
+  <div class="clr"> </div>  
+  </div>
+<!--share box -->
+<div class="copyright">
   <div style="width:30%" class="fleft">Visualizations powered by <a href="https://gramener.com/" target="_blank" style="color:#fff">Gramener.com</a></div>
   <div style="width:40%" class="fright">Copyright &copy; 2013 IBNLive.in.com - All rights reserved</div>
  </div>
