@@ -43,6 +43,7 @@ data_file = 'data.csv'
 # Just return data if no transformations are required.
 def data_setup(data):
     # data[date] = stats.to_date(data[date], dayfirst=True)
+    data['Amount'] /= 1E7;
     return data
 
 # Reference data file and its transformations
@@ -76,7 +77,7 @@ periods = OrderedDict((
 # What is the size based on?
 sizes = OrderedDict((
     # Title                       fieldname, aggregation, display format
-    ('# Amount',       ('Amount', 'sum', '{:,.0f}')),
+    ('# Amount',       ('Amount', 'sum', '{:,.2f} cr')),
 
 ))
 
