@@ -259,7 +259,9 @@ $('body')
     container: 'body',
     html: 'true'
   })
-  .aspect();
+  .aspect({
+    selector:'[data-height]'
+  });
 
 $('.zoom').on('click', function(e) {
   e.preventDefault();
@@ -272,9 +274,9 @@ $('.zoom').on('click', function(e) {
     });
 });
 
-G.search.filter({
-  search:     'input[type=search]',
-  selector:   '.treemap rect, .treemap text',
+$('body').search({
+  selector:     'input[type=search]',
+  target:   '.treemap rect, .treemap text',
   text:       function(el) { return $(el).text() || $(el).next().text(); },
   hideClass:  'dim'
 })
