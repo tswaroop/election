@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://127.0.0.1:8888" />
+<title>selenium_govtper</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">selenium_govtper</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/govtperformance</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=metricname</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=chart</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=chartsvg</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=metricname</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//div[@id='termButtons']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=startNext</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertCssCount</td>
+	<td>css=#legend svg g</td>
+	<td>4</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#chartsvg g .line</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeCssCount</td>
+	<td>css=#termButtons label</td>
+	<td>termcount</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>${termcount}-1</td>
+	<td>newtermcount</td>
+</tr>
+<tr>
+	<td>assertCssCount</td>
+	<td>css=#chartsvg g .line</td>
+	<td>${newtermcount}</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeCssCount</td>
+	<td>css=#chartsvg g g:nth-child(3) g</td>
+	<td>tickcount</td>
+</tr>
+<tr>
+	<td>assertCssCount</td>
+	<td>css=#chartsvg g circle</td>
+	<td>${tickcount}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#legend svg .party:first-child rect</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>css=#legend svg .party:first-child text</td>
+	<td>partyname</td>
+</tr>
+<tr>
+	<td>storeAttribute</td>
+	<td>css=#chartsvg g circle@class</td>
+	<td>classname</td>
+</tr>
+<tr>
+	<td>assertExpression</td>
+	<td>${partyname}</td>
+	<td>${classname}</td>
+</tr>
+</tbody></table>
+</body>
+</html>
