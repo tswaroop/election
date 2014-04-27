@@ -1,0 +1,32 @@
+index,value,column
+Bharatiya Janata Party (BJP),A,Party
+Indian National congress (INC),B,Party
+Janata Dal (United) (JD(U)),C,Party
+Communist Party of India (Marxist) (CPI(M)),D,Party
+Samajwadi Party (SP),E,Party
+Communist Party of India (CPI),F,Party
+Telugu Desam (TDP),G,Party
+Rashtriya Lok Dal (RLD),H,Party
+Maharashtra Navnirman Sena (MNS),I,Party
+Sikkim Democratic Front (SDF),J,Party
+Shiv Sena (SHS),K,Party
+All India United Democratic Front (AIUDF),L,Party
+All India Anna Dravida Munnetra Kazhagam (AIADMK),M,Party
+Nationalist Congress Party (NCP),N,Party
+Telangana Rashtra Samithi (TRS),O,Party
+Zoram Nationalist Party (ZNP),P,Party
+Shiromani Akali Dal (SAD),Q,Party
+Jharkhand Vikas Morcha (Prajatantrik) (JVM),R,Party
+Lok Jan Shakti party (LJP),S,Party
+Rashtriya Janata Dal (RJD),T,Party
+Bodoland Peoples Front (BPF),U,Party
+All India Trinamool Congress (AITC),V,Party
+Desiya Murpokku Dravida Kazhagam (DMDK),W,Party
+Haryana Janhit Congress (BL) (HJC(BL)),X,Party
+Biju Janata Dal (BJD),Y,Party
+Janata Dal (Secular) (JD(S)),Z,Party
+Jammu & Kashmir National Conference (JKNC),a,Party
+Dravida Munnetra Kazhagam (DMK),b,Party
+Individual,A,Type
+limited,B,Type
+trust,C,Type
