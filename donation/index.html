@@ -2,6 +2,7 @@
 {{ GRAMEX(cache=[data_file, reference_file], mime='text/csv' if '_csv' in args else 'text/html', download=args.get('_csv', [None])[0], max_age=60 * 5) }}{% code %}
 from cStringIO import StringIO
 from urllib import quote
+from layout import fontwidth
 
 data = DB.csv(data_file, setup=data_setup, dtype={group:object for group in groups})
 ref = DB.csv(reference_file, setup=reference_setup, dtype=object)
@@ -202,7 +203,11 @@ if groupby in ref.index:
           except:
             fill = _color.gradient(color_value_scaled[i], gradient)
 
-        font_size = min(MAX_FONT, w * aspect * 1.8 / len(str(text)))
+        # try:
+        font_size =  min(h, w * aspect * 14.5 / fontwidth(text.encode('utf8')), MAX_FONT)
+        # except:
+        #   font_size = min(MAX_FONT, w * aspect * 1.8 / len(str(text)))
+
         title = [escape(text)]
         title += ['<br>', size,        ': ', sizes[size.replace('Prev ', '')][2].format(summary[size].iloc[i])]
         #title += ['<br>', numerator,   ': ', sizes[numerator.replace('Prev ', '')][2].format(summary[numerator].iloc[i])]
