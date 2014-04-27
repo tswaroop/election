@@ -203,9 +203,9 @@ if groupby in ref.index:
         font_size = min(MAX_FONT, w * aspect * 1.8 / len(str(text)))
         title = [escape(text)]
         title += ['<br>', size,        ': ', sizes[size.replace('Prev ', '')][2].format(summary[size].iloc[i])]
-        title += ['<br>', numerator,   ': ', sizes[numerator.replace('Prev ', '')][2].format(summary[numerator].iloc[i])]
-        title += ['<br>', denominator, ': ', sizes[denominator.replace('Prev ', '')][2].format(summary[denominator].iloc[i])]
-        title += ['<br>', color,       ': ', colors[color][2].format(summary[color].iloc[i])]
+        #title += ['<br>', numerator,   ': ', sizes[numerator.replace('Prev ', '')][2].format(summary[numerator].iloc[i])]
+        #title += ['<br>', denominator, ': ', sizes[denominator.replace('Prev ', '')][2].format(summary[denominator].iloc[i])]
+        #title += ['<br>', color,       ': ', colors[color][2].format(summary[color].iloc[i])]
       {% end %}
       <rect x="{{ '%2f' % (aspect * x) }}" y="{{ '%2f' % y }}" width="{{ '%2f' % (aspect * w) }}" height="{{ '%2f' % h }}" fill="{{ fill }}" title="{{ ''.join(title) }}"
       {% if len(groupbys) %}
