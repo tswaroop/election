@@ -7,6 +7,7 @@ data = DB.csv(data_file, setup=data_setup, dtype={group:object for group in grou
 ref = DB.csv(reference_file, setup=reference_setup, dtype=object)
 
 data = data.dropna()
+dropdown_data = data.copy()
 
 party_colors = data[["Party","Color"]].groupby("Party").first()
 lookup = ref.ix["Party"].set_index(ref.columns[1])[ref.columns[0]]
@@ -39,6 +40,7 @@ for group in filters + groups:
             v = lookup.get(v, v)
         data = data[data[group] == v]
         prev_data = prev_data[prev_data[group] == v]
+
 
 if '_csv' in args:
     s = StringIO()
@@ -148,7 +150,7 @@ if groupby in ref.index:
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ escape(column) }}: {{ escape(lookup.get(value, value)) }} <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li{{ ' class="active"' if column not in args else '' }}><a class="filter" href="?{{ quote(column) }}=">All</a></li>
-              {% for v in sorted(data[column].unique()) %}
+              {% for v in sorted(dropdown_data[column].unique()) %}
                 <li{{ ' class="active"' if v == value else '' }}><a class="filter" href="?{{ quote(column) }}={{ quote(v) }}">{{ escape(lookup.get(v, v)) }}</a></li>
               {% end %}
             </ul>
