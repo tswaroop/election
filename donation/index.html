@@ -4,8 +4,8 @@ from cStringIO import StringIO
 from urllib import quote
 from layout import fontwidth
 
-data = DB.csv(data_file, setup=data_setup, dtype={group:object for group in groups})
-ref = DB.csv(reference_file, setup=reference_setup, dtype=object)
+data = DB.csv(data_file, setup=data_setup, encoding='cp1252', dtype={group:object for group in groups})
+ref = DB.csv(reference_file, setup=reference_setup, encoding='cp1252', dtype=object)
 
 data = data.dropna()
 dropdown_data = data.copy()
@@ -204,7 +204,7 @@ if groupby in ref.index:
             fill = _color.gradient(color_value_scaled[i], gradient)
 
         # try:
-        font_size =  min(h, w * aspect * 14.5 / fontwidth(text.encode('utf8')), MAX_FONT)
+        font_size =  min(h, w * aspect * 14.5 / fontwidth(text), MAX_FONT)
         # except:
         #   font_size = min(MAX_FONT, w * aspect * 1.8 / len(str(text)))
 
@@ -220,6 +220,9 @@ if groupby in ref.index:
       {% end %}/>
       <text x="{{ aspect*(x + w/2) }}" y="{{ y + h/2 }}" dy="0.35em" text-anchor="middle" font-size="{{ font_size }}" fill="{{ _color.contrast(fill) }}">{{ text }}</text>
     {% end %}
+
+    {% if groupby in ["Name","Type"] and party == "" %}
+
     {{ T('legend-gradient.svg',
         y        = H - legend_height + 4,
         width    = W,
@@ -227,12 +230,9 @@ if groupby in ref.index:
         text     = [colors[color][2].format(lo_color), color, colors[color][2].format(hi_color)],
         gradient = gradient
     ) }}
+    {% end %}
   </svg>
 
-  <p>
-    <a class="btn btn-primary filter" href="?_csv={{ period }}.csv">Download CSV</a>
-    <a class="btn btn-info zoom" href="#"><i class="glyphicon glyphicon-search"></i></a>
-  </p>
 </div>
 
 <script src="{{ static_url('/js/jquery.min.js') }}"></script>
