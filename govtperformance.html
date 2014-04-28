@@ -1,14 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+{{ GRAMEX(cache=['js/G.min.js', 'style.css', 'data_india_new.csv', '.head.html', '.tail.html', 'img/loading.gif'], max_age=10*60) }}{% code %}
+title = 'Government Performance'
+description = 'A visual guide to the history of Indian Parliament elections, from 1951 until today, by Gramener.'
+tv = args.get('tv')
+#colors = _color.distinct(10)
+
+# Set style to the IBN style, which has a header, based on hostname.
+# http://ibnlive.in.com/general-elections-2014/analytics/ will point here
+appstyle = 'ibn' if 'ibnlive' in handler.request.host else ''
+
+# Allow ?style= to override the hostname-based style
+appstyle = args.get('style', [appstyle])[0]
+
+{% end %}<!DOCTYPE html><html lang="en">
 <html>
 <head>
+{{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv, appstyle=appstyle) }}
 	<title>Government Performance</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="{{ static_url('/css/bootstrap.v3.min.css') }}"/>
 	<link rel="stylesheet" href="bootstrap-multiselect.css" type="text/css"/>
-	<link rel="stylesheet" href="js/bootstro.css" type="text/css"/>
 	<style type="text/css">
 .axis path,
 .axis line {
@@ -119,10 +131,12 @@ text{
 
 
 	</style>
-</head>
-<body>
+</head><body{% if tv %} class="tv"{% end %}>
 
-<nav class="navbar navbar-default" role="navigation">
+{% if appstyle %}
+  {{ T('header.' + appstyle + '.html') }}
+{% end %}
+<nav class="navbar navbar-default{% if tv %} navbar-fixed-top{% end %}" role="navigation">
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -167,10 +181,6 @@ text{
 			</div>	
         </li>
 
-        <li>
-        	<div id="download-png" class="btn btn-default">Download as PNG</div>
-        </li>
-
       </ul>
 
 <!--       <form class="navbar-form navbar-left" role="search" id="select_params">
@@ -183,7 +193,7 @@ text{
   </div><!-- /.container-fluid -->
 </nav>
 
-<div class="container" id="mainContainer">
+<div class="container">
 
 <!-- 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12">
@@ -212,7 +222,7 @@ text{
 	</div> -->
 
 	<div class="row">
-		<div class="col-md-offset-2 col-md-10 col-sm-offset-2 col-sm-10 col-xs-12 bootstro">
+		<div class="col-md-offset-2 col-md-10 col-sm-offset-2 col-sm-10 col-xs-12">
 			<div class="btn-group" id="termButtons" data-toggle="buttons">
 			</div>
 		</div>
@@ -221,38 +231,32 @@ text{
 	<div class="row">
 
 		<div class="col-md-12 col-sm-12">
-			<div id="chart" class="bootstro"></div>
+			<div id="chart"></div>
 		</div>
 
 	</div>
 
-	<div class='row'>
+	<div class="row">
 
-		<div class='col-md-offset-1 col-md-11 col-sm-offset-1 col-sm-11 col-xs-offset-1 col-xs-11'>
-			<div id='legend' style='margin-left:-15px' class='bootstro'></div>
+		<div class="col-md-offset-1 col-md-11 col-sm-offset-1 col-sm-11 col-xs-offset-1 col-xs-11">
+			<div id="legend" style="margin-left:-15px"></div>
 		</div>
 
 	</div>
 
-	<footer>Data sourced from <a href='http://data.worldbank.org/products/wdi' target='_blank'>World Bank</a>.All currency values in ($USD).</footer>
+	<footer>Data sourced from <a href="http://data.worldbank.org/products/wdi" target="_blank">World Bank</a>.All currency values in ($USD).</footer>
 
 </div>
 
-<canvas id="canvas" width="300" height="200" style="border: 1px solid black;"></canvas>
-
+{{ T('.tail.html', appstyle=appstyle) }}
 <script src="{{ static_url('/js/d3.v3.min.js') }}"></script>
 <script src="{{ static_url('/js/jquery2.min.js') }}"></script>
 <script src="{{ static_url('/js/underscore-min.js') }}"></script>
 <script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
 <script src="{{ static_url('js/G.min.js') }}"></script>
 <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
-<script type="text/javascript" src="js/bootstro.js"></script>
-<script type="text/javascript" src="js/rasterizeHTML.allinone.js"></script>
 
 <script>
-$(document).ready(function(){
-	bootstro.start();
-});
 
  $('.multiselect').multiselect();
 
@@ -279,7 +283,6 @@ var margin = {top:50,bottom:90,left:80,right:50},
 
 var svg = d3.select("#chart").append("svg")
 		.attr("id","chartsvg")
-		.attr("class","svg-to-download-as-png")
 		.attr("width",margin.left+width+margin.right)
 		.attr("height",margin.top+height+margin.bottom)
 		.attr("viewBox","0 0 "+(margin.left+width+margin.right)+" "+(margin.top+height+margin.bottom))
@@ -1035,23 +1038,6 @@ $('body').urlfilter({
     selector: '.gselect',
     target: "#"
   }).search();
-
-$('#download-png').on('click', function() {
-  // G.download({
-  //   file: 'test.png',                   // Save the file as ...
-  //   png: $('.svg-to-download-as-png')   // SVG element to download
-  // })
-	var canvas = document.getElementById("canvas"),
-	    context = canvas.getContext('2d'),
-	    // html_container = document.getElementById("thehtml"),
-	    html = $("#chart").html();//html_container.innerHTML;
-
-	console.log(html);
-	// rasterizeHTML.drawHTML(html).then(function (renderResult) {
-	//     context.drawImage(renderResult.image, 10, 25);
-	// });
-	rasterizeHTML.drawHTML(html,canvas);
-});
 
 </script>
 
