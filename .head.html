@@ -53,7 +53,6 @@
   <meta property="twitter:image" content="{{ static_url('img/startup-tablet-landscape.png') }}">
   <meta property="og:description" content="{{ description }}">
   <meta property="twitter:description" content="{{ static_url('img/startup-tablet-landscape.png') }}">
-
 {% end %}
 
 <link rel="stylesheet" href="{{ static_url('/css/bootstrap.v3.min.css') }}">
@@ -67,3 +66,9 @@
       (webview ? 'no-history' : '')
     );
 </script>
+
+{% if style == 'android' %}
+<style>
+body { font-size: 11px; }
+</style>
+{% end %}
