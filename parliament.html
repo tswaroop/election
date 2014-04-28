@@ -22,7 +22,7 @@ appstyle = args.get('style', [appstyle])[0]
   {{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv, appstyle=appstyle) }}
 </head><body{% if tv %} class="tv"{% end %}>
 
-{% if appstyle %}
+{% if appstyle and os.path.exists('header.' + appstyle + '.html') %}
   {{ T('header.' + appstyle + '.html') }}
 {% end %}
 <nav class="navbar navbar-default{% if tv %} navbar-fixed-top{% end %}" role="navigation">
@@ -147,8 +147,6 @@ appstyle = args.get('style', [appstyle])[0]
     Powered by <a href="https://gramener.com/">Gramener.com</a>
   </footer>
 </div>
-
-{{ T('.tail.html', appstyle=appstyle) }}
 
 <script>
 {{ T('js/helper.js') }}
@@ -328,5 +326,5 @@ redraw();
 
 </script>
 
-{{ T('.tail.html') }}
+{{ T('.tail.html', appstyle=appstyle) }}
 </body></html>

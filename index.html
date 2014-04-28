@@ -23,7 +23,7 @@ govtperformance_url = 'govtperformance' + ('?style=' + appstyle if 'style' in ar
   </style>
 </head><body>
 
-{% if appstyle %}
+{% if appstyle and os.path.exists('header.' + appstyle + '.html') %}
   {{ T('header.' + appstyle + '.html') }}
 {% end %}
 <nav class="navbar navbar-default{% if tv %} navbar-fixed-top{% end %}" role="navigation">
