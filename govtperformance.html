@@ -1,6 +1,21 @@
+{{ GRAMEX(cache=['js/G.min.js', 'style.css', 'data_india_new.csv', '.head.html', '.tail.html', 'img/loading.gif'], max_age=10*60) }}{% code %}
+title = 'Government Performance'
+description = 'A visual guide to the history of Indian Parliament elections, from 1951 until today, by Gramener.'
+tv = args.get('tv')
+#colors = _color.distinct(10)
+
+# Set style to the IBN style, which has a header, based on hostname.
+# http://ibnlive.in.com/general-elections-2014/analytics/ will point here
+appstyle = 'ibn' if 'ibnlive' in handler.request.host else ''
+
+# Allow ?style= to override the hostname-based style
+appstyle = args.get('style', [appstyle])[0]
+
+{% end %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+{{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv, appstyle=appstyle) }}
 	<title>Government Performance</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -119,9 +134,13 @@ text{
 
 	</style>
 </head>
-<body>
+<body {% if tv %} class="tv"{% end %}>
 
-<nav class="navbar navbar-default" role="navigation">
+{% if appstyle %}
+  {{ T('header.' + appstyle + '.html') }}
+{% end %}
+
+<nav class="navbar navbar-default {% if tv %} navbar-fixed-top{% end %}" role="navigation">
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -242,6 +261,8 @@ text{
 </div>
 
 <canvas id="canvas" width="1170" height="1000" style="border: 1px solid black;display:none"></canvas>
+
+{{ T('.tail.html', appstyle=appstyle) }}
 
 <script src="{{ static_url('/js/d3.v3.min.js') }}"></script>
 <script src="{{ static_url('/js/jquery2.min.js') }}"></script>

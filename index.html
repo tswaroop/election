@@ -12,6 +12,8 @@ appstyle = 'ibn' if 'ibnlive' in handler.request.host else ''
 appstyle = args.get('style', [appstyle])[0]
 
 base_url = 'parliament' + ('?style=' + appstyle if 'style' in args else '')
+govtperformance_url = 'govtperformance' + ('?style=' + appstyle if 'style' in args else '')
+#donation_url = 'donation' + ('?style=' + appstyle if 'style' in args else '')
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
   {{ T('.head.html', title=title, static_url=static_url, description=description, appstyle=appstyle) }}
@@ -21,7 +23,7 @@ base_url = 'parliament' + ('?style=' + appstyle if 'style' in args else '')
   </style>
 </head><body>
 
-{% if appstyle %}
+{% if appstyle and os.path.exists('header.' + appstyle + '.html') %}
   {{ T('header.' + appstyle + '.html') }}
 {% end %}
 <nav class="navbar navbar-default{% if tv %} navbar-fixed-top{% end %}" role="navigation">
@@ -63,8 +65,8 @@ base_url = 'parliament' + ('?style=' + appstyle if 'style' in args else '')
       <a href="{{ base_url }}#facts"><img class="main" src="{{ static_url('img/factoids.png') }}"></a>
     </div>
     <div class="col-md-6">
-      <h2 class="summary-title"><a href="govtperformance">Government Performance</a></h2>
-      <a href="govtperformance"><img class="main" src="{{ static_url('img/govtperformance.png') }}"></a>
+      <h2 class="summary-title"><a href="{{ govtperformance_url }}">Government Performance</a></h2>
+      <a href="{{ govtperformance_url }}"><img class="main" src="{{ static_url('img/govtperformance.png') }}"></a>
     </div>
   </div>
 
