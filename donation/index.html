@@ -114,6 +114,7 @@ if groupby in ref.index:
   <title>{{ title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ static_url('/css/bootstrap.v3.min.css') }}">
+  <link rel="stylesheet" href="{{ static_url('../js/bootstro.css') }}" type="text/css"/>
   <style>
   text { pointer-events: none; }
   .calendarmap { padding: 6px; font-size: 12px; }
@@ -164,12 +165,17 @@ if groupby in ref.index:
           <input type="search" class="form-control" placeholder="Search {{ groupby }}">
         </div>
       </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li style="padding-top:0.7em;padding-left:1em">
+          <div id="helpbutton" class="btn btn-success">Help Guide</div>
+        </li> 
+      </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- .container -->
 </nav>
 
 <div class="container">
-  <div class="btn-group">
+  <div class="btn-group bootstro" data-bootstro-title="Button groups" data-bootstro-content="Click on any button to group or ungroup the treemap." data-bootstro-placement="bottom">
     {% for group in groups %}
       {% if group in args %}
         <a class="btn btn-sm btn-danger btn-active filter" href="?{{ quote(group) }}=&groupby={{ quote(group) }}" title="Remove {{ group }} filter">{{ escape(args[group][0]) }} &times;</a>
@@ -192,6 +198,7 @@ if groupby in ref.index:
     {% end %}
   </div>
 
+  <div class="bootstro" data-bootstro-title="TreeMap Guide" data-bootstro-content="Click on any box to go to next level. Use Financial Year dropdown to filter years.">
   <svg class="treemap" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ round(float(H) / W, 3) }}">
     {% for i, (x, y, w, h) in enumerate(rects) %}{% code %}
         text = names.iloc[i]
@@ -232,12 +239,14 @@ if groupby in ref.index:
     ) }}
     {% end %}
   </svg>
+  </div>
 
 </div>
 
 <script src="{{ static_url('/js/jquery.min.js') }}"></script>
 <script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
 <script src="{{ static_url('../js/G.min.js') }}"></script>
+<script src="{{ static_url('../js/bootstro.js') }}"></script>
 <script>
 $.fn.zoom = function(options) {
   var x = options.x || 0,
@@ -286,6 +295,11 @@ $('body').search({
   target:   '.treemap rect, .treemap text',
   text:       function(el) { return $(el).text() || $(el).next().text(); },
   hideClass:  'dim'
-})
+});
+
+$('#helpbutton').on('click', function() {
+  bootstro.start(".bootstro");
+});
+
 </script>
 </body></html>
