@@ -20,6 +20,7 @@ appstyle = args.get('style', [appstyle])[0]
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
   {{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv, appstyle=appstyle) }}
+  <link rel="stylesheet" href="js/bootstro.css" type="text/css"/>
 </head><body{% if tv %} class="tv"{% end %}>
 
 {% if appstyle and os.path.exists('header.' + appstyle + '.html') %}
@@ -102,6 +103,9 @@ appstyle = args.get('style', [appstyle])[0]
             {% end %}
           </ul>
         </li>
+        <li style="padding-top:0.7em;padding-left:1em">
+          <div id="helpbutton" class="btn btn-success">Help Guide</div>
+        </li>   
         <form class="navbar-form navbar-left search-filter">
           <input type="search" class="form-control" placeholder="Search Your Constituency" data-search="title" data-target="circle" data-hide-class="hide">
         </form>
@@ -123,7 +127,7 @@ appstyle = args.get('style', [appstyle])[0]
 
 <div class="container">
 
-  <div id="summary">
+  <div id="summary" data-bootstro-placement="right" data-bootstro-title="Party Stack bar" data-bootstro-content="Click on any bar to go to the cartogram view. Filter party wise by clicking on horizontal buttons.">
     <img class="loading" src="{{ static_url('img/loading.gif') }}">
   </div>
 
@@ -165,12 +169,17 @@ if (window.FastClick)
 {{ T('js/G.min.js') }}
 {{ T('js/jquery.scrollTo.min.js') }}
 {{ T('js/d3.v3.min.js') }}
+{{ T('js/bootstro.js') }}
 
 var years = {{ json.dumps(years) }},
     metric_names = {{ json.dumps(metric_names) }},
     on_highlight = function(e) {},
     DB = sessionStorage,
     get_hash = function() { return location.href.split("#")[1] || '' }
+
+$('#helpbutton').on('click', function() {
+  bootstro.start("#summary");
+});
 
 $('body')
   .tooltip({
