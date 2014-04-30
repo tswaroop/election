@@ -103,9 +103,9 @@ appstyle = args.get('style', [appstyle])[0]
             {% end %}
           </ul>
         </li>
-        <li style="padding-top:0.7em;padding-left:1em">
+        <!--<li style="padding-top:0.7em;padding-left:1em">
           <div id="helpbutton" class="btn btn-success">Help Guide</div>
-        </li>   
+        </li>-->   
         <form class="navbar-form navbar-left search-filter">
           <input type="search" class="form-control" placeholder="Search Your Constituency" data-search="title" data-target="circle" data-hide-class="hide">
         </form>
@@ -177,9 +177,9 @@ var years = {{ json.dumps(years) }},
     DB = sessionStorage,
     get_hash = function() { return location.href.split("#")[1] || '' }
 
-$('#helpbutton').on('click', function() {
-  bootstro.start("#summary");
-});
+//$('#helpbutton').on('click', function() {
+//  bootstro.start("#summary");
+//});
 
 $('body')
   .tooltip({
