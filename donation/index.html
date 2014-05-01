@@ -42,6 +42,7 @@ for group in filters + groups:
         data = data[data[group] == v]
         prev_data = prev_data[prev_data[group] == v]
 
+print data["Financial Year"]
 
 if '_csv' in args:
     s = StringIO()
@@ -94,12 +95,13 @@ summary = pd.DataFrame({
   numerator:    groupby_field(numerator),
   denominator:  groupby_field(denominator),
 }).sort(size, ascending=False).dropna().head(MAX_ENTRIES)
-total_amount = summary[numerator].sum()
-summary[color] = summary[numerator] / float(total_amount) #summary[numerator] / summary[denominator].astype(float)
+total_amount = totals[numerator]#float(summary[numerator].sum())
+summary[color] = summary[numerator] / total_amount #summary[numerator] / summary[denominator].astype(float)
 lo_color, hi_color = summary[color].quantile(outliers), summary[color].quantile(1 - outliers)
+lo_color_actual, hi_color_actual = summary[numerator].min(), summary[numerator].max()
 color_value_scaled = stats.scale(summary[color], lo_color, hi_color)
 
-W, H, legend_height, aspect = 800, 524, 24, float(aspect)
+W, H, legend_height, aspect = 800, 370, 24, float(aspect)
 gradient = ((0, '#D73027'), (0.5, '#FFFFBF'), (1.0, '#1A9850'))
 rects = treemap.squarified(0, 0, W / aspect, H - legend_height, summary[size])
 
@@ -123,7 +125,7 @@ if groupby in ref.index:
   .treemap rect { stroke: #fff; cursor: pointer; }
   .filter { cursor: pointer; }
   .tooltip-inner { text-align: left; }
-  .kpi { text-align: right; margin: 1em 0;}
+  .kpi { text-align: left; margin: 0 0;}
   .kpi .head { font-size: 100%; text-transform: uppercase; font-family: Georgia, sans-serif; color: #666; line-height: 1; margin: 0; padding: 0; height: 2em; vertical-align: bottom; }
   .kpi .number { font-size: 300%; }
   .dim { opacity: 0.05; }
@@ -149,7 +151,7 @@ if groupby in ref.index:
           {% set lookup = ref.ix[column].set_index(ref.columns[1])[ref.columns[0]] if column in ref.index else {} %}
           {% set value = args.get(column, [''])[0] %}
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ escape(column) }}: {{ escape(lookup.get(value, value)) }} <b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ escape(column) }}: {{ escape(lookup.get(value, value)) or "All" }} <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li{{ ' class="active"' if column not in args else '' }}><a class="filter" href="?{{ quote(column) }}=">All</a></li>
               {% for v in sorted(dropdown_data[column].unique()) %}
@@ -175,27 +177,28 @@ if groupby in ref.index:
 </nav>
 
 <div class="container">
-  <div class="btn-group bootstro" data-bootstro-title="Button groups" data-bootstro-content="Click on any button to group or ungroup the treemap." data-bootstro-placement="bottom">
-    {% for group in groups %}
-      {% if group in args %}
-        <a class="btn btn-sm btn-danger btn-active filter" href="?{{ quote(group) }}=&groupby={{ quote(group) }}" title="Remove {{ group }} filter">{{ escape(args[group][0]) }} &times;</a>
-      {% elif group == groupby %}
-        <a class="btn btn-sm btn-success btn-active" href="" title="Currently grouped by {{ group }}">{{ escape(group) }}</a>
-      {% else %}
-        <a class="btn btn-sm btn-default filter" href="?groupby={{ quote(group) }}" title="Group by {{ group }}">{{ escape(group) }}</a>
-      {% end %}
-    {% end %}
-  </div>
-
   <div class="row">
-    {% for field in [size] %}
-      {% set fieldval = field.replace('Prev ', '') %}
-      {% set format = sizes.get(fieldval, colors.get(field, None))[2] %}
-      <div class="col-sm-3 kpi">
-        <h2 class="head">{{ field }}</h2>
-        <span class="number">{{ format.format(totals[field]) }}</span>
+    <div class="col-sm-5 col-xs-12">
+      <div class="btn-group bootstro" data-bootstro-title="Button groups" data-bootstro-content="Click on any button to group or ungroup the treemap." data-bootstro-placement="bottom">
+        {% for group in groups %}
+          {% if group in args %}
+            <a class="btn btn-sm btn-danger btn-active filter" href="?{{ quote(group) }}=&groupby={{ quote(group) }}" title="Remove {{ group }} filter">{{ escape(args[group][0]) }} &times;</a>
+          {% elif group == groupby %}
+            <a class="btn btn-sm btn-success btn-active" href="" title="Currently grouped by {{ group }}">{{ escape(group) }}</a>
+          {% else %}
+            <a class="btn btn-sm btn-default filter" href="?groupby={{ quote(group) }}" title="Group by {{ group }}">{{ escape(group) }}</a>
+          {% end %}
+        {% end %}
       </div>
-    {% end %}
+    </div>
+
+      {% for field in [size] %}
+        {% set fieldval = field.replace('Prev ', '') %}
+        {% set format = sizes.get(fieldval, colors.get(field, None))[2] %}
+        <div class="col-sm-7 col-xs-12 kpi">
+          <h2 class="head" style="display:inline-block;">Total {{ field }} :</h2><span class="number">{{ format.format(totals[field]) }}</span>
+        </div>
+      {% end %}
   </div>
 
   <div class="bootstro" data-bootstro-title="TreeMap Guide" data-bootstro-content="Click on any box to go to next level. Use Financial Year dropdown to filter years.">
@@ -214,6 +217,10 @@ if groupby in ref.index:
         font_size =  min(h, w * aspect * 14.5 / fontwidth(text), MAX_FONT)
         # except:
         #   font_size = min(MAX_FONT, w * aspect * 1.8 / len(str(text)))
+        try:
+          testvar = quote(text)
+        except:
+          print text
 
         title = [escape(text)]
         title += ['<br>', size,        ': ', sizes[size.replace('Prev ', '')][2].format(summary[size].iloc[i])]
@@ -228,13 +235,15 @@ if groupby in ref.index:
       <text x="{{ aspect*(x + w/2) }}" y="{{ y + h/2 }}" dy="0.35em" text-anchor="middle" font-size="{{ font_size }}" fill="{{ _color.contrast(fill) }}">{{ text }}</text>
     {% end %}
 
-    {% if groupby in ["Name","Type"] and party == "" %}
+
+    {% if groupby in ["Donor Name","Donor Type"] and party == "" %}
+
 
     {{ T('legend-gradient.svg',
         y        = H - legend_height + 4,
         width    = W,
         height   = legend_height - 4,
-        text     = [colors[color][2].format(lo_color), color, colors[color][2].format(hi_color)],
+        text     = [colors[color][2].format(lo_color_actual), color, colors[color][2].format(hi_color_actual)],
         gradient = gradient
     ) }}
     {% end %}

@@ -52,7 +52,7 @@ def reference_setup(ref):
     return ref.set_index('column')
 
 # Group by columns
-groups = 'Party,Type,Name'.split(',')
+groups = 'Party,Donor Type,Donor Name'.split(',')
 
 # Columns that act as dropdown filters
 filters = ['Financial Year']
@@ -77,7 +77,7 @@ periods = OrderedDict((
 # What is the size based on?
 sizes = OrderedDict((
     # Title                       fieldname, aggregation, display format
-    ('# Amount',       ('Amount', 'sum', '{:,.2f} cr')),
+    ('Amount Donated',       ('Amount', 'sum', '{:,.2f} cr')),
 
 ))
 
@@ -85,5 +85,5 @@ sizes = OrderedDict((
 # Optionally prefixed by 'Prev' to indicate previous period
 colors = OrderedDict((
     # Title                       numerator, denominator, display format
-    ('Amount',        ('# Amount', '# Amount', '{:,.2f}')),
+    ('Amount',        ('Amount Donated', 'Amount Donated', '{:,.2f}')),
 ))

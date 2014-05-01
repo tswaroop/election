@@ -16,17 +16,15 @@ Nationalist Congress Party (NCP),N,Party
 Telangana Rashtra Samithi (TRS),O,Party
 Zoram Nationalist Party (ZNP),P,Party
 Shiromani Akali Dal (SAD),Q,Party
-Jharkhand Vikas Morcha (Prajatantrik) (JVM),R,Party
-Lok Jan Shakti party (LJP),S,Party
-Rashtriya Janata Dal (RJD),T,Party
-Bodoland Peoples Front (BPF),U,Party
-All India Trinamool Congress (AITC),V,Party
+Rashtriya Janata Dal (RJD),R,Party
+Bodoland Peoples Front (BPF),S,Party
+All India Trinamool Congress (AITC),T,Party
+Lok Jan Shakti party (LJP),U,Party
+Jharkhand Vikas Morcha (Prajatantrik) (JVM),V,Party
 Desiya Murpokku Dravida Kazhagam (DMDK),W,Party
-Haryana Janhit Congress (BL) (HJC(BL)),X,Party
+Janata Dal (Secular) (JD(S)),X,Party
 Biju Janata Dal (BJD),Y,Party
-Janata Dal (Secular) (JD(S)),Z,Party
-Jammu & Kashmir National Conference (JKNC),a,Party
-Dravida Munnetra Kazhagam (DMK),b,Party
-Individual,A,Type
-limited,B,Type
-trust,C,Type
+Dravida Munnetra Kazhagam (DMK),Z,Party
+Individual,A,Donor Type
+limited,B,Donor Type
+trust,C,Donor Type
