@@ -1,19 +1,33 @@
+{% set uri = globals().get('uri','') %} 
 {% set style = globals().get('appstyle', '') %}
 {% if style == 'ibn' %}
-  <meta charset="utf-8">
-  <title>Elections Results India, General Elections Results, Lok Sabha Polls Results India</title>
-  <META NAME="keywords" CONTENT="Election Results India, Lok Sabha Polls Results India, General Elections Results, Elections Results India">
-  <META NAME="description" CONTENT="Get historical data of all elections results in India including Lok Sabha elections and Assembly elections only on IBNLive.com. Also find political party-wise and constituency-wise elections results here.">
-  <meta property="og:title" content="Elections Results India, General Elections Results, Lok Sabha Polls Results India" />
-  <meta property="og:description" content="Get historical data of all elections results in India including Lok Sabha elections and Assembly elections only on IBNLive.com. Also find political party-wise and constituency-wise elections results here." />
-  <meta property="og:image" content="http://static.ibnlive.in.com/pix/ibnhome/ibnlive-logo_2012.jpg" />
-  <meta property="og:url" content="" />
-  <meta property="fb:app_id" content="283567585004547" />
-  <meta property="og:type"   content="website" />
-
-  <link href="http://ibnlive.in.com/css/ibnhome/generalelections/style_mselection.css" type="text/css" rel="stylesheet">
-  <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+	<meta charset="utf-8">
+	<meta property="og:image" content="http://static.ibnlive.in.com/pix/ibnhome/ibnlive-logo_2012.jpg" />
+	<meta property="og:url" content="" />
+	<meta property="fb:app_id" content="283567585004547" />
+	<meta property="og:type"   content="website" />
+		{% if 'parliament' in uri %}
+  			<title>Parliament Elections Results India, Lok Sabha Election Results, General Elections (Polls) Results - IBNLive</title>
+		  	<META NAME="keywords" CONTENT="Parliament Elections Results India, Lok Sabha Election Results, General Elections (Polls) Results">
+		  	<META NAME="description" CONTENT="Get historical data of all Lok Sabha election results in India including General elections and Assembly elections only on IBNLive.com. Also find political party-wise and constituency-wise parliament elections results here.">
+		  	<meta property="og:title" content="Elections Results India, General Elections Results, Lok Sabha Polls Results India" />
+		  	<meta property="og:description" content="Get historical data of all elections results in India including Lok Sabha elections and Assembly elections only on IBNLive.com. Also find political party-wise and constituency-wise elections results here." />
+		{% elif 'govtperformance' in uri %}
+			<title>Performance of Indian Government, Congress, BJP, JNP, JD - IBNLive</title>
+			<META NAME="keywords" CONTENT="Performance of Indian Government, Congress, BJP, JNP, JD">
+			<META NAME="description" CONTENT="Want to see the performance of Indian Government? Visit us at IBNLive.com for a historical data of in the form of graphs of all the political parties of India including BJP, Congress etc.">
+			<meta property="og:title" content="Performance of Indian Government, Congress, BJP, JNP, JD" />
+			<meta property="og:description" content="Want to see the performance of Indian Government? Visit us at IBNLive.com for a historical data of in the form of graphs of all the political parties of India including BJP, Congress etc." />
+		{% else %}
+			<title>Election Results India, General Elections Results, Lok Sabha Polls Results India - IBNLive</title>
+			<META NAME="keywords" CONTENT="Election Results India, Lok Sabha Polls Results India, General Elections Results, Elections Results India">
+			<META NAME="description" CONTENT="Get historical data of all elections results in India including Lok Sabha elections and Assembly elections only on IBNLive.com. Also find political party-wise and constituency-wise elections results here.">
+			<meta property="og:title" content="Election Results India, Lok Sabha Polls Results India, General Elections Results, Elections Results India" />
+			<meta property="og:description" content="Get historical data of all elections results in India including Lok Sabha elections and Assembly elections only on IBNLive.com. Also find political party-wise and constituency-wise elections results here." />
+		{% end %}
+    <link href="http://ibnlive.in.com/css/ibnhome/generalelections/style_mselection.css" type="text/css" rel="stylesheet">
+    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 
   <style>
   #footerbar {
@@ -29,7 +43,7 @@
   body {
     padding-bottom: 65px;
   }
-  </style>
+  </style>	
 
 {% else %}
   <meta charset="utf-8">
