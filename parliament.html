@@ -14,12 +14,13 @@ colors = _color.distinct(10)
 # Set style to the IBN style, which has a header, based on hostname.
 # http://ibnlive.in.com/general-elections-2014/analytics/ will point here
 appstyle = 'ibn' if 'ibnlive' in handler.request.host else ''
+uri = handler.request.uri
 
 # Allow ?style= to override the hostname-based style
 appstyle = args.get('style', [appstyle])[0]
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
-  {{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv, appstyle=appstyle) }}
+  {{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv, appstyle=appstyle,uri=uri) }}
   <link rel="stylesheet" href="js/bootstro.css" type="text/css"/>
 </head><body{% if tv %} class="tv"{% end %}>
 
@@ -160,7 +161,7 @@ MBP.startupImage()
 MBP.hideUrlBarOnLoad()
 MBP.enableActive()
 
-// TODO: Add FastClick
+
 if (window.FastClick)
   window.addEventListener('load', function() { FastClick.attach(document.body); }, false);
 
