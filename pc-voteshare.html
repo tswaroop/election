@@ -1,0 +1,99 @@
+{{ GRAMEX(cache=['voteshare.csv', 'colors.csv'], max_age=10*60) }}{% code %}
+
+from urllib import quote
+from common import slug
+
+state = args['STATE'][0] if 'STATE' in args else None
+data = DB.csv('voteshare.csv')
+parties = DB.csv('voteshare-parties.csv')
+colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
+distinct_colors = _color.distinct(10)
+{% end %}
+
+<h2>
+  <i class="back glyphicon glyphicon-circle-arrow-left"></i>
+  {% if state is None %}Vote share{% else %}{{ state }} vote share{% end %}
+</h2>
+
+{% if state is None %}
+  <div id="factoid" class="voteshare-states">
+    {% for i, state in enumerate(sorted(parties['STATE'].unique())) %}
+      <div class="topic" href="?STATE={{ quote(state) }}">
+        <div class="thumbnail" style="background-color:{{ distinct_colors[i % len(distinct_colors)] }}">
+          <div class="caption">
+            <h3>{{ state }}</h3>
+          </div>
+        </div>
+      </div>
+    {% end %}
+  </div>
+{% else %}
+  {% code %}
+  data = data[data['STATE'] == state]
+  parties = parties[parties['STATE'] == state]['PARTY']
+  pivot = data.pivot_table(rows=['PARTY'], cols=['YEAR'], values='VOTESHARE')
+  if len(parties):
+      pivot = pivot.ix[parties]
+  nparties = len(pivot.index)
+  {% end %}
+
+  {% set W, legend = 940, 30 %}
+  {% set w = float(W - 30) / nparties %}
+  <svg width="100%" data-height="{{ float(legend) / W }}" viewBox="0 0 {{ W }} {{ legend }}">
+    {% for i, party in enumerate(pivot.index) %}
+      {% set background_color = colors.get(party, '#888') %}
+      <rect width="30" height="{{ legend }}" class="party-unhighlight" fill="#000" title="Show all parties"/>
+      <text x="15" y="{{ legend /2 }}" font-size="16" text-anchor="middle" dy=".35em" fill="#fff">x</text>
+      <rect
+        class="party-legend"
+        x="{{ 30 + i * w }}"
+        width="{{ w }}"
+        height="{{ legend }}"
+        fill="{{ background_color }}"
+        data-highlight="[data-party={{ slug(party) }}]"
+        data-party="{{ slug(party) }}"
+        data-toggle="1"/>
+      <text class="party-legend-text"
+        x="{{ 30 + w * (i + .5) }}"
+        y="{{ legend / 2 }}"
+        font-size="16"
+        text-anchor="middle"
+        dy=".35em"
+        fill="{{ _color.contrast(background_color) }}"
+        data-party="{{ slug(party) }}">{{ escape(party) }}</text>
+    {% end %}
+  </svg>
+
+  {% set W, H, leftmargin, topmargin = 640, 300, 50, 80 %}
+  <div class="row">
+    <div class="col-md-8">
+      <svg width="100%" data-height="{{ float(H + 20)/W }}" viewBox="0 0 {{ W }} {{ H + 20 }}">
+        {{ T('multiline.svg',
+            x=30,
+            r=10,
+            lo=0,
+            width=W, height=H,
+            data=pivot,
+            topmargin=topmargin,
+            color=lambda party,i: colors.get(party, '#888'),
+            attrs={
+              'data-party': lambda party, i: slug(party),
+            },
+        ) }}
+        {{ T('axis.svg', axis='y',
+            data=pivot,
+            x=leftmargin, y=topmargin, size=H - topmargin,
+            format=lambda ticks: ['{:.0%}'.format(t) for t in ticks],
+            ticks=4,
+            ticksize=-10,
+            tickattrs={'stroke-width': 0},
+            gridsize=W - leftmargin,
+            gridattrs={'stroke': 'rgba(0,0,0,.1)'},
+        ) }}
+      </svg>
+    </div>
+  </div>
+
+  <p><a class="direct-link btn btn-primary" href="#state?STATE={{ quote(state) }}">{{ escape(state) }} seat share history &raquo;</a>
+
+{% end %}

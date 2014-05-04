@@ -62,7 +62,7 @@ if state:
           text-anchor="middle"
           dy=".35em"
           fill="{{ _color.contrast(background_color) }}"
-          data-party="{{ slug(party) }}">{{ party }}</text>
+          data-party="{{ slug(party) }}">{{ escape(party) }}</text>
       {% end %}
     </svg>
 
