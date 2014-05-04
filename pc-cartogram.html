@@ -195,7 +195,7 @@ names = {
     {% end %}
     <g transform="translate(640, 46)">
       {% if groupby.startswith('2014') %}
-        <text x="-30" class="carto-title" y="-20" dy="-.2em" dx="+0.0em" text-anchor="end">Schedule 2014</text>
+        <text x="-50" class="carto-title" y="-20" dy="-.2em" dx="+0.0em" text-anchor="end">Schedule 2014</text>
       {% else %}
         {% if prev_year %}<text x="-80" class="carto-title" y="-20" dy="-.2em" dx="-1.7em" text-anchor="middle" href="?BY=&YEAR={{ prev_year }}" title="Previous election">&#x25c4;</text>{% end %}
                           <text x="-80" class="carto-title" y="-20" dy="-.2em" dx="+0.0em" text-anchor="middle">{{ year }}</text>
@@ -203,6 +203,9 @@ names = {
       {% end %}
       {% if original_year != year %}
         <text x="-80" y="-5" text-anchor="middle" fill="red">No data for {{ escape(original_year) }}</text>
+      {% end %}
+      {% for i, filter in enumerate([f for f in filters if f['key'] in args]) %}
+        <text x="-50" y="{{ i * 20 - 5 }}" text-anchor="end">{{ filter['key'] }}: <tspan fill="#800">{{ args[filter['key']][0] }}</tspan></text>
       {% end %}
       <text class="carto-title" y="-20" dy="-.2em"{% if len(chosen_states) %} href="state?YEAR=&{{ '&'.join('STATE=' + quote(state) for state in chosen_states) }}"{% end %}>
         {{ ', '.join(chosen_states) if len(chosen_states) else 'India' }}
