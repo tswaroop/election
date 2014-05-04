@@ -194,9 +194,13 @@ names = {
       </g>
     {% end %}
     <g transform="translate(640, 46)">
-      {% if prev_year %}<text x="-80" class="carto-title" y="-20" dy="-.2em" dx="-1.7em" text-anchor="middle" href="?BY=&YEAR={{ prev_year }}" title="Previous election">&#x25c4;</text>{% end %}
-                        <text x="-80" class="carto-title" y="-20" dy="-.2em" dx="+0.0em" text-anchor="middle">{{ '2014' if groupby.startswith('2014') else year }}</text>
-      {% if next_year %}<text x="-80" class="carto-title" y="-20" dy="-.2em" dx="+1.7em" text-anchor="middle" href="?BY=&YEAR={{ next_year }}" title="Next election">&#x25ba;</text>{% end %}
+      {% if groupby.startswith('2014') %}
+        <text x="-30" class="carto-title" y="-20" dy="-.2em" dx="+0.0em" text-anchor="end">Schedule 2014</text>
+      {% else %}
+        {% if prev_year %}<text x="-80" class="carto-title" y="-20" dy="-.2em" dx="-1.7em" text-anchor="middle" href="?BY=&YEAR={{ prev_year }}" title="Previous election">&#x25c4;</text>{% end %}
+                          <text x="-80" class="carto-title" y="-20" dy="-.2em" dx="+0.0em" text-anchor="middle">{{ year }}</text>
+        {% if next_year %}<text x="-80" class="carto-title" y="-20" dy="-.2em" dx="+1.7em" text-anchor="middle" href="?BY=&YEAR={{ next_year }}" title="Next election">&#x25ba;</text>{% end %}
+      {% end %}
       {% if original_year != year %}
         <text x="-80" y="-5" text-anchor="middle" fill="red">No data for {{ escape(original_year) }}</text>
       {% end %}
