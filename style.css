@@ -9,6 +9,10 @@ body.tv {
 .only-tv { display: none; }
 .tv .only-tv { display: inline-block; }
 
+.abbr3 { display: none; }
+.tv .abbr { display: none; }
+.tv .abbr3 { display: block; }
+
 /* Large screen-related TV settings */
 @media (min-width: 1920px) {
   .tv .container { width: 1900px; }
@@ -264,7 +268,14 @@ h2 a:hover {
 
 .topic .caption {
   display: inline-block;
-  height: 12em;
+}
+
+.voteshare-states  .topic .caption {
+  height: 5em;
+}
+
+.voteshare-states  .thumbnail .caption {
+  padding-top: 0;
 }
 
 .sorted {

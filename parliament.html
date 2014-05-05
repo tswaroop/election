@@ -106,7 +106,7 @@ appstyle = args.get('style', [appstyle])[0]
         </li>
         <!--<li style="padding-top:0.7em;padding-left:1em">
           <div id="helpbutton" class="btn btn-success">Help Guide</div>
-        </li>-->   
+        </li>-->
         <form class="navbar-form navbar-left search-filter">
           <input type="search" class="form-control" placeholder="Search Your Constituency" data-search="title" data-target="circle" data-hide-class="hide">
         </form>
@@ -282,17 +282,17 @@ function redraw() {
       q = G.url.parse(hash),
       query = q.searchKey;
 
-  if (q.pathname.match(/^(summary|year|result|cartogram|table|scatter|state|pattern|facts)$|^story/)) {
+  if (q.pathname.match(/^(summary|year|result|cartogram|table|scatter|state|pattern|facts|voteshare)$|^story/)) {
     $('#summary').slideUp(250)
-    $('.year-filter')[q.pathname.match(/scatter|state|pattern|facts|story/) ? 'hide' : 'show']()
+    $('.year-filter')[q.pathname.match(/scatter|state|pattern|facts|story|voteshare/) ? 'hide' : 'show']()
     $('.years-filter')[q.pathname.match(/state/) ? 'show' : 'hide']()
-    $('.result-controls')[q.pathname.match(/cartogram|scatter|state|facts|story/) ? 'hide' : 'show']()
+    $('.result-controls')[q.pathname.match(/cartogram|scatter|state|facts|story|voteshare/) ? 'hide' : 'show']()
     $('.state-filter')[q.pathname.match(/result|pattern|facts|story/) ? 'hide' : 'show']()
     $('.search-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('.metric-filter')[q.pathname.match(/cartogram/) ? 'show' : 'hide']()
     $('.state-page-filter')[q.pathname.match(/result/) ? 'show' : 'hide']()
     $('#result').append('<img class="loading" src="{{ static_url('img/loading.gif') }}">').load('pc-' + hash, function() {
-      if (q.pathname.match(/cartogram|scatter|state|result/)) {
+      if (q.pathname.match(/cartogram|scatter|state|result|voteshare/)) {
         $(window).dispatch('resize')
         $('input[type="search"]').val('').trigger('refresh')
         $('#summary').slideUp(250)
