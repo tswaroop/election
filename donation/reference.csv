@@ -26,5 +26,5 @@ Janata Dal (Secular) (JD(S)),X,Party
 Biju Janata Dal (BJD),Y,Party
 Dravida Munnetra Kazhagam (DMK),Z,Party
 Individual,A,Donor Type
-limited,B,Donor Type
-trust,C,Donor Type
+Corporate,B,Donor Type
+Trust,C,Donor Type
