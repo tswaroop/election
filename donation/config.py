@@ -85,5 +85,5 @@ sizes = OrderedDict((
 # Optionally prefixed by 'Prev' to indicate previous period
 colors = OrderedDict((
     # Title                       numerator, denominator, display format
-    ('Amount',        ('Amount Donated', 'Amount Donated', '{:,.2f}')),
+    ('Amount',        ('Amount Donated', 'Amount Donated', '{:,.2f} cr')),
 ))
