@@ -106,7 +106,7 @@ lo_color, hi_color = summary[color].quantile(outliers), summary[color].quantile(
 lo_color_actual, hi_color_actual = summary[numerator].min(), summary[numerator].max()
 color_value_scaled = stats.scale(summary[color], lo_color, hi_color)
 
-W, H, legend_height, aspect = 800, 370, 24, float(aspect)
+W, H, legend_height, aspect = 800, 350, 24, float(aspect)
 gradient = ((0, '#D73027'), (0.5, '#FFFFBF'), (1.0, '#1A9850'))
 rects = treemap.squarified(0, 0, W / aspect, H - legend_height, summary[size])
 
@@ -165,7 +165,7 @@ data_sparkline.index = names_spark.values
             <ul class="dropdown-menu">
               <li{{ ' class="active"' if column not in args else '' }}><a class="filter" href="?{{ quote(column) }}=">All</a></li>
               {% for v in sorted(dropdown_data[column].unique()) %}
-                <li{{ ' class="active"' if v == value else '' }}><a class="filter" href="?{{ quote(column) }}={{ quote(v) }}">{{ escape(lookup.get(v, v)) }}</a></li>
+                <li{{ ' class="active"' if v == value else '' }}><a href="?{{ quote(column) }}={{ quote(v) }}">{{ escape(lookup.get(v, v)) }}</a></li>
               {% end %}
             </ul>
           </li>
@@ -240,6 +240,7 @@ data_sparkline.index = names_spark.values
 
         title = [escape(text)]
         title += ['<br>', size,        ': ', sizes[size.replace('Prev ', '')][2].format(summary[size].iloc[i])]
+        title += ['<br>','Trendline for last 8 years.']
         title += ['<br>',sparkline]
         #title += ['<br>', numerator,   ': ', sizes[numerator.replace('Prev ', '')][2].format(summary[numerator].iloc[i])]
         #title += ['<br>', denominator, ': ', sizes[denominator.replace('Prev ', '')][2].format(summary[denominator].iloc[i])]

@@ -77,7 +77,7 @@ periods = OrderedDict((
 # What is the size based on?
 sizes = OrderedDict((
     # Title                       fieldname, aggregation, display format
-    ('Amount Donated',       ('Amount', 'sum', '{:,.2f} cr')),
+    ('Amount Donated/Received',       ('Amount', 'sum', '{:,.2f} cr')),
 
 ))
 
@@ -85,5 +85,5 @@ sizes = OrderedDict((
 # Optionally prefixed by 'Prev' to indicate previous period
 colors = OrderedDict((
     # Title                       numerator, denominator, display format
-    ('Amount',        ('Amount Donated', 'Amount Donated', '{:,.2f}')),
+    ('Amount',        ('Amount Donated/Received', 'Amount Donated/Received', '{:,.2f} cr')),
 ))
