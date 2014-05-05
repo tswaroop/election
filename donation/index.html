@@ -165,7 +165,7 @@ data_sparkline.index = names_spark.values
             <ul class="dropdown-menu">
               <li{{ ' class="active"' if column not in args else '' }}><a class="filter" href="?{{ quote(column) }}=">All</a></li>
               {% for v in sorted(dropdown_data[column].unique()) %}
-                <li{{ ' class="active"' if v == value else '' }}><a class="filter" href="?{{ quote(column) }}={{ quote(v) }}">{{ escape(lookup.get(v, v)) }}</a></li>
+                <li{{ ' class="active"' if v == value else '' }}><a href="?{{ quote(column) }}={{ quote(v) }}">{{ escape(lookup.get(v, v)) }}</a></li>
               {% end %}
             </ul>
           </li>
