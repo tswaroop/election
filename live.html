@@ -1,0 +1,270 @@
+{{ GRAMEX(cache=['js/G.min.js', 'style.css', '.head.html', '.tail.html', '2014-summary.json'], max_age=0) }}{% code %}
+title = '2014 Counting Day'
+description = 'A live update on the 2014 Indian Parliament elections, by Gramener.'
+
+tv = args.get('tv')
+appstyle = 'ibn' if 'ibnlive' in handler.request.host else ''
+appstyle = args.get('style', [appstyle])[0]
+{% end %}<!DOCTYPE html><html lang="en">
+<head>
+  {{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv, appstyle=appstyle) }}
+  <style>
+  .alliance-name { font-size: 24px; font-weight: bold; }
+  .alliance-name.other { font-size: 14px; }
+  .alliance-legend { font-size: 8px; }
+  @media (min-width: 640px) {
+    .alliance-name { font-size: 40px; font-weight: bold; }
+    .alliance-name.other { font-size: 24px; }
+    .alliance-legend { font-size: 16px; }
+  }
+  .alliance-legend { fill: #666; text-transform: uppercase;}
+  .leading { opacity: .6; }
+  #parties .progress { margin-bottom: 0; }
+  .party-summary td, .party-summary th { text-align: right; }
+  #map path { stroke-width: .5; stroke: #fff; vector-effect:non-scaling-stroke; }
+  </style>
+</head><body{% if tv %} class="tv"{% end %}>
+
+{% if appstyle %}
+  {{ T('header.' + appstyle + '.html') }}
+{% end %}
+<nav class="navbar navbar-default{% if tv %} navbar-fixed-top{% end %} expressions" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand heading direct-link" href=".">
+        <i class="glyphicon glyphicon-home"></i>
+        Elections 2014
+      </a>
+    </div>
+    <div class="collapse navbar-collapse" id="header-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a class="reload" href="?" title="Refresh" data-placement="bottom">
+          At <span x-html="$.updated"></span>
+          <i class="glyphicon glyphicon-refresh"></i>
+        </a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container expressions">
+  <svg width="100%" height="45">
+    <text class="alliance-name" x-text="$.alliances[0].name + ':' + ($.alliances[0].won + $.alliances[0].leading)" x-fill="$.alliances[0].color" dy="38" x="0%"></text>
+    <text class="alliance-name other" x-text="$.alliances[1].name + ':' + ($.alliances[1].won + $.alliances[1].leading)" x-fill="$.alliances[1].color" dy="38" x="50%" text-anchor="middle"></text>
+    <text class="alliance-name" x-text="$.alliances[2].name + ':' + ($.alliances[2].won + $.alliances[2].leading)" x-fill="$.alliances[2].color" dy="38" x="100%" text-anchor="end"></text>
+  </svg>
+  {% set barheight = 25 %}
+  <svg width="100%" height="{{ barheight + 5 + 20 }}">
+    <rect class="won" height="{{ barheight }}" x-fill="$.alliances[0].color"
+      x-x="0"
+      x-width="100 * $.alliances[0].won / $.constituencies.total + '%'"/>
+    <rect class="leading" height="{{ barheight }}" x-fill="$.alliances[0].color"
+      x-x="100 * $.alliances[0].won / $.constituencies.total + '%'"
+      x-width="100 * $.alliances[0].leading / $.constituencies.total + '%'"/>
+
+    <rect class="won" height="{{ barheight }}" x-fill="$.alliances[1].color"
+      x-x="(Math.max(($.constituencies.total - $.alliances[1].all)/2, $.alliances[0].all)) / $.constituencies.total * 100 + '%'"
+      x-width="100 * $.alliances[1].won / $.constituencies.total + '%'"/>
+    <rect class="leading" height="{{ barheight }}" x-fill="$.alliances[1].color"
+      x-x="(Math.max(($.constituencies.total - $.alliances[1].all)/2, $.alliances[0].all) + $.alliances[1].won) / $.constituencies.total * 100 + '%'"
+      x-width="100 * $.alliances[1].leading / $.constituencies.total + '%'"/>
+
+    <rect class="leading" height="{{ barheight }}" x-fill="$.alliances[2].color"
+      x-x="100 * (1 - $.alliances[2].all / $.constituencies.total) + '%'"
+      x-width="100 * $.alliances[2].leading / $.constituencies.total + '%'"/>
+    <rect class="won" height="{{ barheight }}" x-fill="$.alliances[2].color"
+      x-x="100 * (1 - $.alliances[2].won / $.constituencies.total) + '%'"
+      x-width="100 * $.alliances[2].won / $.constituencies.total + '%'"/>
+
+    <text class="alliance-legend" x-html="$.alliances[0].name + ' won ' + $.alliances[0].won + ', leads in ' + $.alliances[0].leading" y="{{ barheight + 5 }}" dy="1em"></text>
+    <text class="alliance-legend" x-html="$.alliances[2].name + ' won ' + $.alliances[2].won + ', leads in ' + $.alliances[2].leading" y="{{ barheight + 5 }}" dy="1em" x="100%" text-anchor="end"></text>
+    <text class="alliance-legend" x="50%" y="{{ barheight + 5 }}" dy="1em" text-anchor="middle" x-html="Math.ceil($.constituencies.total / 2) + ' out of ' + $.constituencies.total"></text>
+
+    <line stroke-width="2" stroke="#777" x1="50%" x2="50%" y2="{{ barheight + 5 }}"/>
+
+    <rect height="{{ barheight }}" fill="none" stroke="#000" width="100%" />
+  </svg>
+
+  <script id="parties" type="text/html">
+    <div class="row">
+      {% for id in range(3) %}
+        <div class="col-md-4">
+          <% if (alliances[{{ id }}].parties.length) { %>
+            <table class="table table-condensed party-summary">
+              <thead>
+                <tr><th></th><th>Won</th><th>Lead</th></tr>
+              </thead>
+              <tbody>
+                <% (alliances[{{ id }}].parties || []).forEach(function(party) { %>
+                  <tr>
+                    <td><%= party.name %></td>
+                    <td><%= party.won %></td>
+                    <td><%= party.leading %></td>
+                    <td><%= party.all %></td>
+                    <td>
+                      <div class="progress" style="min-width:100px">
+                        <div class="progress-bar"         style="background-color:<%= colors[party.name] || '#a0a0a0' %>;width:<%= party.won / party_maxall * 100 %>%"></div>
+                        <div class="progress-bar leading" style="background-color:<%= colors[party.name] || '#a0a0a0' %>;width:<%= party.leading / party_maxall * 100 %>%"></div>
+                      </div>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          <% } %>
+        </div>
+      {% end %}
+    </div>
+  </script>
+
+  <div class="progress">
+    <div class="progress-bar"
+      x-style="'background-color:{{ _color.brighten(_color.Office[0], -.5) }};width:' + $.constituencies.finished / $.constituencies.total * 100 + '%'"
+      x-text="$.constituencies.finished / $.constituencies.total > 0.1 ? $.constituencies.finished + ' finished' : ''"></div>
+    <div class="progress-bar"
+      x-style="'background-color:{{ _color.brighten(_color.Office[0], +.5) }};width:' + $.constituencies.counting / $.constituencies.total * 100 + '%'"
+      x-text="$.constituencies.counting / $.constituencies.total > 0.1 ? $.constituencies.counting + ' counting' : ''"></div>
+    <div class="progress-bar"
+      x-style="'background:none;color:#000;width:' + $.constituencies.awaited / $.constituencies.total * 100 + '%'"
+      x-text="$.constituencies.awaited / $.constituencies.total > 0.1 ? $.constituencies.awaited + ' awaited' : ''"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8" style="position:relative">
+      <div id="map"></div>
+      <div class="btn-group color-by" style="position:absolute;right:0;top:0">
+        <a class="urlfilter btn btn-default btn-sm color-by-alliance" href="?color=alliance">Alliance</a>
+        <a class="urlfilter btn btn-default btn-sm color-by-party" href="?color=party">Party</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="{{ static_url('/js/jquery2.min.js') }}"></script>
+<script src="{{ static_url('/js/underscore-min.js') }}"></script>
+<script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
+<script src="{{ static_url('js/G.min.js') }}"></script>
+<script>
+var colors = {{ DB.csv('colors.csv').set_index('Name')['Color'].to_json() }}
+var data = {{ open('2014-summary.json').read() }}
+
+function process(data) {
+  for (var i=0, li=data.alliances.length; i<li; i++) {
+    data.alliances[i].color = colors[data.alliances[i].name] || colors['Other']
+  }
+}
+process(data)
+
+// Load the map and store map_path['S01-01'] -> $path element
+var map_path = {}
+$('#map').load('pc-2014-4.svg', function() {
+  $('#map svg')
+    .aspect()
+    .find('path')
+      .attr('fill', '#eee')
+      .each(function() {
+        var $this = $(this)
+        map_path[$this.attr('id')] = $this
+      })
+  render()
+})
+
+// Live rendering via x-attributes
+var expr = []
+$('.expressions')
+  .find('*')
+  .each(function() {
+    var $el = $(this),
+        xnames = []
+    $.each(this.attributes, function() {
+      if (this.name.match(/^x\-/)) {
+        var attr = this.name.slice(2),
+            calc = new Function('$', 'return ' + this.value),
+            fn
+        if (attr == 'text') fn = function(data) { return $el.text(calc(data)) }
+        else if (attr == 'html') fn = function(data) { return $el.html(calc(data)) }
+        else fn = function(data) { return $el.attr(attr, calc(data)) }
+        expr.push(fn)
+        xnames.push(this.name)
+      }
+    })
+    $el.removeAttr(xnames.join(' '))
+  })
+
+// Live rendering via underscore templates
+var templates = []
+$('script[type="text/html"]').each(function() {
+  var $el = $(this),
+      $target = $('<div></div>').attr('id', $el.attr('id')).insertAfter($el),
+      template = _.template($el.html())
+  $el.remove()
+  templates.push(function(data) { $target.html(template(data)) })
+})
+
+function render() {
+  var q = G.url.parse(location.href).searchKey,
+      color_by
+
+  templates.forEach(function(x) { x(data) })
+  expr.forEach(function(x) { x(data) })
+
+  {#  0   1       2         3       4
+      ID  Party   Alliance  Votes   Finished #}
+  color_by = q.color == 'party' ? 1 : 2
+  $('.color-by-party')[q.color == 'party' ? 'addClass' : 'removeClass']('active')
+  $('.color-by-alliance')[q.color == 'party' ? 'removeClass' : 'addClass']('active')
+  data.map.forEach(function(row) {
+    if (row[0] in map_path)
+      map_path[row[0]]
+        .attr('fill', colors[row[color_by]] || '#a0a0a0')
+        .attr('class', row[4] == '0' ? 'leading' : '')
+        .attr('title', row[1] + ' (' + row[2] + ') ' + (row[4] == '0' ? 'is leading' : 'won') + ' with ' + row[3] + ' votes')
+  })
+}
+render()
+
+function reload() {
+  $.ajax({
+    url: '2014-summary.json',
+    dataType: 'json',
+    success: function(data) {
+      process(data)
+      window.data = data;
+      render()
+    },
+    error: function() { console.log('error', arguments) }
+  })
+
+  {# ?refresh=5 for 5 minute auto-refresh #}
+  {% if 'refresh' in args %}
+    setTimeout(reload, {{ min(1, float(args['refresh'][0])) * 60000 }})
+  {% end %}
+}
+
+$('body')
+  .tooltip({
+    selector: '[title]',
+    html: true,
+    container: 'body'
+  })
+  .on('click', '.reload', function(e) {
+    e.preventDefault()
+    reload()
+  })
+  .urlfilter({
+    selector: '.urlfilter',
+    target: 'pushState'
+  })
+  .on('loaded.g.urlfilter', render)
+
+</script>
+
+{{ T('.tail.html', appstyle=appstyle) }}
+</body></html>
