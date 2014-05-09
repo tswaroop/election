@@ -54,6 +54,15 @@ appstyle = args.get('style', [appstyle])[0]
 </nav>
 
 <div class="container expressions">
+  <script id="filters" type="text/html">
+    <% _.each(filters, function(val, key) { %>
+      <a href="?<%= encodeURIComponent(key) %>="
+        title="Remove <%= key %> filter"
+        class="urlfilter label label-danger"
+      ><%= key %>: <%= val.join(', ') %></a>
+    <% }) %>
+  </script>
+
   <svg width="100%" height="45">
     <text class="alliance-name" x-text="$.alliances[0].name + ':' + ($.alliances[0].won + $.alliances[0].leading)" x-fill="$.alliances[0].color" dy="38" x="0%"></text>
     <text class="alliance-name other" x-text="$.alliances[1].name + ':' + ($.alliances[1].won + $.alliances[1].leading)" x-fill="$.alliances[1].color" dy="38" x="50%" text-anchor="middle"></text>
@@ -61,30 +70,30 @@ appstyle = args.get('style', [appstyle])[0]
   </svg>
   {% set barheight = 25 %}
   <svg width="100%" height="{{ barheight + 5 + 20 }}">
-    <rect class="won" height="{{ barheight }}" x-fill="$.alliances[0].color"
+    <rect class="won" height="{{ barheight }}" x-fill="$.alliances[0].color" x-title="$.alliances[0].name + ' won ' + $.alliances[0].won + ' seats'"
       x-x="0"
       x-width="100 * $.alliances[0].won / $.constituencies.total + '%'"/>
-    <rect class="leading" height="{{ barheight }}" x-fill="$.alliances[0].color"
+    <rect class="leading" height="{{ barheight }}" x-fill="$.alliances[0].color" x-title="$.alliances[0].name + ' leads in ' + $.alliances[0].leading + ' seats'"
       x-x="100 * $.alliances[0].won / $.constituencies.total + '%'"
       x-width="100 * $.alliances[0].leading / $.constituencies.total + '%'"/>
 
-    <rect class="won" height="{{ barheight }}" x-fill="$.alliances[1].color"
+    <rect class="won" height="{{ barheight }}" x-fill="$.alliances[1].color" x-title="$.alliances[1].name + ' won ' + $.alliances[1].won + ' seats'"
       x-x="(Math.max(($.constituencies.total - $.alliances[1].all)/2, $.alliances[0].all)) / $.constituencies.total * 100 + '%'"
       x-width="100 * $.alliances[1].won / $.constituencies.total + '%'"/>
-    <rect class="leading" height="{{ barheight }}" x-fill="$.alliances[1].color"
+    <rect class="leading" height="{{ barheight }}" x-fill="$.alliances[1].color" x-title="$.alliances[1].name + ' leads in ' + $.alliances[1].leading + ' seats'"
       x-x="(Math.max(($.constituencies.total - $.alliances[1].all)/2, $.alliances[0].all) + $.alliances[1].won) / $.constituencies.total * 100 + '%'"
       x-width="100 * $.alliances[1].leading / $.constituencies.total + '%'"/>
 
-    <rect class="leading" height="{{ barheight }}" x-fill="$.alliances[2].color"
+    <rect class="leading" height="{{ barheight }}" x-fill="$.alliances[2].color" x-title="$.alliances[2].name + ' won ' + $.alliances[2].won + ' seats'"
       x-x="100 * (1 - $.alliances[2].all / $.constituencies.total) + '%'"
       x-width="100 * $.alliances[2].leading / $.constituencies.total + '%'"/>
-    <rect class="won" height="{{ barheight }}" x-fill="$.alliances[2].color"
+    <rect class="won" height="{{ barheight }}" x-fill="$.alliances[2].color" x-title="$.alliances[2].name + ' leads in ' + $.alliances[2].leading + ' seats'"
       x-x="100 * (1 - $.alliances[2].won / $.constituencies.total) + '%'"
       x-width="100 * $.alliances[2].won / $.constituencies.total + '%'"/>
 
     <text class="alliance-legend" x-html="$.alliances[0].name + ' won ' + $.alliances[0].won + ', leads in ' + $.alliances[0].leading" y="{{ barheight + 5 }}" dy="1em"></text>
     <text class="alliance-legend" x-html="$.alliances[2].name + ' won ' + $.alliances[2].won + ', leads in ' + $.alliances[2].leading" y="{{ barheight + 5 }}" dy="1em" x="100%" text-anchor="end"></text>
-    <text class="alliance-legend" x="50%" y="{{ barheight + 5 }}" dy="1em" text-anchor="middle" x-html="Math.ceil($.constituencies.total / 2) + ' out of ' + $.constituencies.total"></text>
+    <text class="alliance-legend" x="50%" y="{{ barheight + 5 }}" dy="1em" text-anchor="middle" x-html="'Majority: ' + Math.ceil($.constituencies.total / 2) + ' / ' + $.constituencies.total"></text>
 
     <line stroke-width="2" stroke="#777" x1="50%" x2="50%" y2="{{ barheight + 5 }}"/>
 
@@ -109,8 +118,8 @@ appstyle = args.get('style', [appstyle])[0]
                     <td><%= party.all %></td>
                     <td>
                       <div class="progress" style="min-width:100px">
-                        <div class="progress-bar"         style="background-color:<%= colors[party.name] || '#a0a0a0' %>;width:<%= party.won / party_maxall * 100 %>%"></div>
-                        <div class="progress-bar leading" style="background-color:<%= colors[party.name] || '#a0a0a0' %>;width:<%= party.leading / party_maxall * 100 %>%"></div>
+                        <div class="progress-bar"         style="background-color:<%= party.color %>;width:<%= party.won / party_maxall * 100 %>%"></div>
+                        <div class="progress-bar leading" style="background-color:<%= party.color %>;width:<%= party.leading / party_maxall * 100 %>%"></div>
                       </div>
                     </td>
                   </tr>
@@ -152,19 +161,14 @@ appstyle = args.get('style', [appstyle])[0]
 <script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
 <script src="{{ static_url('js/G.min.js') }}"></script>
 <script>
-var colors = {{ DB.csv('colors.csv').set_index('Name')['Color'].to_json() }}
+var colors = {{ DB.csv('colors.csv')[['Name', 'Color']].drop_duplicates().set_index('Name')['Color'].to_json() }}
 var data = {{ open('2014-summary.json').read() }}
+var pcs = {{ DB.csv('pc.csv').set_index('KEY').to_json(orient='index') }}
 
-function process(data) {
-  for (var i=0, li=data.alliances.length; i<li; i++) {
-    data.alliances[i].color = colors[data.alliances[i].name] || colors['Other']
-  }
-}
-process(data)
 
 // Load the map and store map_path['S01-01'] -> $path element
 var map_path = {}
-$('#map').load('pc-2014-4.svg', function() {
+$('#map').load('{{ static_url('pc-2014-4.svg') }}', function() {
   $('#map svg')
     .aspect()
     .find('path')
@@ -208,19 +212,94 @@ $('script[type="text/html"]').each(function() {
   templates.push(function(data) { $target.html(template(data)) })
 })
 
+var _sort = function (dict) { return _.sortBy(_.values(dict), function(v) { return -v.all }) }
+
+function filter(data, q) {
+  var map = [],
+      status = {finished:0, counting:0, awaited:0, total:0},
+      alliances = {},
+      filters = [],
+      applied_filters = {},
+      alliance, party, pc, row, i, match
+
+  _.each(q, function(val, key) {
+    if (key in pcs['S01-1']) {
+      filters.push(function(pc) {
+        // TODO: Check for multiple values
+        return pc[key] == val[0]
+      })
+      applied_filters[key] = val
+    }
+  })
+
+  {#  row[] has the following structure
+      0   1       2         3       4
+      ID  Party   Alliance  Votes   Status
+
+      The output has the following structure
+      {
+        updated: '11:34am',
+        party_maxall: 86,     // Max won+leading across all parties
+        constituencies: {
+          awaited: 34,
+          counting: 200,
+          finished: 300,
+          total: 534
+        },
+        alliances: [
+            {
+              "won":79,"leading":20,"all":99,"name":"UPA","color":"#2EA7FF",
+              "parties":[
+                {"won":72,"leading":17,"all":89,"name":"INC","color":"#2EA7FF"},
+                {"won": 6,"leading": 2,"all": 8,"name":"NCP","color":"#2E3EEB"},
+                ...
+              ]
+            },
+            ...
+        ],
+        map: [... constituency data ...]
+      }
+  #}
+  for (i=0, row; row=data.map[i]; i++) {
+    pc = pcs[row[0]]
+    match = _.every(filters, function(fn) { return fn(pc) })
+    if (!match) continue
+
+    map.push(row)
+    alliance = alliances[row[2]] = alliances[row[2]] || { won:0, leading:0, all:0, name:row[2], color: colors[row[2]] || colors['Other'], parties:{} }
+    party = alliance.parties[row[1]] = alliance.parties[row[1]] || { won:0, leading:0, all:0, name:row[1], color: colors[row[1]] || colors['Other'] }
+
+    status.total++
+    if      (row[4] == 0) { status.awaited++; }
+    else if (row[4] == 1) { status.counting++; alliance.leading++; party.leading++; alliance.all++; party.all++; }
+    else if (row[4] == 2) { status.finished++; alliance.won++    ; party.won++    ; alliance.all++; party.all++; }
+  }
+  _.each(alliances, function(a) { a.parties = _sort(a.parties).slice(0, 5) })
+
+  return map.length == 0 ? null : {
+      alliances: alliances.NDA.all > alliances.UPA.all ? [alliances.NDA, alliances.OTHER, alliances.UPA] : [alliances.UPA, alliances.OTHER, alliances.NDA],
+      party_maxall: _.max(_.map(alliances, function(a) { return _.max(_.pluck(a.parties, 'all')) } )),
+      constituencies: status,
+      updated: data.updated,
+      filters: applied_filters,
+      map: map
+    }
+}
+
 function render() {
-  var q = G.url.parse(location.href).searchKey,
-      color_by
+  $('.tooltip').remove()
+  var q = G.url.parse(location.href).searchList,
+      subset = filter(data, q)
 
-  templates.forEach(function(x) { x(data) })
-  expr.forEach(function(x) { x(data) })
+  if (!subset) { return }
 
-  {#  0   1       2         3       4
-      ID  Party   Alliance  Votes   Finished #}
-  color_by = q.color == 'party' ? 1 : 2
-  $('.color-by-party')[q.color == 'party' ? 'addClass' : 'removeClass']('active')
-  $('.color-by-alliance')[q.color == 'party' ? 'removeClass' : 'addClass']('active')
-  data.map.forEach(function(row) {
+  templates.forEach(function(x) { x(subset) })
+  expr.forEach(function(x) { x(subset) })
+
+  var color_by = q.color[0] == 'party' ? 1 : 2
+  $('.color-by-party')[color_by == 1 ? 'addClass' : 'removeClass']('active')
+  $('.color-by-alliance')[color_by == 1 ? 'removeClass' : 'addClass']('active')
+  subset.map.forEach(function(row) {
     if (row[0] in map_path)
       map_path[row[0]]
         .attr('fill', colors[row[color_by]] || '#a0a0a0')
@@ -235,8 +314,7 @@ function reload() {
     url: '2014-summary.json',
     dataType: 'json',
     success: function(data) {
-      process(data)
-      window.data = data;
+      window.data = data
       render()
     },
     error: function() { console.log('error', arguments) }
@@ -263,6 +341,9 @@ $('body')
     target: 'pushState'
   })
   .on('loaded.g.urlfilter', render)
+
+$(window)
+  .on('popstate', render)
 
 </script>
 
