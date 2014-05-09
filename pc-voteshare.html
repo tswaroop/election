@@ -78,6 +78,7 @@ distinct_colors = _color.distinct(10)
             color=lambda party,i: colors.get(party, '#888'),
             attrs={
               'data-party': lambda party, i: slug(party),
+              'class': 'voteline'
             },
         ) }}
         {{ T('axis.svg', axis='y',

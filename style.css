@@ -413,6 +413,10 @@ footer {
   width: 64px;
 }
 
+.voteline path {
+  stroke-width: 8;
+}
+
 /* Mobile TV settings */
 @media (max-width: 560px) {
   .state-table td, .state-table th {
