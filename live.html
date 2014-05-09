@@ -2,9 +2,12 @@
 title = '2014 Counting Day'
 description = 'A live update on the 2014 Indian Parliament elections, by Gramener.'
 
+from urllib import quote
+
 tv = args.get('tv')
 appstyle = 'ibn' if 'ibnlive' in handler.request.host else ''
 appstyle = args.get('style', [appstyle])[0]
+
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
   {{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv, appstyle=appstyle) }}
@@ -21,7 +24,8 @@ appstyle = args.get('style', [appstyle])[0]
   .leading { opacity: .6; }
   #parties .progress { margin-bottom: 0; }
   .party-summary td, .party-summary th { text-align: right; }
-  #map path { stroke-width: .5; stroke: #fff; vector-effect:non-scaling-stroke; }
+  #map path { stroke-width: .5; stroke: #fff; vector-effect: non-scaling-stroke; }
+  #map path.na { stroke: #777; fill: #fff; }
   </style>
 </head><body{% if tv %} class="tv"{% end %}>
 
@@ -54,8 +58,8 @@ appstyle = args.get('style', [appstyle])[0]
 </nav>
 
 <div class="container expressions">
-  <script id="filters" type="text/html">
-    <% _.each(filters, function(val, key) { %>
+  <script id="applied_filters" type="text/html">
+    <% _.each(applied_filters, function(val, key) { %>
       <a href="?<%= encodeURIComponent(key) %>="
         title="Remove <%= key %> filter"
         class="urlfilter label label-danger"
@@ -107,7 +111,7 @@ appstyle = args.get('style', [appstyle])[0]
           <% if (alliances[{{ id }}].parties.length) { %>
             <table class="table table-condensed party-summary">
               <thead>
-                <tr><th></th><th>Won</th><th>Lead</th></tr>
+                <tr><th><%= alliances[{{ id }}].name %></th><th>Won</th><th>Lead</th></tr>
               </thead>
               <tbody>
                 <% (alliances[{{ id }}].parties || []).forEach(function(party) { %>
@@ -152,6 +156,23 @@ appstyle = args.get('style', [appstyle])[0]
         <a class="urlfilter btn btn-default btn-sm color-by-party" href="?color=party">Party</a>
       </div>
     </div>
+    <div class="col-md-4">
+      <script id="filters" type="text/html">
+        <% _.each(filters, function(vals, key) { %>
+          <p class="btn-group">
+            <a class="urlfilter btn btn-xs <%= key in applied_filters ? 'btn-success active' : 'btn-primary' %>"
+               href="?<%= encodeURIComponent(key) %>="
+               <% if (key in applied_filters) { %> title="Clear filter"<% } %>
+            ><%= key.replace('-', ' ') %></a>
+            <% _.each(vals, function(val) { %>
+              <% var match = (key in applied_filters) && (applied_filters[key].indexOf(val) >= 0) %>
+              <a class="urlfilter btn btn-xs <%= match ? 'btn-success active' : 'btn-default' %>"
+                 href="?<%= encodeURIComponent(key) %>=<%= match ? '' : encodeURIComponent(val) %>"><%= val %></a>
+            <% }) %>
+          </p>
+        <% }) %>
+      </script>
+    </div>
   </div>
 
 </div>
@@ -164,7 +185,18 @@ appstyle = args.get('style', [appstyle])[0]
 var colors = {{ DB.csv('colors.csv')[['Name', 'Color']].drop_duplicates().set_index('Name')['Color'].to_json() }}
 var data = {{ open('2014-summary.json').read() }}
 var pcs = {{ DB.csv('pc.csv').set_index('KEY').to_json(orient='index') }}
-
+var filters = {
+  '2014-Schedule' : ['07-Apr', '09-Apr', '10-Apr', '11-Apr', '12-Apr', '17-Apr', '24-Apr', '30-Apr', '07-May', '12-May'],
+  'Hindi-speaking': ['Hindi', 'Rest'],
+  'Bi-polar'      : ['Bi-polar', 'Rest'],
+  'Rural'         : ['Rural', 'Semi Urban', 'Urban'],
+  'SC'            : ['Below 10%', '10-19.9%', '20-29.9%', '30% and above'],
+  'ST'            : ['Below 10%', '10-29.9%', '30-49.9%', '50% and above'],
+  'Muslim'        : ['No information', 'Less than 10%', '10-19.9%', '20-39.9%', '40% and above'],
+  'Muslim-pc'     : ['No information', 'Less than 20%','20% and above'],
+  '2009-turnout'  : ['Less than 50%', '50-59.9%','60-69.9%', '70-79.9%', '80% and above'],
+  '2014-turnout'  : ['Less than 50%', '50-59.9%','60-69.9%', '70-79.9%', '80% and above']
+}
 
 // Load the map and store map_path['S01-01'] -> $path element
 var map_path = {}
@@ -172,7 +204,7 @@ $('#map').load('{{ static_url('pc-2014-4.svg') }}', function() {
   $('#map svg')
     .aspect()
     .find('path')
-      .attr('fill', '#eee')
+      .attr('class', 'na')
       .each(function() {
         var $this = $(this)
         map_path[$this.attr('id')] = $this
@@ -257,6 +289,10 @@ function filter(data, q) {
             },
             ...
         ],
+        applied_filters: {
+          key: [val1, val2, ...],
+          ...
+        },
         map: [... constituency data ...]
       }
   #}
@@ -281,7 +317,7 @@ function filter(data, q) {
       party_maxall: _.max(_.map(alliances, function(a) { return _.max(_.pluck(a.parties, 'all')) } )),
       constituencies: status,
       updated: data.updated,
-      filters: applied_filters,
+      applied_filters: applied_filters,
       map: map
     }
 }
@@ -291,20 +327,29 @@ function render() {
   var q = G.url.parse(location.href).searchList,
       subset = filter(data, q)
 
-  if (!subset) { return }
+  _.each(map_path, function(val, key) { val.data('drawn', false) })
+  if (subset) {
+    subset.filters = filters
+    templates.forEach(function(x) { x(subset) })
+    expr.forEach(function(x) { x(subset) })
 
-  templates.forEach(function(x) { x(subset) })
-  expr.forEach(function(x) { x(subset) })
-
-  var color_by = q.color[0] == 'party' ? 1 : 2
-  $('.color-by-party')[color_by == 1 ? 'addClass' : 'removeClass']('active')
-  $('.color-by-alliance')[color_by == 1 ? 'removeClass' : 'addClass']('active')
-  subset.map.forEach(function(row) {
-    if (row[0] in map_path)
-      map_path[row[0]]
-        .attr('fill', colors[row[color_by]] || '#a0a0a0')
-        .attr('class', row[4] == '0' ? 'leading' : '')
-        .attr('title', row[1] + ' (' + row[2] + ') ' + (row[4] == '0' ? 'is leading' : 'won') + ' with ' + row[3] + ' votes')
+    var color_by = q.color[0] == 'party' ? 1 : 2
+    $('.color-by-party')[color_by == 1 ? 'addClass' : 'removeClass']('active')
+    $('.color-by-alliance')[color_by == 1 ? 'removeClass' : 'addClass']('active')
+    subset.map.forEach(function(row) {
+      if (row[0] in map_path) {
+        map_path[row[0]]
+          .attr('fill', colors[row[color_by]] || '#a0a0a0')
+          .attr('class', row[4] == '0' ? 'leading' : '')
+          .attr('title', row[1] + ' (' + row[2] + ') ' + (row[4] == '0' ? 'is leading' : 'won') + ' with ' + row[3] + ' votes')
+          .removeAttr('class')
+          .data('drawn', true)
+      }
+    })
+  }
+  _.each(map_path, function(val, key) {
+    if (!val.data('drawn'))
+      val.attr('class', 'na')
   })
 }
 render()
