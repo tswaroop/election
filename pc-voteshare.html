@@ -6,6 +6,8 @@ from common import slug
 state = args['STATE'][0] if 'STATE' in args else None
 data = DB.csv('voteshare.csv')
 parties = DB.csv('voteshare-parties.csv')
+alliance = parties.set_index(['STATE', 'PARTY'])['ALLIANCE'].to_dict()
+data['ALLIANCE'] = data.apply(lambda v: alliance.get((v['STATE'], v['PARTY']), pd.np.nan), axis=1)
 colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 distinct_colors = _color.distinct(10)
 {% end %}
@@ -30,8 +32,8 @@ distinct_colors = _color.distinct(10)
 {% else %}
   {% code %}
   data = data[data['STATE'] == state]
-  parties = parties[parties['STATE'] == state]['PARTY']
-  pivot = data.pivot_table(rows=['PARTY'], cols=['YEAR'], values='VOTESHARE')
+  parties = parties[parties['STATE'] == state]['ALLIANCE'].unique()
+  pivot = data.pivot_table(rows=['ALLIANCE'], cols=['YEAR'], values='VOTESHARE')
   if len(parties):
       pivot = pivot.ix[parties]
   nparties = len(pivot.index)
@@ -78,7 +80,7 @@ distinct_colors = _color.distinct(10)
             color=lambda party,i: colors.get(party, '#888'),
             attrs={
               'data-party': lambda party, i: slug(party),
-              'class': 'voteline'
+              'class': 'voteline',
             },
         ) }}
         {{ T('axis.svg', axis='y',
