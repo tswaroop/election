@@ -19,13 +19,6 @@ winners = data[data['#'] == '1']
 elections['CONSTANT'] = 1
 metric = 'CONSTANT' if groupby.startswith('2014') else args.get('METRIC', ['CONSTANT'])[0]
 
-# Add constituency related metrics
-constituencies = DB.csv('pc.csv')
-constituencies['YEAR'] = '2009'
-constituencies = constituencies.set_index(['YEAR', 'STATE', 'PC'])
-constituencies_columns = ['2014-Schedule', '2014-Star-Candidate', 'Hindi-speaking', 'Bi-polar', 'Rural', 'SC', 'ST', 'Muslim', '2009-turnout','2014-turnout']
-elections[constituencies_columns] = constituencies[constituencies_columns]
-
 # Various filters, explicitly ordered
 filters = (
   {'key': '2014-Schedule' , 'only-tv': False, 'series': schedule, },
@@ -37,7 +30,16 @@ filters = (
   {'key': 'Muslim'        , 'only-tv': True,  'series': ['< 10%', '10-20%', '20-40%', '40%+'], },
   {'key': '2009-turnout'  , 'only-tv': True,  'series': ['< 50%', '50-60%','60-70%', '70-80%', '80%+'], },
   {'key': '2014-turnout'  , 'only-tv': True,  'series': ['< 50%', '50-60%','60-70%', '70-80%', '80%+'], },
+  {'key': '2009-Party'    , 'only-tv': True,  'series': ['CONG', 'BJP', 'SP', 'BSP', 'JDU'], },
+  {'key': '2009-Margin'   , 'only-tv': True,  'series': ['< 2%', '2-5%', '5-10%', '10-20%', '20%+']}
 )
+
+# Add constituency related metrics
+constituencies = DB.csv('pc.csv')
+constituencies['YEAR'] = '2009'
+constituencies = constituencies.set_index(['YEAR', 'STATE', 'PC'])
+constituencies_columns = ['2014-Star-Candidate'] + [f['key'] for f in filters]
+elections[constituencies_columns] = constituencies[constituencies_columns]
 
 subset = election_dataset = elections.reset_index()
 
