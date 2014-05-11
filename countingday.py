@@ -86,7 +86,7 @@ def main(args):
 
     elections['VOTES'] = candidates.sort(['CCODE', 'CANDICODE']).groupby('CCODE')['VOTES'].apply(lambda v: list(v))
     elections = elections.reset_index().rename(columns={'index': 'CONST_ID'})
-    elections['STATUS'] = elections.apply(lambda v: 2 if v['STATUS'] == '99' else 1 if v['WINNER VOTES'] > 0 else 0, axis=1)
+    elections['STATUS'] = elections.apply(lambda v: 0 if v['WINNER VOTES'] <= 0 else 2 if v['STATUS'] == '99' else 1, axis=1)
 
     map_data = elections[['ID', 'WINNER PARTY', 'WINNER ALLIANCE', 'WINNER VOTES', 'STATUS', 'VOTES']]
     map_data = json.loads(map_data.to_json(orient='values'))

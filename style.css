@@ -462,7 +462,7 @@ footer {
 #live-map path { stroke-width: .5; stroke: #fff; vector-effect: non-scaling-stroke; }
 #live-map path.na { stroke: #777; fill: #fff; }
 
-#consti-result { background-color: #fff; }
+#consti-result { background-color: #fff; position:absolute; right:16px; top:0; }
 .tv #consti-result { background-color: #b1b180; }
 #consti-result td { text-align: right; }
 #consti-result h2 { text-align: right; margin: 0; }

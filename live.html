@@ -140,26 +140,33 @@ appstyle = args.get('style', [appstyle])[0]
   <div class="row">
     <div class="col-md-8">
       <div id="live-map"></div>
-      <div class="consti-result" style="position:absolute;right:16px;top:0">
-        <script id="consti-result" type="text/html">
-          <h2><%= pc.PC_NAME %>, <%= pc.ST_ABBR %></h2>
-          <table class="table table-condensed">
-            <tbody>
-              <% for (var i=0, row; row=result[i]; i++) { %>
-                <tr>
-                  <td><%= row.name %></td>
-                  <td style="background-color:<%= colors[row.party] || colors.Other %>">&#160;</td>
-                  <td><a class="urlfilter" href="?2014-Party=<%= encodeURIComponent(row.party) %>"><%= row.party %></a></td>
-                  <td><%= _comma(row.votes) %></td>
-                </tr>
-              <% } %>
-            </tbody>
-          </table>
+      <div id="live-table"></div>
+      <script id="consti-result" type="text/html">
+        <h2><%= pc.PC_NAME %>, <%= pc.ST_ABBR %></h2>
+        <table class="table table-condensed">
+          <tbody>
+            <% for (var i=0, row; row=result[i]; i++) { %>
+              <tr>
+                <td><%= row.name %></td>
+                <td style="background-color:<%= colors[row.party] || colors.Other %>">&#160;</td>
+                <td><a class="urlfilter" href="?2014-Party=<%= encodeURIComponent(row.party) %>"><%= row.party %></a></td>
+                <td><%= _comma(row.votes) %></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </script>
+      <div style="position:absolute;left:16px;top:0">
+        <script id="draw-buttons" class="onredraw" type="text/html">
+          <div class="btn-group">
+            <a class="urlfilter btn btn-default btn-sm <%= !q.color || q.color != 'party' ? 'active' : '' %>" href="?color=">Alliance</a>
+            <a class="urlfilter btn btn-default btn-sm <%=  q.color && q.color == 'party' ? 'active' : '' %>" href="?color=party">Party</a>
+          </div>
+          <div class="btn-group">
+            <a class="urlfilter btn btn-default btn-sm <%= !q.show || q.show != 'table' ? 'active' : '' %>" href="?show=">Map</a>
+            <a class="urlfilter btn btn-default btn-sm <%=  q.show && q.show == 'table' ? 'active' : '' %>" href="?show=table">Table</a>
+          </div>
         </script>
-      </div>
-      <div class="btn-group color-by" style="position:absolute;left:16px;top:0">
-        <a class="urlfilter btn btn-default btn-sm color-by-alliance" href="?color=alliance">Alliance</a>
-        <a class="urlfilter btn btn-default btn-sm color-by-party" href="?color=party">Party</a>
       </div>
     </div>
     <div class="col-md-4">
@@ -338,6 +345,7 @@ function filter(data, q) {
       constituencies: status,
       updated: data.updated,
       applied_filters: applied_filters,
+      q: q,
       map: map
     }
 }
@@ -354,16 +362,23 @@ function redraw() {
     expr.forEach(function(x) { x(subset) })
 
     var color_by = (q.color && q.color[0] == 'party') ? 1 : 2
-    $('.color-by-party')[color_by == 1 ? 'addClass' : 'removeClass']('active')
-    $('.color-by-alliance')[color_by == 1 ? 'removeClass' : 'addClass']('active')
     subset.map.forEach(function(row) {
+      var path
       if (row[0] in map_path) {
-        map_path[row[0]]
-          .attr('fill', colors[row[color_by]] || '#a0a0a0')
-          .attr('class', row[4] == '0' ? 'leading' : '')
-          .attr('title', row[1] + ' (' + row[2] + ') ' + (row[4] == '0' ? 'is leading' : 'won') + ' with ' + _comma(row[3]) + ' votes')
-          .removeAttr('class')
-          .data('drawn', true)
+        path = map_path[row[0]].data('drawn', true)
+        if (row[4] == 0) {
+          path.attr('class', 'na')
+        } else if (row[4] == 1) {
+          path
+            .attr('class', 'leading')
+            .attr('fill', colors[row[color_by]] || '#a0a0a0')
+            .attr('title', row[1] + ' (' + row[2] + ') is leading with ' + _comma(row[3]) + ' votes')
+        } else if (row[4] == 2) {
+          path
+            .attr('class', '')
+            .attr('fill', colors[row[color_by]] || '#a0a0a0')
+            .attr('title', row[1] + ' (' + row[2] + ') won with ' + _comma(row[3]) + ' votes')
+        }
       }
     })
   } else {
@@ -382,7 +397,7 @@ function reload() {
     dataType: 'json',
     success: function(data) {
       window.data = data
-      update_pcs(data.map)
+      process(data)
       redraw()
     },
     error: function() { console.log('error', arguments) }
@@ -450,6 +465,7 @@ Note about the filter() function.
 The output has the following structure
 {
   updated: '11:34am',
+  q: url_parameters,
   party_maxall: 86,     // Max won+leading across all parties
   constituencies: {
     awaited: 34,
