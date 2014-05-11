@@ -11,28 +11,12 @@ appstyle = args.get('style', [appstyle])[0]
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
   {{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv, appstyle=appstyle) }}
-  <style>
-  .alliance-name { font-size: 24px; font-weight: bold; }
-  .alliance-name.other { font-size: 14px; }
-  .alliance-legend { font-size: 8px; }
-  @media (min-width: 640px) {
-    .alliance-name { font-size: 40px; font-weight: bold; }
-    .alliance-name.other { font-size: 24px; }
-    .alliance-legend { font-size: 16px; }
-  }
-  .alliance-legend { fill: #666; text-transform: uppercase;}
-  .leading { opacity: .6; }
-  #parties .progress { margin-bottom: 0; }
-  .party-summary td, .party-summary th { text-align: right; }
-  #map path { stroke-width: .5; stroke: #fff; vector-effect: non-scaling-stroke; }
-  #map path.na { stroke: #777; fill: #fff; }
-  </style>
-</head><body{% if tv %} class="tv"{% end %}>
+</head><body class="{{ 'tv' if tv else ''}} first-time live">
 
 {% if appstyle %}
   {{ T('header.' + appstyle + '.html') }}
 {% end %}
-<nav class="navbar navbar-default{% if tv %} navbar-fixed-top{% end %} expressions" role="navigation">
+<nav class="navbar navbar-default expressions" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header-collapse">
@@ -58,7 +42,18 @@ appstyle = args.get('style', [appstyle])[0]
 </nav>
 
 <div class="container expressions">
-  <script id="applied_filters" type="text/html">
+
+  <div class="alert alert-danger no-results">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4>Nothing to show</h4>
+    <p>The combination of filters selected do not match any constituencies.</p>
+    <p>
+      <button type="button" class="back btn btn-default">Go back</button>
+      <button type="button" class="clear-filter btn btn-success">Clear all filters</button>
+    </p>
+  </div>
+
+  <script id="applied_filters" class="onredraw" type="text/html">
     <% _.each(applied_filters, function(val, key) { %>
       <a href="?<%= encodeURIComponent(key) %>="
         title="Remove <%= key %> filter"
@@ -72,46 +67,43 @@ appstyle = args.get('style', [appstyle])[0]
     <text class="alliance-name other" x-text="$.alliances[1].name + ':' + ($.alliances[1].won + $.alliances[1].leading)" x-fill="$.alliances[1].color" dy="38" x="50%" text-anchor="middle"></text>
     <text class="alliance-name" x-text="$.alliances[2].name + ':' + ($.alliances[2].won + $.alliances[2].leading)" x-fill="$.alliances[2].color" dy="38" x="100%" text-anchor="end"></text>
   </svg>
+
+  <div class="alliance-progress progress">
+    {% for id in range(3) %}
+      <div class="progress-bar"
+        x-style="'background-color:' + $.alliances[{{ id }}].color + ';width:' + 100 * $.alliances[{{ id }}].won / $.constituencies.total + '%'"
+        x-text="$.alliances[{{ id }}].won"></div>
+      <div class="progress-bar leading"
+        x-style="'background-color:' + $.alliances[{{ id }}].color + ';width:' + 100 * $.alliances[{{ id }}].leading / $.constituencies.total + '%'"
+        x-text="$.alliances[{{ id }}].leading"></div>
+      {% if id < 2 %}
+        <div class="progress-bar leading" x-style="'background:none;width:' + alliance_progress_gap($, {{ id }}) + '%'"></div>
+      {% end %}
+    {% end %}
+  </div>
+
   {% set barheight = 25 %}
-  <svg width="100%" height="{{ barheight + 5 + 20 }}">
-    <rect class="won" height="{{ barheight }}" x-fill="$.alliances[0].color" x-title="$.alliances[0].name + ' won ' + $.alliances[0].won + ' seats'"
-      x-x="0"
-      x-width="100 * $.alliances[0].won / $.constituencies.total + '%'"/>
-    <rect class="leading" height="{{ barheight }}" x-fill="$.alliances[0].color" x-title="$.alliances[0].name + ' leads in ' + $.alliances[0].leading + ' seats'"
-      x-x="100 * $.alliances[0].won / $.constituencies.total + '%'"
-      x-width="100 * $.alliances[0].leading / $.constituencies.total + '%'"/>
-
-    <rect class="won" height="{{ barheight }}" x-fill="$.alliances[1].color" x-title="$.alliances[1].name + ' won ' + $.alliances[1].won + ' seats'"
-      x-x="(Math.max(($.constituencies.total - $.alliances[1].all)/2, $.alliances[0].all)) / $.constituencies.total * 100 + '%'"
-      x-width="100 * $.alliances[1].won / $.constituencies.total + '%'"/>
-    <rect class="leading" height="{{ barheight }}" x-fill="$.alliances[1].color" x-title="$.alliances[1].name + ' leads in ' + $.alliances[1].leading + ' seats'"
-      x-x="(Math.max(($.constituencies.total - $.alliances[1].all)/2, $.alliances[0].all) + $.alliances[1].won) / $.constituencies.total * 100 + '%'"
-      x-width="100 * $.alliances[1].leading / $.constituencies.total + '%'"/>
-
-    <rect class="leading" height="{{ barheight }}" x-fill="$.alliances[2].color" x-title="$.alliances[2].name + ' won ' + $.alliances[2].won + ' seats'"
-      x-x="100 * (1 - $.alliances[2].all / $.constituencies.total) + '%'"
-      x-width="100 * $.alliances[2].leading / $.constituencies.total + '%'"/>
-    <rect class="won" height="{{ barheight }}" x-fill="$.alliances[2].color" x-title="$.alliances[2].name + ' leads in ' + $.alliances[2].leading + ' seats'"
-      x-x="100 * (1 - $.alliances[2].won / $.constituencies.total) + '%'"
-      x-width="100 * $.alliances[2].won / $.constituencies.total + '%'"/>
-
-    <text class="alliance-legend" x-html="$.alliances[0].name + ' won ' + $.alliances[0].won + ', leads in ' + $.alliances[0].leading" y="{{ barheight + 5 }}" dy="1em"></text>
-    <text class="alliance-legend" x-html="$.alliances[2].name + ' won ' + $.alliances[2].won + ', leads in ' + $.alliances[2].leading" y="{{ barheight + 5 }}" dy="1em" x="100%" text-anchor="end"></text>
-    <text class="alliance-legend" x="50%" y="{{ barheight + 5 }}" dy="1em" text-anchor="middle" x-html="'Majority: ' + Math.ceil($.constituencies.total / 2) + ' / ' + $.constituencies.total"></text>
-
-    <line stroke-width="2" stroke="#777" x1="50%" x2="50%" y2="{{ barheight + 5 }}"/>
-
-    <rect height="{{ barheight }}" fill="none" stroke="#000" width="100%" />
+  <svg width="100%" height="25">
+    <text class="alliance-legend" x-html="$.alliances[0].name + ' won ' + $.alliances[0].won + ', leads in ' + $.alliances[0].leading" y="5" dy="1em"></text>
+    <text class="alliance-legend" x-html="$.alliances[2].name + ' won ' + $.alliances[2].won + ', leads in ' + $.alliances[2].leading" y="5" dy="1em" x="100%" text-anchor="end"></text>
+    <text class="alliance-legend" x="50%" y="23" text-anchor="middle" x-html="'Majority: ' + Math.ceil($.constituencies.total / 2) + ' / ' + $.constituencies.total"></text>
+    <text x="50%" y="9" font-size="15" text-anchor="middle">&#x25b2;</text>
   </svg>
 
-  <script id="parties" type="text/html">
+  <script id="parties" class="onredraw" type="text/html">
     <div class="row">
       {% for id in range(3) %}
         <div class="col-md-4">
           <% if (alliances[{{ id }}].parties.length) { %>
             <table class="table table-condensed party-summary">
               <thead>
-                <tr><th><%= alliances[{{ id }}].name %></th><th>Won</th><th>Lead</th></tr>
+                <tr>
+                  <th style="width:50px"><%= alliances[{{ id }}].name %></th>
+                  <th style="width:30px">Won</th>
+                  <th style="width:30px">Lead</th>
+                  <th style="width:30px"></th>
+                  <th style="width:100px"></th>
+                </tr>
               </thead>
               <tbody>
                 <% (alliances[{{ id }}].parties || []).forEach(function(party) { %>
@@ -121,7 +113,7 @@ appstyle = args.get('style', [appstyle])[0]
                     <td><%= party.leading %></td>
                     <td><%= party.all %></td>
                     <td>
-                      <div class="progress" style="min-width:100px">
+                      <div class="progress">
                         <div class="progress-bar"         style="background-color:<%= party.color %>;width:<%= party.won / party_maxall * 100 %>%"></div>
                         <div class="progress-bar leading" style="background-color:<%= party.color %>;width:<%= party.leading / party_maxall * 100 %>%"></div>
                       </div>
@@ -136,28 +128,42 @@ appstyle = args.get('style', [appstyle])[0]
     </div>
   </script>
 
-  <div class="progress">
-    <div class="progress-bar"
-      x-style="'background-color:{{ _color.brighten(_color.Office[0], -.5) }};width:' + $.constituencies.finished / $.constituencies.total * 100 + '%'"
-      x-text="$.constituencies.finished / $.constituencies.total > 0.1 ? $.constituencies.finished + ' finished' : ''"></div>
-    <div class="progress-bar"
-      x-style="'background-color:{{ _color.brighten(_color.Office[0], +.5) }};width:' + $.constituencies.counting / $.constituencies.total * 100 + '%'"
-      x-text="$.constituencies.counting / $.constituencies.total > 0.1 ? $.constituencies.counting + ' counting' : ''"></div>
-    <div class="progress-bar"
-      x-style="'background:none;color:#000;width:' + $.constituencies.awaited / $.constituencies.total * 100 + '%'"
-      x-text="$.constituencies.awaited / $.constituencies.total > 0.1 ? $.constituencies.awaited + ' awaited' : ''"></div>
+  <div class="counting-progress progress">
+    <div class="progress-bar" x-text="$.constituencies.finished + ' finished'"
+      x-style="'background-color:{{ _color.brighten(_color.Office[0], -.5) }};width:' + $.constituencies.finished / $.constituencies.total * 100 + '%'"></div>
+    <div class="progress-bar" x-text="$.constituencies.counting + ' counting'"
+      x-style="'background-color:{{ _color.brighten(_color.Office[0], +.5) }};width:' + $.constituencies.counting / $.constituencies.total * 100 + '%'"></div>
+    <div class="progress-bar" x-text="$.constituencies.awaited + ' awaited'"
+      x-style="'background:none;color:#000;width:' + $.constituencies.awaited / $.constituencies.total * 100 + '%'"></div>
   </div>
 
   <div class="row">
-    <div class="col-md-8" style="position:relative">
-      <div id="map"></div>
-      <div class="btn-group color-by" style="position:absolute;right:0;top:0">
+    <div class="col-md-8">
+      <div id="live-map"></div>
+      <div class="consti-result" style="position:absolute;right:16px;top:0">
+        <script id="consti-result" type="text/html">
+          <h2><%= pc.PC_NAME %>, <%= pc.ST_ABBR %></h2>
+          <table class="table table-condensed">
+            <tbody>
+              <% for (var i=0, row; row=result[i]; i++) { %>
+                <tr>
+                  <td><%= row.name %></td>
+                  <td style="background-color:<%= colors[row.party] || colors.Other %>">&#160;</td>
+                  <td><a class="urlfilter" href="?2014-Party=<%= encodeURIComponent(row.party) %>"><%= row.party %></a></td>
+                  <td><%= _comma(row.votes) %></td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </script>
+      </div>
+      <div class="btn-group color-by" style="position:absolute;left:16px;top:0">
         <a class="urlfilter btn btn-default btn-sm color-by-alliance" href="?color=alliance">Alliance</a>
         <a class="urlfilter btn btn-default btn-sm color-by-party" href="?color=party">Party</a>
       </div>
     </div>
     <div class="col-md-4">
-      <script id="filters" type="text/html">
+      <script id="filters" class="onredraw" type="text/html">
         <% _.each(filters, function(vals, key) { %>
           <p class="btn-group">
             <a class="urlfilter btn btn-xs <%= key in applied_filters ? 'btn-success active' : 'btn-primary' %>"
@@ -167,7 +173,8 @@ appstyle = args.get('style', [appstyle])[0]
             <% _.each(vals, function(val) { %>
               <% var match = (key in applied_filters) && (applied_filters[key].indexOf(val) >= 0) %>
               <a class="urlfilter btn btn-xs <%= match ? 'btn-success active' : 'btn-default' %>"
-                 href="?<%= encodeURIComponent(key) %>=<%= match ? '' : encodeURIComponent(val) %>"><%= val %></a>
+                 data-toggle="toggle"
+                 href="?<%= encodeURIComponent(key) %>=<%= encodeURIComponent(val) %>"><%= val %></a>
             <% }) %>
           </p>
         <% }) %>
@@ -185,31 +192,58 @@ appstyle = args.get('style', [appstyle])[0]
 var colors = {{ DB.csv('colors.csv')[['Name', 'Color']].drop_duplicates().set_index('Name')['Color'].to_json() }}
 var data = {{ open('2014-summary.json').read() }}
 var pcs = {{ DB.csv('pc.csv').set_index('KEY').to_json(orient='index') }}
+var candidates = []
 var filters = {
   '2014-Schedule' : ['07-Apr', '09-Apr', '10-Apr', '11-Apr', '12-Apr', '17-Apr', '24-Apr', '30-Apr', '07-May', '12-May'],
   'Hindi-speaking': ['Hindi', 'Rest'],
   'Bi-polar'      : ['Bi-polar', 'Rest'],
   'Rural'         : ['Rural', 'Semi Urban', 'Urban'],
-  'SC'            : ['Below 10%', '10-19.9%', '20-29.9%', '30% and above'],
-  'ST'            : ['Below 10%', '10-29.9%', '30-49.9%', '50% and above'],
-  'Muslim'        : ['No information', 'Less than 10%', '10-19.9%', '20-39.9%', '40% and above'],
-  'Muslim-pc'     : ['No information', 'Less than 20%','20% and above'],
-  '2009-turnout'  : ['Less than 50%', '50-59.9%','60-69.9%', '70-79.9%', '80% and above'],
-  '2014-turnout'  : ['Less than 50%', '50-59.9%','60-69.9%', '70-79.9%', '80% and above']
+  'SC'            : ['< 10%', '10-20%', '20-30%', '30%+'],
+  'ST'            : ['< 10%', '10-30%', '30-50%', '50%+'],
+  'Muslim'        : ['< 10%', '10-20%', '20-40%', '40%+'],
+  '2009-Turnout'  : ['< 50%', '50-60%','60-70%', '70-80%', '80%+'],
+  '2014-Turnout'  : ['< 50%', '50-60%','60-70%', '70-80%', '80%+'],
+  '2009-Party'    : ['CONG', 'BJP', 'SP', 'BSP', 'JDU'],
+  '2014-Party'    : ['CONG', 'BJP', 'SP', 'BSP', 'AAP'],
+  '2014-Alliance' : ['NDA', 'UPA', 'OTHER'],
+  '2009-Margin'   : ['< 2%', '2-5%', '5-10%', '10-20%', '20%+']
 }
+
+// Refresh PC information based on latest constituency-wise data
+function process(data) {
+  var status = ['Awaited', 'Counting', 'Finished'],
+      map_id = data.map_id = {}
+  data.map.forEach(function(row) {
+    var pc = pcs[row[0]]
+    pc['2014-Party'] = row[1]
+    pc['2014-Alliance'] = row[2]
+    pc['Status'] = status[row[4]]
+    map_id[row[0]] = row
+  })
+}
+process(data)
 
 // Load the map and store map_path['S01-01'] -> $path element
 var map_path = {}
-$('#map').load('{{ static_url('pc-2014-4.svg') }}', function() {
-  $('#map svg')
-    .aspect()
-    .find('path')
-      .attr('class', 'na')
-      .each(function() {
-        var $this = $(this)
-        map_path[$this.attr('id')] = $this
-      })
-  render()
+$('#live-map')
+  .html('<br><h1>Loading constituency map...</h1>')
+  .load('{{ static_url('pc-2014-4.svg') }}', function() {
+    $('#live-map svg')
+      .aspect()
+      .find('path')
+        .attr('class', 'na')
+        .each(function() {
+          var $this = $(this)
+          map_path[$this.attr('id')] = $this
+        })
+    redraw()
+  })
+
+// Load candidates' names
+$.ajax({
+  url: '2014-candidates.json',
+  dataType: 'json',
+  success: function(candidates) { window.candidates = candidates }
 })
 
 // Live rendering via x-attributes
@@ -235,74 +269,60 @@ $('.expressions')
   })
 
 // Live rendering via underscore templates
-var templates = []
+var reload_templates = [],
+    click_templates = {}
 $('script[type="text/html"]').each(function() {
   var $el = $(this),
-      $target = $('<div></div>').attr('id', $el.attr('id')).insertAfter($el),
-      template = _.template($el.html())
+      id = $el.attr('id'),
+      $target = $('<div></div>').attr('id', id).insertAfter($el),
+      template = _.template($el.html()),
+      fn = function(data) { $target.html(template(data)) }
   $el.remove()
-  templates.push(function(data) { $target.html(template(data)) })
+  if ($el.attr('class') == 'onredraw')
+    reload_templates.push(fn)
+  else
+    click_templates[id] = fn
 })
 
-var _sort = function (dict) { return _.sortBy(_.values(dict), function(v) { return -v.all }) }
+// Used by .alliance-progress
+function alliance_progress_gap(data, id) {
+  var left = data.alliances[0].all  / data.constituencies.total,
+      mid = data.alliances[1].all / data.constituencies.total,
+      right = 1 - data.alliances[2].all  / data.constituencies.total,
+      start = Math.max(left, .5 - mid / 2) ,
+      end = start + mid
+  return 100 * (id == 0 ? start - left : right - end)
+}
 
+// Filter based on query parameters
+var _sort = function (dict) { return _.sortBy(_.values(dict), function(v) { return -v.all }) }
+var _comma = function(x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
 function filter(data, q) {
   var map = [],
       status = {finished:0, counting:0, awaited:0, total:0},
-      alliances = {},
-      filters = [],
       applied_filters = {},
+      filters = [],
+      alliances = {
+        NDA:   { won:0, leading:0, all:0, name:'NDA',   color: colors.NDA  , parties:{} },
+        UPA:   { won:0, leading:0, all:0, name:'UPA',   color: colors.UPA  , parties:{} },
+        OTHER: { won:0, leading:0, all:0, name:'OTHER', color: colors.Other, parties:{} }
+      },
       alliance, party, pc, row, i, match
 
   _.each(q, function(val, key) {
-    if (key in pcs['S01-1']) {
-      filters.push(function(pc) {
-        // TODO: Check for multiple values
-        return pc[key] == val[0]
-      })
+    if (key in pcs['S01-1'] || key.match(/^(Party|Alliance|Status)$/)) {
+      filters.push(function(pc) { return val.indexOf(pc[key]) >= 0 })
       applied_filters[key] = val
     }
   })
 
-  {#  row[] has the following structure
-      0   1       2         3       4
-      ID  Party   Alliance  Votes   Status
-
-      The output has the following structure
-      {
-        updated: '11:34am',
-        party_maxall: 86,     // Max won+leading across all parties
-        constituencies: {
-          awaited: 34,
-          counting: 200,
-          finished: 300,
-          total: 534
-        },
-        alliances: [
-            {
-              "won":79,"leading":20,"all":99,"name":"UPA","color":"#2EA7FF",
-              "parties":[
-                {"won":72,"leading":17,"all":89,"name":"INC","color":"#2EA7FF"},
-                {"won": 6,"leading": 2,"all": 8,"name":"NCP","color":"#2E3EEB"},
-                ...
-              ]
-            },
-            ...
-        ],
-        applied_filters: {
-          key: [val1, val2, ...],
-          ...
-        },
-        map: [... constituency data ...]
-      }
-  #}
   for (i=0, row; row=data.map[i]; i++) {
     pc = pcs[row[0]]
     match = _.every(filters, function(fn) { return fn(pc) })
     if (!match) continue
 
     map.push(row)
-    alliance = alliances[row[2]] = alliances[row[2]] || { won:0, leading:0, all:0, name:row[2], color: colors[row[2]] || colors['Other'], parties:{} }
+    alliance = alliances[row[2]]
     party = alliance.parties[row[1]] = alliance.parties[row[1]] || { won:0, leading:0, all:0, name:row[1], color: colors[row[1]] || colors['Other'] }
 
     status.total++
@@ -322,7 +342,7 @@ function filter(data, q) {
     }
 }
 
-function render() {
+function redraw() {
   $('.tooltip').remove()
   var q = G.url.parse(location.href).searchList,
       subset = filter(data, q)
@@ -330,10 +350,10 @@ function render() {
   _.each(map_path, function(val, key) { val.data('drawn', false) })
   if (subset) {
     subset.filters = filters
-    templates.forEach(function(x) { x(subset) })
+    reload_templates.forEach(function(x) { x(subset) })
     expr.forEach(function(x) { x(subset) })
 
-    var color_by = q.color[0] == 'party' ? 1 : 2
+    var color_by = (q.color && q.color[0] == 'party') ? 1 : 2
     $('.color-by-party')[color_by == 1 ? 'addClass' : 'removeClass']('active')
     $('.color-by-alliance')[color_by == 1 ? 'removeClass' : 'addClass']('active')
     subset.map.forEach(function(row) {
@@ -341,18 +361,20 @@ function render() {
         map_path[row[0]]
           .attr('fill', colors[row[color_by]] || '#a0a0a0')
           .attr('class', row[4] == '0' ? 'leading' : '')
-          .attr('title', row[1] + ' (' + row[2] + ') ' + (row[4] == '0' ? 'is leading' : 'won') + ' with ' + row[3] + ' votes')
+          .attr('title', row[1] + ' (' + row[2] + ') ' + (row[4] == '0' ? 'is leading' : 'won') + ' with ' + _comma(row[3]) + ' votes')
           .removeAttr('class')
           .data('drawn', true)
       }
     })
+  } else {
+    $('.no-results').show()
   }
   _.each(map_path, function(val, key) {
     if (!val.data('drawn'))
       val.attr('class', 'na')
   })
 }
-render()
+redraw()
 
 function reload() {
   $.ajax({
@@ -360,7 +382,8 @@ function reload() {
     dataType: 'json',
     success: function(data) {
       window.data = data
-      render()
+      update_pcs(data.map)
+      redraw()
     },
     error: function() { console.log('error', arguments) }
   })
@@ -385,12 +408,77 @@ $('body')
     selector: '.urlfilter',
     target: 'pushState'
   })
-  .on('loaded.g.urlfilter', render)
+  .on('loaded.g.urlfilter', function() {
+    $(this).removeClass('.first-time')
+    redraw()
+  })
+  .on('click', '.back', function() { history.back() })
+  .on('click', '.clear-filter', function() { history.pushState({}, '', 'live'); redraw() })
+  .on('click', '.no-results .btn', function() { $('.alert').hide() })
+  .on('click', '#live-map path', function(e) {
+    var id = $(this).attr('id'),
+        candi = candidates[id],
+        pc = data.map_id[id],
+        result = [],
+        votes, i, l
+    if (candi && pc) {
+      votes = pc[5]
+      for (i=0, l=candi.length; i<l; i++)
+        result.push({name: candi[i][0], party: candi[i][1], votes: votes[i]})
+      result = _.sortBy(result, function(v) { return -v.votes })
+      result = _.filter(result, function(v) { return v.votes })
+      click_templates['consti-result']({pc: pcs[id], result: result.slice(0, 5)})
+      $('#consti-result').show()
+      e.stopPropagation()
+    }
+  })
+  .on('click', '#live-map', function(e) {
+    $('#consti-result').hide()
+  })
 
 $(window)
-  .on('popstate', render)
+  .on('popstate', redraw)
 
 </script>
 
 {{ T('.tail.html', appstyle=appstyle) }}
-</body></html>
+</body></html>{#
+
+
+Note about the filter() function.
+---------------------------------
+The output has the following structure
+{
+  updated: '11:34am',
+  party_maxall: 86,     // Max won+leading across all parties
+  constituencies: {
+    awaited: 34,
+    counting: 200,
+    finished: 300,
+    total: 534
+  },
+  alliances: [
+      {
+        "won":79,"leading":20,"all":99,"name":"UPA","color":"#2EA7FF",
+        "parties":[
+          {"won":72,"leading":17,"all":89,"name":"INC","color":"#2EA7FF"},
+          {"won": 6,"leading": 2,"all": 8,"name":"NCP","color":"#2E3EEB"},
+          ...
+        ]
+      },
+      ...
+  ],
+  applied_filters: {
+    key: [val1, val2, ...],
+    ...
+  },
+  map: [
+    // 0   1      2         3      4       5
+      [ID, Party, Alliance, Votes, Status, [Candidate votes, ...]]
+  ],
+  map_id: {
+      ID: [ID, Party, ...],
+      ...
+  }
+}
+#}

@@ -3,6 +3,9 @@ body.tv {
   padding-top: 70px;
   padding-bottom: 540px;
 }
+body.live.tv {
+  padding-top: 0;
+}
 .tv .back { color: #000; }
 .no-history .back { display: none; }
 
@@ -29,6 +32,12 @@ body.tv {
   .tv .pc-result .const-stack { font-size: 16px; }
 
   .tv .btn { font-size: 30px; }
+  .tv.live .btn { font-size: 22px; }
+  .tv .party-summary { font-size: 30px; }
+  .tv .alliance-progress, .tv .alliance-progress .progress-bar { height: 40px; line-height: 40px; }
+  .tv .alliance-progress .progress-bar { font-size: 30px; }
+  .tv .counting-progress, .tv .counting-progress .progress-bar { height: 40px; line-height: 40px; }
+  .tv .counting-progress .progress-bar { font-size: 30px; }
 
   .tv .pc-summary { font-size: 32px; }
   .tv .pc-summary h2 { margin-top: 1em; }
@@ -417,10 +426,50 @@ footer {
   stroke-width: 8;
 }
 
+/* Live settings */
+
+.live .leading { opacity: .6; }
+.live .navbar { margin-bottom: 5px; }
+.live .no-results { display: none; }
+.live .first-time .no-results .back { display: none; }
+
+.alliance-name { font-size: 24px; font-weight: bold; }
+.alliance-name.other { font-size: 14px; }
+.alliance-legend { font-size: 8px; }
+.alliance-progress, .alliance-progress .progress-bar { height: 24px; line-height: 24px; }
+.alliance-progress .progress-bar { font-size: 18px; }
+@media (min-width: 640px) {
+  .alliance-name { font-size: 40px; font-weight: bold; }
+  .alliance-name.other { font-size: 24px; }
+  .alliance-legend { font-size: 16px; }
+}
+@media (max-width: 639px) {
+  .party-summary>thead>tr>th,
+  .party-summary>tbody>tr>th,
+  .party-summary>tfoot>tr>th,
+  .party-summary>thead>tr>td,
+  .party-summary>tbody>tr>td { padding: 1px 5px;}
+}
+.alliance-progress {
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+.alliance-legend { fill: #666; text-transform: uppercase;}
+#applied_filters { height: 1.5em; }
+#parties .progress, .alliance-progress { margin-bottom: 0; }
+.party-summary { table-layout: fixed; }
+.party-summary td, .party-summary th { text-align: right; }
+#live-map path { stroke-width: .5; stroke: #fff; vector-effect: non-scaling-stroke; }
+#live-map path.na { stroke: #777; fill: #fff; }
+
+#consti-result { background-color: #fff; }
+.tv #consti-result { background-color: #b1b180; }
+#consti-result td { text-align: right; }
+#consti-result h2 { text-align: right; margin: 0; }
+
 /* Mobile TV settings */
 @media (max-width: 560px) {
   .state-table td, .state-table th {
     font-size: 50%;
   }
 }
-
