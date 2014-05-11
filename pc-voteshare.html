@@ -1,13 +1,18 @@
-{{ GRAMEX(cache=['voteshare.csv', 'colors.csv'], max_age=10*60) }}{% code %}
+{{ GRAMEX(cache=['voteshare.csv', '2014-seatshare-forecast.csv', 'colors.csv'], max_age=10*60) }}{% code %}
 
 from urllib import quote
 from common import slug
 
 state = args['STATE'][0] if 'STATE' in args else None
-data = DB.csv('voteshare.csv')
+
+voteshare = DB.csv('voteshare.csv')
 parties = DB.csv('voteshare-parties.csv')
-alliance = parties.set_index(['STATE', 'PARTY'])['ALLIANCE'].to_dict()
-data['ALLIANCE'] = data.apply(lambda v: alliance.get((v['STATE'], v['PARTY']), pd.np.nan), axis=1)
+group = parties.set_index(['STATE', 'PARTY'])['GROUP'].to_dict()
+voteshare['GROUP'] = voteshare.apply(lambda v: group.get((v['STATE'], v['PARTY']), v['PARTY']), axis=1)
+
+seatshare = DB.csv('2014-seatshare-forecast.csv')
+seatshare = seatshare.sort(['STATE', 'SEATSHARE_HI'], ascending=[True, False]).set_index(['STATE', 'GROUP'])
+
 colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 distinct_colors = _color.distinct(10)
 {% end %}
@@ -31,9 +36,9 @@ distinct_colors = _color.distinct(10)
   </div>
 {% else %}
   {% code %}
-  data = data[data['STATE'] == state]
-  parties = parties[parties['STATE'] == state]['ALLIANCE'].unique()
-  pivot = data.pivot_table(rows=['ALLIANCE'], cols=['YEAR'], values='VOTESHARE')
+  voteshare = voteshare[voteshare['STATE'] == state]
+  parties = parties[parties['STATE'] == state]['GROUP'].unique()
+  pivot = voteshare.pivot_table(rows=['GROUP'], cols=['YEAR'], values='VOTESHARE')
   if len(parties):
       pivot = pivot.ix[parties]
   nparties = len(pivot.index)
@@ -66,33 +71,61 @@ distinct_colors = _color.distinct(10)
     {% end %}
   </svg>
 
-  {% set W, H, leftmargin, topmargin = 640, 300, 50, 80 %}
+  {% set W, H, margin, topmargin, r = 640, 300, 50, 80, 10 %}
+  {% set gap = r + 2 %}
   <div class="row">
     <div class="col-md-8">
       <svg width="100%" data-height="{{ float(H + 20)/W }}" viewBox="0 0 {{ W }} {{ H + 20 }}">
+        {% if 2014 in pivot %}
+          {% set w = float(W - margin - 2*gap)  / len(pivot.columns) %}
+          <rect x="{{ W - margin - gap - w }}" width="{{ w }}" height="{{ H }}" fill="rgba(0,0,0,.3)"/>
+          <text x="{{ W - margin - gap - w/2  }}" dy="1em" text-anchor="middle">Forecast</text>
+        {% end %}
         {{ T('multiline.svg',
-            x=30,
-            r=10,
+            r=r,
             lo=0,
-            width=W, height=H,
+            width=W-margin, height=H,
             data=pivot,
             topmargin=topmargin,
             color=lambda party,i: colors.get(party, '#888'),
             attrs={
               'data-party': lambda party, i: slug(party),
               'class': 'voteline',
+              'font-size': '130%'
             },
         ) }}
         {{ T('axis.svg', axis='y',
             data=pivot,
-            x=leftmargin, y=topmargin, size=H - topmargin,
+            x=W - margin, y=topmargin, size=H - topmargin,
             format=lambda ticks: ['{:.0%}'.format(t) for t in ticks],
             ticks=4,
-            ticksize=-10,
+            ticksize=1,
             tickattrs={'stroke-width': 0},
-            gridsize=W - leftmargin,
+            gridsize=-(W - margin),
             gridattrs={'stroke': 'rgba(0,0,0,.1)'},
+            textattrs={'font-size': '120%'}
         ) }}
+      </svg>
+    </div>
+    <div class="col-md-4">
+      {% code %}
+      W, h, margin, gap = W // 2, (H - topmargin) // 5, 80, 25
+      seatshare = seatshare.ix[state]
+      scale = (W - margin - 2*gap) / float(seatshare['SEATSHARE_HI'].max())
+      seatshare['x'] = margin + gap + scale * seatshare['SEATSHARE_LO']
+      seatshare['w'] = scale * (seatshare['SEATSHARE_HI'] - seatshare['SEATSHARE_LO'])
+      {% end %}
+      <svg width="100%" data-height="{{ float(H + 20)/W }}" viewBox="0 0 {{ W }} {{ H + 20 }}" font-size="20">
+        <path d="M{{ margin + gap }},{{ topmargin }}V{{ H }}" stroke="#000"/>
+        <text x="{{ W / 2 }}" y="{{ topmargin }}" dy="-1em" text-anchor="middle" font-size="130%">2014 Seat share forecast</text>
+        {% for i, (party, row) in enumerate(seatshare.iterrows()) %}
+          <g transform="translate(0, {{ topmargin + (i + .5) * h }})">
+            <text x="{{ margin - 5 }}" dy=".37em" text-anchor="end">{{ escape(party) }}</text>
+            <rect x="{{ row['x'] }}" width="{{ row['w'] }}" y="{{ -h/3 }}" height="{{ 2*h/3 }}" fill="{{ colors.get(party, '#888') }}" stroke="#000"/>
+            <text x="{{ row['x'] - 2 }}" text-anchor="end" dy=".37em">{{ '{:.0f}'.format(row['SEATSHARE_LO']) }}</text>
+            <text x="{{ row['x'] + row['w'] + 2 }}" dy=".37em">{{ '{:.0f}'.format(row['SEATSHARE_HI']) }}</text>
+          </g>
+        {% end %}
       </svg>
     </div>
   </div>
