@@ -242,7 +242,7 @@ names = {
       >{{ filter['key'].replace('-', ' ') }}</a>
       {% for item in filter['series'] %}
         <a class="btn btn-sm {{ 'btn-success active' if item in keyargs else 'btn-default' }}{{ '' if item in available[filter['key']] else ' disabled' }}"
-           href="?YEAR=2009&{{ quote(filter['key']) }}={{ quote(item) if item not in keyargs else '' }}">{{ item }}</a>
+           data-toggle="toggle" href="?YEAR=2009&{{ quote(filter['key']) }}={{ quote(item) }}">{{ item }}</a>
       {% end %}
     </div>
   {% end %}
