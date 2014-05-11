@@ -6,6 +6,7 @@ May also be run at a fixed interval (e.g. 1 minute)
 Usage: python countingday.py
 """
 
+import os
 import json
 import datetime
 import pyodbc
@@ -35,6 +36,20 @@ def main(args):
     # Summarise by constituency
     candidates['VOTES'] = candidates['VOTES'].fillna(0).astype(int)
     candidates['ID'] = candidates['CCODE'].dropna().astype(str).apply(lambda v: 'S%s-%d' % (v[:2], int(v[-2:])))
+    candidates['ABBR'].replace({
+      'INC(I)': 'CONG',
+      'ADK': 'ADMK',
+      'BLD': 'JNP',
+      'INC': 'CONG',
+      'SHS': 'SS',
+      'JD(U)': 'JDU',
+      'AITC': 'TMC',
+      'JKN': 'NC',
+      'MUL': 'IUML',
+      'JD(S)': 'JDS',
+      'BOPF': 'BPF',
+      'KEC(M)': 'KECM',
+    }, inplace=True)
 
     # Map Nielsen's Union Territory codes to ECI Union Territory codes
     candidates['ID'].replace({
@@ -68,10 +83,12 @@ def main(args):
     elections = pd.concat([
         winners,
         runners], axis=1)
+
+    elections['VOTES'] = candidates.sort(['CCODE', 'CANDICODE']).groupby('CCODE')['VOTES'].apply(lambda v: list(v))
     elections = elections.reset_index().rename(columns={'index': 'CONST_ID'})
     elections['STATUS'] = elections.apply(lambda v: 2 if v['STATUS'] == '99' else 1 if v['WINNER VOTES'] > 0 else 0, axis=1)
 
-    map_data = elections[['ID', 'WINNER PARTY', 'WINNER ALLIANCE', 'WINNER VOTES', 'STATUS']]
+    map_data = elections[['ID', 'WINNER PARTY', 'WINNER ALLIANCE', 'WINNER VOTES', 'STATUS', 'VOTES']]
     map_data = json.loads(map_data.to_json(orient='values'))
 
     # Create JSON structure
@@ -81,6 +98,17 @@ def main(args):
     }
     with open('2014-summary.json', 'w') as out:
         json.dump(summary, out, separators=(',', ':'))
+
+    # If 2014-candidates.json was not present, regenerate it
+    if not os.path.exists('2014-candidates.json'):
+        candidates.sort(['ID', 'CANDICODE'], inplace=True)
+        cols = candidates[['CANDINAME', 'ABBR']]
+        names = {
+            id: cols.ix[indices].values.tolist()
+            for id, indices in candidates.groupby(['ID']).groups.iteritems()
+        }
+        with open('2014-candidates.json', 'w') as out:
+            json.dump(names, out, separators=(',', ':'), encoding='cp1252')
 
 if __name__ == '__main__':
     import argparse
