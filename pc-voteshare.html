@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['voteshare.csv', '2014-seatshare-forecast.csv', 'colors.csv'], max_age=10*60) }}{% code %}
+{{ GRAMEX(cache=['voteshare.csv', '2014-seatshare-forecast.csv', 'colors.csv', 'abbr.csv'], max_age=10*60) }}{% code %}
 
 from urllib import quote
 from common import slug
@@ -15,7 +15,25 @@ seatshare = seatshare.sort(['STATE', 'SEATSHARE_HI'], ascending=[True, False]).s
 
 colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
 distinct_colors = _color.distinct(10)
+
+states = sorted(parties['STATE'].unique())
+abbr = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
+W, legend = 940, 30
 {% end %}
+
+<svg width="100%" data-height="{{ 20./W }}" viewBox="0 0 {{ W }} 20">
+  {% set w = float(W) / len(states) %}
+  {% for i, st in enumerate(states) %}
+    <rect class="state-legend"
+      href="?STATE={{ quote(st) }}"
+      x="{{ w * i }}"
+      width="{{ w }}"
+      height="20"
+      title="{{ escape(st) }}"
+      fill="{{ '#aec7e8' if st == state else '#f8f8f8' }}"/>
+    <text x="{{ (i + .5) * w }}" y="10" dy=".37em" text-anchor="middle">{{ escape(abbr.get(st, st)) }}</text>
+  {% end %}
+</svg>
 
 <h2>
   {% if state is not None %}
@@ -29,7 +47,7 @@ distinct_colors = _color.distinct(10)
 
 {% if state is None %}
   <div id="factoid" class="voteshare-states">
-    {% for i, state in enumerate(sorted(parties['STATE'].unique())) %}
+    {% for i, state in enumerate(states) %}
       <div class="topic" href="?STATE={{ quote(state) }}">
         <div class="thumbnail" style="background-color:{{ distinct_colors[i % len(distinct_colors)] }}">
           <div class="caption">
@@ -49,7 +67,6 @@ distinct_colors = _color.distinct(10)
   nparties = len(pivot.index)
   {% end %}
 
-  {% set W, legend = 940, 30 %}
   {% set w = float(W - 30) / nparties %}
   <svg width="100%" data-height="{{ float(legend) / W }}" viewBox="0 0 {{ W }} {{ legend }}">
     {% for i, party in enumerate(pivot.index) %}
@@ -80,7 +97,7 @@ distinct_colors = _color.distinct(10)
   {% set gap = r + 2 %}
   <div class="row">
     <div class="col-md-8">
-      <svg width="100%" data-height="{{ float(H + 20)/W }}" viewBox="0 0 {{ W }} {{ H + 20 }}">
+      <svg class="multiline" width="100%" data-height="{{ float(H + 20)/W }}" viewBox="0 0 {{ W }} {{ H + 20 }}">
         {% if 2014 in pivot %}
           {% set w = float(W - margin - 2*gap)  / len(pivot.columns) %}
           <rect x="{{ W - margin - gap - w }}" width="{{ w }}" height="{{ H }}" fill="rgba(0,0,0,.3)"/>
@@ -93,6 +110,7 @@ distinct_colors = _color.distinct(10)
             data=pivot,
             topmargin=topmargin,
             color=lambda party,i: colors.get(party, '#888'),
+            title=lambda v, party, c: '{:s}: {:.0%}'.format(party, v),
             attrs={
               'data-party': lambda party, i: slug(party),
               'class': 'voteline',
@@ -138,3 +156,10 @@ distinct_colors = _color.distinct(10)
   <p><a class="direct-link btn btn-primary" href="#state?STATE={{ quote(state) }}">{{ escape(state) }} seat share history &raquo;</a>
 
 {% end %}
+<script>
+$('.multiline circle').each(function() {
+    var title = $('title', this);
+    $(this).attr('title', title.text());
+    title.remove();
+})
+</script>
