@@ -8,21 +8,11 @@ Usage: python countingday.py
 
 import json
 import datetime
-import argparse
 import pyodbc
 import pandas as pd
 from pandas import read_sql
 
-def main():
-    # Process command line arguments
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--server', help='SQL Server name', default='localhost')
-    parser.add_argument('--db', help='Database name', default='ELEC_6MAY_6_20PM')
-    parser.add_argument('--time', help='Simulation real time 0.0-1.0', type=float, default=1.0)
-    parser.add_argument('--uid', help='SQL Server username')
-    parser.add_argument('--pwd', help='SQL Server username')
-    args = parser.parse_args()
-
+def main(args):
     # Connect to SQL Server
     dsn = ('DRIVER={:s};' +
           'SERVER={:s};'.format(args.server) +
@@ -35,9 +25,9 @@ def main():
         dsn += 'UID={:s};PWD={:s};'.format(args.uid, args.pwd)
 
     try:
-        con = pyodbc.connect(dsn.format('{SQL Server Native Client 11.0}'))
+        con = pyodbc.connect(dsn.format('{SQL Server Native Client 11.0}'), timeout=3)
     except pyodbc.Error:
-        con = pyodbc.connect(dsn.format('{SQL Server}'))
+        con = pyodbc.connect(dsn.format('{SQL Server}'), timeout=3)
 
     # Load latest candidate votes
     candidates = read_sql('SELECT * FROM dbo.ELECP_CANDMAST', con, coerce_float=False)
@@ -64,8 +54,11 @@ def main():
     }, inplace=True)
 
     const_wise = candidates.groupby('CCODE')
+
+    # Slow operations
     candidates['#'] = const_wise['VOTES'].transform(lambda v: v.rank(ascending=False, method='first'))
     candidates['CANDI_ALLIANCE_INDIA_ID'].replace({0: 'OTHER', 1: 'NDA', 2: 'UPA', 3: 'OTHER'}, inplace=True)
+
     winners = candidates[candidates['#'] == 1].set_index('CCODE')[['CANDINAME', 'ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'VOTES', 'ID']]
     runners = candidates[candidates['#'] == 2].set_index('CCODE')[['CANDINAME', 'ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'VOTES', 'RNO']]
     winners.columns = ['WINNER', 'WINNER PARTY', 'WINNER ALLIANCE', 'WINNER VOTES', 'ID']
@@ -90,4 +83,27 @@ def main():
         json.dump(summary, out, separators=(',', ':'))
 
 if __name__ == '__main__':
-    main()
+    import argparse
+    import traceback
+    from time import sleep
+
+    # Process command line arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--server', help='SQL Server name', default='localhost')
+    parser.add_argument('--db', help='Database name', default='ELEC_6MAY_6_20PM')
+    parser.add_argument('--uid', help='SQL Server username')
+    parser.add_argument('--pwd', help='SQL Server username')
+    parser.add_argument('--refresh', help='Rerun after n seconds', type=int)
+    args = parser.parse_args()
+
+    if not args.refresh:
+        main(args)
+    else:
+        while True:
+            try:
+                main(args)
+                print datetime.datetime.now().strftime('%H:%M:%S')
+            except Exception, e:
+                print traceback.format_exc(e)
+            finally:
+                sleep(args.refresh)
