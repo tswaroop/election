@@ -3,7 +3,7 @@ import json
 from urllib import quote
 from common import pc_setup, slug, metric_names, NONE_COLOR
 
-groupbys = ['PARTY', '2014-Schedule', '2014-Star-Candidate']
+groupbys = ['PARTY', '2014-Schedule', '2014-Star-Candidate', '2014-Turnout']
 
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 latlong = DB.csv('pc-latlong.csv').set_index(['STATE', 'PC'])
@@ -13,7 +13,10 @@ abbr = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr'].ix['STATE']
 abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
 
 # Manually define this for ordering
-schedule = ['07-Apr', '09-Apr', '10-Apr', '11-Apr', '12-Apr', '17-Apr', '24-Apr', '30-Apr', '07-May', '12-May', ]
+group_values = {
+  '2014-Schedule': ['07-Apr', '09-Apr', '10-Apr', '11-Apr', '12-Apr', '17-Apr', '24-Apr', '30-Apr', '07-May', '12-May', ],
+  '2014-Turnout': ['< 50%', '50-60%', '60-70%', '70-80%', '80%+', ],
+}
 
 winners = data[data['#'] == '1']
 elections['CONSTANT'] = 1
@@ -21,15 +24,15 @@ metric = 'CONSTANT' if groupby.startswith('2014') else args.get('METRIC', ['CONS
 
 # Various filters, explicitly ordered
 filters = (
-  {'key': '2014-Schedule' , 'only-tv': False, 'series': schedule, },
+  {'key': '2014-Schedule' , 'only-tv': False, 'series': group_values['2014-Schedule'], },
   {'key': 'Hindi-speaking', 'only-tv': True,  'series': ['Hindi', 'Rest'], },
   {'key': 'Bi-polar'      , 'only-tv': True,  'series': ['Bi-polar', 'Rest'], },
   {'key': 'Rural'         , 'only-tv': True,  'series': ['Rural', 'Semi Urban', 'Urban'], },
   {'key': 'SC'            , 'only-tv': True,  'series': ['< 10%', '10-20%', '20-30%', '30%+'], },
   {'key': 'ST'            , 'only-tv': True,  'series': ['< 10%', '10-30%', '30-50%', '50%+'], },
   {'key': 'Muslim'        , 'only-tv': True,  'series': ['< 10%', '10-20%', '20-40%', '40%+'], },
-  {'key': '2009-turnout'  , 'only-tv': True,  'series': ['< 50%', '50-60%','60-70%', '70-80%', '80%+'], },
-  {'key': '2014-turnout'  , 'only-tv': True,  'series': ['< 50%', '50-60%','60-70%', '70-80%', '80%+'], },
+  {'key': '2009-Turnout'  , 'only-tv': True,  'series': ['< 50%', '50-60%','60-70%', '70-80%', '80%+'], },
+  {'key': '2014-Turnout'  , 'only-tv': True,  'series': ['< 50%', '50-60%','60-70%', '70-80%', '80%+'], },
   {'key': '2009-Party'    , 'only-tv': True,  'series': ['CONG', 'BJP', 'SP', 'BSP', 'JDU'], },
   {'key': '2009-Margin'   , 'only-tv': True,  'series': ['< 2%', '2-5%', '5-10%', '10-20%', '20%+']}
 )
@@ -85,8 +88,8 @@ W, H, R = 940, 700, 6
 bar_height = 33
 top_groups = win_count.head(min(20, H // bar_height))
 
-if groupby == '2014-Schedule':
-    top_groups = top_groups.ix[schedule].dropna().astype(int)
+if groupby in group_values:
+    top_groups = top_groups.ix[group_values[groupby]].dropna().astype(int)
 
 states = [''] + sorted(elections.ix[year].reset_index()['STATE'].unique())
 
@@ -287,7 +290,7 @@ var update = d3.select('#carto-contents').selectAll('circle')
     .attr('r', function(d) { return d.r })
     .attr('title', function(d) { return d.STATE + ': ' + d.PC + '<br>' + d[groupby] })
     .attr('fill', function(d, i) { return colors[d[groupby]] || 'rgba(128,128,128,.5)' })
-    .attr('data-party', function(d) { return d[groupby].replace(/[^A-Za-z0-9_]/g, '-') })
+    .attr('data-party', function(d) { return d[groupby].replace(/[^A-Za-z0-9_]+/g, '-') })
     .attr('href', function(d) { return 'result?BY=&YEAR={{ year }}&STATE=' + encodeURIComponent(d.STATE) + '&PC=' + encodeURIComponent(d.PC) })
     .attr('stroke', 'rgba(0,0,0,.3)')
     .classed('direct', true)
