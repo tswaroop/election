@@ -61,7 +61,7 @@ W, legend = 940, 30
   {% code %}
   voteshare = voteshare[voteshare['STATE'] == state]
   parties = parties[parties['STATE'] == state]['GROUP'].unique()
-  pivot = voteshare.pivot_table(rows=['GROUP'], cols=['YEAR'], values='VOTESHARE')
+  pivot = voteshare.pivot_table(rows=['GROUP'], cols=['YEAR'], values='VOTESHARE', aggfunc='sum')
   if len(parties):
       pivot = pivot.ix[parties]
   nparties = len(pivot.index)
