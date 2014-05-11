@@ -4,6 +4,12 @@ from urllib import quote
 from common import pc_setup, slug, metric_names, NONE_COLOR
 
 groupbys = ['PARTY', '2014-Schedule', '2014-Star-Candidate', '2014-Turnout']
+# Manually define this for ordering
+group_values = {
+  '2014-Schedule': ['07-Apr', '09-Apr', '10-Apr', '11-Apr', '12-Apr', '17-Apr', '24-Apr', '30-Apr', '07-May', '12-May', ],
+  '2014-Turnout': ['< 50%', '50-60%', '60-70%', '70-80%', '80%+', ],
+  '2014-Star-Candidate': ['Star'],
+}
 
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 latlong = DB.csv('pc-latlong.csv').set_index(['STATE', 'PC'])
@@ -11,12 +17,6 @@ groupby = args.get('BY', ['PARTY'])[0]
 colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color']
 abbr = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr'].ix['STATE']
 abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
-
-# Manually define this for ordering
-group_values = {
-  '2014-Schedule': ['07-Apr', '09-Apr', '10-Apr', '11-Apr', '12-Apr', '17-Apr', '24-Apr', '30-Apr', '07-May', '12-May', ],
-  '2014-Turnout': ['< 50%', '50-60%', '60-70%', '70-80%', '80%+', ],
-}
 
 winners = data[data['#'] == '1']
 elections['CONSTANT'] = 1
@@ -198,8 +198,8 @@ names = {
       </g>
     {% end %}
     <g transform="translate(640, 46)">
-      {% if groupby.startswith('2014') %}
-        <text x="-50" class="carto-title" y="-20" dy="-.2em" dx="+0.0em" text-anchor="end">Schedule 2014</text>
+      {% if groupby in group_values %}
+        <text x="-50" class="carto-title" y="-20" dy="-.2em" dx="+0.0em" text-anchor="end">{{ groupby.replace('-', ' ') }}</text>
       {% else %}
         {% if prev_year %}<text x="-80" class="carto-title" y="-20" dy="-.2em" dx="-1.7em" text-anchor="middle" href="?BY=&YEAR={{ prev_year }}" title="Previous election">&#x25c4;</text>{% end %}
                           <text x="-80" class="carto-title" y="-20" dy="-.2em" dx="+0.0em" text-anchor="middle">{{ year }}</text>
