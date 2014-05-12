@@ -36,12 +36,13 @@ filters = (
   {'key': '2009-Party'    , 'only-tv': True,  'series': ['CONG', 'BJP', 'SP', 'BSP', 'JDU'], },
   {'key': '2009-Margin'   , 'only-tv': True,  'series': ['< 2%', '2-5%', '5-10%', '10-20%', '20%+']}
 )
+hidden_filters = ['2014-Star-Candidate', 'ST_CODE', 'KEY']
 
 # Add constituency related metrics
 constituencies = DB.csv('pc.csv')
 constituencies['YEAR'] = '2009'
 constituencies = constituencies.set_index(['YEAR', 'STATE', 'PC'])
-constituencies_columns = ['2014-Star-Candidate'] + [f['key'] for f in filters]
+constituencies_columns = hidden_filters + [f['key'] for f in filters]
 elections[constituencies_columns] = constituencies[constituencies_columns]
 
 subset = election_dataset = elections.reset_index()
@@ -58,9 +59,9 @@ year_index = years.index(year)
 prev_year = years[year_index - 1] if not groupby.startswith('2014') and year_index > 0 else None
 next_year = years[year_index + 1] if not groupby.startswith('2014') and year_index < len(years) - 1 else None
 
-for filter in filters:
-    if filter['key'] in args:
-        subset = subset[subset[filter['key']].isin(args[filter['key']])]
+for filter in set([f['key'] for f in filters] + hidden_filters):
+    if filter in args:
+        subset = subset[subset[filter].isin(args[filter])]
 
 subset = subset[subset['YEAR'] == year]
 pivot = subset[['STATE', 'PC', groupby, 'WINNER', metric]].set_index(['STATE', 'PC'])
