@@ -92,11 +92,14 @@ def main(args):
     map_data = json.loads(map_data.to_json(orient='values'))
 
     # Create JSON structure
+    now = datetime.datetime.now()
     summary = {
-        'updated': datetime.datetime.now().strftime('%H:%M %p'),
+        'updated': now.strftime('%H:%M %p'),
         'map': map_data
     }
     with open('2014-summary.json', 'w') as out:
+        json.dump(summary, out, separators=(',', ':'))
+    with open(now.strftime('2014-summary-%Y-%m-%d-%H-%M-%S.json'), 'w') as out:
         json.dump(summary, out, separators=(',', ':'))
 
     # If 2014-candidates.json was not present, regenerate it
