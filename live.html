@@ -279,7 +279,9 @@ var filters = {
   '2009-Party'    : ['CONG', 'BJP', 'SP', 'BSP', 'JDU'],
   '2014-Party'    : ['CONG', 'BJP', 'SP', 'BSP', 'AAP'],
   '2014-Alliance' : ['NDA', 'UPA', 'OTHER'],
-  '2009-Margin'   : ['< 2%', '2-5%', '5-10%', '10-20%', '20%+']
+  '2009-Margin'   : ['< 2%', '2-5%', '5-10%', '10-20%', '20%+'],
+  '2014-Margin'   : ['< 2%', '2-5%', '5-10%', '10-20%', '20%+'],
+  'Swing'         : ['Anti-incumbent', 'Incumbent']
 }
 
 // Refresh PC information based on latest constituency-wise data
@@ -301,7 +303,7 @@ function process(data) {
 
     var pc = row.PC,
         candi = candidates[row.ID],
-        result, votes, i, l, total
+        result, votes, i, l, total, margin
 
     // Convert row.Result: votes into sorted {name:, party:, votes:, '%':}
     if (candi) {
@@ -312,13 +314,19 @@ function process(data) {
       for (i=0, l=votes.length; i<l; i++) {
         result[i]['%'] = votes[i] / total
       }
-      row[5] = row.Result = _.sortBy(result, function(v) { return -v.votes })
+      row.Result = _.sortBy(result, function(v) { return -v.votes })
+      if (row.Result.length > 1) margin = (row.Result[0].votes - row.Result[1].votes) / total
     }
 
     // Update pcs for filtering
     pc['2014-Party'] = row.Party
     pc['2014-Alliance'] = row.Alliance
     pc['Status'] = row.Status
+    pc['Swing'] = row.Party != pc['2009-Party'] ? 'Anti-incumbent' : 'Incumbent'
+    pc['2014-Margin'] = margin < 0.02 ? '< 2%' :
+                        margin < 0.05 ? '2-5%' :
+                        margin < 0.10 ? '5-10%' :
+                        margin < 0.20 ? '10-20%' : '20%+'
     id_row[row.ID] = row
 
     // Update states
@@ -472,8 +480,8 @@ function redraw() {
       })
       $('.live-summary').hide()
       $('.live-map').show()
-      $(window).trigger('resize')
     }
+    $(window).trigger('resize')
   } else {
     $('#no-results').show()
   }
