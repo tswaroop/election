@@ -8,6 +8,7 @@ tv = args.get('tv')
 appstyle = 'ibn' if 'ibnlive' in handler.request.host else ''
 appstyle = args.get('style', [appstyle])[0]
 pc = DB.csv('pc.csv')
+abbr = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr'].ix['STATE']
 abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
@@ -161,7 +162,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
           height="20"
           title="<%= state %>"
           fill="<%= q.STATE && q.STATE.indexOf(state) >= 0 ? '#ccf' : '#fff' %>"/>
-        <text x="<%= (i + .5) * w %>%" y="10" dy=".37em" text-anchor="middle" font-size="12"><%= abbr3[state] %></text>
+        <text x="<%= (i + .5) * w %>%" y="10" dy=".37em" text-anchor="middle" font-size="12"><%= (tv ? abbr3 : abbr)[state] %></text>
       <% i++ %>
       <% }) %>
     </svg>
@@ -254,9 +255,11 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
 <script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
 <script src="{{ static_url('js/G.min.js') }}"></script>
 <script>
+var tv = {{ 1 if tv else 0 }}
 var colors = {{ DB.csv('colors.csv')[['Name', 'Color']].drop_duplicates().set_index('Name')['Color'].to_json() }}
 var data = {{ open('2014-summary.json').read() }}
 var pcs = {{ pc.set_index('KEY').astype(str).to_json(orient='index') }}
+var abbr = {{ abbr.to_json() }}
 var abbr3 = {{ abbr3.to_json() }}
 var candidates = []
 var states
