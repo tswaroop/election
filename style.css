@@ -33,11 +33,12 @@ body.live.tv {
 
   .tv .btn { font-size: 30px; }
   .tv.live .btn { font-size: 22px; }
-  .tv .party-summary { font-size: 30px; }
+
+  .tv .party-summary, .tv #live-summary { font-size: 30px; }
+  .tv .progress, .tv .progress-bar { height: 40px; line-height: 40px; }
+  .tv .progress-bar { font-size: 30px; }
   .tv .alliance-progress, .tv .alliance-progress .progress-bar { height: 40px; line-height: 40px; }
   .tv .alliance-progress .progress-bar { font-size: 30px; }
-  .tv .counting-progress, .tv .counting-progress .progress-bar { height: 40px; line-height: 40px; }
-  .tv .counting-progress .progress-bar { font-size: 30px; }
 
   .tv .pc-summary { font-size: 32px; }
   .tv .pc-summary h2 { margin-top: 1em; }
@@ -430,8 +431,8 @@ footer {
 
 .live .leading { opacity: .6; }
 .live .navbar { margin-bottom: 5px; }
-.live .no-results { display: none; }
-.live .first-time .no-results .back { display: none; }
+.live #no-results { display: none; }
+.live.first-time #no-results .back { display: none; }
 
 .alliance-name { font-size: 24px; font-weight: bold; }
 .alliance-name.other { font-size: 14px; }
@@ -454,9 +455,9 @@ footer {
   -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
           box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
 }
-.alliance-legend { fill: #666; text-transform: uppercase;}
+.alliance-legend { fill: #666; text-transform: uppercase; }
 #applied_filters { height: 1.5em; }
-#parties .progress, .alliance-progress { margin-bottom: 0; }
+#parties .progress, .alliance-progress, #live-summary .progress { margin-bottom: 0; }
 .party-summary { table-layout: fixed; }
 .party-summary td, .party-summary th { text-align: right; }
 #live-map path { stroke-width: .5; stroke: #fff; vector-effect: non-scaling-stroke; }
@@ -466,6 +467,12 @@ footer {
 .tv #consti-result { background-color: #b1b180; }
 #consti-result td { text-align: right; }
 #consti-result h2 { text-align: right; margin: 0; }
+
+#live-summary h2 { text-align: right; margin: 0 0 10px 0; }
+#live-summary .row { padding-top: 5px; padding-bottom: 5px; border-top: 1px solid #ddd;}
+#live-summary .right { text-align: right; }
+
+.live #state-legend { margin-bottom: 20px; }
 
 /* Mobile TV settings */
 @media (max-width: 560px) {

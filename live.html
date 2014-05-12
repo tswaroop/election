@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['js/G.min.js', 'style.css', '.head.html', '.tail.html', '2014-summary.json'], max_age=0) }}{% code %}
+{{ GRAMEX(cache=['js/G.min.js', 'pc.csv', 'abbr.csv', 'colors.csv', 'style.css', '.head.html', '.tail.html', '2014-summary.json'], max_age=0) }}{% code %}
 title = '2014 Counting Day'
 description = 'A live update on the 2014 Indian Parliament elections, by Gramener.'
 
@@ -7,7 +7,8 @@ from urllib import quote
 tv = args.get('tv')
 appstyle = 'ibn' if 'ibnlive' in handler.request.host else ''
 appstyle = args.get('style', [appstyle])[0]
-
+pc = DB.csv('pc.csv')
+abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
   {{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv, appstyle=appstyle) }}
@@ -43,7 +44,7 @@ appstyle = args.get('style', [appstyle])[0]
 
 <div class="container expressions">
 
-  <div class="alert alert-danger no-results">
+  <div class="alert alert-danger" id="no-results">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
     <h4>Nothing to show</h4>
     <p>The combination of filters selected do not match any constituencies.</p>
@@ -72,10 +73,10 @@ appstyle = args.get('style', [appstyle])[0]
     {% for id in range(3) %}
       <div class="progress-bar"
         x-style="'background-color:' + $.alliances[{{ id }}].color + ';width:' + 100 * $.alliances[{{ id }}].won / $.constituencies.total + '%'"
-        x-text="$.alliances[{{ id }}].won"></div>
+        x-text="$.alliances[{{ id }}].won || ''"></div>
       <div class="progress-bar leading"
         x-style="'background-color:' + $.alliances[{{ id }}].color + ';width:' + 100 * $.alliances[{{ id }}].leading / $.constituencies.total + '%'"
-        x-text="$.alliances[{{ id }}].leading"></div>
+        x-text="$.alliances[{{ id }}].leading || ''"></div>
       {% if id < 2 %}
         <div class="progress-bar leading" x-style="'background:none;width:' + alliance_progress_gap($, {{ id }}) + '%'"></div>
       {% end %}
@@ -137,10 +138,58 @@ appstyle = args.get('style', [appstyle])[0]
       x-style="'background:none;color:#000;width:' + $.constituencies.awaited / $.constituencies.total * 100 + '%'"></div>
   </div>
 
+  <script id="state-legend" class="onredraw" type="text/html">
+    <svg width="100%" height="20">
+      <% var w = 100. / (_.keys(states).length + 1), i=1 %>
+      <rect class="urlfilter state-legend"
+        href="?STATE="
+        width="<%= w %>%"
+        height="20"
+        title="Clear State filter"
+        fill="#e66"/>
+      <text x="<%= .5 * w %>%" y="10" dy=".37em" text-anchor="middle" font-size="12">X</text>
+      <% _.each(_.sortBy(states, function(i, state) { return state }), function(state) { %>
+        <rect class="urlfilter state-legend"
+          href="?STATE=<%= encodeURIComponent(state) %>"
+          data-toggle="toggle"
+          x="<%= w * i %>%"
+          width="<%= w %>%"
+          height="20"
+          title="<%= state %>"
+          fill="<%= q.STATE && q.STATE.indexOf(state) >= 0 ? '#ccf' : '#fff' %>"/>
+        <text x="<%= (i + .5) * w %>%" y="10" dy=".37em" text-anchor="middle" font-size="12"><%= abbr3[state] %></text>
+      <% i++ %>
+      <% }) %>
+    </svg>
+  </script>
+
   <div class="row">
     <div class="col-md-8">
       <div id="live-map"></div>
-      <div id="live-table"></div>
+      <script id="live-summary" type="text/html">
+        <h2><%= map.length == 1 ? '1 constituency' : map.length + ' constituencies' %></h2>
+        <% _.sortBy(map, function(row) { return pcs[row[0]].ST_ABBR + '-' + pcs[row[0]].PC_NAME }).forEach(function(row) { %>
+          <div class="row">
+            <div class="col-sm-4 right">
+              <%= pcs[row[0]].PC_NAME %>, <%= pcs[row[0]].ST_ABBR %>
+              <%        if (row[4] == 0) { %><i title="<%= statuses[row[4]] %>" class="glyphicon glyphicon-remove"></i>
+              <% } else if (row[4] == 1) { %><i title="<%= statuses[row[4]] %>" class="glyphicon glyphicon-time"></i>
+              <% } else if (row[4] == 2) { %><i title="<%= statuses[row[4]] %>" class="glyphicon glyphicon-ok"></i>
+              <% } %>
+            </div>
+            <div class="col-sm-8">
+              <div class="progress">
+                <% _.filter(row[5], function(v) { return v.votes }).slice(0, 6).forEach(function(v) { %>
+                  <div class="progress-bar"
+                       style="background-color:<%= colors[v.party] || colors.Other %>;width:<%= v['%'] * 100 %>%"
+                       title="<%= v.name %> of <%= v.party %> has <%= _comma(v.votes) %> votes"
+                  ><%= v.party %> <%= Math.round(100 * v['%']) %>%</div>
+                <% }) %>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </script>
       <script id="consti-result" type="text/html">
         <h2><%= pc.PC_NAME %>, <%= pc.ST_ABBR %></h2>
         <table class="table table-condensed">
@@ -163,8 +212,9 @@ appstyle = args.get('style', [appstyle])[0]
             <a class="urlfilter btn btn-default btn-sm <%=  q.color && q.color == 'party' ? 'active' : '' %>" href="?color=party">Party</a>
           </div>
           <div class="btn-group">
-            <a class="urlfilter btn btn-default btn-sm <%= !q.show || q.show != 'table' ? 'active' : '' %>" href="?show=">Map</a>
-            <a class="urlfilter btn btn-default btn-sm <%=  q.show && q.show == 'table' ? 'active' : '' %>" href="?show=table">Table</a>
+            <a class="urlfilter btn btn-default btn-sm <%= !q.show || q.show == ''        ? 'active' : '' %>" href="?show=">Map</a>
+            <a class="urlfilter btn btn-default btn-sm <%=  q.show && q.show == 'summary' ? 'active' : '' %>" href="?show=summary">Summary</a>
+            <!-- a class="urlfilter btn btn-default btn-sm <%=  q.show && q.show == 'detail'  ? 'active' : '' %>" href="?show=detail">Detail</a -->
           </div>
         </script>
       </div>
@@ -198,8 +248,10 @@ appstyle = args.get('style', [appstyle])[0]
 <script>
 var colors = {{ DB.csv('colors.csv')[['Name', 'Color']].drop_duplicates().set_index('Name')['Color'].to_json() }}
 var data = {{ open('2014-summary.json').read() }}
-var pcs = {{ DB.csv('pc.csv').set_index('KEY').to_json(orient='index') }}
+var pcs = {{ pc.set_index('KEY').astype(str).to_json(orient='index') }}
+var abbr3 = {{ abbr3.to_json() }}
 var candidates = []
+var states
 var filters = {
   '2014-Schedule' : ['07-Apr', '09-Apr', '10-Apr', '11-Apr', '12-Apr', '17-Apr', '24-Apr', '30-Apr', '07-May', '12-May'],
   'Hindi-speaking': ['Hindi', 'Rest'],
@@ -217,15 +269,34 @@ var filters = {
 }
 
 // Refresh PC information based on latest constituency-wise data
+var statuses = ['Awaited', 'Counting', 'Finished']
 function process(data) {
-  var status = ['Awaited', 'Counting', 'Finished'],
-      map_id = data.map_id = {}
+  var map_id = data.map_id = {}
+  states = {}
   data.map.forEach(function(row) {
-    var pc = pcs[row[0]]
+    var pc = pcs[row[0]],
+        candi = candidates[row[0]],
+        result, votes, i, l, total
+
+    // Convert row[5]: votes into sorted {name:, party:, votes:, '%':}
+    if (candi) {
+      for (result=[], votes=row[5], total=0, i=0, l=votes.length; i<l; i++) {
+        result.push({name: candi[i][0], party: candi[i][1], votes: votes[i]})
+        total += votes[i]
+      }
+      for (i=0, l=votes.length; i<l; i++) {
+        result[i]['%'] = votes[i] / total
+      }
+      row[5] = _.sortBy(result, function(v) { return -v.votes })
+    }
+
+    // Update pcs for filtering
     pc['2014-Party'] = row[1]
     pc['2014-Alliance'] = row[2]
-    pc['Status'] = status[row[4]]
+    pc['Status'] = statuses[row[4]]
     map_id[row[0]] = row
+
+    states[pc.STATE] = pc.STATE
   })
 }
 process(data)
@@ -250,7 +321,10 @@ $('#live-map')
 $.ajax({
   url: '2014-candidates.json',
   dataType: 'json',
-  success: function(candidates) { window.candidates = candidates }
+  success: function(candidates) {
+    window.candidates = candidates
+    process(window.data)
+  }
 })
 
 // Live rendering via x-attributes
@@ -362,27 +436,36 @@ function redraw() {
     expr.forEach(function(x) { x(subset) })
 
     var color_by = (q.color && q.color[0] == 'party') ? 1 : 2
-    subset.map.forEach(function(row) {
-      var path
-      if (row[0] in map_path) {
-        path = map_path[row[0]].data('drawn', true)
-        if (row[4] == 0) {
-          path.attr('class', 'na')
-        } else if (row[4] == 1) {
-          path
-            .attr('class', 'leading')
-            .attr('fill', colors[row[color_by]] || '#a0a0a0')
-            .attr('title', row[1] + ' (' + row[2] + ') is leading with ' + _comma(row[3]) + ' votes')
-        } else if (row[4] == 2) {
-          path
-            .attr('class', '')
-            .attr('fill', colors[row[color_by]] || '#a0a0a0')
-            .attr('title', row[1] + ' (' + row[2] + ') won with ' + _comma(row[3]) + ' votes')
+    if (q.show && q.show == 'summary') {
+      click_templates['live-summary'](subset)
+      $('#live-map, #consti-result').hide()
+      $('#live-summary').show()
+    } else if (!q.show) {
+      subset.map.forEach(function(row) {
+        var path
+        if (row[0] in map_path) {
+          path = map_path[row[0]].data('drawn', true)
+          if (row[4] == 0) {
+            path.attr('class', 'na')
+          } else if (row[4] == 1) {
+            path
+              .attr('class', 'leading')
+              .attr('fill', colors[row[color_by]] || '#a0a0a0')
+              .attr('title', row[1] + ' (' + row[2] + ') is leading with ' + _comma(row[3]) + ' votes')
+          } else if (row[4] == 2) {
+            path
+              .attr('class', '')
+              .attr('fill', colors[row[color_by]] || '#a0a0a0')
+              .attr('title', row[1] + ' (' + row[2] + ') won with ' + _comma(row[3]) + ' votes')
+          }
         }
-      }
-    })
+      })
+      $('#live-summary').hide()
+      $('#live-map').show()
+      $(window).trigger('resize')
+    }
   } else {
-    $('.no-results').show()
+    $('#no-results').show()
   }
   _.each(map_path, function(val, key) {
     if (!val.data('drawn'))
@@ -409,6 +492,7 @@ function reload() {
   {% end %}
 }
 
+
 $('body')
   .tooltip({
     selector: '[title]',
@@ -429,20 +513,13 @@ $('body')
   })
   .on('click', '.back', function() { history.back() })
   .on('click', '.clear-filter', function() { history.pushState({}, '', 'live'); redraw() })
-  .on('click', '.no-results .btn', function() { $('.alert').hide() })
+  .on('click', '#no-results .btn', function() { $('.alert').hide() })
   .on('click', '#live-map path', function(e) {
     var id = $(this).attr('id'),
         candi = candidates[id],
-        pc = data.map_id[id],
-        result = [],
-        votes, i, l
-    if (candi && pc) {
-      votes = pc[5]
-      for (i=0, l=candi.length; i<l; i++)
-        result.push({name: candi[i][0], party: candi[i][1], votes: votes[i]})
-      result = _.sortBy(result, function(v) { return -v.votes })
-      result = _.filter(result, function(v) { return v.votes })
-      click_templates['consti-result']({pc: pcs[id], result: result.slice(0, 5)})
+        row = data.map_id[id]
+    if (candi && row) {
+      click_templates['consti-result']({pc: pcs[id], result: _.filter(row[5], function(v) { return v.votes }).slice(0, 5)})
       $('#consti-result').show()
       e.stopPropagation()
     }
