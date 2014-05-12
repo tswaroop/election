@@ -455,8 +455,7 @@ function redraw() {
 
     var color_by = (q.color && q.color[0] == 'party') ? 'Party' : 'Alliance'
     if (q.show && q.show == 'summary') {
-      $('script.live-summary').template(subset)
-      $('div.live-summary').show()
+      $('script.live-summary').template(subset).show()
       $('.live-map, .consti-result').hide()
     } else if (!q.show) {
       subset.result.forEach(function(row) {
@@ -540,8 +539,7 @@ $('body')
         candi = candidates[id],
         row = id_row[id]
     if (candi && row) {
-      $('script.consti-result').template({pc: pcs[id], result: _.filter(row.Result, function(v) { return v.votes }).slice(0, 5)})
-      $('div.consti-result').show()
+      $('script.consti-result').template({pc: pcs[id], result: _.filter(row.Result, function(v) { return v.votes }).slice(0, 5)}).show()
       e.stopPropagation()
     }
   })
