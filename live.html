@@ -147,7 +147,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
   </div>
 
   <script class="state-legend onredraw" type="text/html">
-    <svg class="state-legend" width="100%" height="20">
+    <svg class="state-legend" width="100%" data-height="{{ 20./940 }}" viewBox="0 0 940 20">
       <% var w = 100. / (_.keys(states).length + 1), i=1 %>
       <rect class="urlfilter state-legend"
         href="?STATE="
@@ -335,7 +335,6 @@ $('.live-map')
   .html('<br><h1>Loading constituency map...</h1>')
   .load('{{ static_url('pc-2014-4.svg') }}', function() {
     $('.live-map svg')
-      .aspect()
       .find('path')
         .attr('class', 'na')
         .each(function() {
@@ -510,13 +509,16 @@ $('body')
     html: true,
     container: 'body'
   })
-  .on('click', '.reload', function(e) {
-    e.preventDefault()
-    reload()
+  .aspect({
+    selector: '[data-height]'
   })
   .urlfilter({
     selector: '.urlfilter',
     target: 'pushState'
+  })
+  .on('click', '.reload', function(e) {
+    e.preventDefault()
+    reload()
   })
   .on('loaded.g.urlfilter', function() {
     $(this).removeClass('first-time')
