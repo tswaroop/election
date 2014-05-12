@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['voteshare.csv', '2014-seatshare-forecast.csv', 'colors.csv', 'abbr.csv'], max_age=10*60) }}{% code %}
+{{ GRAMEX(cache=['voteshare.csv', '2014-seatshare-forecast.csv', 'colors.csv', 'abbr.csv'], max_age=10) }}{% code %}
 
 from urllib import quote
 from common import slug
@@ -132,7 +132,7 @@ W, legend = 940, 30
     </div>
     <div class="col-md-4">
       {% code %}
-      W, h, margin, gap = W // 2, (H - topmargin) // 5, 80, 25
+      W, h, margin, gap = W // 2, (H - topmargin) // 5, 80, 35
       seatshare = seatshare.ix[state]
       scale = (W - margin - 2*gap) / float(seatshare['SEATSHARE_HI'].max())
       seatshare['x'] = margin + gap + scale * seatshare['SEATSHARE_LO']
