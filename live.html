@@ -54,13 +54,15 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
     </p>
   </div>
 
-  <script id="applied_filters" class="onredraw" type="text/html">
-    <% _.each(applied_filters, function(val, key) { %>
-      <a href="?<%= encodeURIComponent(key) %>="
-        title="Remove <%= key %> filter"
-        class="urlfilter label label-danger"
-      ><%= key %>: <%= val.join(', ') %></a>
-    <% }) %>
+  <script class="applied_filters onredraw" type="text/html">
+    <div class="applied_filters">
+      <% _.each(applied_filters, function(val, key) { %>
+        <a href="?<%= encodeURIComponent(key) %>="
+          title="Remove <%= key %> filter"
+          class="urlfilter label label-danger"
+        ><%= key %>: <%= val.join(', ') %></a>
+      <% }) %>
+    </div>
   </script>
 
   <svg width="100%" height="45">
@@ -91,41 +93,43 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
     <text x="50%" y="9" font-size="15" text-anchor="middle">&#x25b2;</text>
   </svg>
 
-  <script id="parties" class="onredraw" type="text/html">
-    <div class="row">
-      {% for id in range(3) %}
-        <div class="col-md-4">
-          <% if (alliances[{{ id }}].parties.length) { %>
-            <table class="table table-condensed party-summary">
-              <thead>
-                <tr>
-                  <th style="width:50px"><%= alliances[{{ id }}].name %></th>
-                  <th style="width:30px">Won</th>
-                  <th style="width:30px">Lead</th>
-                  <th style="width:30px"></th>
-                  <th style="width:100px"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <% (alliances[{{ id }}].parties || []).forEach(function(party) { %>
+  <script class="parties onredraw" type="text/html">
+    <div class="parties">
+      <div class="row">
+        {% for id in range(3) %}
+          <div class="col-md-4">
+            <% if (alliances[{{ id }}].parties.length) { %>
+              <table class="table table-condensed party-summary">
+                <thead>
                   <tr>
-                    <td><%= party.name %></td>
-                    <td><%= party.won %></td>
-                    <td><%= party.leading %></td>
-                    <td><%= party.all %></td>
-                    <td>
-                      <div class="progress">
-                        <div class="progress-bar"         style="background-color:<%= party.color %>;width:<%= party.won / party_maxall * 100 %>%"></div>
-                        <div class="progress-bar leading" style="background-color:<%= party.color %>;width:<%= party.leading / party_maxall * 100 %>%"></div>
-                      </div>
-                    </td>
+                    <th style="width:50px"><%= alliances[{{ id }}].name %></th>
+                    <th style="width:30px">Won</th>
+                    <th style="width:30px">Lead</th>
+                    <th style="width:30px"></th>
+                    <th style="width:100px"></th>
                   </tr>
-                <% }) %>
-              </tbody>
-            </table>
-          <% } %>
-        </div>
-      {% end %}
+                </thead>
+                <tbody>
+                  <% (alliances[{{ id }}].parties || []).forEach(function(party) { %>
+                    <tr>
+                      <td><%= party.name %></td>
+                      <td><%= party.won %></td>
+                      <td><%= party.leading %></td>
+                      <td><%= party.all %></td>
+                      <td>
+                        <div class="progress">
+                          <div class="progress-bar"         style="background-color:<%= party.color %>;width:<%= party.won / party_maxall * 100 %>%"></div>
+                          <div class="progress-bar leading" style="background-color:<%= party.color %>;width:<%= party.leading / party_maxall * 100 %>%"></div>
+                        </div>
+                      </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            <% } %>
+          </div>
+        {% end %}
+      </div>
     </div>
   </script>
 
@@ -138,8 +142,8 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       x-style="'background:none;color:#000;width:' + $.constituencies.awaited / $.constituencies.total * 100 + '%'"></div>
   </div>
 
-  <script id="state-legend" class="onredraw" type="text/html">
-    <svg width="100%" height="20">
+  <script class="state-legend onredraw" type="text/html">
+    <svg class="state-legend" width="100%" height="20">
       <% var w = 100. / (_.keys(states).length + 1), i=1 %>
       <rect class="urlfilter state-legend"
         href="?STATE="
@@ -165,48 +169,52 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
 
   <div class="row">
     <div class="col-md-8">
-      <div id="live-map"></div>
-      <script id="live-summary" type="text/html">
-        <h2><%= map.length == 1 ? '1 constituency' : map.length + ' constituencies' %></h2>
-        <% _.sortBy(map, function(row) { return pcs[row[0]].ST_ABBR + '-' + pcs[row[0]].PC_NAME }).forEach(function(row) { %>
-          <div class="row">
-            <div class="col-sm-4 right">
-              <%= pcs[row[0]].PC_NAME %>, <%= pcs[row[0]].ST_ABBR %>
-              <%        if (row[4] == 0) { %><i title="<%= statuses[row[4]] %>" class="glyphicon glyphicon-remove"></i>
-              <% } else if (row[4] == 1) { %><i title="<%= statuses[row[4]] %>" class="glyphicon glyphicon-time"></i>
-              <% } else if (row[4] == 2) { %><i title="<%= statuses[row[4]] %>" class="glyphicon glyphicon-ok"></i>
-              <% } %>
-            </div>
-            <div class="col-sm-8">
-              <div class="progress">
-                <% _.filter(row[5], function(v) { return v.votes }).slice(0, 6).forEach(function(v) { %>
-                  <div class="progress-bar"
-                       style="background-color:<%= colors[v.party] || colors.Other %>;width:<%= v['%'] * 100 %>%"
-                       title="<%= v.name %> of <%= v.party %> has <%= _comma(v.votes) %> votes"
-                  ><%= v.party %> <%= Math.round(100 * v['%']) %>%</div>
-                <% }) %>
+      <div class="live-map"></div>
+      <script class="live-summary" type="text/html">
+        <div class="live-summary">
+          <h2><%= map.length == 1 ? '1 constituency' : map.length + ' constituencies' %></h2>
+          <% _.sortBy(map, function(row) { return pcs[row[0]].ST_ABBR + '-' + pcs[row[0]].PC_NAME }).forEach(function(row) { %>
+            <div class="row">
+              <div class="col-sm-4 right">
+                <%= pcs[row[0]].PC_NAME %>, <%= pcs[row[0]].ST_ABBR %>
+                <%        if (row[4] == 0) { %><i title="<%= statuses[row[4]] %>" class="glyphicon glyphicon-remove"></i>
+                <% } else if (row[4] == 1) { %><i title="<%= statuses[row[4]] %>" class="glyphicon glyphicon-time"></i>
+                <% } else if (row[4] == 2) { %><i title="<%= statuses[row[4]] %>" class="glyphicon glyphicon-ok"></i>
+                <% } %>
+              </div>
+              <div class="col-sm-8">
+                <div class="progress">
+                  <% _.filter(row[5], function(v) { return v.votes }).slice(0, 6).forEach(function(v) { %>
+                    <div class="progress-bar"
+                         style="background-color:<%= colors[v.party] || colors.Other %>;width:<%= v['%'] * 100 %>%"
+                         title="<%= v.name %> of <%= v.party %> has <%= _comma(v.votes) %> votes"
+                    ><%= v.party %> <%= Math.round(100 * v['%']) %>%</div>
+                  <% }) %>
+                </div>
               </div>
             </div>
-          </div>
-        <% }) %>
+          <% }) %>
+        </div>
       </script>
-      <script id="consti-result" type="text/html">
-        <h2><%= pc.PC_NAME %>, <%= pc.ST_ABBR %></h2>
-        <table class="table table-condensed">
-          <tbody>
-            <% for (var i=0, row; row=result[i]; i++) { %>
-              <tr>
-                <td><%= row.name %></td>
-                <td style="background-color:<%= colors[row.party] || colors.Other %>">&#160;</td>
-                <td><a class="urlfilter" href="?2014-Party=<%= encodeURIComponent(row.party) %>"><%= row.party %></a></td>
-                <td><%= _comma(row.votes) %></td>
-              </tr>
-            <% } %>
-          </tbody>
-        </table>
+      <script class="consti-result" type="text/html">
+        <div class="consti-result">
+          <h2><%= pc.PC_NAME %>, <%= pc.ST_ABBR %></h2>
+          <table class="table table-condensed">
+            <tbody>
+              <% for (var i=0, row; row=result[i]; i++) { %>
+                <tr>
+                  <td><%= row.name %></td>
+                  <td style="background-color:<%= colors[row.party] || colors.Other %>">&#160;</td>
+                  <td><a class="urlfilter" href="?2014-Party=<%= encodeURIComponent(row.party) %>"><%= row.party %></a></td>
+                  <td><%= _comma(row.votes) %></td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
       </script>
       <div style="position:absolute;left:16px;top:0">
-        <script id="draw-buttons" class="onredraw" type="text/html">
+        <script class="onredraw" type="text/html">
           <div class="btn-group">
             <a class="urlfilter btn btn-default btn-sm <%= !q.color || q.color != 'party' ? 'active' : '' %>" href="?color=">Alliance</a>
             <a class="urlfilter btn btn-default btn-sm <%=  q.color && q.color == 'party' ? 'active' : '' %>" href="?color=party">Party</a>
@@ -220,7 +228,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       </div>
     </div>
     <div class="col-md-4">
-      <script id="filters" class="onredraw" type="text/html">
+      <script class="onredraw" type="text/html">
         <% _.each(filters, function(vals, key) { %>
           <p class="btn-group">
             <a class="urlfilter btn btn-xs <%= key in applied_filters ? 'btn-success active' : 'btn-primary' %>"
@@ -303,10 +311,10 @@ process(data)
 
 // Load the map and store map_path['S01-01'] -> $path element
 var map_path = {}
-$('#live-map')
+$('.live-map')
   .html('<br><h1>Loading constituency map...</h1>')
   .load('{{ static_url('pc-2014-4.svg') }}', function() {
-    $('#live-map svg')
+    $('.live-map svg')
       .aspect()
       .find('path')
         .attr('class', 'na')
@@ -348,22 +356,6 @@ $('.expressions')
     })
     $el.removeAttr(xnames.join(' '))
   })
-
-// Live rendering via underscore templates
-var reload_templates = [],
-    click_templates = {}
-$('script[type="text/html"]').each(function() {
-  var $el = $(this),
-      id = $el.attr('id'),
-      $target = $('<div></div>').attr('id', id).insertAfter($el),
-      template = _.template($el.html()),
-      fn = function(data) { $target.html(template(data)) }
-  $el.remove()
-  if ($el.attr('class') == 'onredraw')
-    reload_templates.push(fn)
-  else
-    click_templates[id] = fn
-})
 
 // Used by .alliance-progress
 function alliance_progress_gap(data, id) {
@@ -432,14 +424,13 @@ function redraw() {
   _.each(map_path, function(val, key) { val.data('drawn', false) })
   if (subset) {
     subset.filters = filters
-    reload_templates.forEach(function(x) { x(subset) })
+    $('script.onredraw').template(subset)
     expr.forEach(function(x) { x(subset) })
 
     var color_by = (q.color && q.color[0] == 'party') ? 1 : 2
     if (q.show && q.show == 'summary') {
-      click_templates['live-summary'](subset)
-      $('#live-map, #consti-result').hide()
-      $('#live-summary').show()
+      $('.live-summary').template(subset).show()
+      $('.live-map, .consti-result').hide()
     } else if (!q.show) {
       subset.map.forEach(function(row) {
         var path
@@ -460,8 +451,8 @@ function redraw() {
           }
         }
       })
-      $('#live-summary').hide()
-      $('#live-map').show()
+      $('.live-summary').hide()
+      $('.live-map').show()
       $(window).trigger('resize')
     }
   } else {
@@ -508,24 +499,25 @@ $('body')
     target: 'pushState'
   })
   .on('loaded.g.urlfilter', function() {
-    $(this).removeClass('.first-time')
+    $(this).removeClass('first-time')
     redraw()
   })
   .on('click', '.back', function() { history.back() })
   .on('click', '.clear-filter', function() { history.pushState({}, '', 'live'); redraw() })
   .on('click', '#no-results .btn', function() { $('.alert').hide() })
-  .on('click', '#live-map path', function(e) {
+  .on('click', '.live-map path', function(e) {
     var id = $(this).attr('id'),
         candi = candidates[id],
         row = data.map_id[id]
     if (candi && row) {
-      click_templates['consti-result']({pc: pcs[id], result: _.filter(row[5], function(v) { return v.votes }).slice(0, 5)})
-      $('#consti-result').show()
+      $('.consti-result')
+        .template({pc: pcs[id], result: _.filter(row[5], function(v) { return v.votes }).slice(0, 5)})
+        .show()
       e.stopPropagation()
     }
   })
-  .on('click', '#live-map', function(e) {
-    $('#consti-result').hide()
+  .on('click', '.live-map', function(e) {
+    $('.consti-result').hide()
   })
 
 $(window)
