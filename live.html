@@ -27,7 +27,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand heading direct-link" href=".">
+      <a class="navbar-brand heading direct-link" href="?">
         <i class="glyphicon glyphicon-home"></i>
         Elections 2014
       </a>
@@ -57,6 +57,9 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
 
   <script class="applied_filters onredraw" type="text/html">
     <div class="applied_filters">
+      <% if (_.keys(applied_filters).length > 0) { %>
+        <a href="?" title="Remove all filters" class="label label-danger">X</a>
+      <% } %>
       <% _.each(applied_filters, function(val, key) { %>
         <a href="?<%= encodeURIComponent(key) %>="
           title="Remove <%= key %> filter"
