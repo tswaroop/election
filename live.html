@@ -172,19 +172,19 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       <div class="live-map"></div>
       <script class="live-summary" type="text/html">
         <div class="live-summary">
-          <h2><%= map.length == 1 ? '1 constituency' : map.length + ' constituencies' %></h2>
-          <% _.sortBy(map, function(row) { return pcs[row[0]].ST_ABBR + '-' + pcs[row[0]].PC_NAME }).forEach(function(row) { %>
+          <h2><%= result.length == 1 ? '1 constituency' : result.length + ' constituencies' %></h2>
+          <% _.sortBy(result, function(row) { return row.PC.ST_ABBR + '-' + row.PC.PC_NAME }).forEach(function(row) { %>
             <div class="row">
               <div class="col-sm-4 right">
-                <%= pcs[row[0]].PC_NAME %>, <%= pcs[row[0]].ST_ABBR %>
-                <%        if (row[4] == 0) { %><i title="<%= statuses[row[4]] %>" class="glyphicon glyphicon-remove"></i>
-                <% } else if (row[4] == 1) { %><i title="<%= statuses[row[4]] %>" class="glyphicon glyphicon-time"></i>
-                <% } else if (row[4] == 2) { %><i title="<%= statuses[row[4]] %>" class="glyphicon glyphicon-ok"></i>
+                <%= row.PC.PC_NAME %>, <%= row.PC.ST_ABBR %>
+                <%        if (row.Status == 'Awaited' ) { %><i title="<%= row.Status %>" class="glyphicon glyphicon-remove"></i>
+                <% } else if (row.Status == 'Counting') { %><i title="<%= row.Status %>" class="glyphicon glyphicon-time"></i>
+                <% } else if (row.Status == 'Finished') { %><i title="<%= row.Status %>" class="glyphicon glyphicon-ok"></i>
                 <% } %>
               </div>
               <div class="col-sm-8">
                 <div class="progress">
-                  <% _.filter(row[5], function(v) { return v.votes }).slice(0, 6).forEach(function(v) { %>
+                  <% _.filter(row.Result, function(v) { return v.votes }).slice(0, 6).forEach(function(v) { %>
                     <div class="progress-bar"
                          style="background-color:<%= colors[v.party] || colors.Other %>;width:<%= v['%'] * 100 %>%"
                          title="<%= v.name %> of <%= v.party %> has <%= _comma(v.votes) %> votes"
@@ -278,33 +278,47 @@ var filters = {
 
 // Refresh PC information based on latest constituency-wise data
 var statuses = ['Awaited', 'Counting', 'Finished']
+var id_row
 function process(data) {
-  var map_id = data.map_id = {}
+  id_row = {}
   states = {}
-  data.map.forEach(function(row) {
-    var pc = pcs[row[0]],
-        candi = candidates[row[0]],
+  data.result = _.map(data.map, function(v) {
+    var row = {
+      ID: v[0],
+      Party: v[1],
+      Alliance: v[2],
+      Votes: v[3],
+      Status: statuses[v[4]],
+      Result: v[5],
+      PC: pcs[v[0]]
+    }
+
+    var pc = row.PC,
+        candi = candidates[row.ID],
         result, votes, i, l, total
 
-    // Convert row[5]: votes into sorted {name:, party:, votes:, '%':}
+    // Convert row.Result: votes into sorted {name:, party:, votes:, '%':}
     if (candi) {
-      for (result=[], votes=row[5], total=0, i=0, l=votes.length; i<l; i++) {
+      for (result=[], votes=row.Result, total=0, i=0, l=votes.length; i<l; i++) {
         result.push({name: candi[i][0], party: candi[i][1], votes: votes[i]})
         total += votes[i]
       }
       for (i=0, l=votes.length; i<l; i++) {
         result[i]['%'] = votes[i] / total
       }
-      row[5] = _.sortBy(result, function(v) { return -v.votes })
+      row[5] = row.Result = _.sortBy(result, function(v) { return -v.votes })
     }
 
     // Update pcs for filtering
-    pc['2014-Party'] = row[1]
-    pc['2014-Alliance'] = row[2]
-    pc['Status'] = statuses[row[4]]
-    map_id[row[0]] = row
+    pc['2014-Party'] = row.Party
+    pc['2014-Alliance'] = row.Alliance
+    pc['Status'] = row.Status
+    id_row[row.ID] = row
 
+    // Update states
     states[pc.STATE] = pc.STATE
+
+    return row
   })
 }
 process(data)
@@ -371,7 +385,7 @@ function alliance_progress_gap(data, id) {
 var _sort = function (dict) { return _.sortBy(_.values(dict), function(v) { return -v.all }) }
 var _comma = function(x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
 function filter(data, q) {
-  var map = [],
+  var result = [],
       status = {finished:0, counting:0, awaited:0, total:0},
       applied_filters = {},
       filters = [],
@@ -380,7 +394,7 @@ function filter(data, q) {
         UPA:   { won:0, leading:0, all:0, name:'UPA',   color: colors.UPA  , parties:{} },
         OTHER: { won:0, leading:0, all:0, name:'OTHER', color: colors.Other, parties:{} }
       },
-      alliance, party, pc, row, i, match
+      alliance, party, row, i, match
 
   _.each(q, function(val, key) {
     if (key in pcs['S01-1'] || key.match(/^(Party|Alliance|Status)$/)) {
@@ -389,30 +403,29 @@ function filter(data, q) {
     }
   })
 
-  for (i=0, row; row=data.map[i]; i++) {
-    pc = pcs[row[0]]
-    match = _.every(filters, function(fn) { return fn(pc) })
+  for (i=0, row; row=data.result[i]; i++) {
+    match = _.every(filters, function(fn) { return fn(row.PC) })
     if (!match) continue
 
-    map.push(row)
-    alliance = alliances[row[2]]
-    party = alliance.parties[row[1]] = alliance.parties[row[1]] || { won:0, leading:0, all:0, name:row[1], color: colors[row[1]] || colors['Other'] }
+    result.push(row)
+    alliance = alliances[row.Alliance]
+    party = alliance.parties[row.Party] = alliance.parties[row.Party] || { won:0, leading:0, all:0, name:row.Party, color: colors[row.Party] || colors['Other'] }
 
     status.total++
-    if      (row[4] == 0) { status.awaited++; }
-    else if (row[4] == 1) { status.counting++; alliance.leading++; party.leading++; alliance.all++; party.all++; }
-    else if (row[4] == 2) { status.finished++; alliance.won++    ; party.won++    ; alliance.all++; party.all++; }
+    if      (row.Status == 'Awaited' ) { status.awaited++; }
+    else if (row.Status == 'Counting') { status.counting++; alliance.leading++; party.leading++; alliance.all++; party.all++; }
+    else if (row.Status == 'Finished') { status.finished++; alliance.won++    ; party.won++    ; alliance.all++; party.all++; }
   }
   _.each(alliances, function(a) { a.parties = _sort(a.parties).slice(0, 5) })
 
-  return map.length == 0 ? null : {
+  return result.length == 0 ? null : {
       alliances: alliances.NDA.all > alliances.UPA.all ? [alliances.NDA, alliances.OTHER, alliances.UPA] : [alliances.UPA, alliances.OTHER, alliances.NDA],
       party_maxall: _.max(_.map(alliances, function(a) { return _.max(_.pluck(a.parties, 'all')) } )),
       constituencies: status,
       updated: data.updated,
       applied_filters: applied_filters,
       q: q,
-      map: map
+      result: result
     }
 }
 
@@ -427,27 +440,28 @@ function redraw() {
     $('script.onredraw').template(subset)
     expr.forEach(function(x) { x(subset) })
 
-    var color_by = (q.color && q.color[0] == 'party') ? 1 : 2
+    var color_by = (q.color && q.color[0] == 'party') ? 'Party' : 'Alliance'
     if (q.show && q.show == 'summary') {
-      $('.live-summary').template(subset).show()
+      $('script.live-summary').template(subset)
+      $('div.live-summary').show()
       $('.live-map, .consti-result').hide()
     } else if (!q.show) {
-      subset.map.forEach(function(row) {
+      subset.result.forEach(function(row) {
         var path
-        if (row[0] in map_path) {
-          path = map_path[row[0]].data('drawn', true)
-          if (row[4] == 0) {
+        if (row.ID in map_path) {
+          path = map_path[row.ID].data('drawn', true)
+          if (row.Status == 'Awaited') {
             path.attr('class', 'na')
-          } else if (row[4] == 1) {
+          } else if (row.Status == 'Counting') {
             path
               .attr('class', 'leading')
               .attr('fill', colors[row[color_by]] || '#a0a0a0')
-              .attr('title', row[1] + ' (' + row[2] + ') is leading with ' + _comma(row[3]) + ' votes')
-          } else if (row[4] == 2) {
+              .attr('title', row.Party + ' (' + row.Alliance + ') is leading at ' + row.PC.PC_NAME + ' with ' + _comma(row.Votes) + ' votes')
+          } else if (row.Status == 'Finished') {
             path
               .attr('class', '')
               .attr('fill', colors[row[color_by]] || '#a0a0a0')
-              .attr('title', row[1] + ' (' + row[2] + ') won with ' + _comma(row[3]) + ' votes')
+              .attr('title', row.Party + ' (' + row.Alliance + ') won at ' + row.PC.PC_NAME + ' with ' + _comma(row.Votes) + ' votes')
           }
         }
       })
@@ -508,11 +522,10 @@ $('body')
   .on('click', '.live-map path', function(e) {
     var id = $(this).attr('id'),
         candi = candidates[id],
-        row = data.map_id[id]
+        row = id_row[id]
     if (candi && row) {
-      $('.consti-result')
-        .template({pc: pcs[id], result: _.filter(row[5], function(v) { return v.votes }).slice(0, 5)})
-        .show()
+      $('script.consti-result').template({pc: pcs[id], result: _.filter(row.Result, function(v) { return v.votes }).slice(0, 5)})
+      $('div.consti-result').show()
       e.stopPropagation()
     }
   })
@@ -557,13 +570,8 @@ The output has the following structure
     key: [val1, val2, ...],
     ...
   },
-  map: [
-    // 0   1      2         3      4       5
-      [ID, Party, Alliance, Votes, Status, [Candidate votes, ...]]
-  ],
-  map_id: {
-      ID: [ID, Party, ...],
-      ...
-  }
+  result: [
+      {ID:..., Party:..., Alliance:..., Votes:..., Status:..., PC:..., Result: [{name:..., party:..., votes:...}]]
+  ]
 }
 #}
