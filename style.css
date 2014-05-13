@@ -433,6 +433,7 @@ footer {
 .live .navbar { margin-bottom: 5px; }
 .live #no-results { display: none; }
 .live.first-time #no-results .back { display: none; }
+.live .other { visibility: hidden; }
 
 .alliance-name { font-size: 24px; font-weight: bold; }
 .alliance-name.other { font-size: 14px; }

@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['js/G.min.js', 'pc.csv', 'abbr.csv', 'colors.csv', 'style.css', '.head.html', '.tail.html', '2014-summary.json'], max_age=0) }}{% code %}
+{{ GRAMEX(cache=['js/G.min.js', 'pc.csv', 'abbr.csv', 'colors.csv', 'style.css', '.head.html', '.tail.html', '2014-summary.json'], max_age=10) }}{% code %}
 title = '2014 Counting Day'
 description = 'A live update on the 2014 Indian Parliament elections, by Gramener.'
 
@@ -77,10 +77,10 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
 
   <div class="alliance-progress progress">
     {% for id in range(3) %}
-      <div class="progress-bar"
+      <div class="progress-bar{{ ' other' if id == 1 else '' }}"
         x-style="'background-color:' + $.alliances[{{ id }}].color + ';width:' + 100 * $.alliances[{{ id }}].won / $.constituencies.total + '%'"
         x-text="$.alliances[{{ id }}].won || ''"></div>
-      <div class="progress-bar leading"
+      <div class="progress-bar leading{{ ' other' if id == 1 else '' }}"
         x-style="'background-color:' + $.alliances[{{ id }}].color + ';width:' + 100 * $.alliances[{{ id }}].leading / $.constituencies.total + '%'"
         x-text="$.alliances[{{ id }}].leading || ''"></div>
       {% if id < 2 %}
