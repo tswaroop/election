@@ -153,7 +153,7 @@ W, legend = 940, 30
     </div>
   </div>
 
-  <p><a class="direct-link btn btn-primary" href="#state?STATE={{ quote(state) }}">{{ escape(state) }} seat share history &raquo;</a>
+  <p><a class="direct-link btn btn-primary" href="{{ '#' if state == 'ALL INDIA' else '#state?STATE=' + quote(state) }}">{{ escape(state) }} seat share history &raquo;</a>
 
 {% end %}
 <script>
