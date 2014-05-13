@@ -116,7 +116,7 @@ text { pointer-events: none; }
 .state-legend.fade { opacity: .3; }
 .rank-legend.fade { opacity: .3; }
 .cartogram .fade { opacity: .05; }
-.cartogram circle.fade, .state-table .fade, .pc-stack .fade { pointer-events: none; }
+.cartogram circle.fade, .state-table .fade, .pc-stack .fade, .multiline .fade { pointer-events: none; }
 .wealthmap .fade { opacity: .1; }
 
 g.disabled { opacity: .2; }
