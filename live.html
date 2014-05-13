@@ -162,7 +162,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       <div class="live-map"></div>
       <script class="live-summary" type="text/html">
         <div class="live-summary">
-          <h2><%= result.length == 1 ? '1 constituency' : result.length + ' constituencies' %></h2>
+          <h2><%= result.length == 1 ? '1 seat' : result.length + ' seats' %></h2>
           <% _.sortBy(result, function(row) { return row.PC.ST_ABBR + '-' + row.PC.PC_NAME }).forEach(function(row) { %>
             <div class="row">
               <div class="col-sm-4 right">
@@ -188,13 +188,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       </script>
       <script class="applied_filters onredraw" type="text/html">
         <div class="applied_filters">
-          <% if (_.keys(applied_filters).length > 0) { %>
-            <div>Filtered <%= constituencies.total %> seats
-              <a href="?<%= _.map(applied_filters, function(val, key) { return encodeURIComponent(key) + '=' }).join('&') %>"
-                 class="urlfilter label label-danger"
-                 title="Remove all filters">X</a>
-              </div>
-          <% } %>
+          <h2><%= result.length == 1 ? '1 seat' : result.length + ' seats' %></h2>
           <% _.each(applied_filters, function(val, key) { %>
             <div><a href="?<%= encodeURIComponent(key) %>="
               title="Remove <%= key %> filter"
@@ -235,21 +229,30 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       </div>
     </div>
     <div class="col-md-4">
-      <script class="onredraw" type="text/html">
-        <% _.each(filters, function(vals, key) { %>
-          <p class="btn-group">
-            <a class="urlfilter btn btn-xs <%= key in applied_filters ? 'btn-success active' : 'btn-primary' %>"
-               href="?<%= encodeURIComponent(key) %>="
-               <% if (key in applied_filters) { %> title="Clear filter"<% } %>
-            ><%= key.replace('-', ' ') %></a>
-            <% _.each(vals, function(val) { %>
-              <% var match = (key in applied_filters) && (applied_filters[key].indexOf(val) >= 0) %>
-              <a class="urlfilter btn btn-xs <%= match ? 'btn-success active' : 'btn-default' %>"
-                 data-toggle="toggle"
-                 href="?<%= encodeURIComponent(key) %>=<%= encodeURIComponent(val) %>"><%= val %></a>
-            <% }) %>
-          </p>
-        <% }) %>
+      <script class="filters onredraw" type="text/html">
+        <div class="filters">
+          <h2>Filters
+            <% if (_.keys(applied_filters).length > 0) { %>
+              <a href="?<%= _.map(applied_filters, function(val, key) { return encodeURIComponent(key) + '=' }).join('&') %>"
+                 class="urlfilter label label-danger pull-right"
+                 title="Remove all filters">Clear all</a>
+            <% } %>
+          </h2>
+          <% _.each(filters, function(vals, key) { %>
+            <p class="btn-group">
+              <a class="urlfilter btn btn-xs <%= key in applied_filters ? 'btn-success active' : 'btn-primary' %>"
+                 href="?<%= encodeURIComponent(key) %>="
+                 <% if (key in applied_filters) { %> title="Clear filter"<% } %>
+              ><%= key.replace('-', ' ') %></a>
+              <% _.each(vals, function(val) { %>
+                <% var match = (key in applied_filters) && (applied_filters[key].indexOf(val) >= 0) %>
+                <a class="urlfilter btn btn-xs <%= match ? 'btn-success active' : 'btn-default' %>"
+                   data-toggle="toggle"
+                   href="?<%= encodeURIComponent(key) %>=<%= encodeURIComponent(val) %>"><%= val %></a>
+              <% }) %>
+            </p>
+          <% }) %>
+        </div>
       </script>
     </div>
   </div>
@@ -460,7 +463,7 @@ function redraw() {
     var color_by = (q.color && q.color[0] == 'party') ? 'Party' : 'Alliance'
     if (q.show && q.show == 'summary') {
       $('script.live-summary').template(subset).show()
-      $('.live-map, .consti-result').hide()
+      $('.live-map, .consti-result, .applied_filters').hide()
     } else if (!q.show) {
       subset.result.forEach(function(row) {
         var path

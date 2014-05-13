@@ -36,6 +36,7 @@ body.live.tv {
   .tv .btn { font-size: 30px; }
   .tv.live .btn { font-size: 22px; }
   .tv.live .applied_filters { font-size: 36px; }
+  .tv.live .applied_filters h2, .tv.live .filters h2 { font-size: 53px; }
 
   .tv .party-summary, .tv .live-summary { font-size: 30px; }
   .tv .progress, .tv .progress-bar { height: 40px; line-height: 40px; }
@@ -473,7 +474,8 @@ footer {
 .consti-result td { text-align: right; }
 .consti-result h2 { text-align: right; margin: 0; }
 
-.live-summary h2 { text-align: right; margin: 0 0 10px 0; }
+.live .filters h2 { margin: 0 0 10px 0; }
+.live-summary h2, .applied_filters h2 { text-align: right; margin: 0 0 10px 0; }
 .live-summary .row { padding-top: 5px; padding-bottom: 5px; border-top: 1px solid #ddd;}
 .live-summary .right { text-align: right; }
 
