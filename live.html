@@ -55,20 +55,6 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
     </p>
   </div>
 
-  <script class="applied_filters onredraw" type="text/html">
-    <div class="applied_filters">
-      <% if (_.keys(applied_filters).length > 0) { %>
-        <a href="?" title="Remove all filters" class="label label-danger">X</a>
-      <% } %>
-      <% _.each(applied_filters, function(val, key) { %>
-        <a href="?<%= encodeURIComponent(key) %>="
-          title="Remove <%= key %> filter"
-          class="urlfilter label label-danger"
-        ><%= key %>: <%= val.join(', ') %></a>
-      <% }) %>
-    </div>
-  </script>
-
   <svg width="100%" height="45">
     <text class="alliance-name" x-text="$.alliances[0].name + ':' + ($.alliances[0].won + $.alliances[0].leading)" x-fill="$.alliances[0].color" dy="38" x="0%"></text>
     <text class="alliance-name other" x-text="$.alliances[1].name + ':' + ($.alliances[1].won + $.alliances[1].leading)" x-fill="$.alliances[1].color" dy="38" x="50%" text-anchor="middle"></text>
@@ -197,6 +183,23 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
                 </div>
               </div>
             </div>
+          <% }) %>
+        </div>
+      </script>
+      <script class="applied_filters onredraw" type="text/html">
+        <div class="applied_filters">
+          <% if (_.keys(applied_filters).length > 0) { %>
+            <div>Filtered <%= constituencies.total %> seats
+              <a href="?<%= _.map(applied_filters, function(val, key) { return encodeURIComponent(key) + '=' }).join('&') %>"
+                 class="urlfilter label label-danger"
+                 title="Remove all filters">X</a>
+              </div>
+          <% } %>
+          <% _.each(applied_filters, function(val, key) { %>
+            <div><a href="?<%= encodeURIComponent(key) %>="
+              title="Remove <%= key %> filter"
+              class="urlfilter label label-danger"
+            ><%= key %>: <%= val.join(', ') %></a></div>
           <% }) %>
         </div>
       </script>
