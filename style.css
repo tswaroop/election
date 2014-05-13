@@ -37,6 +37,7 @@ body.live.tv {
   .tv.live .btn { font-size: 22px; }
   .tv.live .applied_filters { font-size: 36px; }
   .tv.live .applied_filters h2, .tv.live .filters h2 { font-size: 53px; }
+  .tv.live .parties { height: 25em; }
 
   .tv .party-summary, .tv .live-list { font-size: 30px; }
   .tv .progress, .tv .progress-bar { height: 40px; line-height: 40px; }

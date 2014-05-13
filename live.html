@@ -1,5 +1,5 @@
 {{ GRAMEX(cache=['js/G.min.js', 'pc.csv', 'abbr.csv', 'colors.csv', 'style.css', '.head.html', '.tail.html', '2014-summary.json'], max_age=10) }}{% code %}
-title = '2014 Counting Day'
+title = 'Results 2014 analytics'
 description = 'A live update on the 2014 Indian Parliament elections, by Gramener.'
 
 from urllib import quote
@@ -29,7 +29,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       </button>
       <a class="navbar-brand heading direct-link" href="?">
         <i class="glyphicon glyphicon-home"></i>
-        Elections 2014
+        {{ title }}
       </a>
     </div>
     <div class="collapse navbar-collapse" id="header-collapse">
