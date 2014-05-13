@@ -38,7 +38,7 @@ body.live.tv {
   .tv.live .applied_filters { font-size: 36px; }
   .tv.live .applied_filters h2, .tv.live .filters h2 { font-size: 53px; }
 
-  .tv .party-summary, .tv .live-summary { font-size: 30px; }
+  .tv .party-summary, .tv .live-list { font-size: 30px; }
   .tv .progress, .tv .progress-bar { height: 40px; line-height: 40px; }
   .tv .progress-bar { font-size: 30px; }
   .tv .alliance-progress, .tv .alliance-progress .progress-bar { height: 40px; line-height: 40px; }
@@ -461,7 +461,7 @@ footer {
           box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 .alliance-legend { fill: #666; text-transform: uppercase; }
-.parties .progress, .alliance-progress, .live-summary .progress { margin-bottom: 0; }
+.parties .progress, .alliance-progress, .live-list .progress { margin-bottom: 0; }
 .party-summary { table-layout: fixed; }
 .party-summary td, .party-summary th { text-align: right; }
 .live-map path { stroke-width: .5; stroke: #fff; vector-effect: non-scaling-stroke; }
@@ -475,9 +475,9 @@ footer {
 .consti-result h2 { text-align: right; margin: 0; }
 
 .live .filters h2 { margin: 0 0 10px 0; }
-.live-summary h2, .applied_filters h2 { text-align: right; margin: 0 0 10px 0; }
-.live-summary .row { padding-top: 5px; padding-bottom: 5px; border-top: 1px solid #ddd;}
-.live-summary .right { text-align: right; }
+.live-list h2, .applied_filters h2 { text-align: right; margin: 0 0 10px 0; }
+.live-list .row { padding-top: 5px; padding-bottom: 5px; border-top: 1px solid #ddd;}
+.live-list .right { text-align: right; }
 
 .live .state-legend { margin-bottom: 20px; }
 

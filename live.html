@@ -160,8 +160,8 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
   <div class="row">
     <div class="col-md-8">
       <div class="live-map"></div>
-      <script class="live-summary" type="text/html">
-        <div class="live-summary">
+      <script class="live-list" type="text/html">
+        <div class="live-list">
           <h2><%= result.length == 1 ? (result[0].PC.PC_NAME + ', ' + result[0].PC.ST_ABBR) : result.length + ' seats' %></h2>
           <% _.sortBy(result, function(row) { return row.PC.ST_ABBR + '-' + row.PC.PC_NAME }).forEach(function(row) { %>
             <div class="row seat" data-id="<%= row.ID %>">
@@ -229,12 +229,16 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       <div style="position:absolute;left:16px;top:0">
         <script class="onredraw" type="text/html">
           <div class="btn-group show-buttons">
-            <a class="urlfilter btn btn-default btn-sm <%= !q.show || q.show == ''        ? 'active' : '' %>" href="?show=">Map</a>
-            <a class="urlfilter btn btn-default btn-sm <%=  q.show && q.show == 'summary' ? 'active' : '' %>" href="?show=summary">List</a>
+            <a class="urlfilter btn btn-default btn-sm <%= !q.show || q.show == ''     ? 'active' : '' %>" href="?show=">Map</a>
+            <a class="urlfilter btn btn-default btn-sm <%=  q.show && q.show == 'list' ? 'active' : '' %>" href="?show=list">List</a>
           </div>
           <div class="btn-group color-buttons">
             <a class="urlfilter btn btn-default btn-sm <%= !q.color || q.color != 'party' ? 'active' : '' %>" href="?color=">Alliance</a>
             <a class="urlfilter btn btn-default btn-sm <%=  q.color && q.color == 'party' ? 'active' : '' %>" href="?color=party">Party</a>
+          </div>
+          <div class="btn-group expand-buttons">
+            <a class="urlfilter btn btn-default btn-sm <%= !q.expand ? 'active' : '' %>" href="?expand=">Summary</a>
+            <a class="urlfilter btn btn-default btn-sm <%=  q.expand ? 'active' : '' %>" href="?expand=1">Detail</a>
           </div>
         </script>
       </div>
@@ -378,6 +382,7 @@ $.ajax({
   success: function(candidates) {
     window.candidates = candidates
     process(window.data)
+    redraw()
   }
 })
 
@@ -465,13 +470,13 @@ function redraw() {
   $('.tooltip').remove()
   var q = G.url.parse(location.href).searchList,
       subset = filter(data, q),
-      summary = q.show && q.show == 'summary',
-      expand = 'KEY' in subset.applied_filters
+      list = q.show && q.show == 'list',
+      single_key = 'KEY' in subset.applied_filters
 
   // If single key, just show the results
-  if (expand) {
+  if (single_key) {
     $('body').addClass('single-key')
-    summary = 'summary'
+    list = 'list'
   } else {
     $('body').removeClass('single-key')
   }
@@ -483,8 +488,8 @@ function redraw() {
     expr.forEach(function(x) { x(subset) })
 
     var color_by = (q.color && q.color[0] == 'party') ? 'Party' : 'Alliance'
-    if (summary) {
-      $('script.live-summary').template(subset).show()
+    if (list) {
+      $('script.live-list').template(subset).add('.expand-buttons').show()
       $('.live-map, .consti-result, .applied_filters, .color-buttons').hide()
     } else {
       subset.result.forEach(function(row) {
@@ -506,7 +511,7 @@ function redraw() {
           }
         }
       })
-      $('.live-summary').hide()
+      $('.live-list, .expand-buttons').hide()
       $('.live-map, .color-buttons').show()
     }
     $(window).trigger('resize')
@@ -518,8 +523,8 @@ function redraw() {
       val.attr('class', 'na')
   })
 
-  if (expand) {
-    $('.live-summary .seat').trigger('click')
+  if (single_key || q.expand) {
+    $('.live-list .seat').slice(0, 10).trigger('click')
   }
 
 }
@@ -586,6 +591,7 @@ $('body')
     var $this = $(this),
         $next = $this.next(),
         pc
+    $this.toggleClass('expanded')
     if ($next.is('.seat-result'))
       $next.remove()
     else {
