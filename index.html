@@ -49,24 +49,27 @@ govtperformance_url = 'govtperformance' + ('?style=' + appstyle if 'style' in ar
 
 <div class="container">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
       <h2 class="summary-title"><a href="{{ base_url }}">Parliament elections</a></h2>
       <a href="{{ base_url }}"><img class="main" src="{{ static_url('img/parliament.png') }}"></a>
     </div>
-
-    <div class="col-md-6">
+    <div class="col-md-4">
       <h2 class="summary-title"><a href="{{ base_url }}#cartogram?BY=2014-Schedule">Parliament maps</a></h2>
       <a href="{{ base_url }}#cartogram?BY=2014-Schedule"><img class="main" src="{{ static_url('img/parliament-cartogram.png') }}"></a>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
       <h2 class="summary-title"><a href="{{ base_url }}#facts">Election Factoids</a></h2>
       <a href="{{ base_url }}#facts"><img class="main" src="{{ static_url('img/factoids.png') }}"></a>
     </div>
-    <div class="col-md-6">
-      <h2 class="summary-title"><a href="{{ govtperformance_url }}">Government Performance</a></h2>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <h2 class="summary-title"><a href="{{ govtperformance_url }}">Govt. Performance</a></h2>
       <a href="{{ govtperformance_url }}"><img class="main" src="{{ static_url('img/govtperformance.png') }}"></a>
+    </div>
+    <div class="col-md-4">
+      <h2 class="summary-title"><a href="{{ base_url }}#voteshare">Post poll survey</a></h2>
+      <a href="{{ base_url }}#voteshare"><img class="main" src="{{ static_url('img/voteshare.png') }}"></a>
     </div>
   </div>
 
