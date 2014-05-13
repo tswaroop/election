@@ -4,6 +4,8 @@ description = 'A live update on the 2014 Indian Parliament elections, by Gramene
 
 from urllib import quote
 
+countdown = 'test' not in args or datetime.datetime.utcnow() > datetime.datetime(2014, 5, 16, 2, 30, 0)
+
 tv = args.get('tv')
 appstyle = 'ibn' if 'ibnlive' in handler.request.host else ''
 appstyle = args.get('style', [appstyle])[0]
@@ -11,8 +13,66 @@ pc = DB.csv('pc.csv')
 abbr = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr'].ix['STATE']
 abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
 {% end %}<!DOCTYPE html><html lang="en">
-<head>
   {{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv, appstyle=appstyle) }}
+<head>
+{% if countdown %}
+  <style>
+    html { background: url('img/tile_bg.jpg') #B0B0B0; }
+    body {
+      background: url('img/page_bg_center.jpg') no-repeat center center;
+      min-height: 600px;
+      min-height: 100vh;
+      padding-top: 10em;
+      padding-top: 18vh;
+    }
+    h1 {
+      font-family: "Century Gothic";
+      font-variant: small-caps;
+      font-size: 500%;
+    }
+    .emboss {
+      font-weight: bold;
+      color: #456;
+      text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+      text-align: center;
+    }
+  </style>
+</head><body>
+
+  <h1 class="emboss">{{ title }}</h1>
+  <h2 class="emboss">{{ handler.request.host }}/live</h2>
+  <h2 class="emboss" style="margin-top:2em">
+    <span id="days"></span> days,
+    <span id="hours"></span> hr,
+    <span id="minutes"></span> min,
+    <span id="seconds"></span> s to go
+  </h2>
+
+  <script>
+  var $d = document.getElementById('days'),
+      $h = document.getElementById('hours'),
+      $m = document.getElementById('minutes'),
+      $s = document.getElementById('seconds'),
+      live = Date.UTC(2014, 4, 16, 2, 30, 0)
+  function refresh() {
+    var t = live - (new Date()), d, m, h, s
+    d = Math.floor(t / 86400000)
+    t -= d * 86400000
+    $d.innerHTML = Math.floor(d)
+    h = Math.floor(t / 3600000)
+    t -= h * 3600000
+    $h.innerHTML = Math.floor(h)
+    m = Math.floor(t / 60000)
+    t -= m * 60000
+    $m.innerHTML = Math.floor(m)
+    s = Math.floor(t / 1000)
+    t -= s * 60000
+    $s.innerHTML = Math.floor(s)
+  }
+  refresh()
+  setInterval(refresh, 1000)
+  </script>
+{% else %}
 </head><body class="{{ 'tv' if tv else ''}} first-time live">
 
 {% if appstyle %}
@@ -35,7 +95,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
     <div class="collapse navbar-collapse" id="header-collapse">
       <ul class="nav navbar-nav navbar-right">
         <li><a class="reload" href="?" title="Refresh" data-placement="bottom">
-          At <span x-html="$.updated"></span>
+          <span class="last-updated"></span>
           <i class="glyphicon glyphicon-refresh"></i>
         </a></li>
       </ul>
@@ -279,6 +339,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
 <script src="{{ static_url('/js/bootstrap.v3.min.js') }}"></script>
 <script src="{{ static_url('js/G.min.js') }}"></script>
 <script>
+var last_updated = +(new Date())
 var tv = {{ 1 if tv else 0 }}
 var colors = {{ DB.csv('colors.csv')[['Name', 'Color']].drop_duplicates().set_index('Name')['Color'].to_json() }}
 var data = {{ open('2014-summary.json').read() }}
@@ -459,7 +520,6 @@ function filter(data, q) {
       alliances: alliances.NDA.all > alliances.UPA.all ? [alliances.NDA, alliances.OTHER, alliances.UPA] : [alliances.UPA, alliances.OTHER, alliances.NDA],
       party_maxall: _.max(_.map(alliances, function(a) { return _.max(_.pluck(a.parties, 'all')) } )),
       constituencies: status,
-      updated: data.updated,
       applied_filters: applied_filters,
       q: q,
       result: result
@@ -536,6 +596,7 @@ function reload() {
     dataType: 'json',
     success: function(data) {
       window.data = data
+      window.last_updated = +(new Date())
       process(data)
       redraw()
     },
@@ -603,10 +664,20 @@ $('body')
     $(this).remove()
   })
 
+var $last_updated = $('.last-updated')
+function last_updated_refresh() {
+  var ms = +(new Date()) - last_updated
+  $last_updated.text(Math.round(ms / 60000) + ' min ago')
+}
+setInterval(last_updated_refresh, 30 * 1000)
+last_updated_refresh()
+
 $(window)
   .on('popstate', redraw)
 
 </script>
+
+{% end %}{# if countdown #}
 
 {{ T('.tail.html', appstyle=appstyle) }}
 </body></html>{#
@@ -616,7 +687,6 @@ Note about the filter() function.
 ---------------------------------
 The output has the following structure
 {
-  updated: '11:34am',
   q: url_parameters,
   party_maxall: 86,     // Max won+leading across all parties
   constituencies: {
