@@ -55,7 +55,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
     </p>
   </div>
 
-  <svg width="100%" height="45">
+  <svg class="alliance-label" width="100%" height="45">
     <text class="alliance-name" x-text="$.alliances[0].name + ':' + ($.alliances[0].won + $.alliances[0].leading)" x-fill="$.alliances[0].color" dy="38" x="0%"></text>
     <text class="alliance-name other" x-text="$.alliances[1].name + ':' + ($.alliances[1].won + $.alliances[1].leading)" x-fill="$.alliances[1].color" dy="38" x="50%" text-anchor="middle"></text>
     <text class="alliance-name" fill="#000" dy="38" x="50%" text-anchor="middle"><tspan x-text="$.constituencies.total"></tspan><tspan font-size="70%"> seats</tspan></text>
@@ -77,7 +77,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
   </div>
 
   {% set barheight = 25 %}
-  <svg width="100%" height="25">
+  <svg class="alliance-footer" width="100%" height="25">
     <text class="alliance-legend" x-html="$.alliances[0].name + ' won ' + $.alliances[0].won + ', leads in ' + $.alliances[0].leading" y="5" dy="1em"></text>
     <text class="alliance-legend" x-html="$.alliances[2].name + ' won ' + $.alliances[2].won + ', leads in ' + $.alliances[2].leading" y="5" dy="1em" x="100%" text-anchor="end"></text>
     <text class="alliance-legend" x="50%" y="23" text-anchor="middle" x-html="'Majority: ' + Math.ceil($.constituencies.total / 2) + ' / ' + $.constituencies.total"></text>
@@ -162,19 +162,19 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       <div class="live-map"></div>
       <script class="live-summary" type="text/html">
         <div class="live-summary">
-          <h2><%= result.length == 1 ? '1 seat' : result.length + ' seats' %></h2>
+          <h2><%= result.length == 1 ? (result[0].PC.PC_NAME + ', ' + result[0].PC.ST_ABBR) : result.length + ' seats' %></h2>
           <% _.sortBy(result, function(row) { return row.PC.ST_ABBR + '-' + row.PC.PC_NAME }).forEach(function(row) { %>
-            <div class="row">
-              <div class="col-sm-4 right">
+            <div class="row seat" data-id="<%= row.ID %>">
+              <div class="col-xs-4 right">
                 <%= row.PC.PC_NAME %>, <%= row.PC.ST_ABBR %>
                 <%        if (row.Status == 'Awaited' ) { %><i title="<%= row.Status %>" class="glyphicon glyphicon-remove"></i>
                 <% } else if (row.Status == 'Counting') { %><i title="<%= row.Status %>" class="glyphicon glyphicon-time"></i>
                 <% } else if (row.Status == 'Finished') { %><i title="<%= row.Status %>" class="glyphicon glyphicon-ok"></i>
                 <% } %>
               </div>
-              <div class="col-sm-8">
+              <div class="col-xs-8">
                 <div class="progress">
-                  <% _.filter(row.Result, function(v) { return v.votes }).slice(0, 6).forEach(function(v) { %>
+                  <% _.filter(row.Result, function(v) { return v.votes > 0.01 * row.Total }).slice(0, 6).forEach(function(v) { %>
                     <div class="progress-bar"
                          style="background-color:<%= colors[v.party] || colors.Other %>;width:<%= v['%'] * 100 %>%"
                          title="<%= v.name %> of <%= v.party %> has <%= _comma(v.votes) %> votes"
@@ -185,6 +185,18 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
             </div>
           <% }) %>
         </div>
+      </script>
+      <script class="seat-result" type="text/html">
+        <table class="seat-result table table-condensed">
+          <% Result.forEach(function(candi) { %>
+            <tr>
+              <td><%= candi.name %></td>
+              <td><%= candi.party %></td>
+              <td style="background-color:<%= colors[candi.party] || colors.Other %>">&#160;</td>
+              <td><%= _comma(candi.votes) %></td>
+            </tr>
+          <% }) %>
+        </table>
       </script>
       <script class="applied_filters onredraw" type="text/html">
         <div class="applied_filters">
@@ -216,14 +228,13 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       </script>
       <div style="position:absolute;left:16px;top:0">
         <script class="onredraw" type="text/html">
-          <div class="btn-group">
+          <div class="btn-group show-buttons">
+            <a class="urlfilter btn btn-default btn-sm <%= !q.show || q.show == ''        ? 'active' : '' %>" href="?show=">Map</a>
+            <a class="urlfilter btn btn-default btn-sm <%=  q.show && q.show == 'summary' ? 'active' : '' %>" href="?show=summary">List</a>
+          </div>
+          <div class="btn-group color-buttons">
             <a class="urlfilter btn btn-default btn-sm <%= !q.color || q.color != 'party' ? 'active' : '' %>" href="?color=">Alliance</a>
             <a class="urlfilter btn btn-default btn-sm <%=  q.color && q.color == 'party' ? 'active' : '' %>" href="?color=party">Party</a>
-          </div>
-          <div class="btn-group">
-            <a class="urlfilter btn btn-default btn-sm <%= !q.show || q.show == ''        ? 'active' : '' %>" href="?show=">Map</a>
-            <a class="urlfilter btn btn-default btn-sm <%=  q.show && q.show == 'summary' ? 'active' : '' %>" href="?show=summary">Summary</a>
-            <!-- a class="urlfilter btn btn-default btn-sm <%=  q.show && q.show == 'detail'  ? 'active' : '' %>" href="?show=detail">Detail</a -->
           </div>
         </script>
       </div>
@@ -321,6 +332,7 @@ function process(data) {
         result[i]['%'] = votes[i] / total
       }
       row.Result = _.sortBy(result, function(v) { return -v.votes })
+      row.Total = total
       if (row.Result.length > 1) margin = (row.Result[0].votes - row.Result[1].votes) / total
     }
 
@@ -452,7 +464,17 @@ function filter(data, q) {
 function redraw() {
   $('.tooltip').remove()
   var q = G.url.parse(location.href).searchList,
-      subset = filter(data, q)
+      subset = filter(data, q),
+      summary = q.show && q.show == 'summary',
+      expand = 'KEY' in subset.applied_filters
+
+  // If single key, just show the results
+  if (expand) {
+    $('body').addClass('single-key')
+    summary = 'summary'
+  } else {
+    $('body').removeClass('single-key')
+  }
 
   _.each(map_path, function(val, key) { val.data('drawn', false) })
   if (subset) {
@@ -461,10 +483,10 @@ function redraw() {
     expr.forEach(function(x) { x(subset) })
 
     var color_by = (q.color && q.color[0] == 'party') ? 'Party' : 'Alliance'
-    if (q.show && q.show == 'summary') {
+    if (summary) {
       $('script.live-summary').template(subset).show()
-      $('.live-map, .consti-result, .applied_filters').hide()
-    } else if (!q.show) {
+      $('.live-map, .consti-result, .applied_filters, .color-buttons').hide()
+    } else {
       subset.result.forEach(function(row) {
         var path
         if (row.ID in map_path) {
@@ -485,7 +507,7 @@ function redraw() {
         }
       })
       $('.live-summary').hide()
-      $('.live-map').show()
+      $('.live-map, .color-buttons').show()
     }
     $(window).trigger('resize')
   } else {
@@ -495,6 +517,11 @@ function redraw() {
     if (!val.data('drawn'))
       val.attr('class', 'na')
   })
+
+  if (expand) {
+    $('.live-summary .seat').trigger('click')
+  }
+
 }
 redraw()
 
@@ -516,6 +543,8 @@ function reload() {
   {% end %}
 }
 
+
+var seat_result_template = _.template($('script.seat-result').html())
 
 $('body')
   .tooltip({
@@ -552,6 +581,20 @@ $('body')
   })
   .on('click', '.live-map', function(e) {
     $('.consti-result').hide()
+  })
+  .on('click', '.seat', function(e) {
+    var $this = $(this),
+        $next = $this.next(),
+        pc
+    if ($next.is('.seat-result'))
+      $next.remove()
+    else {
+      pc = id_row[$(this).data('id')]
+      $this.after(seat_result_template(pc))
+    }
+  })
+  .on('click', '.seat-result', function(e) {
+    $(this).remove()
   })
 
 $(window)
@@ -592,7 +635,7 @@ The output has the following structure
     ...
   },
   result: [
-      {ID:..., Party:..., Alliance:..., Votes:..., Status:..., PC:..., Result: [{name:..., party:..., votes:...}]]
+      {ID:..., Party:..., Alliance:..., Votes:..., Status:..., PC:..., Total:..., Result: [{name:..., party:..., votes:...}]]
   ]
 }
 #}

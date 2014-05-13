@@ -481,6 +481,20 @@ footer {
 
 .live .state-legend { margin-bottom: 20px; }
 
+.seat { cursor: pointer; }
+.seat-result td, .seat-result th { text-align: right; }
+
+.single-key .alliance-label,
+.single-key .alliance-progress,
+.single-key .alliance-footer,
+.single-key .parties,
+.single-key .counting-progress,
+.single-key .show-buttons,
+.single-key .color-buttons,
+.single-key .state-legend,
+.single-key .filters p { display: none; }
+
+
 /* Mobile TV settings */
 @media (max-width: 560px) {
   .state-table td, .state-table th {
