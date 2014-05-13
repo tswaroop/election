@@ -160,7 +160,6 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       <% _.each(_.sortBy(states, function(i, state) { return state }), function(state) { %>
         <rect class="urlfilter state-legend"
           href="?STATE=<%= encodeURIComponent(state) %>"
-          data-toggle="toggle"
           x="<%= w * i %>%"
           width="<%= w %>%"
           height="20"
