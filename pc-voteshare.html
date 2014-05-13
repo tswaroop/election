@@ -131,25 +131,27 @@ W, legend = 940, 30
       </svg>
     </div>
     <div class="col-md-4">
-      {% code %}
-      W, h, margin, gap = W // 2, (H - topmargin) // 5, 80, 35
-      seatshare = seatshare.ix[state]
-      scale = (W - margin - 2*gap) / float(seatshare['SEATSHARE_HI'].max())
-      seatshare['x'] = margin + gap + scale * seatshare['SEATSHARE_LO']
-      seatshare['w'] = scale * (seatshare['SEATSHARE_HI'] - seatshare['SEATSHARE_LO'])
-      {% end %}
-      <svg width="100%" data-height="{{ float(H + 20)/W }}" viewBox="0 0 {{ W }} {{ H + 20 }}" font-size="20">
-        <path d="M{{ margin + gap }},{{ topmargin }}V{{ H }}" stroke="#000"/>
-        <text x="{{ W / 2 }}" y="{{ topmargin }}" dy="-1em" text-anchor="middle" font-size="130%">2014 seat share forecast</text>
-        {% for i, (party, row) in enumerate(seatshare.iterrows()) %}
-          <g transform="translate(0, {{ topmargin + (i + .5) * h }})">
-            <text x="{{ margin - 5 }}" dy=".37em" text-anchor="end">{{ escape(party) }}</text>
-            <rect x="{{ row['x'] }}" width="{{ row['w'] }}" y="{{ -h/3 }}" height="{{ 2*h/3 }}" fill="{{ colors.get(party, '#888') }}" stroke="#000"/>
-            <text x="{{ row['x'] - 2 }}" text-anchor="end" dy=".37em">{{ '{:.0f}'.format(row['SEATSHARE_LO']) }}</text>
-            <text x="{{ row['x'] + row['w'] + 2 }}" dy=".37em">{{ '{:.0f}'.format(row['SEATSHARE_HI']) }}</text>
-          </g>
+      {% if state in seatshare.T %}
+        {% code %}
+        W, h, margin, gap = W // 2, (H - topmargin) // 5, 80, 35
+        seatshare = seatshare.ix[state]
+        scale = (W - margin - 2*gap) / float(seatshare['SEATSHARE_HI'].max())
+        seatshare['x'] = margin + gap + scale * seatshare['SEATSHARE_LO']
+        seatshare['w'] = scale * (seatshare['SEATSHARE_HI'] - seatshare['SEATSHARE_LO'])
         {% end %}
-      </svg>
+        <svg width="100%" data-height="{{ float(H + 20)/W }}" viewBox="0 0 {{ W }} {{ H + 20 }}" font-size="20">
+          <path d="M{{ margin + gap }},{{ topmargin }}V{{ H }}" stroke="#000"/>
+          <text x="{{ W / 2 }}" y="{{ topmargin }}" dy="-1em" text-anchor="middle" font-size="130%">2014 seat share forecast</text>
+          {% for i, (party, row) in enumerate(seatshare.iterrows()) %}
+            <g transform="translate(0, {{ topmargin + (i + .5) * h }})">
+              <text x="{{ margin - 5 }}" dy=".37em" text-anchor="end">{{ escape(party) }}</text>
+              <rect x="{{ row['x'] }}" width="{{ row['w'] }}" y="{{ -h/3 }}" height="{{ 2*h/3 }}" fill="{{ colors.get(party, '#888') }}" stroke="#000"/>
+              <text x="{{ row['x'] - 2 }}" text-anchor="end" dy=".37em">{{ '{:.0f}'.format(row['SEATSHARE_LO']) }}</text>
+              <text x="{{ row['x'] + row['w'] + 2 }}" dy=".37em">{{ '{:.0f}'.format(row['SEATSHARE_HI']) }}</text>
+            </g>
+          {% end %}
+        </svg>
+      {% end %}
     </div>
   </div>
 
