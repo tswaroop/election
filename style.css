@@ -39,6 +39,9 @@ body.live.tv {
   .tv.live .applied_filters h2, .tv.live .filters h2 { font-size: 53px; }
   .tv.live .parties { height: 25em; }
 
+  .tv .filter-sc { display: none; }
+  .tv .filter-st { display: none; }
+
   .tv .party-summary, .tv .live-list { font-size: 30px; }
   .tv .progress, .tv .progress-bar { height: 40px; line-height: 40px; }
   .tv .progress-bar { font-size: 30px; }
@@ -447,7 +450,7 @@ footer {
 .alliance-name.other { font-size: 14px; }
 .alliance-legend { font-size: 8px; }
 .alliance-progress, .alliance-progress .progress-bar { height: 24px; line-height: 24px; }
-.alliance-progress .progress-bar { font-size: 18px; }
+.alliance-progress .progress-bar { font-size: 18px; color: #000; }
 @media (min-width: 640px) {
   .alliance-name { font-size: 40px; font-weight: bold; }
   .alliance-name.other { font-size: 24px; }
