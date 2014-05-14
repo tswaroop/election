@@ -14,7 +14,7 @@ import pandas as pd
 from pandas import read_sql
 from time import time, sleep
 
-def main(args):
+def main(args, count):
     # Connect to SQL Server
     dsn = ('DRIVER={:s};' +
           'SERVER={:s};'.format(args.server) +
@@ -100,7 +100,7 @@ def main(args):
         json.dump(summary, out, separators=(',', ':'))
 
     # If 2014-candidates.json was not present, regenerate it
-    if not os.path.exists('2014-candidates.json'):
+    if not count:
         candidates.sort(['ID', 'CANDICODE'], inplace=True)
         cols = candidates[['CANDINAME', 'ABBR']]
         names = {
@@ -125,13 +125,15 @@ if __name__ == '__main__':
     parser.add_argument('--refresh', help='Rerun after n seconds', type=int)
     args = parser.parse_args()
 
+    count = 0
     if not args.refresh:
-        main(args)
+        main(args, count)
     else:
         while True:
             try:
-                duration = main(args)
-                print datetime.datetime.now().strftime('%H:%M:%S'), duration
+                duration = main(args, count)
+                count += 1
+                print count, datetime.datetime.now().strftime('%H:%M:%S'), duration
             except Exception, e:
                 print traceback.format_exc(e)
             finally:
