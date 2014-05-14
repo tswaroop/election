@@ -158,9 +158,11 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
   <div class="alliance-progress progress">
     {% for id in range(3) %}
       <div class="progress-bar{{ ' other' if id == 1 else '' }}"
+        x-title="$.alliances[{{ id }}].name + ' won ' + $.alliances[{{ id }}].won + ' seats'"
         x-style="'background-color:' + $.alliances[{{ id }}].color + ';width:' + 100 * $.alliances[{{ id }}].won / $.constituencies.total + '%'"
         x-text="$.alliances[{{ id }}].won || ''"></div>
       <div class="progress-bar leading{{ ' other' if id == 1 else '' }}"
+        x-title="$.alliances[{{ id }}].name + ' leads in ' + $.alliances[{{ id }}].leading + ' seats'"
         x-style="'background-color:' + $.alliances[{{ id }}].color + ';width:' + 100 * $.alliances[{{ id }}].leading / $.constituencies.total + '%'"
         x-text="$.alliances[{{ id }}].leading || ''"></div>
       {% if id < 2 %}
