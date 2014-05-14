@@ -1,0 +1,53 @@
+{{ GRAMEX(cache=['js/G.min.js', 'pc.csv', 'abbr.csv', 'colors.csv', 'style.css', '.head.html', '.tail.html', '2014-summary.json'], max_age=10) }}{% code %}
+title = 'Results 2014 analytics'
+description = 'A live update on the 2014 Indian Parliament elections, by Gramener.'
+tv, appstyle = False, ''
+{% end %}<!DOCTYPE html><html lang="en">
+  {{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv, appstyle=appstyle) }}
+<head>
+  <style>
+    html { background: url('img/tile_bg.jpg') #B0B0B0; }
+    body {
+      background: url('img/page_bg_center.jpg') no-repeat center center;
+      min-height: 600px;
+      min-height: 100vh;
+      padding-top: 10em;
+      padding-top: 10vh;
+    }
+    h1 {
+      font-family: "Century Gothic";
+      font-variant: small-caps;
+    }
+    h1 { font-size: 400%; }
+    h2 { font-size: 250%; }
+    h3 { font-size: 250%; }
+    .clock {
+      font-size: 300%;
+      margin-top: 1em;
+    }
+    .emboss {
+      font-weight: bold;
+      color: #456;
+      text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+      text-align: center;
+    }
+    .branding, .link { margin-top: .5em; }
+    h1.logo { font-size: 200%; }
+    body { font-size: 40px;}
+    .branding { font-size: 200%; }
+    .link { font-size: 150%; }
+  </style>
+</head><body>
+
+  <h1 class="emboss logo">CNN-IBN Microsoft</h1>
+
+  <h1 class="emboss">{{ title }}</h1>
+  <h2 class="emboss link">{{ handler.request.host }}/live</h2>
+  <h3 class="emboss branding" href="https://gramener.com/">Powered by Gramener.com<h3>
+
+<script src="{{ static_url('/js/jquery2.min.js') }}"></script>
+<script>
+$('body').on('click', function(e) { window.location = '/live?tv&test' })
+</script>
+{{ T('.tail.html', appstyle=appstyle) }}
+</body></html>
