@@ -396,6 +396,7 @@ var filters = {
   'SC'            : ['< 10%', '10-20%', '20-30%', '30%+'],
   'ST'            : ['< 10%', '10-30%', '30-50%', '50%+'],
   'Muslim'        : ['< 10%', '10-20%', '20-40%', '40%+'],
+  '2014-Star-Candidate': ['Star'],
   '2009-Turnout'  : ['< 50%', '50-60%','60-70%', '70-80%', '80%+'],
   '2014-Turnout'  : ['< 50%', '50-60%','60-70%', '70-80%', '80%+'],
   '2009-Party'    : ['CONG', 'BJP', 'SP', 'BSP', 'JDU'],
@@ -410,7 +411,9 @@ var filter_map = {
   'Bi-polar': 'Polarity',
   'Bi-polar:Rest': 'Multi',
   'Hindi-speaking': 'Lang',
-  'Hindi-speaking:Rest': 'Non-Hindi'
+  'Hindi-speaking:Rest': 'Non-Hindi',
+  '2014-Star-Candidate': 'Star',
+  '2014-Star-Candidate:Star': 'Yes'
 }
 
 // Refresh PC information based on latest constituency-wise data
@@ -441,12 +444,12 @@ function process(data) {
           result.push({name: candi[i][0], party: candi[i][1], votes: votes[i]})
           total += votes[i]
         } else {
-          console.log(row.ID, i, row.Result.length, candi.length)
+          result.push({votes: votes[i]})
+          console.log('No candidate master', row.ID, i, row.Result.length, candi.length)
         }
       }
       for (i=0, l=votes.length; i<l; i++) {
-        if (result[i])
-          result[i]['%'] = votes[i] / total
+        result[i]['%'] = votes[i] / total
       }
       row.Result = _.sortBy(result, function(v) { return -v.votes })
       row.Total = total
@@ -533,7 +536,7 @@ function alliance_progress_gap(data, id) {
 
 // Filter based on query parameters
 var _sort = function (dict) { return _.sortBy(_.values(dict), function(v) { return -v.all }) }
-var _comma = function(x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
+var _comma = function(x) { return (x || '').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
 function filter(data, q) {
   var result = [],
       status = {finished:0, counting:0, awaited:0, total:0},
@@ -639,7 +642,7 @@ function redraw() {
   })
 
   if (single_key || q.expand) {
-    $('.live-list .seat').slice(0, 10).trigger('click')
+    $('.live-list .seat').slice(0, 20).trigger('click')
   }
 
 }
