@@ -44,6 +44,9 @@ body.live.tv {
   .tv .filter-sc { display: none; }
   .tv .filter-st { display: none; }
 
+  .tv.live .state-legend { margin-bottom: 5px; }
+  .tv.live .party-legend { margin-bottom: 20px; display: block; }
+
   .tv .party-summary, .tv .live-list { font-size: 30px; }
   .tv .progress, .tv .progress-bar { height: 40px; line-height: 40px; }
   .tv .progress-bar { font-size: 30px; }
@@ -490,6 +493,8 @@ footer {
 .live-list .right { text-align: right; }
 
 .live .state-legend { margin-bottom: 20px; }
+.live .party-legend { display: none; }
+.live rect.party-legend { stroke: rgba(0,0,0,.2); }
 
 .seat { cursor: pointer; }
 .seat-result td, .seat-result th { text-align: right; }

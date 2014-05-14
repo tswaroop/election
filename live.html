@@ -126,17 +126,6 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
 </nav>
 
 <div class="container expressions">
-
-  <div class="alert alert-danger" id="no-results">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    <h4>Nothing to show</h4>
-    <p>The combination of filters selected do not match any constituencies.</p>
-    <p>
-      <button type="button" class="back btn btn-default">Go back</button>
-      <button type="button" class="clear-filter btn btn-success">Clear all filters</button>
-    </p>
-  </div>
-
   <script class="alliance-label onredraw" type="text/html">
     <svg class="alliance-label" width="100%" height="45">
       <text class="alliance-name" fill="<%= alliances[0].color %>" dy="38" x="0%"><%= alliances[0].name + ':' + (alliances[0].won + alliances[0].leading) %></text>
@@ -265,6 +254,27 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       <% i++ %>
       <% }) %>
     </svg>
+    <svg class="party-legend" width="100%" data-height="{{ 20./940 }}" viewBox="0 0 940 20">
+      <% var w = 100. / (filters['2014-Party'].length + 1), i=1 %>
+      <rect class="urlfilter party-legend"
+        href="?2014-Party="
+        width="<%= w %>%"
+        height="20"
+        title="Clear 2014 Party filter"
+        fill="#e66"/>
+      <text x="<%= .5 * w %>%" y="10" dy=".37em" text-anchor="middle" font-size="12">X</text>
+      <% _.each(_.sortBy(filters['2014-Party'], function(i, party) { return party }), function(party) { %>
+        <rect class="urlfilter party-legend"
+          href="?2014-Party=<%= encodeURIComponent(party) %>"
+          x="<%= w * i %>%"
+          width="<%= w %>%"
+          height="20"
+          title="<%= party %>"
+          fill="<%= q['2014-Party'] && q['2014-Party'].indexOf(party) >= 0 ? '#ccf' : '#fff' %>"/>
+        <text x="<%= (i + .5) * w %>%" y="10" dy=".37em" text-anchor="middle" font-size="12"><%= party %></text>
+      <% i++ %>
+      <% }) %>
+    </svg>
   </script>
 
   <div class="row">
@@ -386,8 +396,26 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       </script>
     </div>
   </div>
-
 </div>
+
+<div class="modal fade" id="no-results">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Nothing to show</h4>
+      </div>
+      <div class="modal-body">
+        <p>The combination of filters selected do not match any constituencies.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="back btn btn-default">Go back</button>
+        <button type="button" class="clear-filter btn btn-success">Clear all filters</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script src="{{ static_url('/js/jquery2.min.js') }}"></script>
 <script src="{{ static_url('/js/underscore-min.js') }}"></script>
@@ -414,8 +442,8 @@ var filters = {
   '2014-Star-Candidate': ['Star'],
   '2009-Turnout'  : ['< 50%', '50-60%','60-70%', '70-80%', '80%+'],
   '2014-Turnout'  : ['< 50%', '50-60%','60-70%', '70-80%', '80%+'],
-  '2009-Party'    : ['CONG', 'BJP', 'SP', 'BSP', 'JDU'],
-  '2014-Party'    : ['CONG', 'BJP', 'SP', 'BSP', 'AAP'],
+  '2009-Party'    : 'CONG BJP ADMK BJD BSP CPM DMK JDU NCP RJD SP SS TDP TMC TRS'.split(/ /),
+  '2014-Party'    : 'CONG BJP AAP ADMK BJD BSP CPM DMK JDU MNS NCP RJD SAD SP SS TDP TMC TRS YSRC'.split(/ /),
   '2014-Alliance' : ['NDA', 'UPA', 'OTHER'],
   '2009-Margin'   : ['< 2%', '2-5%', '5-10%', '10-20%', '20%+'],
   '2014-Margin'   : ['< 2%', '2-5%', '5-10%', '10-20%', '20%+'],
@@ -546,7 +574,6 @@ function alliance_progress_gap(data, id) {
       right = 1 - data.alliances[2].all  / data.constituencies.total,
       start = Math.max(left, .5 - mid / 2) ,
       end = start + mid
-  console.log(left, start, right, end)
   return 100 * (id == 0 ? start - left : right - end)
 }
 
@@ -649,8 +676,7 @@ function redraw() {
     }
     $(window).trigger('resize')
   } else {
-    $('#no-results').show()
-    window.scrollTo(0, 0)
+    $('#no-results').modal({show: true})
   }
   _.each(map_path, function(val, key) {
     if (!val.data('drawn'))
@@ -707,8 +733,8 @@ $('body')
     $(this).removeClass('first-time')
     redraw()
   })
-  .on('click', '.back', function() { history.back() })
-  .on('click', '.clear-filter', function() { history.pushState({}, '', 'live'); redraw() })
+  .on('click', '.back', function() { history.back(); $('#no-results').modal('hide') })
+  .on('click', '.clear-filter', function() { history.pushState({}, '', 'live'); $('#no-results').modal('hide'); redraw() })
   .on('click', '#no-results .btn', function() { $('.alert').hide() })
   .on('click', '.live-map path', function(e) {
     var id = $(this).attr('id'),
