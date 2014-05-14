@@ -446,7 +446,8 @@ footer {
 .live .other { visibility: hidden; }
 
 .alliance-name { font-size: 24px; font-weight: bold; }
-.alliance-filter { font-size: 60%; fill: #D9534F; }
+.alliance-filter { font-size: 60%; fill: #D9534F; display: none; }
+.tv .alliance-filter { display: inline; }
 .alliance-name.other { font-size: 14px; }
 .alliance-legend { font-size: 8px; }
 .alliance-progress, .alliance-progress .progress-bar { height: 24px; line-height: 24px; }

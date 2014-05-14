@@ -149,7 +149,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
           <% }) %>
         </tspan>
         <tspan><%= constituencies.total %><tspan>
-        <tspan font-size="70%"> seats</tspan>
+        <tspan font-size="70%"> seats / <%= data.map.length %></tspan>
       </text>
       <text class="alliance-name" fill="<%= alliances[2].color %>" dy="38" x="100%" text-anchor="end"><%= alliances[2].name + ':' + (alliances[2].won + alliances[2].leading) %></text>
     </svg>
@@ -255,7 +255,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       <div class="live-map"></div>
       <script class="live-list" type="text/html">
         <div class="live-list">
-          <h2><%= result.length == 1 ? (result[0].PC.PC_NAME + ', ' + result[0].PC.ST_ABBR) : result.length + ' seats' %></h2>
+          <h2><%= result.length == 1 ? (result[0].PC.PC_NAME + ', ' + result[0].PC.ST_ABBR) : result.length + ' seats / ' + data.map.length %></h2>
           <% _.sortBy(result, function(row) { return row.PC.ST_ABBR + '-' + row.PC.PC_NAME }).forEach(function(row) { %>
             <div class="row seat" data-id="<%= row.ID %>">
               <div class="col-xs-4 right">
@@ -293,7 +293,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       </script>
       <script class="applied_filters onredraw" type="text/html">
         <div class="applied_filters">
-          <h2><%= result.length == 1 ? '1 seat' : result.length + ' seats' %></h2>
+          <h2><%= result.length == 1 ? '1 seat' : result.length + ' seats / ' + data.map.length %></h2>
           <% _.each(applied_filters, function(val, key) { %>
             <% var show_val = _.map(val, function(v) { return filter_map[key + ':' + v] || v }), show_key = filter_map[key] || key %>
             <div><a href="?<%= encodeURIComponent(key) %>="
