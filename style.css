@@ -39,6 +39,8 @@ body.live.tv {
   .tv.live .applied_filters h2, .tv.live .filters h2 { font-size: 53px; }
   .tv.live .parties { height: 25em; }
 
+  .tv .consti-result { font-size: 30px; }
+
   .tv .filter-sc { display: none; }
   .tv .filter-st { display: none; }
 
