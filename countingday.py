@@ -12,6 +12,7 @@ import datetime
 import pyodbc
 import pandas as pd
 from pandas import read_sql
+from time import time, sleep
 
 def main(args):
     # Connect to SQL Server
@@ -26,14 +27,17 @@ def main(args):
         dsn += 'UID={:s};PWD={:s};'.format(args.uid, args.pwd)
 
     try:
-        con = pyodbc.connect(dsn.format('{SQL Server Native Client 11.0}'), timeout=3)
+        con = pyodbc.connect(dsn.format('{SQL Server Native Client 11.0}'), timeout=3, unicode_results=True)
     except pyodbc.Error:
-        con = pyodbc.connect(dsn.format('{SQL Server}'), timeout=3)
+        con = pyodbc.connect(dsn.format('{SQL Server}'), timeout=3, unicode_results=True)
 
     # Load latest candidate votes
+    start_time = time()
     candidates = read_sql('SELECT * FROM dbo.ELECP_CANDMAST', con, coerce_float=False)
+    duration = time() - start_time
+    candidates.to_csv('2014-candidates.csv', index=False, encoding='cp1252')
 
-    # Summarise by constituency
+    # Sanitize the values
     candidates['VOTES'] = candidates['VOTES'].fillna(0).astype(int)
     candidates['ID'] = candidates['CCODE'].dropna().astype(str).apply(lambda v: 'S%s-%d' % (v[:2], int(v[-2:])))
     candidates['ABBR'].replace({
@@ -70,23 +74,17 @@ def main(args):
 
     const_wise = candidates.groupby('CCODE')
 
-    # Slow operations
-    candidates['#'] = const_wise['VOTES'].transform(lambda v: v.rank(ascending=False, method='first'))
+    # Replace alliance ID values with text (slow operations)
     candidates['CANDI_ALLIANCE_INDIA_ID'].replace({0: 'OTHER', 1: 'NDA', 2: 'UPA', 3: 'OTHER'}, inplace=True)
 
-    winners = candidates[candidates['#'] == 1].set_index('CCODE')[['CANDINAME', 'ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'VOTES', 'ID']]
-    runners = candidates[candidates['#'] == 2].set_index('CCODE')[['CANDINAME', 'ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'VOTES', 'RNO']]
-    winners.columns = ['WINNER', 'WINNER PARTY', 'WINNER ALLIANCE', 'WINNER VOTES', 'ID']
-    runners.columns = ['RUNNER', 'RUNNER PARTY', 'RUNNER ALLIANCE', 'RUNNER VOTES', 'STATUS']
-
-    # Save the results
-    elections = pd.concat([
-        winners,
-        runners], axis=1)
+    # Take the winners / leaders' data. Assumption: only 1 such row per constituency
+    elections = candidates[candidates['CANDI_STATUS'].isin(['WON', 'LEADING'])].set_index('CCODE')[['CANDINAME', 'ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'VOTES', 'ID', 'CANDI_STATUS']]
+    elections.columns = ['WINNER', 'WINNER PARTY', 'WINNER ALLIANCE', 'WINNER VOTES', 'ID', 'STATUS']
 
     elections['VOTES'] = candidates.sort(['CCODE', 'CANDICODE']).groupby('CCODE')['VOTES'].apply(lambda v: list(v))
     elections = elections.reset_index().rename(columns={'index': 'CONST_ID'})
-    elections['STATUS'] = elections.apply(lambda v: 0 if v['WINNER VOTES'] <= 0 else 2 if v['STATUS'] == '99' else 1, axis=1)
+    # Status: 0 = awaited, 1 = counting, 2 = finished
+    elections['STATUS'] = elections.apply(lambda v: 0 if v['WINNER VOTES'] <= 0 else 2 if v['STATUS'] == 'WON' else 1, axis=1)
 
     map_data = elections[['ID', 'WINNER PARTY', 'WINNER ALLIANCE', 'WINNER VOTES', 'STATUS', 'VOTES']]
     map_data = json.loads(map_data.to_json(orient='values'))
@@ -113,10 +111,11 @@ def main(args):
         with open('2014-candidates.json', 'w') as out:
             json.dump(names, out, separators=(',', ':'), encoding='cp1252')
 
+    return duration
+
 if __name__ == '__main__':
     import argparse
     import traceback
-    from time import sleep
 
     # Process command line arguments
     parser = argparse.ArgumentParser()
@@ -132,8 +131,8 @@ if __name__ == '__main__':
     else:
         while True:
             try:
-                main(args)
-                print datetime.datetime.now().strftime('%H:%M:%S')
+                duration = main(args)
+                print datetime.datetime.now().strftime('%H:%M:%S'), duration
             except Exception, e:
                 print traceback.format_exc(e)
             finally:
