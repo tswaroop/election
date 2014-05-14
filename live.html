@@ -173,9 +173,9 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
 
   {% set barheight = 25 %}
   <svg class="alliance-footer" width="100%" height="25">
-    <text class="alliance-legend" x-html="$.alliances[0].name + ' won ' + $.alliances[0].won + ', leads in ' + $.alliances[0].leading" y="5" dy="1em"></text>
-    <text class="alliance-legend" x-html="$.alliances[2].name + ' won ' + $.alliances[2].won + ', leads in ' + $.alliances[2].leading" y="5" dy="1em" x="100%" text-anchor="end"></text>
-    <text class="alliance-legend" x="50%" y="23" text-anchor="middle" x-html="Math.ceil($.constituencies.total / 2) + ' / ' + $.constituencies.total"></text>
+    <text class="alliance-legend" x-text="$.alliances[0].name + ' won ' + $.alliances[0].won + ', leads in ' + $.alliances[0].leading" y="5" dy="1em"></text>
+    <text class="alliance-legend" x-text="$.alliances[2].name + ' won ' + $.alliances[2].won + ', leads in ' + $.alliances[2].leading" y="5" dy="1em" x="100%" text-anchor="end"></text>
+    <text class="alliance-legend" x="50%" y="23" text-anchor="middle" x-text="Math.ceil($.constituencies.total / 2) + ' / ' + $.constituencies.total"></text>
     <text x="50%" y="9" font-size="15" text-anchor="middle">&#x25b2;</text>
   </svg>
 
