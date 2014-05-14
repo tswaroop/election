@@ -42,8 +42,10 @@ body.live.tv {
   .tv .party-summary, .tv .live-list { font-size: 30px; }
   .tv .progress, .tv .progress-bar { height: 40px; line-height: 40px; }
   .tv .progress-bar { font-size: 30px; }
-  .tv .alliance-progress, .tv .alliance-progress .progress-bar { height: 40px; line-height: 40px; }
-  .tv .alliance-progress .progress-bar { font-size: 30px; }
+  .tv .alliance-progress, .tv .alliance-progress .progress-bar { height: 60px; line-height: 60px; }
+  .tv .alliance-progress .progress-bar { font-size: 45px; }
+  .tv .alliance-name { stroke: rgba(0,0,0,.75); }
+  .tv .alliance-filter { font-size: 80%; }
 
   .tv .pc-summary { font-size: 32px; }
   .tv .pc-summary h2 { margin-top: 1em; }
@@ -441,6 +443,7 @@ footer {
 .live .other { visibility: hidden; }
 
 .alliance-name { font-size: 24px; font-weight: bold; }
+.alliance-filter { font-size: 60%; fill: #D9534F; }
 .alliance-name.other { font-size: 14px; }
 .alliance-legend { font-size: 8px; }
 .alliance-progress, .alliance-progress .progress-bar { height: 24px; line-height: 24px; }

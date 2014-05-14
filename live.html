@@ -23,13 +23,21 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       min-height: 600px;
       min-height: 100vh;
       padding-top: 10em;
-      padding-top: 18vh;
+      padding-top: 10vh;
     }
     h1 {
       font-family: "Century Gothic";
       font-variant: small-caps;
-      font-size: 500%;
     }
+    @media (min-width:  480px) { body { font-size: 12px;} }
+    @media (min-width:  768px) { body { font-size: 18px;} }
+    @media (min-width: 1024px) { body { font-size: 20px;} }
+    @media (min-width: 1200px) { body { font-size: 24px;} }
+    @media (min-width: 1600px) { body { font-size: 30px;} }
+    @media (min-width: 1920px) { body { font-size: 40px;} }
+    h1 { font-size: 400%; }
+    h2 { font-size: 250%; }
+    .clock { font-size: 300%; }
     .emboss {
       font-weight: bold;
       color: #456;
@@ -39,9 +47,11 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
   </style>
 </head><body>
 
+  <h1 class="emboss">CNN-IBN Microsoft</h1>
+
   <h1 class="emboss">{{ title }}</h1>
   <h2 class="emboss">{{ handler.request.host }}/live</h2>
-  <h2 class="emboss" style="margin-top:2em">
+  <h2 class="emboss clock" style="margin-top:2em">
     <span id="days"></span> days,
     <span id="hours"></span> hr,
     <span id="minutes"></span> min,
@@ -115,12 +125,22 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
     </p>
   </div>
 
-  <svg class="alliance-label" width="100%" height="45">
-    <text class="alliance-name" x-text="$.alliances[0].name + ':' + ($.alliances[0].won + $.alliances[0].leading)" x-fill="$.alliances[0].color" dy="38" x="0%"></text>
-    <text class="alliance-name other" x-text="$.alliances[1].name + ':' + ($.alliances[1].won + $.alliances[1].leading)" x-fill="$.alliances[1].color" dy="38" x="50%" text-anchor="middle"></text>
-    <text class="alliance-name" fill="#000" dy="38" x="50%" text-anchor="middle"><tspan x-text="$.constituencies.total"></tspan><tspan font-size="70%"> seats</tspan></text>
-    <text class="alliance-name" x-text="$.alliances[2].name + ':' + ($.alliances[2].won + $.alliances[2].leading)" x-fill="$.alliances[2].color" dy="38" x="100%" text-anchor="end"></text>
-  </svg>
+  <script class="alliance-label onredraw" type="text/html">
+    <svg class="alliance-label" width="100%" height="45">
+      <text class="alliance-name" fill="<%= alliances[0].color %>" dy="38" x="0%"><%= alliances[0].name + ':' + (alliances[0].won + alliances[0].leading) %></text>
+      <text class="alliance-name other" fill="<%= alliances[1].color %>" dy="38" x="50%" text-anchor="middle"><%= alliances[1].name + ':' + (alliances[1].won + alliances[1].leading) %></text>
+      <text class="alliance-name middle" fill="#000" dy="38" x="50%" text-anchor="middle">
+        <tspan class="alliance-filter">
+          <% _.each(applied_filters, function(val, key) { %>
+            <%= key.replace(/-/, ' ') %>:<%= val.join(', ') %>&#160;&#160;
+          <% }) %>
+        </tspan>
+        <tspan><%= constituencies.total %><tspan>
+        <tspan font-size="70%"> seats</tspan>
+      </text>
+      <text class="alliance-name" fill="<%= alliances[2].color %>" dy="38" x="100%" text-anchor="end"><%= alliances[2].name + ':' + (alliances[2].won + alliances[2].leading) %></text>
+    </svg>
+  </script>
 
   <div class="alliance-progress progress">
     {% for id in range(3) %}
@@ -140,7 +160,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
   <svg class="alliance-footer" width="100%" height="25">
     <text class="alliance-legend" x-html="$.alliances[0].name + ' won ' + $.alliances[0].won + ', leads in ' + $.alliances[0].leading" y="5" dy="1em"></text>
     <text class="alliance-legend" x-html="$.alliances[2].name + ' won ' + $.alliances[2].won + ', leads in ' + $.alliances[2].leading" y="5" dy="1em" x="100%" text-anchor="end"></text>
-    <text class="alliance-legend" x="50%" y="23" text-anchor="middle" x-html="'Majority: ' + Math.ceil($.constituencies.total / 2) + ' / ' + $.constituencies.total"></text>
+    <text class="alliance-legend" x="50%" y="23" text-anchor="middle" x-html="Math.ceil($.constituencies.total / 2) + ' / ' + $.constituencies.total"></text>
     <text x="50%" y="9" font-size="15" text-anchor="middle">&#x25b2;</text>
   </svg>
 
@@ -157,7 +177,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
                     <th style="width:30px">Won</th>
                     <th style="width:30px">Lead</th>
                     <th style="width:30px"></th>
-                    <th style="width:100px"></th>
+                    <th style="width:100px"><%= alliances[{{ id }}].all %> seats</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -390,11 +410,16 @@ function process(data) {
     // Convert row.Result: votes into sorted {name:, party:, votes:, '%':}
     if (candi) {
       for (result=[], votes=row.Result, total=0, i=0, l=votes.length; i<l; i++) {
-        result.push({name: candi[i][0], party: candi[i][1], votes: votes[i]})
-        total += votes[i]
+        if (candi[i]) {
+          result.push({name: candi[i][0], party: candi[i][1], votes: votes[i]})
+          total += votes[i]
+        } else {
+          console.log(row.ID, i, row.Result.length, candi.length)
+        }
       }
       for (i=0, l=votes.length; i<l; i++) {
-        result[i]['%'] = votes[i] / total
+        if (result[i])
+          result[i]['%'] = votes[i] / total
       }
       row.Result = _.sortBy(result, function(v) { return -v.votes })
       row.Total = total
@@ -530,19 +555,21 @@ function redraw() {
   $('.tooltip').remove()
   var q = G.url.parse(location.href).searchList,
       subset = filter(data, q),
-      list = q.show && q.show == 'list',
-      single_key = 'KEY' in subset.applied_filters
-
-  // If single key, just show the results
-  if (single_key) {
-    $('body').addClass('single-key')
-    list = 'list'
-  } else {
-    $('body').removeClass('single-key')
-  }
+      list, single_key
 
   _.each(map_path, function(val, key) { val.data('drawn', false) })
   if (subset) {
+    // If single key, just show the results
+    if (single_key) {
+      $('body').addClass('single-key')
+      list = 'list'
+    } else {
+      $('body').removeClass('single-key')
+    }
+
+    list = q.show && q.show == 'list'
+    single_key = 'KEY' in subset.applied_filters
+
     subset.filters = filters
     $('script.onredraw').template(subset)
     expr.forEach(function(x) { x(subset) })
@@ -577,6 +604,7 @@ function redraw() {
     $(window).trigger('resize')
   } else {
     $('#no-results').show()
+    window.scrollTo(0, 0)
   }
   _.each(map_path, function(val, key) {
     if (!val.data('drawn'))
