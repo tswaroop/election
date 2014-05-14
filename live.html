@@ -144,7 +144,8 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       <text class="alliance-name middle" fill="#000" dy="38" x="50%" text-anchor="middle">
         <tspan class="alliance-filter">
           <% _.each(applied_filters, function(val, key) { %>
-            <%= key.replace(/-/, ' ') %>:<%= val.join(', ') %>&#160;&#160;
+            <% var show_val = _.map(val, function(v) { return filter_map[key + ':' + v] || v }), show_key = filter_map[key] || key %>
+            <%= show_key.replace(/-/, ' ') %>:<%= show_val.join(', ') %>&#160;
           <% }) %>
         </tspan>
         <tspan><%= constituencies.total %><tspan>
@@ -294,10 +295,11 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
         <div class="applied_filters">
           <h2><%= result.length == 1 ? '1 seat' : result.length + ' seats' %></h2>
           <% _.each(applied_filters, function(val, key) { %>
+            <% var show_val = _.map(val, function(v) { return filter_map[key + ':' + v] || v }), show_key = filter_map[key] || key %>
             <div><a href="?<%= encodeURIComponent(key) %>="
-              title="Remove <%= key %> filter"
+              title="Remove <%= show_key %> filter"
               class="urlfilter label label-danger"
-            ><%= key %>: <%= val.join(', ') %></a></div>
+            ><%= show_key %>: <%= show_val.join(', ') %></a></div>
           <% }) %>
         </div>
       </script>
@@ -346,16 +348,17 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
             <% } %>
           </h2>
           <% _.each(filters, function(vals, key) { %>
+            <% var show_key = filter_map[key] || key %>
             <p class="btn-group filter-<%= key.toLowerCase() %>">
               <a class="urlfilter btn btn-xs <%= key in applied_filters ? 'btn-success active' : 'btn-primary' %>"
                  href="?<%= encodeURIComponent(key) %>="
                  <% if (key in applied_filters) { %> title="Clear filter"<% } %>
-              ><%= key.replace('-', ' ') %></a>
+              ><%= show_key.replace('-', ' ') %></a>
               <% _.each(vals, function(val) { %>
                 <% var match = (key in applied_filters) && (applied_filters[key].indexOf(val) >= 0) %>
                 <a class="urlfilter btn btn-xs <%= match ? 'btn-success active' : 'btn-default' %>"
                    data-toggle="toggle"
-                   href="?<%= encodeURIComponent(key) %>=<%= encodeURIComponent(val) %>"><%= val %></a>
+                   href="?<%= encodeURIComponent(key) %>=<%= encodeURIComponent(val) %>"><%= filter_map[key + ':' + val] || val %></a>
               <% }) %>
             </p>
           <% }) %>
@@ -396,6 +399,13 @@ var filters = {
   '2009-Margin'   : ['< 2%', '2-5%', '5-10%', '10-20%', '20%+'],
   '2014-Margin'   : ['< 2%', '2-5%', '5-10%', '10-20%', '20%+'],
   'Swing'         : ['Anti-incumbent', 'Incumbent']
+}
+var filter_map = {
+  'Rural': 'Type',
+  'Bi-polar': 'Polarity',
+  'Bi-polar:Rest': 'Multi',
+  'Hindi-speaking': 'Lang',
+  'Hindi-speaking:Rest': 'Non-Hindi'
 }
 
 // Refresh PC information based on latest constituency-wise data
