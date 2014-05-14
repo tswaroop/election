@@ -35,7 +35,6 @@ def main(args):
     start_time = time()
     candidates = read_sql('SELECT * FROM dbo.ELECP_CANDMAST', con, coerce_float=False)
     duration = time() - start_time
-    candidates.to_csv('2014-candidates.csv', index=False, encoding='cp1252')
 
     # Sanitize the values
     candidates['VOTES'] = candidates['VOTES'].fillna(0).astype(int)
