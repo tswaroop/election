@@ -314,7 +314,10 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
                 <tr>
                   <td><%= row.name %></td>
                   <td style="background-color:<%= colors[row.party] || colors.Other %>">&#160;</td>
-                  <td><a class="urlfilter" href="?2014-Party=<%= encodeURIComponent(row.party) %>"><%= row.party %></a></td>
+                  <td>
+                    {% if not tv %}<a class="urlfilter" href="?2014-Party=<%= encodeURIComponent(row.party) %>"><%= row.party %></a>
+                    {% else %}<%= row.party %>{% end %}
+                  </td>
                   <td><%= _comma(row.votes) %></td>
                 </tr>
               <% } %>
