@@ -156,19 +156,34 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
   </script>
 
   <div class="alliance-progress progress">
-    {% for id in range(3) %}
-      <div class="progress-bar{{ ' other' if id == 1 else '' }}"
-        x-title="$.alliances[{{ id }}].name + ' won ' + $.alliances[{{ id }}].won + ' seats'"
-        x-style="'background-color:' + $.alliances[{{ id }}].color + ';width:' + 100 * $.alliances[{{ id }}].won / $.constituencies.total + '%'"
-        x-text="$.alliances[{{ id }}].won || ''"></div>
-      <div class="progress-bar leading{{ ' other' if id == 1 else '' }}"
-        x-title="$.alliances[{{ id }}].name + ' leads in ' + $.alliances[{{ id }}].leading + ' seats'"
-        x-style="'background-color:' + $.alliances[{{ id }}].color + ';width:' + 100 * $.alliances[{{ id }}].leading / $.constituencies.total + '%'"
-        x-text="$.alliances[{{ id }}].leading || ''"></div>
-      {% if id < 2 %}
-        <div class="progress-bar leading" x-style="'background:none;width:' + alliance_progress_gap($, {{ id }}) + '%'"></div>
-      {% end %}
-    {% end %}
+    <div class="progress-bar"
+      x-title="$.alliances[0].name + ' won ' + $.alliances[0].won + ' seats'"
+      x-style="'background-color:' + $.alliances[0].color + ';width:' + 100 * $.alliances[0].won / $.constituencies.total + '%'"
+      x-text="$.alliances[0].won || ''"></div>
+    <div class="progress-bar leading"
+      x-title="$.alliances[0].name + ' leads in ' + $.alliances[0].leading + ' seats'"
+      x-style="'background-color:' + $.alliances[0].color + ';width:' + 100 * $.alliances[0].leading / $.constituencies.total + '%'"
+      x-text="$.alliances[0].leading || ''"></div>
+    <div class="progress-bar leading" x-style="'background:none;width:' + alliance_progress_gap($, 0) + '%'"></div>
+
+    <div class="progress-bar other"
+      x-title="$.alliances[1].name + ' won ' + $.alliances[1].won + ' seats'"
+      x-style="'background-color:' + $.alliances[1].color + ';width:' + 100 * $.alliances[1].won / $.constituencies.total + '%'"
+      x-text="$.alliances[1].won || ''"></div>
+    <div class="progress-bar leading other"
+      x-title="$.alliances[1].name + ' leads in ' + $.alliances[1].leading + ' seats'"
+      x-style="'background-color:' + $.alliances[1].color + ';width:' + 100 * $.alliances[1].leading / $.constituencies.total + '%'"
+      x-text="$.alliances[1].leading || ''"></div>
+    <div class="progress-bar leading" x-style="'background:none;width:' + alliance_progress_gap($, 1) + '%'"></div>
+
+    <div class="progress-bar leading"
+      x-title="$.alliances[2].name + ' leads in ' + $.alliances[2].leading + ' seats'"
+      x-style="'background-color:' + $.alliances[2].color + ';width:' + 100 * $.alliances[2].leading / $.constituencies.total + '%'"
+      x-text="$.alliances[2].leading || ''"></div>
+    <div class="progress-bar"
+      x-title="$.alliances[2].name + ' won ' + $.alliances[2].won + ' seats'"
+      x-style="'background-color:' + $.alliances[2].color + ';width:' + 100 * $.alliances[2].won / $.constituencies.total + '%'"
+      x-text="$.alliances[2].won || ''"></div>
   </div>
 
   {% set barheight = 25 %}
@@ -531,6 +546,7 @@ function alliance_progress_gap(data, id) {
       right = 1 - data.alliances[2].all  / data.constituencies.total,
       start = Math.max(left, .5 - mid / 2) ,
       end = start + mid
+  console.log(left, start, right, end)
   return 100 * (id == 0 ? start - left : right - end)
 }
 
