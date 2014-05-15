@@ -86,14 +86,13 @@ def main(args, count):
     # Status: 0 = awaited, 1 = counting, 2 = finished
     elections['STATUS'] = elections.apply(lambda v: 2 if v['STATUS'] == 'WON' else 1 if v['STATUS'] == 'LEADING' else 0, axis=1)
 
-    map_data = elections[['ID', 'ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'WINNER VOTES', 'STATUS', 'VOTES', 'CANDICODE']]
-    map_data = json.loads(map_data.to_json(orient='values'))
+    elections = elections[['ID', 'ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'WINNER VOTES', 'STATUS', 'VOTES', 'CANDICODE']]
 
     # Create JSON structure
     now = datetime.datetime.now()
     summary = {
         'updated': now.strftime('%H:%M %p'),
-        'map': map_data
+        'map': json.loads(elections.to_json(orient='values'))
     }
     with open('2014-summary.json', 'w') as out:
         json.dump(summary, out, separators=(',', ':'))
@@ -121,7 +120,20 @@ def main(args, count):
         with open('2014-candidates.json', 'w') as out:
             json.dump(names, out, separators=(',', ':'), encoding='cp1252')
 
-    return duration
+    by_status = elections.groupby(['STATUS'])['ID'].count()
+    by_party = elections.groupby(['ABBR'])['ID'].count()
+    by_alliance = elections.groupby(['CANDI_ALLIANCE_INDIA_ID'])['ID'].count()
+    return '{:0.2f}s. {:3d} = {:3d} FIN + {:3d} WIP + {:3d} TBD. NDA={:3d} UPA={:3d} CONG={:3d} BJP={:3d}'.format(
+        duration,
+        len(elections),
+        by_status.ix[2] if 2 in by_status else 0,
+        by_status.ix[1] if 1 in by_status else 0,
+        by_status.ix[0] if 0 in by_status else 0,
+        by_alliance.ix['NDA'] if 'NDA'  in by_alliance else 0,
+        by_alliance.ix['UPA'] if 'NDA'  in by_alliance else 0,
+        by_party.ix['CONG']   if 'CONG' in by_party else 0,
+        by_party.ix['BJP']    if 'BJP'  in by_party else 0,
+    )
 
 if __name__ == '__main__':
     import argparse
@@ -142,9 +154,9 @@ if __name__ == '__main__':
     else:
         while True:
             try:
-                duration = main(args, count)
+                msg = main(args, count)
                 count += 1
-                print count, datetime.datetime.now().strftime('%H:%M:%S'), duration
+                print count, datetime.datetime.now().strftime('%H:%M:%S'), msg
             except Exception, e:
                 print traceback.format_exc(e)
             finally:
