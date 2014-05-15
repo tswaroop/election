@@ -42,7 +42,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
       text-align: center;
     }
-    .branding, .link { margin-top: .5em; }
+    .branding { margin-top: .5em; }
     .branding { display: none; }
     @media (min-width:  480px) { body { font-size: 12px;} }
     @media (min-width:  768px) { body { font-size: 18px;} }
@@ -52,8 +52,10 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
     @media (min-width: 1920px) {
       h1.logo { font-size: 200%; }
       body { font-size: 40px;}
-      .branding { font-size: 150%; display: block; }
-      .link { display: none; }
+      .branding { font-size: 150%; }
+      {% if tv %}
+        .branding { display: block; }
+      {% end %}
     }
   </style>
 </head><body>
@@ -61,7 +63,6 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
   <h1 class="emboss logo">CNN-IBN Microsoft</h1>
 
   <h1 class="emboss">{{ title }}</h1>
-  <h2 class="emboss link">{{ handler.request.host }}/live</h2>
   <h3 class="emboss branding" href="https://gramener.com/">Powered by Gramener.com<h3>
   <h2 class="emboss clock">
     <span id="days"></span>
