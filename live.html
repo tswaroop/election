@@ -64,10 +64,10 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
   <h2 class="emboss link">{{ handler.request.host }}/live</h2>
   <h3 class="emboss branding" href="https://gramener.com/">Powered by Gramener.com<h3>
   <h2 class="emboss clock">
-    <span id="days"></span> day,
-    <span id="hours"></span> hr,
-    <span id="minutes"></span> min,
-    <span id="seconds"></span> s to go
+    <span id="days"></span>
+    <span id="hours"></span>
+    <span id="minutes"></span>
+    <span id="seconds"></span>
   </h2>
 
   <script>
@@ -80,16 +80,16 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
     var t = live - (new Date()), d, m, h, s
     d = Math.floor(t / 86400000)
     t -= d * 86400000
-    $d.innerHTML = Math.floor(d)
+    if (d > 0) $d.innerHTML = Math.floor(d) + ' day,'
     h = Math.floor(t / 3600000)
     t -= h * 3600000
-    $h.innerHTML = Math.floor(h)
+    if (d > 0 || h > 0) $h.innerHTML = Math.floor(h) + ' hr,'
     m = Math.floor(t / 60000)
     t -= m * 60000
-    $m.innerHTML = Math.floor(m)
+    if (d > 0 || h > 0 || m > 0) $m.innerHTML = Math.floor(m) + ' min,'
     s = Math.floor(t / 1000)
     t -= s * 60000
-    $s.innerHTML = Math.floor(s)
+    if (d > 0 || h > 0 || m > 0 || s > 0) $s.innerHTML = Math.floor(s) + ' s to go'
   }
   refresh()
   setInterval(refresh, 1000)
@@ -630,6 +630,7 @@ function redraw() {
       subset = filter(data, q),
       list, single_key
 
+  $('.consti-result').hide()
   _.each(map_path, function(val, key) { val.data('drawn', false) })
   if (subset) {
     // If single key, just show the results
