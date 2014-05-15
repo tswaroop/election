@@ -87,7 +87,6 @@ def main(args, count):
     elections['STATUS'] = elections.apply(lambda v: 2 if v['STATUS'] == 'WON' else 1 if v['STATUS'] == 'LEADING' else 0, axis=1)
 
     map_data = elections[['ID', 'PARTY', 'ALLIANCE', 'WINNER VOTES', 'STATUS', 'VOTES']]
-    map_data[['ID', 'PARTY', 'ALLIANCE', 'WINNER VOTES', 'STATUS']].to_csv('killme.csv')
     map_data = json.loads(map_data.to_json(orient='values'))
 
     # Create JSON structure
