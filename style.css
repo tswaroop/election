@@ -477,6 +477,7 @@ footer {
 .parties .progress, .alliance-progress, .live-list .progress { margin-bottom: 0; }
 .party-summary { table-layout: fixed; }
 .party-summary td, .party-summary th { text-align: right; }
+.live-map svg { margin-top: 20px; }
 .live-map path { stroke-width: .5; stroke: #fff; vector-effect: non-scaling-stroke; }
 .live-map path.na { stroke: #777; fill: #fff; }
 
