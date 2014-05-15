@@ -636,7 +636,6 @@ function redraw() {
       list, single_key
 
   $('.consti-result').hide()
-  $('#no-results').modal('hide')
   _.each(map_path, function(val, key) { val.data('drawn', false) })
   if (subset) {
     // If single key, just show the results
@@ -681,6 +680,7 @@ function redraw() {
       $('.live-list, .expand-buttons').hide()
       $('.live-map, .color-buttons').show()
     }
+    $('#no-results').modal('hide')
     $(window).trigger('resize')
   } else {
     $('#no-results').modal({show: true})
@@ -745,8 +745,8 @@ $('body')
     $(this).removeClass('first-time')
     redraw()
   })
-  .on('click', '.back', function() { history.back(); $('#no-results').modal('hide') })
-  .on('click', '.clear-filter', function() { history.pushState({}, '', 'live'); $('#no-results').modal('hide'); redraw() })
+  .on('click', '.back', function() { history.back(); $('#no-results').modal('hide'); console.log('hide modal back') })
+  .on('click', '.clear-filter', function() { history.pushState({}, '', 'live?{{ 'tv' if tv else '' }}'); $('#no-results').modal('hide'); redraw(); console.log('hide modal clear') })
   .on('click', '#no-results .btn', function() { $('.alert').hide() })
   .on('click', '.live-map path', function(e) {
     var id = $(this).attr('id'),
