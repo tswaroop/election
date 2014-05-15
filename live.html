@@ -308,7 +308,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       <script class="seat-result" type="text/html">
         <table class="seat-result table table-condensed">
           <% Result.forEach(function(candi) { %>
-            <tr>
+            <tr<% if (candi.battle) { %> class="success"<% } %>>
               <td><%= candi.name %></td>
               <td><%= candi.party %></td>
               <td style="background-color:<%= colors[candi.party] || colors.Other %>">&#160;</td>
@@ -439,6 +439,7 @@ var filters = {
   'ST'            : ['< 10%', '10-30%', '30-50%', '50%+'],
   'Muslim'        : ['< 10%', '10-20%', '20-40%', '40%+'],
   '2014-Star-Candidate': ['Star'],
+  'Key-Battle'    : ['Yes'],
   '2009-Turnout'  : ['< 50%', '50-60%','60-70%', '70-80%', '80%+'],
   '2014-Turnout'  : ['< 50%', '50-60%','60-70%', '70-80%', '80%+'],
   '2009-Party'    : 'CONG BJP ADMK BJD BSP CPM DMK JDU NCP RJD SP SS TDP TMC TRS'.split(/ /),
@@ -477,13 +478,15 @@ function process(data) {
 
     var pc = row.PC,
         candi = candidates[row.ID],
+        battle = 'No',
         result, votes, i, l, total, margin
 
-    // Convert row.Result: votes into sorted {name:, party:, votes:, '%':}
+    // Convert row.Result: votes into sorted {name:, party:, votes:, '%':, 'battle':}
     if (candi) {
       for (result=[], votes=row.Result, total=0, i=0, l=votes.length; i<l; i++) {
         if (candi[i]) {
-          result.push({name: candi[i][0], party: candi[i][1], votes: votes[i]})
+          if (candi[i][2]) battle = 'Yes'
+          result.push({name: candi[i][0], party: candi[i][1], battle: candi[i][2], votes: votes[i]})
           total += votes[i]
         } else {
           result.push({votes: votes[i]})
@@ -499,6 +502,7 @@ function process(data) {
     }
 
     // Update pcs for filtering
+    pc['Key-Battle'] = battle
     pc['KEY'] = row.ID
     pc['2014-Party'] = row.Party
     pc['2014-Alliance'] = row.Alliance
@@ -630,6 +634,7 @@ function redraw() {
       list, single_key
 
   $('.consti-result').hide()
+  $('#no-results').modal('hide')
   _.each(map_path, function(val, key) { val.data('drawn', false) })
   if (subset) {
     // If single key, just show the results

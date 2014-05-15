@@ -102,11 +102,21 @@ def main(args, count):
 
     # If 2014-candidates.json was not present, regenerate it
     if not count:
-        candidates.sort(['ID', 'CANDICODE'], inplace=True)
-        cols = candidates[['CANDINAME', 'ABBR']]
+        battles = pd.read_sql('SELECT TRN_CONSTI_ID, TRN_CANDI_CODE FROM CANDI_KEY_CONTEST', con, coerce_float=False).astype(str)
+        battles.columns = ['CCODE', 'CANDICODE']
+        battles['CCODE'] = battles['CCODE'].apply(lambda v: v.zfill(5))
+        battles['BATTLE'] = 1
+
+        battles = battles.set_index(['CCODE', 'CANDICODE'])
+        candi_index = candidates.set_index(['CCODE', 'CANDICODE'])
+        candi_index['BATTLE'] = battles['BATTLE']
+        candi_index['BATTLE'] = candi_index['BATTLE'].fillna(0)
+        candi_index['BATTLE'] = candi_index['BATTLE'].astype(int)
+        candi_index.sort_index(inplace=True)
+        cols = candi_index[['CANDINAME', 'ABBR', 'BATTLE']]
         names = {
             id: cols.ix[indices].values.tolist()
-            for id, indices in candidates.groupby(['ID']).groups.iteritems()
+            for id, indices in candi_index.groupby(['ID']).groups.iteritems()
         }
         with open('2014-candidates.json', 'w') as out:
             json.dump(names, out, separators=(',', ':'), encoding='cp1252')
