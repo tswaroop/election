@@ -468,14 +468,14 @@ function process(data) {
   data.result = _.map(data.map, function(v) {
     var candi = candidates[v[0]],
         row = {
-          ID: v[0],
-          Party: v[1],
-          Alliance: v[2],
-          Votes: v[3],
-          Status: statuses[v[4]],
-          Result: v[5],
-          PC: pcs[v[0]],
-          Name: candi && candi[v[6]] ? candi[v[6]][0] : ''
+          ID:       v[0],
+          Party:    v[4] > 0 ? v[1] : '',  // Ignore awaited
+          Alliance: v[4] > 0 ? v[2] : '',
+          Votes:    v[4] > 0 ? v[3] : 0,
+          Status:   statuses[v[4]],
+          Result:   v[5],
+          PC:       pcs[v[0]],
+          Name:     candi && candi[v[6]] ? candi[v[6]][0] : ''
         },
         pc = row.PC,
         battle = 'No',
@@ -607,13 +607,15 @@ function filter(data, q) {
     if (!match) continue
 
     result.push(row)
-    alliance = alliances[row.Alliance]
-    party = alliance.parties[row.Party] = alliance.parties[row.Party] || { won:0, leading:0, all:0, name:row.Party, color: colors[row.Party] || colors['Other'] }
-
     status.total++
-    if      (row.Status == 'Awaited' ) { status.awaited++; }
-    else if (row.Status == 'Counting') { status.counting++; alliance.leading++; party.leading++; alliance.all++; party.all++; }
-    else if (row.Status == 'Finished') { status.finished++; alliance.won++    ; party.won++    ; alliance.all++; party.all++; }
+    if (row.Status == 'Awaited') {
+      status.awaited++
+    } else {
+      alliance = alliances[row.Alliance]
+      party = alliance.parties[row.Party] = alliance.parties[row.Party] || { won:0, leading:0, all:0, name:row.Party, color: colors[row.Party] || colors['Other'] }
+      if      (row.Status == 'Counting') { status.counting++; alliance.leading++; party.leading++; alliance.all++; party.all++; }
+      else if (row.Status == 'Finished') { status.finished++; alliance.won++    ; party.won++    ; alliance.all++; party.all++; }
+    }
   }
   _.each(alliances, function(a) { a.parties = _sort(a.parties).slice(0, 5) })
 
@@ -699,21 +701,26 @@ function reload() {
   $.ajax({
     url: '2014-summary.json',
     dataType: 'json',
+    cache: false,
     success: function(data) {
       window.data = data
       window.last_updated = +(new Date())
       process(data)
       redraw()
     },
-    error: function() { console.log('error', arguments) }
+    error: function() { console.log('error', arguments) },
+    complete: function() {
+      {# ?refresh=5 for 5 minute auto-refresh #}
+      {% if 'refresh' in args %}
+        setTimeout(reload, {{ min(1, float(args['refresh'][0])) * 60000 }})
+      {% end %}
+    }
   })
-
-  {# ?refresh=5 for 5 minute auto-refresh #}
-  {% if 'refresh' in args %}
-    setTimeout(reload, {{ min(1, float(args['refresh'][0])) * 60000 }})
-  {% end %}
 }
 
+{% if 'refresh' in args %}
+  setTimeout(reload, {{ min(1, float(args['refresh'][0])) * 60000 }})
+{% end %}
 
 var seat_result_template = _.template($('script.seat-result').html())
 
