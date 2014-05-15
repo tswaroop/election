@@ -485,7 +485,7 @@ footer {
 .consti-result { background-color: #fff; position: absolute; right:16px; top:0; }
 .tv .consti-result { background-color: #b1b180; }
 .consti-result td { text-align: right; }
-.consti-result h2 { text-align: right; margin: 0; }
+.consti-result h2 { text-align: right; margin: 0 0 10px 0; }
 
 .live .filters h2 { margin: 0 0 10px 0; }
 .live-list h2, .applied_filters h2 { text-align: right; margin: 0 0 10px 0; }
@@ -508,6 +508,8 @@ footer {
 .single-key .color-buttons,
 .single-key .state-legend,
 .single-key .filters p { display: none; }
+
+.show-buttons { margin-right: 20px; }
 
 
 /* Mobile TV settings */
