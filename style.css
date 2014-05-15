@@ -39,6 +39,14 @@ body.live.tv {
   .tv.live .applied_filters h2, .tv.live .filters h2 { font-size: 53px; }
   .tv.live .parties { height: 25em; }
 
+  .tv .consti-result { font-size: 30px; }
+
+  .tv .filter-sc { display: none; }
+  .tv .filter-st { display: none; }
+
+  .tv.live .state-legend { margin-bottom: 5px; }
+  .tv.live .party-legend { margin-bottom: 20px; display: block; }
+
   .tv .party-summary, .tv .live-list { font-size: 30px; }
   .tv .progress, .tv .progress-bar { height: 40px; line-height: 40px; }
   .tv .progress-bar { font-size: 30px; }
@@ -440,14 +448,15 @@ footer {
 .live .navbar { margin-bottom: 5px; }
 .live #no-results { display: none; }
 .live.first-time #no-results .back { display: none; }
-.live .other { visibility: hidden; }
+.tv.live .other { visibility: hidden; }
 
 .alliance-name { font-size: 24px; font-weight: bold; }
-.alliance-filter { font-size: 60%; fill: #D9534F; }
+.alliance-filter { font-size: 60%; fill: #D9534F; display: none; }
+.tv .alliance-filter { display: inline; }
 .alliance-name.other { font-size: 14px; }
 .alliance-legend { font-size: 8px; }
 .alliance-progress, .alliance-progress .progress-bar { height: 24px; line-height: 24px; }
-.alliance-progress .progress-bar { font-size: 18px; }
+.alliance-progress .progress-bar { font-size: 18px; color: #000; }
 @media (min-width: 640px) {
   .alliance-name { font-size: 40px; font-weight: bold; }
   .alliance-name.other { font-size: 24px; }
@@ -468,6 +477,7 @@ footer {
 .parties .progress, .alliance-progress, .live-list .progress { margin-bottom: 0; }
 .party-summary { table-layout: fixed; }
 .party-summary td, .party-summary th { text-align: right; }
+.live-map svg { margin-top: 20px; }
 .live-map path { stroke-width: .5; stroke: #fff; vector-effect: non-scaling-stroke; }
 .live-map path.na { stroke: #777; fill: #fff; }
 
@@ -476,7 +486,7 @@ footer {
 .consti-result { background-color: #fff; position: absolute; right:16px; top:0; }
 .tv .consti-result { background-color: #b1b180; }
 .consti-result td { text-align: right; }
-.consti-result h2 { text-align: right; margin: 0; }
+.consti-result h2 { text-align: right; margin: 0 0 10px 0; }
 
 .live .filters h2 { margin: 0 0 10px 0; }
 .live-list h2, .applied_filters h2 { text-align: right; margin: 0 0 10px 0; }
@@ -484,6 +494,8 @@ footer {
 .live-list .right { text-align: right; }
 
 .live .state-legend { margin-bottom: 20px; }
+.live .party-legend { display: none; }
+.live rect.party-legend { stroke: rgba(0,0,0,.2); }
 
 .seat { cursor: pointer; }
 .seat-result td, .seat-result th { text-align: right; }
@@ -497,6 +509,8 @@ footer {
 .single-key .color-buttons,
 .single-key .state-legend,
 .single-key .filters p { display: none; }
+
+.show-buttons { margin-right: 20px; }
 
 
 /* Mobile TV settings */

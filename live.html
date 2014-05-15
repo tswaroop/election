@@ -29,33 +29,45 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       font-family: "Century Gothic";
       font-variant: small-caps;
     }
-    @media (min-width:  480px) { body { font-size: 12px;} }
-    @media (min-width:  768px) { body { font-size: 18px;} }
-    @media (min-width: 1024px) { body { font-size: 20px;} }
-    @media (min-width: 1200px) { body { font-size: 24px;} }
-    @media (min-width: 1600px) { body { font-size: 30px;} }
-    @media (min-width: 1920px) { body { font-size: 40px;} }
     h1 { font-size: 400%; }
     h2 { font-size: 250%; }
-    .clock { font-size: 300%; }
+    h3 { font-size: 250%; }
+    .clock {
+      font-size: 300%;
+      margin-top: 1em;
+    }
     .emboss {
       font-weight: bold;
       color: #456;
       text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
       text-align: center;
     }
+    .branding, .link { margin-top: .5em; }
+    .branding { display: none; }
+    @media (min-width:  480px) { body { font-size: 12px;} }
+    @media (min-width:  768px) { body { font-size: 18px;} }
+    @media (min-width: 1024px) { body { font-size: 20px;} }
+    @media (min-width: 1200px) { body { font-size: 24px;} }
+    @media (min-width: 1600px) { body { font-size: 30px;} }
+    @media (min-width: 1920px) {
+      h1.logo { font-size: 200%; }
+      body { font-size: 40px;}
+      .branding { font-size: 150%; display: block; }
+      .link { display: none; }
+    }
   </style>
 </head><body>
 
-  <h1 class="emboss">CNN-IBN Microsoft</h1>
+  <h1 class="emboss logo">CNN-IBN Microsoft</h1>
 
   <h1 class="emboss">{{ title }}</h1>
-  <h2 class="emboss">{{ handler.request.host }}/live</h2>
-  <h2 class="emboss clock" style="margin-top:2em">
-    <span id="days"></span> days,
-    <span id="hours"></span> hr,
-    <span id="minutes"></span> min,
-    <span id="seconds"></span> s to go
+  <h2 class="emboss link">{{ handler.request.host }}/live</h2>
+  <h3 class="emboss branding" href="https://gramener.com/">Powered by Gramener.com<h3>
+  <h2 class="emboss clock">
+    <span id="days"></span>
+    <span id="hours"></span>
+    <span id="minutes"></span>
+    <span id="seconds"></span>
   </h2>
 
   <script>
@@ -68,16 +80,16 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
     var t = live - (new Date()), d, m, h, s
     d = Math.floor(t / 86400000)
     t -= d * 86400000
-    $d.innerHTML = Math.floor(d)
+    if (d > 0) $d.innerHTML = Math.floor(d) + ' day,'
     h = Math.floor(t / 3600000)
     t -= h * 3600000
-    $h.innerHTML = Math.floor(h)
+    if (d > 0 || h > 0) $h.innerHTML = Math.floor(h) + ' hr,'
     m = Math.floor(t / 60000)
     t -= m * 60000
-    $m.innerHTML = Math.floor(m)
+    if (d > 0 || h > 0 || m > 0) $m.innerHTML = Math.floor(m) + ' min,'
     s = Math.floor(t / 1000)
     t -= s * 60000
-    $s.innerHTML = Math.floor(s)
+    if (d > 0 || h > 0 || m > 0 || s > 0) $s.innerHTML = Math.floor(s) + ' s to go'
   }
   refresh()
   setInterval(refresh, 1000)
@@ -114,53 +126,59 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
 </nav>
 
 <div class="container expressions">
-
-  <div class="alert alert-danger" id="no-results">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    <h4>Nothing to show</h4>
-    <p>The combination of filters selected do not match any constituencies.</p>
-    <p>
-      <button type="button" class="back btn btn-default">Go back</button>
-      <button type="button" class="clear-filter btn btn-success">Clear all filters</button>
-    </p>
-  </div>
-
   <script class="alliance-label onredraw" type="text/html">
     <svg class="alliance-label" width="100%" height="45">
       <text class="alliance-name" fill="<%= alliances[0].color %>" dy="38" x="0%"><%= alliances[0].name + ':' + (alliances[0].won + alliances[0].leading) %></text>
-      <text class="alliance-name other" fill="<%= alliances[1].color %>" dy="38" x="50%" text-anchor="middle"><%= alliances[1].name + ':' + (alliances[1].won + alliances[1].leading) %></text>
       <text class="alliance-name middle" fill="#000" dy="38" x="50%" text-anchor="middle">
         <tspan class="alliance-filter">
           <% _.each(applied_filters, function(val, key) { %>
-            <%= key.replace(/-/, ' ') %>:<%= val.join(', ') %>&#160;&#160;
+            <% var show_val = _.map(val, function(v) { return filter_map[key + ':' + v] || v }), show_key = filter_map[key] || key %>
+            <%= show_key.replace(/-/, ' ') %>:<%= show_val.join(', ') %>&#160;
           <% }) %>
         </tspan>
         <tspan><%= constituencies.total %><tspan>
-        <tspan font-size="70%"> seats</tspan>
+        <tspan font-size="70%"> seats / <%= data.map.length %></tspan>
       </text>
       <text class="alliance-name" fill="<%= alliances[2].color %>" dy="38" x="100%" text-anchor="end"><%= alliances[2].name + ':' + (alliances[2].won + alliances[2].leading) %></text>
     </svg>
   </script>
 
   <div class="alliance-progress progress">
-    {% for id in range(3) %}
-      <div class="progress-bar{{ ' other' if id == 1 else '' }}"
-        x-style="'background-color:' + $.alliances[{{ id }}].color + ';width:' + 100 * $.alliances[{{ id }}].won / $.constituencies.total + '%'"
-        x-text="$.alliances[{{ id }}].won || ''"></div>
-      <div class="progress-bar leading{{ ' other' if id == 1 else '' }}"
-        x-style="'background-color:' + $.alliances[{{ id }}].color + ';width:' + 100 * $.alliances[{{ id }}].leading / $.constituencies.total + '%'"
-        x-text="$.alliances[{{ id }}].leading || ''"></div>
-      {% if id < 2 %}
-        <div class="progress-bar leading" x-style="'background:none;width:' + alliance_progress_gap($, {{ id }}) + '%'"></div>
-      {% end %}
-    {% end %}
+    <div class="progress-bar"
+      x-title="$.alliances[0].name + ' won ' + $.alliances[0].won + ' seats'"
+      x-style="'background-color:' + $.alliances[0].color + ';width:' + 100 * $.alliances[0].won / $.constituencies.total + '%'"
+      x-text="$.alliances[0].won || ''"></div>
+    <div class="progress-bar leading"
+      x-title="$.alliances[0].name + ' leads in ' + $.alliances[0].leading + ' seats'"
+      x-style="'background-color:' + $.alliances[0].color + ';width:' + 100 * $.alliances[0].leading / $.constituencies.total + '%'"
+      x-text="$.alliances[0].leading || ''"></div>
+    <div class="progress-bar leading" x-style="'background:none;width:' + alliance_progress_gap($, 0) + '%'"></div>
+
+    <div class="progress-bar other"
+      x-title="$.alliances[1].name + ' won ' + $.alliances[1].won + ' seats'"
+      x-style="'background-color:' + $.alliances[1].color + ';width:' + 100 * $.alliances[1].won / $.constituencies.total + '%'"
+      x-text="$.alliances[1].won || ''"></div>
+    <div class="progress-bar leading other"
+      x-title="$.alliances[1].name + ' leads in ' + $.alliances[1].leading + ' seats'"
+      x-style="'background-color:' + $.alliances[1].color + ';width:' + 100 * $.alliances[1].leading / $.constituencies.total + '%'"
+      x-text="$.alliances[1].leading || ''"></div>
+    <div class="progress-bar leading" x-style="'background:none;width:' + alliance_progress_gap($, 1) + '%'"></div>
+
+    <div class="progress-bar leading"
+      x-title="$.alliances[2].name + ' leads in ' + $.alliances[2].leading + ' seats'"
+      x-style="'background-color:' + $.alliances[2].color + ';width:' + 100 * $.alliances[2].leading / $.constituencies.total + '%'"
+      x-text="$.alliances[2].leading || ''"></div>
+    <div class="progress-bar"
+      x-title="$.alliances[2].name + ' won ' + $.alliances[2].won + ' seats'"
+      x-style="'background-color:' + $.alliances[2].color + ';width:' + 100 * $.alliances[2].won / $.constituencies.total + '%'"
+      x-text="$.alliances[2].won || ''"></div>
   </div>
 
   {% set barheight = 25 %}
   <svg class="alliance-footer" width="100%" height="25">
-    <text class="alliance-legend" x-html="$.alliances[0].name + ' won ' + $.alliances[0].won + ', leads in ' + $.alliances[0].leading" y="5" dy="1em"></text>
-    <text class="alliance-legend" x-html="$.alliances[2].name + ' won ' + $.alliances[2].won + ', leads in ' + $.alliances[2].leading" y="5" dy="1em" x="100%" text-anchor="end"></text>
-    <text class="alliance-legend" x="50%" y="23" text-anchor="middle" x-html="Math.ceil($.constituencies.total / 2) + ' / ' + $.constituencies.total"></text>
+    <text class="alliance-legend" x-text="$.alliances[0].name + ' won ' + $.alliances[0].won + ', leads in ' + $.alliances[0].leading" y="5" dy="1em"></text>
+    <text class="alliance-legend" x-text="$.alliances[2].name + ' won ' + $.alliances[2].won + ', leads in ' + $.alliances[2].leading" y="5" dy="1em" x="100%" text-anchor="end"></text>
+    <text class="alliance-legend" x="50%" y="23" text-anchor="middle" x-text="Math.ceil($.constituencies.total / 2) + ' / ' + $.constituencies.total"></text>
     <text x="50%" y="9" font-size="15" text-anchor="middle">&#x25b2;</text>
   </svg>
 
@@ -235,6 +253,27 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       <% i++ %>
       <% }) %>
     </svg>
+    <svg class="party-legend" width="100%" data-height="{{ 20./940 }}" viewBox="0 0 940 20">
+      <% var w = 100. / (filters['2014-Party'].length + 1), i=1 %>
+      <rect class="urlfilter party-legend"
+        href="?2014-Party="
+        width="<%= w %>%"
+        height="20"
+        title="Clear 2014 Party filter"
+        fill="#e66"/>
+      <text x="<%= .5 * w %>%" y="10" dy=".37em" text-anchor="middle" font-size="12">X</text>
+      <% _.each(_.sortBy(filters['2014-Party'], function(i, party) { return party }), function(party) { %>
+        <rect class="urlfilter party-legend"
+          href="?2014-Party=<%= encodeURIComponent(party) %>"
+          x="<%= w * i %>%"
+          width="<%= w %>%"
+          height="20"
+          title="<%= party %>"
+          fill="<%= q['2014-Party'] && q['2014-Party'].indexOf(party) >= 0 ? '#ccf' : '#fff' %>"/>
+        <text x="<%= (i + .5) * w %>%" y="10" dy=".37em" text-anchor="middle" font-size="12"><%= party %></text>
+      <% i++ %>
+      <% }) %>
+    </svg>
   </script>
 
   <div class="row">
@@ -242,7 +281,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       <div class="live-map"></div>
       <script class="live-list" type="text/html">
         <div class="live-list">
-          <h2><%= result.length == 1 ? (result[0].PC.PC_NAME + ', ' + result[0].PC.ST_ABBR) : result.length + ' seats' %></h2>
+          <h2><%= result.length == 1 ? (result[0].PC.PC_NAME + ', ' + result[0].PC.ST_ABBR) : result.length + ' seats / ' + data.map.length %></h2>
           <% _.sortBy(result, function(row) { return row.PC.ST_ABBR + '-' + row.PC.PC_NAME }).forEach(function(row) { %>
             <div class="row seat" data-id="<%= row.ID %>">
               <div class="col-xs-4 right">
@@ -269,7 +308,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       <script class="seat-result" type="text/html">
         <table class="seat-result table table-condensed">
           <% Result.forEach(function(candi) { %>
-            <tr>
+            <tr<% if (candi.battle) { %> class="success"<% } %>>
               <td><%= candi.name %></td>
               <td><%= candi.party %></td>
               <td style="background-color:<%= colors[candi.party] || colors.Other %>">&#160;</td>
@@ -280,12 +319,13 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       </script>
       <script class="applied_filters onredraw" type="text/html">
         <div class="applied_filters">
-          <h2><%= result.length == 1 ? '1 seat' : result.length + ' seats' %></h2>
+          <h2><%= result.length == 1 ? '1 seat' : result.length + ' seats / ' + data.map.length %></h2>
           <% _.each(applied_filters, function(val, key) { %>
+            <% var show_val = _.map(val, function(v) { return filter_map[key + ':' + v] || v }), show_key = filter_map[key] || key %>
             <div><a href="?<%= encodeURIComponent(key) %>="
-              title="Remove <%= key %> filter"
+              title="Remove <%= show_key %> filter"
               class="urlfilter label label-danger"
-            ><%= key %>: <%= val.join(', ') %></a></div>
+            ><%= show_key %>: <%= show_val.join(', ') %></a></div>
           <% }) %>
         </div>
       </script>
@@ -298,7 +338,10 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
                 <tr>
                   <td><%= row.name %></td>
                   <td style="background-color:<%= colors[row.party] || colors.Other %>">&#160;</td>
-                  <td><a class="urlfilter" href="?2014-Party=<%= encodeURIComponent(row.party) %>"><%= row.party %></a></td>
+                  <td>
+                    {% if not tv %}<a class="urlfilter" href="?2014-Party=<%= encodeURIComponent(row.party) %>"><%= row.party %></a>
+                    {% else %}<%= row.party %>{% end %}
+                  </td>
                   <td><%= _comma(row.votes) %></td>
                 </tr>
               <% } %>
@@ -334,16 +377,17 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
             <% } %>
           </h2>
           <% _.each(filters, function(vals, key) { %>
-            <p class="btn-group">
+            <% var show_key = filter_map[key] || key %>
+            <p class="btn-group filter-<%= key.toLowerCase() %>">
               <a class="urlfilter btn btn-xs <%= key in applied_filters ? 'btn-success active' : 'btn-primary' %>"
                  href="?<%= encodeURIComponent(key) %>="
                  <% if (key in applied_filters) { %> title="Clear filter"<% } %>
-              ><%= key.replace('-', ' ') %></a>
+              ><%= show_key.replace('-', ' ') %></a>
               <% _.each(vals, function(val) { %>
                 <% var match = (key in applied_filters) && (applied_filters[key].indexOf(val) >= 0) %>
                 <a class="urlfilter btn btn-xs <%= match ? 'btn-success active' : 'btn-default' %>"
                    data-toggle="toggle"
-                   href="?<%= encodeURIComponent(key) %>=<%= encodeURIComponent(val) %>"><%= val %></a>
+                   href="?<%= encodeURIComponent(key) %>=<%= encodeURIComponent(val) %>"><%= filter_map[key + ':' + val] || val %></a>
               <% }) %>
             </p>
           <% }) %>
@@ -351,8 +395,26 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
       </script>
     </div>
   </div>
-
 </div>
+
+<div class="modal fade" id="no-results">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Nothing to show</h4>
+      </div>
+      <div class="modal-body">
+        <p>The combination of filters selected do not match any constituencies.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="back btn btn-default">Go back</button>
+        <button type="button" class="clear-filter btn btn-success">Clear all filters</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script src="{{ static_url('/js/jquery2.min.js') }}"></script>
 <script src="{{ static_url('/js/underscore-min.js') }}"></script>
@@ -376,14 +438,25 @@ var filters = {
   'SC'            : ['< 10%', '10-20%', '20-30%', '30%+'],
   'ST'            : ['< 10%', '10-30%', '30-50%', '50%+'],
   'Muslim'        : ['< 10%', '10-20%', '20-40%', '40%+'],
+  '2014-Star-Candidate': ['Star'],
+  'Key-Battle'    : ['Yes'],
   '2009-Turnout'  : ['< 50%', '50-60%','60-70%', '70-80%', '80%+'],
   '2014-Turnout'  : ['< 50%', '50-60%','60-70%', '70-80%', '80%+'],
-  '2009-Party'    : ['CONG', 'BJP', 'SP', 'BSP', 'JDU'],
-  '2014-Party'    : ['CONG', 'BJP', 'SP', 'BSP', 'AAP'],
+  '2009-Party'    : 'CONG BJP ADMK BJD BSP CPM DMK JDU NCP RJD SP SS TDP TMC TRS'.split(/ /),
+  '2014-Party'    : 'CONG BJP AAP ADMK BJD BSP CPM DMK JDU MNS NCP RJD SAD SP SS TDP TMC TRS YSRC'.split(/ /),
   '2014-Alliance' : ['NDA', 'UPA', 'OTHER'],
   '2009-Margin'   : ['< 2%', '2-5%', '5-10%', '10-20%', '20%+'],
   '2014-Margin'   : ['< 2%', '2-5%', '5-10%', '10-20%', '20%+'],
   'Swing'         : ['Anti-incumbent', 'Incumbent']
+}
+var filter_map = {
+  'Rural': 'Type',
+  'Bi-polar': 'Polarity',
+  'Bi-polar:Rest': 'Multi',
+  'Hindi-speaking': 'Lang',
+  'Hindi-speaking:Rest': 'Non-Hindi',
+  '2014-Star-Candidate': 'Star',
+  '2014-Star-Candidate:Star': 'Yes'
 }
 
 // Refresh PC information based on latest constituency-wise data
@@ -405,21 +478,23 @@ function process(data) {
 
     var pc = row.PC,
         candi = candidates[row.ID],
+        battle = 'No',
         result, votes, i, l, total, margin
 
-    // Convert row.Result: votes into sorted {name:, party:, votes:, '%':}
+    // Convert row.Result: votes into sorted {name:, party:, votes:, '%':, 'battle':}
     if (candi) {
       for (result=[], votes=row.Result, total=0, i=0, l=votes.length; i<l; i++) {
         if (candi[i]) {
-          result.push({name: candi[i][0], party: candi[i][1], votes: votes[i]})
+          if (candi[i][2]) battle = 'Yes'
+          result.push({name: candi[i][0], party: candi[i][1], battle: candi[i][2], votes: votes[i]})
           total += votes[i]
         } else {
-          console.log(row.ID, i, row.Result.length, candi.length)
+          result.push({votes: votes[i]})
+          console.log('No candidate master', row.ID, i, row.Result.length, candi.length)
         }
       }
       for (i=0, l=votes.length; i<l; i++) {
-        if (result[i])
-          result[i]['%'] = votes[i] / total
+        result[i]['%'] = votes[i] / total
       }
       row.Result = _.sortBy(result, function(v) { return -v.votes })
       row.Total = total
@@ -427,6 +502,7 @@ function process(data) {
     }
 
     // Update pcs for filtering
+    pc['Key-Battle'] = battle
     pc['KEY'] = row.ID
     pc['2014-Party'] = row.Party
     pc['2014-Alliance'] = row.Alliance
@@ -506,7 +582,7 @@ function alliance_progress_gap(data, id) {
 
 // Filter based on query parameters
 var _sort = function (dict) { return _.sortBy(_.values(dict), function(v) { return -v.all }) }
-var _comma = function(x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
+var _comma = function(x) { return (x || '').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
 function filter(data, q) {
   var result = [],
       status = {finished:0, counting:0, awaited:0, total:0},
@@ -557,6 +633,8 @@ function redraw() {
       subset = filter(data, q),
       list, single_key
 
+  $('.consti-result').hide()
+  $('#no-results').modal('hide')
   _.each(map_path, function(val, key) { val.data('drawn', false) })
   if (subset) {
     // If single key, just show the results
@@ -603,8 +681,7 @@ function redraw() {
     }
     $(window).trigger('resize')
   } else {
-    $('#no-results').show()
-    window.scrollTo(0, 0)
+    $('#no-results').modal({show: true})
   }
   _.each(map_path, function(val, key) {
     if (!val.data('drawn'))
@@ -612,7 +689,7 @@ function redraw() {
   })
 
   if (single_key || q.expand) {
-    $('.live-list .seat').slice(0, 10).trigger('click')
+    $('.live-list .seat').slice(0, 20).trigger('click')
   }
 
 }
@@ -661,8 +738,8 @@ $('body')
     $(this).removeClass('first-time')
     redraw()
   })
-  .on('click', '.back', function() { history.back() })
-  .on('click', '.clear-filter', function() { history.pushState({}, '', 'live'); redraw() })
+  .on('click', '.back', function() { history.back(); $('#no-results').modal('hide') })
+  .on('click', '.clear-filter', function() { history.pushState({}, '', 'live'); $('#no-results').modal('hide'); redraw() })
   .on('click', '#no-results .btn', function() { $('.alert').hide() })
   .on('click', '.live-map path', function(e) {
     var id = $(this).attr('id'),

@@ -14,7 +14,7 @@ import pandas as pd
 from pandas import read_sql
 from time import time, sleep
 
-def main(args):
+def main(args, count):
     # Connect to SQL Server
     dsn = ('DRIVER={:s};' +
           'SERVER={:s};'.format(args.server) +
@@ -33,7 +33,7 @@ def main(args):
 
     # Load latest candidate votes
     start_time = time()
-    candidates = read_sql('SELECT * FROM dbo.ELECP_CANDMAST', con, coerce_float=False)
+    candidates = read_sql('SELECT CCODE, CANDICODE, CANDINAME, VOTES, ABBR, CANDI_STATUS, CANDI_ALLIANCE_INDIA_ID FROM dbo.ELECP_CANDMAST', con, coerce_float=False)
     duration = time() - start_time
 
     # Sanitize the values
@@ -64,28 +64,29 @@ def main(args):
         'S30-5': 'U05-5',
         'S30-6': 'U05-6',
         'S30-7': 'U05-7',
+        'S31-1': 'U06-1',   # Lakshadweep
         'S32-1': 'U07-1',   # Puducherry
+        'S33-1': 'U01-1',   # Andaman & Nicobar
         'S34-1': 'U02-1',   # Chandigarh
         'S35-1': 'U03-1',   # Dadra & Nagar Haveli
-        'S31-1': 'U06-1',   # Lakshadweep
-        'S33-1': 'U01-1',   # Andaman & Nicobar
     }, inplace=True)
-
-    const_wise = candidates.groupby('CCODE')
 
     # Replace alliance ID values with text (slow operations)
     candidates['CANDI_ALLIANCE_INDIA_ID'].replace({0: 'OTHER', 1: 'NDA', 2: 'UPA', 3: 'OTHER'}, inplace=True)
 
-    # Take the winners / leaders' data. Assumption: only 1 such row per constituency
-    elections = candidates[candidates['CANDI_STATUS'].isin(['WON', 'LEADING'])].set_index('CCODE')[['CANDINAME', 'ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'VOTES', 'ID', 'CANDI_STATUS']]
-    elections.columns = ['WINNER', 'WINNER PARTY', 'WINNER ALLIANCE', 'WINNER VOTES', 'ID', 'STATUS']
+    # Take each constituency's data
+    declared = candidates[candidates['CANDI_STATUS'].isin(['WON', 'LEADING'])].set_index('CCODE')
+    awaited = candidates[~candidates['CANDI_STATUS'].isin(['WON', 'LEADING', 'TRAILING', 'LOST']) & (candidates['CANDICODE'] == '1')].set_index('CCODE')
+
+    elections = pd.concat([declared, awaited], axis=0)[['CANDINAME', 'ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'VOTES', 'ID', 'CANDI_STATUS']]
+    elections.columns = ['NAME', 'PARTY', 'ALLIANCE', 'WINNER VOTES', 'ID', 'STATUS']
 
     elections['VOTES'] = candidates.sort(['CCODE', 'CANDICODE']).groupby('CCODE')['VOTES'].apply(lambda v: list(v))
     elections = elections.reset_index().rename(columns={'index': 'CONST_ID'})
     # Status: 0 = awaited, 1 = counting, 2 = finished
-    elections['STATUS'] = elections.apply(lambda v: 0 if v['WINNER VOTES'] <= 0 else 2 if v['STATUS'] == 'WON' else 1, axis=1)
+    elections['STATUS'] = elections.apply(lambda v: 2 if v['STATUS'] == 'WON' else 1 if v['STATUS'] == 'LEADING' else 0, axis=1)
 
-    map_data = elections[['ID', 'WINNER PARTY', 'WINNER ALLIANCE', 'WINNER VOTES', 'STATUS', 'VOTES']]
+    map_data = elections[['ID', 'PARTY', 'ALLIANCE', 'WINNER VOTES', 'STATUS', 'VOTES']]
     map_data = json.loads(map_data.to_json(orient='values'))
 
     # Create JSON structure
@@ -100,12 +101,22 @@ def main(args):
         json.dump(summary, out, separators=(',', ':'))
 
     # If 2014-candidates.json was not present, regenerate it
-    if not os.path.exists('2014-candidates.json'):
-        candidates.sort(['ID', 'CANDICODE'], inplace=True)
-        cols = candidates[['CANDINAME', 'ABBR']]
+    if not count:
+        battles = pd.read_sql('SELECT TRN_CONSTI_ID, TRN_CANDI_CODE FROM CANDI_KEY_CONTEST', con, coerce_float=False).astype(str)
+        battles.columns = ['CCODE', 'CANDICODE']
+        battles['CCODE'] = battles['CCODE'].apply(lambda v: v.zfill(5))
+        battles['BATTLE'] = 1
+
+        battles = battles.set_index(['CCODE', 'CANDICODE'])
+        candi_index = candidates.set_index(['CCODE', 'CANDICODE'])
+        candi_index['BATTLE'] = battles['BATTLE']
+        candi_index['BATTLE'] = candi_index['BATTLE'].fillna(0)
+        candi_index['BATTLE'] = candi_index['BATTLE'].astype(int)
+        candi_index.sort_index(inplace=True)
+        cols = candi_index[['CANDINAME', 'ABBR', 'BATTLE']]
         names = {
             id: cols.ix[indices].values.tolist()
-            for id, indices in candidates.groupby(['ID']).groups.iteritems()
+            for id, indices in candi_index.groupby(['ID']).groups.iteritems()
         }
         with open('2014-candidates.json', 'w') as out:
             json.dump(names, out, separators=(',', ':'), encoding='cp1252')
@@ -125,13 +136,15 @@ if __name__ == '__main__':
     parser.add_argument('--refresh', help='Rerun after n seconds', type=int)
     args = parser.parse_args()
 
+    count = 0
     if not args.refresh:
-        main(args)
+        main(args, count)
     else:
         while True:
             try:
-                duration = main(args)
-                print datetime.datetime.now().strftime('%H:%M:%S'), duration
+                duration = main(args, count)
+                count += 1
+                print count, datetime.datetime.now().strftime('%H:%M:%S'), duration
             except Exception, e:
                 print traceback.format_exc(e)
             finally:
