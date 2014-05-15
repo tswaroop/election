@@ -33,7 +33,7 @@ def main(args, count):
 
     # Load latest candidate votes
     start_time = time()
-    candidates = read_sql('SELECT * FROM dbo.ELECP_CANDMAST', con, coerce_float=False)
+    candidates = read_sql('SELECT CCODE, CANDICODE, CANDINAME, VOTES, ABBR, CANDI_STATUS, CANDI_ALLIANCE_INDIA_ID FROM dbo.ELECP_CANDMAST', con, coerce_float=False)
     duration = time() - start_time
 
     # Sanitize the values
@@ -64,28 +64,30 @@ def main(args, count):
         'S30-5': 'U05-5',
         'S30-6': 'U05-6',
         'S30-7': 'U05-7',
+        'S31-1': 'U06-1',   # Lakshadweep
         'S32-1': 'U07-1',   # Puducherry
+        'S33-1': 'U01-1',   # Andaman & Nicobar
         'S34-1': 'U02-1',   # Chandigarh
         'S35-1': 'U03-1',   # Dadra & Nagar Haveli
-        'S31-1': 'U06-1',   # Lakshadweep
-        'S33-1': 'U01-1',   # Andaman & Nicobar
     }, inplace=True)
-
-    const_wise = candidates.groupby('CCODE')
 
     # Replace alliance ID values with text (slow operations)
     candidates['CANDI_ALLIANCE_INDIA_ID'].replace({0: 'OTHER', 1: 'NDA', 2: 'UPA', 3: 'OTHER'}, inplace=True)
 
-    # Take the winners / leaders' data. Assumption: only 1 such row per constituency
-    elections = candidates[candidates['CANDI_STATUS'].isin(['WON', 'LEADING'])].set_index('CCODE')[['CANDINAME', 'ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'VOTES', 'ID', 'CANDI_STATUS']]
-    elections.columns = ['WINNER', 'WINNER PARTY', 'WINNER ALLIANCE', 'WINNER VOTES', 'ID', 'STATUS']
+    # Take each constituency's data
+    declared = candidates[candidates['CANDI_STATUS'].isin(['WON', 'LEADING'])].set_index('CCODE')
+    awaited = candidates[~candidates['CANDI_STATUS'].isin(['WON', 'LEADING', 'TRAILING', 'LOST']) & (candidates['CANDICODE'] == '1')].set_index('CCODE')
+
+    elections = pd.concat([declared, awaited], axis=0)[['CANDINAME', 'ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'VOTES', 'ID', 'CANDI_STATUS']]
+    elections.columns = ['NAME', 'PARTY', 'ALLIANCE', 'WINNER VOTES', 'ID', 'STATUS']
 
     elections['VOTES'] = candidates.sort(['CCODE', 'CANDICODE']).groupby('CCODE')['VOTES'].apply(lambda v: list(v))
     elections = elections.reset_index().rename(columns={'index': 'CONST_ID'})
     # Status: 0 = awaited, 1 = counting, 2 = finished
-    elections['STATUS'] = elections.apply(lambda v: 0 if v['WINNER VOTES'] <= 0 else 2 if v['STATUS'] == 'WON' else 1, axis=1)
+    elections['STATUS'] = elections.apply(lambda v: 2 if v['STATUS'] == 'WON' else 1 if v['STATUS'] == 'LEADING' else 0, axis=1)
 
-    map_data = elections[['ID', 'WINNER PARTY', 'WINNER ALLIANCE', 'WINNER VOTES', 'STATUS', 'VOTES']]
+    map_data = elections[['ID', 'PARTY', 'ALLIANCE', 'WINNER VOTES', 'STATUS', 'VOTES']]
+    map_data[['ID', 'PARTY', 'ALLIANCE', 'WINNER VOTES', 'STATUS']].to_csv('killme.csv')
     map_data = json.loads(map_data.to_json(orient='values'))
 
     # Create JSON structure
