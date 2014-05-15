@@ -78,15 +78,15 @@ def main(args, count):
     declared = candidates[candidates['CANDI_STATUS'].isin(['WON', 'LEADING'])].set_index('CCODE')
     awaited = candidates[~candidates['CANDI_STATUS'].isin(['WON', 'LEADING', 'TRAILING', 'LOST']) & (candidates['CANDICODE'] == '1')].set_index('CCODE')
 
-    elections = pd.concat([declared, awaited], axis=0)[['CANDINAME', 'ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'VOTES', 'ID', 'CANDI_STATUS']]
-    elections.columns = ['NAME', 'PARTY', 'ALLIANCE', 'WINNER VOTES', 'ID', 'STATUS']
+    elections = pd.concat([declared, awaited], axis=0)[['ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'VOTES', 'ID', 'CANDI_STATUS', 'CANDICODE']]
+    elections.columns = ['ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'WINNER VOTES', 'ID', 'STATUS', 'CANDICODE']
 
     elections['VOTES'] = candidates.sort(['CCODE', 'CANDICODE']).groupby('CCODE')['VOTES'].apply(lambda v: list(v))
     elections = elections.reset_index().rename(columns={'index': 'CONST_ID'})
     # Status: 0 = awaited, 1 = counting, 2 = finished
     elections['STATUS'] = elections.apply(lambda v: 2 if v['STATUS'] == 'WON' else 1 if v['STATUS'] == 'LEADING' else 0, axis=1)
 
-    map_data = elections[['ID', 'PARTY', 'ALLIANCE', 'WINNER VOTES', 'STATUS', 'VOTES']]
+    map_data = elections[['ID', 'ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'WINNER VOTES', 'STATUS', 'VOTES', 'CANDICODE']]
     map_data = json.loads(map_data.to_json(orient='values'))
 
     # Create JSON structure

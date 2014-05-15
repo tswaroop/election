@@ -466,18 +466,18 @@ function process(data) {
   id_row = {}
   states = {}
   data.result = _.map(data.map, function(v) {
-    var row = {
-      ID: v[0],
-      Party: v[1],
-      Alliance: v[2],
-      Votes: v[3],
-      Status: statuses[v[4]],
-      Result: v[5],
-      PC: pcs[v[0]]
-    }
-
-    var pc = row.PC,
-        candi = candidates[row.ID],
+    var candi = candidates[v[0]],
+        row = {
+          ID: v[0],
+          Party: v[1],
+          Alliance: v[2],
+          Votes: v[3],
+          Status: statuses[v[4]],
+          Result: v[5],
+          PC: pcs[v[0]],
+          Name: candi && candi[v[6]] ? candi[v[6]][0] : ''
+        },
+        pc = row.PC,
         battle = 'No',
         result, votes, i, l, total, margin
 
@@ -667,12 +667,12 @@ function redraw() {
             path
               .attr('class', 'leading')
               .attr('fill', colors[row[color_by]] || '#a0a0a0')
-              .attr('title', row.Party + ' (' + row.Alliance + ') is leading at ' + row.PC.PC_NAME + ' with ' + _comma(row.Votes) + ' votes')
+              .attr('title', row.Name + ': ' + row.Party + ' (' + row.Alliance + ') is leading at ' + row.PC.PC_NAME + ' with ' + _comma(row.Votes) + ' votes')
           } else if (row.Status == 'Finished') {
             path
               .attr('class', '')
               .attr('fill', colors[row[color_by]] || '#a0a0a0')
-              .attr('title', row.Party + ' (' + row.Alliance + ') won at ' + row.PC.PC_NAME + ' with ' + _comma(row.Votes) + ' votes')
+              .attr('title', row.Name + ': ' + row.Party + ' (' + row.Alliance + ') won at ' + row.PC.PC_NAME + ' with ' + _comma(row.Votes) + ' votes')
           }
         }
       })
