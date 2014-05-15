@@ -223,7 +223,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
   </script>
 
   <div class="counting-progress progress">
-    <div class="progress-bar" x-text="$.constituencies.finished + ' finished'"
+    <div class="progress-bar" x-text="$.constituencies.finished + ' declared'"
       x-style="'background-color:{{ _color.brighten(_color.Office[0], -.5) }};width:' + $.constituencies.finished / $.constituencies.total * 100 + '%'"></div>
     <div class="progress-bar" x-text="$.constituencies.counting + ' counting'"
       x-style="'background-color:{{ _color.brighten(_color.Office[0], +.5) }};width:' + $.constituencies.counting / $.constituencies.total * 100 + '%'"></div>
