@@ -137,7 +137,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
           <% }) %>
         </tspan>
         <tspan><%= constituencies.total %><tspan>
-        <tspan font-size="70%"> seats / <%= data.map.length %></tspan>
+        <tspan font-size="70%"> seats<%= constituencies.total < data.map.length ? ' / ' + data.map.length : '' %></tspan>
       </text>
       <text class="alliance-name" fill="<%= alliances[2].color %>" dy="38" x="100%" text-anchor="end"><%= alliances[2].name + ':' + (alliances[2].won + alliances[2].leading) %></text>
     </svg>
