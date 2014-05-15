@@ -34,7 +34,7 @@ tv, appstyle = False, ''
     .branding, .link { margin-top: .5em; }
     h1.logo { font-size: 200%; }
     body { font-size: 40px;}
-    .branding { font-size: 200%; }
+    .branding { font-size: 150%; }
     .link { font-size: 150%; }
   </style>
 </head><body>
@@ -42,11 +42,40 @@ tv, appstyle = False, ''
   <h1 class="emboss logo">CNN-IBN Microsoft</h1>
 
   <h1 class="emboss">{{ title }}</h1>
-  <h2 class="emboss link">{{ handler.request.host }}/live</h2>
   <h3 class="emboss branding" href="https://gramener.com/">Powered by Gramener.com<h3>
+
+  <h2 class="emboss clock">
+    <span id="days"></span>
+    <span id="hours"></span>
+    <span id="minutes"></span>
+    <span id="seconds"></span>
+  </h2>
 
 <script src="{{ static_url('/js/jquery2.min.js') }}"></script>
 <script>
+var $d = document.getElementById('days'),
+    $h = document.getElementById('hours'),
+    $m = document.getElementById('minutes'),
+    $s = document.getElementById('seconds'),
+    live = Date.UTC(2014, 4, 16, 2, 30, 0)
+function refresh() {
+  var t = live - (new Date()), d, m, h, s
+  d = Math.floor(t / 86400000)
+  t -= d * 86400000
+  if (d > 0) $d.innerHTML = Math.floor(d) + ' day,'
+  h = Math.floor(t / 3600000)
+  t -= h * 3600000
+  if (d > 0 || h > 0) $h.innerHTML = Math.floor(h) + ' hr,'
+  m = Math.floor(t / 60000)
+  t -= m * 60000
+  if (d > 0 || h > 0 || m > 0) $m.innerHTML = Math.floor(m) + ' min,'
+  s = Math.floor(t / 1000)
+  t -= s * 60000
+  if (d > 0 || h > 0 || m > 0 || s > 0) $s.innerHTML = Math.floor(s) + ' s to go'
+}
+refresh()
+setInterval(refresh, 1000)
+
 $('body').on('click', function(e) { window.location = '/live?tv&test' })
 </script>
 {{ T('.tail.html', appstyle=appstyle) }}
