@@ -240,7 +240,7 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
         height="20"
         title="Clear State filter"
         fill="#e66"/>
-      <text x="<%= .5 * w %>%" y="10" dy=".37em" text-anchor="middle" font-size="12">X</text>
+      <text x="<%= .5 * w %>%" y="10" dy=".37em" text-anchor="middle" font-size="12">All</text>
       <% _.each(_.sortBy(states, function(i, state) { return state }), function(state) { %>
         <rect class="urlfilter state-legend"
           href="?STATE=<%= encodeURIComponent(state) %>"
