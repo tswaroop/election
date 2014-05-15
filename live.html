@@ -49,17 +49,18 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
     @media (min-width: 1200px) { body { font-size: 24px;} }
     @media (min-width: 1600px) { body { font-size: 30px;} }
     @media (min-width: 1920px) {
-      h1.logo { font-size: 200%; }
+      h1.logo2 { font-size: 200%; }
       body { font-size: 40px;}
       .branding { font-size: 150%; }
       {% if tv %}
         .branding { display: block; }
       {% end %}
     }
+    #footerbar { font-size: 14px; }
   </style>
 </head><body>
 
-  <h1 class="emboss logo">CNN-IBN Microsoft</h1>
+  <h1 class="emboss logo2">CNN-IBN Microsoft</h1>
 
   <h1 class="emboss">{{ title }}</h1>
   <h3 class="emboss branding" href="https://gramener.com/">Powered by Gramener.com<h3>
@@ -708,18 +709,19 @@ function reload() {
       process(data)
       redraw()
     },
-    error: function() { console.log('error', arguments) },
     complete: function() {
       {# ?refresh=5 for 5 minute auto-refresh #}
       {% if 'refresh' in args %}
-        setTimeout(reload, {{ min(1, float(args['refresh'][0])) * 60000 }})
+        setTimeout(then_reload, {{ min(1, float(args['refresh'][0])) * 60000 }})
       {% end %}
     }
   })
 }
 
 {% if 'refresh' in args %}
-  setTimeout(reload, {{ min(1, float(args['refresh'][0])) * 60000 }})
+  {% set t = min(1, float(args['refresh'][0])) * 60000 %}
+  var then_reload = _.throttle(reload, {{ t }})
+  setTimeout(then_reload, {{ t }})
 {% end %}
 
 var seat_result_template = _.template($('script.seat-result').html())
