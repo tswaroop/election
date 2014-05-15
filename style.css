@@ -448,7 +448,7 @@ footer {
 .live .navbar { margin-bottom: 5px; }
 .live #no-results { display: none; }
 .live.first-time #no-results .back { display: none; }
-.live .other { visibility: hidden; }
+.tv.live .other { visibility: hidden; }
 
 .alliance-name { font-size: 24px; font-weight: bold; }
 .alliance-filter { font-size: 60%; fill: #D9534F; display: none; }
