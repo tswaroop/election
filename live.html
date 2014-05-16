@@ -7,7 +7,7 @@ from urllib import quote
 countdown = False
 
 tv = args.get('tv')
-refresh = int(args.get('refresh', ['1'])[0]) * 10000
+refresh = int(args.get('refresh', ['30'])[0]) * 10000
 appstyle = 'ibn' if 'ibnlive' in handler.request.host else ''
 appstyle = args.get('style', [appstyle])[0]
 pc = DB.csv('pc.csv')
@@ -481,7 +481,7 @@ function process(data) {
           Status:   statuses[v[4]],
           Result:   v[5],
           PC:       pcs[v[0]],
-          Name:     candi && candi[v[6]] ? candi[v[6]][0] : ''
+          Name:     candi && candi[v[6] - 1] ? candi[v[6] - 1][0] : ''
         },
         pc = row.PC,
         battle = 'No',

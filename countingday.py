@@ -34,6 +34,7 @@ def main(args, count):
     # Load latest candidate votes
     start_time = time()
     candidates = read_sql('SELECT CCODE, CANDICODE, CANDINAME, VOTES, ABBR, CANDI_STATUS, CANDI_ALLIANCE_INDIA_ID FROM dbo.ELECP_CANDMAST', con, coerce_float=False)
+    candidates['CANDICODE'] = candidates['CANDICODE'].dropna().astype(int)
     duration = time() - start_time
 
     # Sanitize the values
@@ -76,7 +77,7 @@ def main(args, count):
 
     # Take each constituency's data
     declared = candidates[candidates['CANDI_STATUS'].isin(['WON', 'LEADING'])].set_index('CCODE')
-    awaited = candidates[~candidates['CANDI_STATUS'].isin(['WON', 'LEADING', 'TRAILING', 'LOST']) & (candidates['CANDICODE'] == '1')].set_index('CCODE')
+    awaited = candidates[~candidates['CANDI_STATUS'].isin(['WON', 'LEADING', 'TRAILING', 'LOST']) & (candidates['CANDICODE'] == 1)].set_index('CCODE')
 
     elections = pd.concat([declared, awaited], axis=0)[['ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'VOTES', 'ID', 'CANDI_STATUS', 'CANDICODE']]
     elections.columns = ['ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'WINNER VOTES', 'ID', 'STATUS', 'CANDICODE']
@@ -113,7 +114,6 @@ def main(args, count):
         candi_index['BATTLE'] = candi_index['BATTLE'].astype(int)
         candi_index.sort_index(inplace=True)
         cols = candi_index[['CANDINAME', 'ABBR', 'BATTLE']]
-        print indices
         names = {
             id: cols.ix[indices].values.tolist()
             for id, indices in candi_index.groupby(['ID']).groups.iteritems()
