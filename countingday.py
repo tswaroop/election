@@ -123,7 +123,7 @@ def main(args, count):
     by_status = elections.groupby(['STATUS'])['ID'].count()
     by_party = elections.groupby(['ABBR'])['ID'].count()
     by_alliance = elections.groupby(['CANDI_ALLIANCE_INDIA_ID'])['ID'].count()
-    return '{:0.2f}s. {:3d} = {:3d} FIN + {:3d} WIP + {:3d} TBD. NDA={:3d} UPA={:3d} CONG={:3d} BJP={:3d}'.format(
+    return '{:0.2f}s. {:3d} = {:3d} FIN + {:3d} WIP + {:3d} TBD. NDA={:3d} UPA={:3d} CONG={:3d} BJP={:3d}. {:3d} candidates'.format(
         duration,
         len(elections),
         by_status.ix[2] if 2 in by_status else 0,
@@ -133,6 +133,7 @@ def main(args, count):
         by_alliance.ix['UPA'] if 'NDA'  in by_alliance else 0,
         by_party.ix['CONG']   if 'CONG' in by_party else 0,
         by_party.ix['BJP']    if 'BJP'  in by_party else 0,
+        len(candidates),
     )
 
 if __name__ == '__main__':
