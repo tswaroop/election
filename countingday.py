@@ -104,6 +104,7 @@ def main(args, count):
     if not count:
         battles = pd.read_sql('SELECT TRN_CONSTI_ID, TRN_CANDI_CODE FROM CANDI_KEY_CONTEST', con, coerce_float=False).astype(str)
         battles.columns = ['CCODE', 'CANDICODE']
+        battles['CANDICODE'] = battles['CANDICODE'].dropna().astype(int)
         battles['CCODE'] = battles['CCODE'].apply(lambda v: v.zfill(5))
         battles['BATTLE'] = 1
 
