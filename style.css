@@ -35,6 +35,7 @@ body.live.tv {
 
   .tv .btn { font-size: 30px; }
   .tv.live .btn { font-size: 22px; }
+  .tv.live .filters .btn { font-weight: bold; font-size: 28px; }
   .tv.live .applied_filters { font-size: 36px; }
   .tv.live .applied_filters h2, .tv.live .filters h2 { font-size: 53px; }
   .tv.live .parties { height: 25em; }
