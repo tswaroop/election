@@ -1,4 +1,4 @@
-{{ GRAMEX(cache=['js/G.min.js', 'pc.csv', 'abbr.csv', 'colors.csv', 'style.css', '.head.html', '.tail.html', '2014-summary.json'], max_age=10) }}{% code %}
+{{ GRAMEX(cache=['js/G.min.js', 'pc.csv', 'abbr.csv', 'colors.csv', 'style.css', '.head.html', '.tail.html', '2014-summary.json', '2014-candidates.json'], max_age=10) }}{% code %}
 title = 'Results 2014 analytics'
 description = 'A live update on the 2014 Indian Parliament elections, by Gramener.'
 
@@ -440,6 +440,7 @@ var abbr = {{ abbr.to_json() }}
 var abbr3 = {{ abbr3.to_json() }}
 var candidates = []
 var states
+var statuses = ['Awaited', 'Counting', 'Finished']
 var filters = {
   '2014-Schedule' : ['07-Apr', '09-Apr', '10-Apr', '11-Apr', '12-Apr', '17-Apr', '24-Apr', '30-Apr', '07-May', '12-May'],
   'Hindi-speaking': ['Hindi', 'Rest'],
@@ -453,11 +454,12 @@ var filters = {
   '2009-Turnout'  : ['< 50%', '50-60%','60-70%', '70-80%', '80%+'],
   '2014-Turnout'  : ['< 50%', '50-60%','60-70%', '70-80%', '80%+'],
   '2009-Party'    : 'CONG BJP ADMK BJD BSP CPM DMK JDU NCP RJD SP SS TDP TMC TRS'.split(/ /),
-  '2014-Party'    : 'CONG BJP AAP ADMK BJD BSP CPM DMK JDU MNS NCP RJD SAD SP SS TDP TMC TRS YSRC'.split(/ /),
+  '2014-Party'    : 'CONG BJP AAP ADMK BJD BSP CPM DMK JDU MNS NCP RJD SAD SP SS TDP TMC TRS YSRCP NOTA'.split(/ /),
   '2014-Alliance' : ['NDA', 'UPA', 'OTHER'],
   '2009-Margin'   : ['< 2%', '2-5%', '5-10%', '10-20%', '20%+'],
   '2014-Margin'   : ['< 2%', '2-5%', '5-10%', '10-20%', '20%+'],
-  'Swing'         : ['Anti-incumbent', 'Incumbent']
+  'Swing'         : ['Anti-incumbent', 'Incumbent'],
+  'Status'        : statuses
 }
 var filter_map = {
   'Rural': 'Type',
@@ -470,7 +472,6 @@ var filter_map = {
 }
 
 // Refresh PC information based on latest constituency-wise data
-var statuses = ['Awaited', 'Counting', 'Finished']
 var id_row
 function process(data) {
   id_row = {}
