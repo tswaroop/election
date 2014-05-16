@@ -113,6 +113,7 @@ def main(args, count):
         candi_index['BATTLE'] = candi_index['BATTLE'].astype(int)
         candi_index.sort_index(inplace=True)
         cols = candi_index[['CANDINAME', 'ABBR', 'BATTLE']]
+        print indices
         names = {
             id: cols.ix[indices].values.tolist()
             for id, indices in candi_index.groupby(['ID']).groups.iteritems()
@@ -131,7 +132,7 @@ def main(args, count):
         by_status.ix[1] if 1 in by_status else 0,
         by_status.ix[0] if 0 in by_status else 0,
         by_alliance.ix['NDA'] if 'NDA'  in by_alliance else 0,
-        by_alliance.ix['UPA'] if 'NDA'  in by_alliance else 0,
+        by_alliance.ix['UPA'] if 'UPA'  in by_alliance else 0,
         by_party.ix['CONG']   if 'CONG' in by_party else 0,
         by_party.ix['BJP']    if 'BJP'  in by_party else 0,
         len(candidates),

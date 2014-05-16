@@ -12,6 +12,7 @@ appstyle = 'ibn' if 'ibnlive' in handler.request.host else ''
 appstyle = args.get('style', [appstyle])[0]
 
 base_url = 'parliament' + ('?style=' + appstyle if 'style' in args else '')
+live_url = 'live' + ('?style=' + appstyle if 'style' in args else '')
 govtperformance_url = 'govtperformance' + ('?style=' + appstyle if 'style' in args else '')
 #donation_url = 'donation' + ('?style=' + appstyle if 'style' in args else '')
 {% end %}<!DOCTYPE html><html lang="en">
@@ -50,6 +51,10 @@ govtperformance_url = 'govtperformance' + ('?style=' + appstyle if 'style' in ar
 <div class="container">
   <div class="row">
     <div class="col-md-4">
+      <h2 class="summary-title"><a href="{{ live_url }}">Live 2014 results</a></h2>
+      <a href="{{ live_url }}"><img class="main" src="{{ static_url('img/live.png') }}"></a>
+    </div>
+    <div class="col-md-4">
       <h2 class="summary-title"><a href="{{ base_url }}">Parliament elections</a></h2>
       <a href="{{ base_url }}"><img class="main" src="{{ static_url('img/parliament.png') }}"></a>
     </div>
@@ -57,12 +62,12 @@ govtperformance_url = 'govtperformance' + ('?style=' + appstyle if 'style' in ar
       <h2 class="summary-title"><a href="{{ base_url }}#cartogram?BY=2014-Schedule">Parliament maps</a></h2>
       <a href="{{ base_url }}#cartogram?BY=2014-Schedule"><img class="main" src="{{ static_url('img/parliament-cartogram.png') }}"></a>
     </div>
+  </div>
+  <div class="row">
     <div class="col-md-4">
       <h2 class="summary-title"><a href="{{ base_url }}#facts">Election Factoids</a></h2>
       <a href="{{ base_url }}#facts"><img class="main" src="{{ static_url('img/factoids.png') }}"></a>
     </div>
-  </div>
-  <div class="row">
     <div class="col-md-4">
       <h2 class="summary-title"><a href="{{ govtperformance_url }}">Govt. Performance</a></h2>
       <a href="{{ govtperformance_url }}"><img class="main" src="{{ static_url('img/govtperformance.png') }}"></a>

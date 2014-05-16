@@ -4,9 +4,10 @@ description = 'A live update on the 2014 Indian Parliament elections, by Gramene
 
 from urllib import quote
 
-countdown = 'test' not in args or datetime.datetime.utcnow() > datetime.datetime(2014, 5, 16, 2, 30, 0)
+countdown = False
 
 tv = args.get('tv')
+refresh = int(args.get('refresh', ['1'])[0]) * 10000
 appstyle = 'ibn' if 'ibnlive' in handler.request.host else ''
 appstyle = args.get('style', [appstyle])[0]
 pc = DB.csv('pc.csv')
@@ -715,17 +716,16 @@ function reload() {
     },
     complete: function() {
       {# ?refresh=5 for 5 minute auto-refresh #}
-      {% if 'refresh' in args %}
-        setTimeout(then_reload, {{ min(1, float(args['refresh'][0])) * 60000 }})
+      {% if refresh %}
+        setTimeout(then_reload, {{ refresh }})
       {% end %}
     }
   })
 }
 
-{% if 'refresh' in args %}
-  {% set t = min(1, float(args['refresh'][0])) * 60000 %}
-  var then_reload = _.throttle(reload, {{ t }})
-  setTimeout(then_reload, {{ t }})
+{% if refresh %}
+  var then_reload = _.throttle(reload, 10000)
+  setTimeout(then_reload, {{ refresh }})
 {% end %}
 
 var seat_result_template = _.template($('script.seat-result').html())

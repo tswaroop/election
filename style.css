@@ -32,6 +32,8 @@ body.live.tv {
   .tv .pc-index .year-legend { font-size: 24px; }
   .tv .pc-result .year-legend { font-size: 24px; }
   .tv .pc-result .const-stack { font-size: 16px; }
+  .tv .seat { font-weight: bold; }
+  .tv .seat-result td { font-weight: bold; }
 
   .tv .btn { font-size: 30px; }
   .tv.live .btn { font-size: 22px; }
@@ -39,6 +41,7 @@ body.live.tv {
   .tv.live .applied_filters { font-size: 36px; }
   .tv.live .applied_filters h2, .tv.live .filters h2 { font-size: 53px; }
   .tv.live .parties { height: 25em; }
+  .tv.live .party-legend { font-weight: bold; }
 
   .tv .consti-result { font-size: 30px; }
 
