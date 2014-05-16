@@ -13,6 +13,8 @@ appstyle = args.get('style', [appstyle])[0]
 
 base_url = 'parliament' + ('?style=' + appstyle if 'style' in args else '')
 live_url = 'live' + ('?style=' + appstyle if 'style' in args else '')
+if handler.request.host == 'gramener.com':
+    live_url = 'http://ibn.gramener.com/live'
 govtperformance_url = 'govtperformance' + ('?style=' + appstyle if 'style' in args else '')
 #donation_url = 'donation' + ('?style=' + appstyle if 'style' in args else '')
 {% end %}<!DOCTYPE html><html lang="en">
