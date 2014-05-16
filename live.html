@@ -674,12 +674,12 @@ function redraw() {
             path
               .attr('class', 'leading')
               .attr('fill', colors[row[color_by]] || '#a0a0a0')
-              .attr('title', row.Name + ': ' + row.Party + ' (' + row.Alliance + ') is leading at ' + row.PC.PC_NAME + ' with ' + _comma(row.Votes) + ' votes')
+              .attr('title', row.Name + ': ' + row.Party + ' (' + row.Alliance + ') is leading at ' + row.PC.PC_NAME + ', ' + row.PC.ST_ABBR + ' with ' + _comma(row.Votes) + ' votes')
           } else if (row.Status == 'Finished') {
             path
               .attr('class', '')
               .attr('fill', colors[row[color_by]] || '#a0a0a0')
-              .attr('title', row.Name + ': ' + row.Party + ' (' + row.Alliance + ') won at ' + row.PC.PC_NAME + ' with ' + _comma(row.Votes) + ' votes')
+              .attr('title', row.Name + ': ' + row.Party + ' (' + row.Alliance + ') won at ' + row.PC.PC_NAME + ', ' + row.PC.ST_ABBR + ' with ' + _comma(row.Votes) + ' votes')
           }
         }
       })
