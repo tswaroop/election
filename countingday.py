@@ -117,12 +117,13 @@ def main(args, count):
             id: cols.ix[indices].values.tolist()
             for id, indices in candi_index.groupby(['ID']).groups.iteritems()
         }
+        print len(candi_index)
         with open('2014-candidates.json', 'w') as out:
             json.dump(names, out, separators=(',', ':'), encoding='cp1252')
 
     by_status = elections.groupby(['STATUS'])['ID'].count()
     by_party = elections.groupby(['ABBR'])['ID'].count()
-    by_alliance = elections.groupby(['CANDI_ALLIANCE_INDIA_ID'])['ID'].count()
+    by_alliance = elections[elections['STATUS'].isin([1,2])].groupby(['CANDI_ALLIANCE_INDIA_ID'])['ID'].count()
     return '{:0.2f}s. {:3d} = {:3d} FIN + {:3d} WIP + {:3d} TBD. NDA={:3d} UPA={:3d} CONG={:3d} BJP={:3d}. {:3d} candidates'.format(
         duration,
         len(elections),
