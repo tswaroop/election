@@ -4,6 +4,9 @@ description = 'A live update on the 2014 Indian Parliament elections, by Gramene
 
 from urllib import quote
 
+if handler.request.host == 'gramener.com':
+    return handler.redirect('http://ibn.gramener.com/live')
+
 countdown = False
 
 tv = args.get('tv')
@@ -290,14 +293,15 @@ abbr3 = DB.csv('abbr.csv').set_index(['Field', 'Name'])['Abbr3'].ix['STATE']
           <h2><%= result.length == 1 ? (result[0].PC.PC_NAME + ', ' + result[0].PC.ST_ABBR) : result.length + (result.length < data.map.length ? ' / ' + data.map.length + ' seats' : ' seats') %></h2>
           <% _.sortBy(result, function(row) { return row.PC.ST_ABBR + '-' + row.PC.PC_NAME }).forEach(function(row) { %>
             <div class="row seat" data-id="<%= row.ID %>">
-              <div class="col-xs-4 right">
+              <div class="col-xs-5 right">
                 <%= row.PC.PC_NAME %>, <%= row.PC.ST_ABBR %>
+                <span class="label" style="background-color:<%= colors[row.Party] || colors.Other %>"><%= row.Party %></span>
                 <%        if (row.Status == 'Awaited' ) { %><i title="<%= row.Status %>" class="glyphicon glyphicon-remove"></i>
                 <% } else if (row.Status == 'Counting') { %><i title="<%= row.Status %>" class="glyphicon glyphicon-time"></i>
                 <% } else if (row.Status == 'Finished') { %><i title="<%= row.Status %>" class="glyphicon glyphicon-ok"></i>
                 <% } %>
               </div>
-              <div class="col-xs-8">
+              <div class="col-xs-7">
                 <div class="progress">
                   <% _.filter(row.Result, function(v) { return v.votes > 0.01 * row.Total }).slice(0, 6).forEach(function(v) { %>
                     <div class="progress-bar"
