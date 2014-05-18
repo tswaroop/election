@@ -45,9 +45,6 @@ body.live.tv {
 
   .tv .consti-result { font-size: 30px; }
 
-  .tv .filter-sc { display: none; }
-  .tv .filter-st { display: none; }
-
   .tv.live .state-legend { margin-bottom: 5px; }
   .tv.live .party-legend { margin-bottom: 20px; display: block; }
 
