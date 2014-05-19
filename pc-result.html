@@ -3,7 +3,7 @@ from urllib import quote
 from common import pc_setup, slug, NONE_COLOR
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 pc = DB.csv('pc.csv').set_index(['STATE', 'PC'])
-year = args.get('YEAR', ['2009'])[0]
+year = args.get('YEAR', ['2014'])[0]
 
 try:
     no_result = False

@@ -10,16 +10,16 @@ pivot = elections['PARTY'].unstack(0)
 if 'party' in args:
     title = '{:s} Bastions <small>Constituences that mostly vote for {:s}</small>'.format(args['party'][0], args['party'][0])
     pattern = None
-    matches = pivot == pd.Series(args['party'] * 15, index=pivot.columns)
+    matches = pivot == pd.Series(args['party'] * 16, index=pivot.columns)
     count = matches.sum(axis=1)
 elif 'not' in args:
     title = '{:s} Antiholds <small>Constituences that never vote for {:s}</small>'.format(args['not'][0], args['not'][0])
     pattern = None
-    matches = pivot != pd.Series(args['not'] * 15, index=pivot.columns)
+    matches = pivot != pd.Series(args['not'] * 16, index=pivot.columns)
     count = matches.sum(axis=1)
 elif 'winning' in args:
     title = 'Winning streaks <small>Constituencies that mostly vote for the national winner</small>'
-    pattern = pd.Series(['CONG', 'CONG', 'CONG', 'CONG', 'CONG', 'JNP', 'CONG', 'CONG', 'CONG', 'CONG', 'BJP', 'BJP', 'BJP', 'CONG', 'CONG'], index=pivot.columns)
+    pattern = pd.Series(['CONG', 'CONG', 'CONG', 'CONG', 'CONG', 'JNP', 'CONG', 'CONG', 'CONG', 'CONG', 'BJP', 'BJP', 'BJP', 'CONG', 'CONG','BJP'], index=pivot.columns)
     matches = pivot == pattern
     count = matches.sum(axis=1)
 elif 'anti-incumbent' in args:
@@ -28,7 +28,7 @@ elif 'anti-incumbent' in args:
     matches = pivot.fillna('') != pivot.fillna('').T.shift(1).T
     count = matches.sum(axis=1) - 1
 
-points = pd.Series([1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 6, 6, 9, 10, 12], index=pivot.columns)
+points = pd.Series([1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 6, 6, 9, 10, 12, 12,], index=pivot.columns)
 notnulls = pd.notnull(pivot).sum(axis=1)
 score = matches.mul(points).sum(axis=1)
 result = pivot.reindex(score.order(ascending=False).index)

@@ -40,7 +40,7 @@ hidden_filters = ['2014-Star-Candidate', 'ST_CODE', 'KEY']
 
 # Add constituency related metrics
 constituencies = DB.csv('pc.csv')
-constituencies['YEAR'] = '2009'
+constituencies['YEAR'] = '2014'
 constituencies = constituencies.set_index(['YEAR', 'STATE', 'PC'])
 constituencies_columns = hidden_filters + [f['key'] for f in filters]
 elections[constituencies_columns] = constituencies[constituencies_columns]
@@ -52,7 +52,7 @@ if len(chosen_states):
     subset = subset[subset['STATE'].isin(chosen_states)]
 
 years = sorted(subset['YEAR'].unique())
-original_year = year = '2009' if groupby.startswith('2014') else args.get('YEAR', years)[-1]
+original_year = year = '2014' if groupby.startswith('2014') else args.get('YEAR', years)[-1]
 if year not in years:
     year = years[-1]
 year_index = years.index(year)
@@ -242,12 +242,12 @@ names = {
     <div class="btn-group{{ ' only-tv' if filter['only-tv'] else '' }}">
       {% set keyargs = args.get(filter['key'], []) %}
       <a class="btn btn-sm {{ 'btn-success active' if len(keyargs) else 'btn-primary' }}"
-         href="?YEAR=2009&{{ quote(filter['key']) }}="
+         href="?YEAR=2014&{{ quote(filter['key']) }}="
          {% if len(keyargs) %} title="Clear filter"{% end %}
       >{{ filter['key'].replace('-', ' ') }}</a>
       {% for item in filter['series'] %}
         <a class="btn btn-sm {{ 'btn-success active' if item in keyargs else 'btn-default' }}{{ '' if item in available[filter['key']] else ' disabled' }}"
-           data-toggle="toggle" href="?YEAR=2009&{{ quote(filter['key']) }}={{ quote(item) }}">{{ item }}</a>
+           data-toggle="toggle" href="?YEAR=2014&{{ quote(filter['key']) }}={{ quote(item) }}">{{ item }}</a>
       {% end %}
     </div>
   {% end %}
