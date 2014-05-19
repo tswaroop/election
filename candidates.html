@@ -16,7 +16,7 @@ groupby = args.get('groupby', [''])[0] or 'Party'
 metric = args.get('metric', [''])[0] or 'Net Assets'
 metrics = {
   'Net Assets':    {'divisor': 1E7, 'format': '{:s}<br>{:s} at {:s}.<br>Rs {:,.1f}cr', },
-  'Criminal Case': {'divisor': 1,   'format': '{:s}<br>{:s} at {:s}.<br>{:,.0f} cases', },
+  'Criminal Cases': {'divisor': 1,   'format': '{:s}<br>{:s} at {:s}.<br>{:,.0f} cases', },
 }
 divisor, format = metrics[metric]['divisor'], metrics[metric]['format']
 
@@ -70,7 +70,7 @@ parents = treemap.squarified(0, 0, W / aspect, H, party)
         <li class="dropdown" title="Metric" data-placement="left">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Metric {{ escape(metric) }} <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            {% for g in ['Net Assets', 'Criminal Case'] %}
+            {% for g in ['Net Assets', 'Criminal Cases'] %}
               <li><a href="?metric={{ quote(g) }}">{{ escape(g) }}</a></li>
             {% end %}
           </ul>
