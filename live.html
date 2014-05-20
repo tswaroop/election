@@ -10,7 +10,7 @@ if handler.request.host == 'gramener.com':
 countdown = False
 
 tv = args.get('tv')
-refresh = int(args.get('refresh', ['30'])[0]) * 10000
+refresh = int(args.get('refresh', ['0'])[0]) * 10000
 appstyle = 'ibn' if 'ibnlive' in handler.request.host else ''
 appstyle = args.get('style', [appstyle])[0]
 pc = DB.csv('pc.csv')
@@ -710,6 +710,7 @@ function redraw() {
 redraw()
 
 function reload() {
+  $('.reload .glyphicon').addClass('spin')
   $.ajax({
     url: '2014-summary.json',
     dataType: 'json',
@@ -721,6 +722,7 @@ function reload() {
       redraw()
     },
     complete: function() {
+      $('.reload .glyphicon').removeClass('spin')
       {# ?refresh=5 for 5 minute auto-refresh #}
       {% if refresh %}
         setTimeout(then_reload, {{ refresh }})
@@ -804,7 +806,9 @@ $(window)
 {% end %}{# if countdown #}
 
 {{ T('.tail.html', appstyle=appstyle) }}
-</body></html>{#
+</body></html>
+<!-- Yes, we are recruiting. https://gramener.com/about/#careers -->
+{#
 
 
 Note about the filter() function.
