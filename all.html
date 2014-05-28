@@ -1,9 +1,13 @@
 {% code %}
 from urllib import quote
 from common import slug
-
+from common import pc_setup, slug, metric_names, NONE_COLOR
 party_colors = DB.csv('colors.csv').set_index(['Field', 'Name'])['Color'].ix['PARTY']
+
 data = DB.csv('assembly.csv', dtype=object)
+winners = data[data['#'] == '1']
+summary = winners.pivot_table(cols='PARTY', rows='YEAR', values='NAME', aggfunc='count').fillna(0)
+parties = summary.sum().order(ascending=False).head(20).index
 results = pd.read_csv('results.csv')
 results['DATE'] = stats.to_date(results['DATE'])
 today = datetime.datetime(2014, 12, 30)
@@ -12,6 +16,7 @@ states = results['ST_NAME'].unique()
 datepos = layout.dates(results['DATE'].min(), today)
 x0, y0, W, h, legend = 120, 28, 1000, 20., 30
 H = h * len(states) + y0 + legend
+w = 920. / len(parties), 5, 30, 30
 {% end %}
 <svg class="all-results full-width" viewBox="0 0 {{ W }} {{ H }}" data-height="{{ float(H) / W }}">
   <g class="show-help" href="#">
@@ -51,7 +56,7 @@ H = h * len(states) + y0 + legend
     state_results['TILL'].fillna(today, inplace=True)
     state_results['x0'] = state_results['DATE'].apply(lambda d: round(datepos.x.iloc[datepos.index.searchsorted(d)], 2))
     state_results['x1'] = state_results['TILL'].apply(lambda d: round(datepos.x.iloc[datepos.index.searchsorted(d)], 2))
-    w = float(W - x0 * 2) / len(party_colors)
+    w = float(W - x0 * 2) / len(parties)
     {% end %}
     <g class="winner-timeline">
       {% for index, row in state_results.iterrows() %}
@@ -70,7 +75,8 @@ H = h * len(states) + y0 + legend
   {% end %}
 
   <rect class="help" x="{{ x0 }}" width="{{ w }}" height="{{ legend - 5 }}" opacity="0" title="Click one or more parties to see party victories"/>
-  {% for i, (party, color) in enumerate(party_colors.iteritems()) %}
+  {% for i, party in enumerate(parties) %}
+    {% set background_color = party_colors.get(party, NONE_COLOR) %}
     <rect class="party-legend"
       data-party="{{ slug(party) }}"
       data-highlight="[data-party={{ slug(party) }}]"
@@ -78,7 +84,7 @@ H = h * len(states) + y0 + legend
       x="{{ x0 + w * i }}"
       width="{{ w }}"
       height="{{ legend - 5 }}"
-      fill="{{ color }}"></rect>
+      fill="{{ background_color }}"></rect>
     <text x="{{ x0 + w * (i + .5) }}" y="{{ (legend - 5) * .5 }}" text-anchor="middle" dy=".35em" fill="#fff">{{ party }}</text>
   {% end %}
 </svg>
