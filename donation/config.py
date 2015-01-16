@@ -1,8 +1,6 @@
 from collections import OrderedDict
-#from donation.common import prev_days, prev_wtd, prev_mtd, prev_ytd
-import stats
-import pandas as pd
 from pandas.tseries.offsets import DateOffset, MonthBegin, YearBegin
+
 
 def prev_days(days):
     def fn(date):
@@ -11,11 +9,14 @@ def prev_days(days):
         return prev_start_time, prev_end_time, start_time
     return fn
 
+
 def prev_wtd(date):
     start_time = date - DateOffset(days=date.weekday() or 7)
     prev_end_time = date - DateOffset(days=7)
-    prev_start_time = prev_end_time - DateOffset(days=prev_end_time.weekday() or 7)
+    prev_start_time = prev_end_time - \
+        DateOffset(days=prev_end_time.weekday() or 7)
     return prev_start_time, prev_end_time, start_time
+
 
 def prev_mtd(date):
     start_time = date - MonthBegin()
@@ -23,9 +24,11 @@ def prev_mtd(date):
     prev_start_time = prev_end_time - MonthBegin()
     return prev_start_time, prev_end_time, start_time
 
+
 def prev_ytd(date):
     start_time = date - YearBegin()
-    prev_end_time = (start_time - DateOffset(days=1)).replace(day=date.day, month=date.month)
+    prev_end_time = (start_time - DateOffset(days=1)).replace(
+        day=date.day, month=date.month)
     prev_start_time = prev_end_time - YearBegin()
     return prev_start_time, prev_end_time, start_time
 
@@ -41,13 +44,17 @@ data_file = 'data.csv'
 
 # Transformations for transaction data file.
 # Just return data if no transformations are required.
+
+
 def data_setup(data):
     # data[date] = stats.to_date(data[date], dayfirst=True)
-    data['Amount'] /= 1E7;
+    data['Amount'] /= 1E7
     return data
 
 # Reference data file and its transformations
 reference_file = 'reference.csv'
+
+
 def reference_setup(ref):
     return ref.set_index('column')
 
@@ -85,5 +92,6 @@ sizes = OrderedDict((
 # Optionally prefixed by 'Prev' to indicate previous period
 colors = OrderedDict((
     # Title                       numerator, denominator, display format
-    ('Amount',        ('Amount Donated/Received', 'Amount Donated/Received', '{:,.2f} cr')),
+    ('Amount',
+     ('Amount Donated/Received', 'Amount Donated/Received', '{:,.2f} cr')),
 ))

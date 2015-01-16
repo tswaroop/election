@@ -6,7 +6,6 @@ May also be run at a fixed interval (e.g. 1 minute)
 Usage: python countingday.py
 """
 
-import os
 import json
 import datetime
 import pyodbc
@@ -14,45 +13,53 @@ import pandas as pd
 from pandas import read_sql
 from time import time, sleep
 
+
 def main(args, count):
     # Connect to SQL Server
     dsn = ('DRIVER={:s};' +
-          'SERVER={:s};'.format(args.server) +
-          'DATABASE={:s};'.format(args.db) +
-          'WSID={:s};'.format(args.server) +
-          'APP=PyCountingDay;')
+           'SERVER={:s};'.format(args.server) +
+           'DATABASE={:s};'.format(args.db) +
+           'WSID={:s};'.format(args.server) +
+           'APP=PyCountingDay;')
     if not args.uid:
         dsn += 'Trusted_Connection=Yes'
     else:
         dsn += 'UID={:s};PWD={:s};'.format(args.uid, args.pwd)
 
     try:
-        con = pyodbc.connect(dsn.format('{SQL Server Native Client 11.0}'), timeout=3, unicode_results=True)
+        con = pyodbc.connect(
+            dsn.format('{SQL Server Native Client 11.0}'),
+            timeout=3, unicode_results=True)
     except pyodbc.Error:
-        con = pyodbc.connect(dsn.format('{SQL Server}'), timeout=3, unicode_results=True)
+        con = pyodbc.connect(
+            dsn.format('{SQL Server}'), timeout=3, unicode_results=True)
 
     # Load latest candidate votes
     start_time = time()
-    candidates = read_sql('SELECT CCODE, CANDICODE, CANDINAME, VOTES, ABBR, CANDI_STATUS, CANDI_ALLIANCE_INDIA_ID FROM dbo.ELECP_CANDMAST', con, coerce_float=False)
+    candidates = read_sql(
+        'SELECT CCODE, CANDICODE, CANDINAME, VOTES, ABBR, CANDI_STATUS, '
+        'CANDI_ALLIANCE_INDIA_ID FROM dbo.ELECP_CANDMAST',
+        con, coerce_float=False)
     candidates['CANDICODE'] = candidates['CANDICODE'].dropna().astype(int)
     duration = time() - start_time
 
     # Sanitize the values
     candidates['VOTES'] = candidates['VOTES'].fillna(0).astype(int)
-    candidates['ID'] = candidates['CCODE'].dropna().astype(str).apply(lambda v: 'S%s-%d' % (v[:2], int(v[-2:])))
+    candidates['ID'] = candidates['CCODE'].dropna().astype(
+        str).apply(lambda v: 'S%s-%d' % (v[:2], int(v[-2:])))
     candidates['ABBR'].replace({
-      'INC(I)': 'CONG',
-      'ADK': 'ADMK',
-      'BLD': 'JNP',
-      'INC': 'CONG',
-      'SHS': 'SS',
-      'JD(U)': 'JDU',
-      'AITC': 'TMC',
-      'JKN': 'NC',
-      'MUL': 'IUML',
-      'JD(S)': 'JDS',
-      'BOPF': 'BPF',
-      'KEC(M)': 'KECM',
+        'INC(I)': 'CONG',
+        'ADK': 'ADMK',
+        'BLD': 'JNP',
+        'INC': 'CONG',
+        'SHS': 'SS',
+        'JD(U)': 'JDU',
+        'AITC': 'TMC',
+        'JKN': 'NC',
+        'MUL': 'IUML',
+        'JD(S)': 'JDS',
+        'BOPF': 'BPF',
+        'KEC(M)': 'KECM',
     }, inplace=True)
 
     # Map Nielsen's Union Territory codes to ECI Union Territory codes
@@ -73,21 +80,34 @@ def main(args, count):
     }, inplace=True)
 
     # Replace alliance ID values with text (slow operations)
-    candidates['CANDI_ALLIANCE_INDIA_ID'].replace({0: 'OTHER', 1: 'NDA', 2: 'UPA', 3: 'OTHER'}, inplace=True)
+    candidates['CANDI_ALLIANCE_INDIA_ID'].replace(
+        {0: 'OTHER', 1: 'NDA', 2: 'UPA', 3: 'OTHER'}, inplace=True)
 
     # Take each constituency's data
-    declared = candidates[candidates['CANDI_STATUS'].isin(['WON', 'LEADING'])].set_index('CCODE')
-    awaited = candidates[~candidates['CANDI_STATUS'].isin(['WON', 'LEADING', 'TRAILING', 'LOST']) & (candidates['CANDICODE'] == 1)].set_index('CCODE')
+    declared = candidates[
+        candidates['CANDI_STATUS'].isin(['WON', 'LEADING'])].set_index('CCODE')
+    awaited = candidates[
+        ~candidates['CANDI_STATUS'].isin(
+            ['WON', 'LEADING', 'TRAILING', 'LOST']
+        ) & (candidates['CANDICODE'] == 1)
+    ].set_index('CCODE')
 
-    elections = pd.concat([declared, awaited], axis=0)[['ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'VOTES', 'ID', 'CANDI_STATUS', 'CANDICODE']]
-    elections.columns = ['ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'WINNER VOTES', 'ID', 'STATUS', 'CANDICODE']
+    elections = pd.concat([declared, awaited], axis=0)[[
+        'ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'VOTES', 'ID',
+        'CANDI_STATUS', 'CANDICODE']]
+    elections.columns = ['ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'WINNER VOTES',
+                         'ID', 'STATUS', 'CANDICODE']
 
-    elections['VOTES'] = candidates.sort(['CCODE', 'CANDICODE']).groupby('CCODE')['VOTES'].apply(lambda v: list(v))
+    elections['VOTES'] = candidates.sort(['CCODE', 'CANDICODE']).groupby(
+        'CCODE')['VOTES'].apply(lambda v: list(v))
     elections = elections.reset_index().rename(columns={'index': 'CONST_ID'})
     # Status: 0 = awaited, 1 = counting, 2 = finished
-    elections['STATUS'] = elections.apply(lambda v: 2 if v['STATUS'] == 'WON' else 1 if v['STATUS'] == 'LEADING' else 0, axis=1)
+    elections['STATUS'] = elections.apply(
+        lambda v: (2 if v['STATUS'] == 'WON' else
+                   1 if v['STATUS'] == 'LEADING' else 0), axis=1)
 
-    elections = elections[['ID', 'ABBR', 'CANDI_ALLIANCE_INDIA_ID', 'WINNER VOTES', 'STATUS', 'VOTES', 'CANDICODE']]
+    elections = elections[['ID', 'ABBR', 'CANDI_ALLIANCE_INDIA_ID',
+                           'WINNER VOTES', 'STATUS', 'VOTES', 'CANDICODE']]
 
     # Create JSON structure
     now = datetime.datetime.now()
@@ -102,7 +122,9 @@ def main(args, count):
 
     # If 2014-candidates.json was not present, regenerate it
     if not count:
-        battles = pd.read_sql('SELECT TRN_CONSTI_ID, TRN_CANDI_CODE FROM CANDI_KEY_CONTEST', con, coerce_float=False).astype(str)
+        battles = pd.read_sql(
+            'SELECT TRN_CONSTI_ID, TRN_CANDI_CODE FROM CANDI_KEY_CONTEST',
+            con, coerce_float=False).astype(str)
         battles.columns = ['CCODE', 'CANDICODE']
         battles['CANDICODE'] = battles['CANDICODE'].dropna().astype(int)
         battles['CCODE'] = battles['CCODE'].apply(lambda v: v.zfill(5))
@@ -123,19 +145,21 @@ def main(args, count):
             json.dump(names, out, separators=(',', ':'), encoding='cp1252')
 
     by_status = elections.groupby(['STATUS'])['ID'].count()
-    counting = elections[elections['STATUS'].isin([1,2])]
+    counting = elections[elections['STATUS'].isin([1, 2])]
     by_party = counting.groupby(['ABBR'])['ID'].count()
     by_alliance = counting.groupby(['CANDI_ALLIANCE_INDIA_ID'])['ID'].count()
-    return '{:0.2f}s. {:3d} = {:3d} FIN + {:3d} WIP + {:3d} TBD. NDA={:3d} UPA={:3d} CONG={:3d} BJP={:3d}. {:3d} candidates'.format(
+    fmt_string = ('{:0.2f}s. {:3d} = {:3d} FIN + {:3d} WIP + {:3d} TBD. '
+                  'NDA={:3d} UPA={:3d} CONG={:3d} BJP={:3d}. {:3d} candidates')
+    return fmt_string.format(
         duration,
         len(elections),
         by_status.ix[2] if 2 in by_status else 0,
         by_status.ix[1] if 1 in by_status else 0,
         by_status.ix[0] if 0 in by_status else 0,
-        by_alliance.ix['NDA'] if 'NDA'  in by_alliance else 0,
-        by_alliance.ix['UPA'] if 'UPA'  in by_alliance else 0,
-        by_party.ix['CONG']   if 'CONG' in by_party else 0,
-        by_party.ix['BJP']    if 'BJP'  in by_party else 0,
+        by_alliance.ix['NDA'] if 'NDA' in by_alliance else 0,
+        by_alliance.ix['UPA'] if 'UPA' in by_alliance else 0,
+        by_party.ix['CONG'] if 'CONG' in by_party else 0,
+        by_party.ix['BJP'] if 'BJP' in by_party else 0,
         len(candidates),
     )
 
@@ -145,8 +169,10 @@ if __name__ == '__main__':
 
     # Process command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument('--server', help='SQL Server name', default='localhost')
-    parser.add_argument('--db', help='Database name', default='ELEC_6MAY_6_20PM')
+    parser.add_argument(
+        '--server', help='SQL Server name', default='localhost')
+    parser.add_argument(
+        '--db', help='Database name', default='ELEC_6MAY_6_20PM')
     parser.add_argument('--uid', help='SQL Server username')
     parser.add_argument('--pwd', help='SQL Server username')
     parser.add_argument('--refresh', help='Rerun after n seconds', type=int)

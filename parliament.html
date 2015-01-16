@@ -4,12 +4,11 @@ description = 'A visual guide to the history of Indian Parliament elections, fro
 
 import json
 from urllib import quote
-from common import pc_setup, slug, metric_names, NONE_COLOR
+from common import pc_setup, metric_names
 data, elections = DB.csv('parliament.csv', setup=pc_setup, dtype=object)
 
 years = sorted(data['YEAR'].unique())
 tv = args.get('tv')
-colors = _color.distinct(10)
 
 # Set style to the IBN style, which has a header, based on hostname.
 # http://ibnlive.in.com/general-elections-2014/analytics/ will point here
@@ -20,7 +19,7 @@ uri = handler.request.uri
 appstyle = args.get('style', [appstyle])[0]
 {% end %}<!DOCTYPE html><html lang="en">
 <head>
-  {{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv, appstyle=appstyle,uri=uri) }}
+  {{ T('.head.html', title=title, static_url=static_url, description=description, tv=tv, appstyle=appstyle, uri=uri) }}
   <link rel="stylesheet" href="js/bootstro.css" type="text/css"/>
 </head><body{% if tv %} class="tv"{% end %}>
 

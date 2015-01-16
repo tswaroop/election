@@ -1,5 +1,6 @@
 """
-Converts a denormalized CSV file into a normalized CSV file with reference data.
+Converts a denormalized CSV file into a normalized CSV file with reference
+data.
 
 For example, if a CSV file looks like this:
 
@@ -26,9 +27,12 @@ import pandas as pd
 
 KEY = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_='
 
+
 def baseN(num):
     b = len(KEY)
-    return ((num == 0) and KEY[0]) or (baseN(num // b).lstrip(KEY[0]) + KEY[num % b])
+    return ((num == 0) and KEY[0]) or (baseN(num // b).lstrip(
+        KEY[0]) + KEY[num % b])
+
 
 def normalize(source, target, reference, ratio, columns):
     data = pd.read_csv(source, dtype=object)
@@ -55,9 +59,11 @@ if __name__ == '__main__':
     parser.add_argument('target', help='Output CSV file')
     parser.add_argument('reference', help='Metadata CSV file')
     parser.add_argument('--ratio', type=float, default=0.005,
-        help='Normalize if %% unique values are below this ratio')
+                        help='Normalize if %% unique values are ' +
+                             'below this ratio')
     parser.add_argument('--columns', nargs='*', help='Columns to normalize')
 
     args = parser.parse_args()
 
-    normalize(args.source, args.target, args.reference, args.ratio, args.columns)
+    normalize(
+        args.source, args.target, args.reference, args.ratio, args.columns)
