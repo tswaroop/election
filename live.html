@@ -4,9 +4,6 @@ description = 'A live update on the 2014 Indian Parliament elections, by Gramene
 
 from urllib import quote
 
-if handler.request.host == 'gramener.com':
-    return handler.redirect('http://ibn.gramener.com/live')
-
 countdown = False
 
 tv = args.get('tv')
